@@ -33,9 +33,8 @@ Primary architecture:
 Notes:
 * Cell Class: abstract class that would be extended for each different simulations. Specifically, the check method would be overriden for different rules. And the status types would be different for each simulation.
 
-The simulation program flow would look like this:
-![](https://i.imgur.com/5pz
-oJnD.png)
+The simulation program flow would look like this:git 
+![](https://i.imgur.com/5pzoJnD.png)
 
 
 
