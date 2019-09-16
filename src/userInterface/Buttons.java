@@ -14,7 +14,13 @@ public class Buttons {
     }
 
     private void initializeButtons() {
-        Button selectFile = new Button();
+        createButton(20, "select file");
+        createButton(20, "Start");
+        createButton(20, "Pause");
+        createButton(20, "speed up");
+        createButton(20, "slow down");
+
+        /*Button selectFile = new Button();
         selectFile.setFont(new Font(20));
         selectFile.setText("select file");
         selectFile.setOnAction(value -> {
@@ -53,8 +59,20 @@ public class Buttons {
         slowDown.setOnAction(value -> {
             //TODO: actions on backend
         });
-        buttonList.add(slowDown);
+        buttonList.add(slowDown);*/
 
+    }
+
+    private void createButton(int textSize, String text) {
+        Button button = new Button();
+        button.setFont(new Font(textSize));
+        button.setText(text);
+        button.setOnAction(value -> buttonAction(text));
+        buttonList.add(button);
+    }
+
+    private void buttonAction(String type) {
+        //to be added
     }
 
     public ArrayList<Button> getButtonList() {

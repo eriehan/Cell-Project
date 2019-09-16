@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import userInterface.UserInterface;
+import userInterface.VisualizationConstants;
 
 import static userInterface.VisualizationConstants.*;
 
@@ -57,6 +58,8 @@ public class MainController extends Application {
     }
 
     private void parseXML() {
+        //TODO: parseXML code
+
 
     }
 
