@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<!--
+
+Read in an XML formatted file that contains the initial settings for a simulation. The file contains three parts:
+
+kind of simulation it represents, as well as a title for this simulation and the author of this data file
+
+settings for global configuration parameters specific to the simulation
+
+width and height of the grid and the initial configuration of the states for the cells in the grid
+-->
+<Simulation>
+    <Author>Diane Lin</Author>
+    <Type>
+        <Title>Game Of Life</Title>
+        <Width>25</Width>
+        <Height>25</Height>
+        <Attributes>
+            <!--
+            Only specifies the cells that are on
+            If cells are not on, default off
+            - specifies the x and y pos of the cell that is on
+            -->
+            <Cell>
+                <x>2</x>
+                <y>1</y>
+            </Cell>
+            <Cell>
+                <x>3</x>
+                <y>1</y>
+            </Cell>
+            <Cell>
+                <x>3</x>
+                <y>2</y>
+            </Cell>
+            <Cell>
+                <x>4</x>
+                <y>2</y>
+            </Cell>
+            <Cell>
+                <x>4</x>
+                <y>3</y>
+            </Cell>
+            <Cell>
+                <x>5</x>
+                <y>3</y>
+            </Cell>
+            <Cell>
+                <x>5</x>
+                <y>4</y>
+            </Cell>
+            <Cell>
+                <x>6</x>
+                <y>4</y>
+            </Cell>
+        </Attributes>
+    </Type>
+</Simulation>
