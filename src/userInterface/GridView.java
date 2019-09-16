@@ -16,7 +16,7 @@ public class GridView {
     private GridPane myGridPane;
     private final int numOfCols;
     private final int numOfRows;
-    private final Color[] paints = {Color.LAVENDER, Color.HONEYDEW, Color.AZURE, Color.ALICEBLUE};
+    private final Color[] paints = {Color.LAVENDER, Color.HONEYDEW, Color.CORNFLOWERBLUE, Color.PLUM};
 
     public GridView(int numOfCols, int numOfRows) {
         myGridPane = new GridPane();
@@ -34,6 +34,11 @@ public class GridView {
                 myGridPane.add(shape, r, c);
             }
         }
+    }
+
+    public void updateGrid(){
+        myGridPane.getChildren().clear();
+        createGrid();
     }
 
     public GridPane getMyGridPane() {
