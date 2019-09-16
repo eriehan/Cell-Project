@@ -28,10 +28,13 @@ public class MainController extends Application {
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
+    private int updateTimer; // TODO: backend can use this to control speed of update
 
 
     @Override
     public void start(Stage stage) throws Exception {
+        updateTimer =0;
+
         myUserInterface = new UserInterface(100, 100, "Some Simulation");
         myUserInterface.getMyGridView().createGrid();
         myScene = initScene();
@@ -48,6 +51,13 @@ public class MainController extends Application {
     }
 
     private void step(double elapsedTime) {
+        if (updateTimer<=100){
+            updateTimer++;
+        }
+        else{
+            myUserInterface.update();
+            updateTimer=0;
+        }
         // listen to UI
         // update grid
         // update view
