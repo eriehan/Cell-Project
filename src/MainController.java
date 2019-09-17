@@ -11,7 +11,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import userInterface.UserInterface;
-import xml_files.*;
 import userInterface.VisualizationConstants;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -65,23 +64,23 @@ public class MainController extends Application {
 
     private Scene initScene() throws IOException, SAXException, ParserConfigurationException {
         Group root = myUserInterface.setScene();
-        parseXML();
+       // parseXML();
         var scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, BACKGROUND_COLOR);
         return scene;
     }
 
     private void parseXML() throws ParserConfigurationException, IOException, SAXException {
-        //TODO: parseXML code
-        File xmlFile = new File("simulation1.xml");
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse(xmlFile);
-        NodeList typeOfSimulation = doc.getElementsByTagName("Game");
-        for(int i = 0; i < typeOfSimulation.getLength(); i++){
-            if(typeOfSimulation.item(i).getAttributes().equals("Game Of Life")){
-                System.out.println("game of Life");
-            }
-        }
+//        //TODO: parseXML code
+//        File xmlFile = new File("simulation1.xml");
+//        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
+//        Document doc = docBuilder.parse(xmlFile);
+//        NodeList typeOfSimulation = doc.getElementsByTagName("Game");
+//        for(int i = 0; i < typeOfSimulation.getLength(); i++){
+//            if(typeOfSimulation.item(i).getAttributes().equals("Game Of Life")){
+//                System.out.println("game of Life");
+//            }
+//        }
 
     }
 
