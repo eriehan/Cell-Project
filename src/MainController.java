@@ -84,20 +84,40 @@ public class MainController extends Application {
         DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(xmlFile);
 
-        NodeList typeOfSimulation = doc.getElementsByTagName("Game");
+        //returns nodeList of elements named "Type"
+        NodeList typeOfSimulation = doc.getElementsByTagName("Type");
 
+        //goes through NodeList to get information about the different simulation
         for(int i = 0; i < typeOfSimulation.getLength(); i++){
-            Node currentGameType = typeOfSimulation.item(i);
 
-            if(currentGameType.getAttributes().item(i).getNodeValue().equals("Game Of Life")) {
-                if(currentGameType.getNodeType() == Node.ELEMENT_NODE){
-                    Element currElement = (Element)currentGameType;
+            //gets the i-th simulation type and casts it as a node
+            Node currentSimulationType = typeOfSimulation.item(i);
+
+            //checks the node's attribute
+            //TODO: make it so it the checking part is not hard coded
+            if(currentSimulationType.getAttributes().item(i).getNodeValue().equals("Game Of Life")) {
+                this.myTitle = "Game Of Life";
+
+                //checks if its an ELEMENT_NODE
+                if(currentSimulationType.getNodeType() == Node.ELEMENT_NODE){
+
+                    //cast the current Node to an element to be able to call methods
+                    Element currElement = (Element)currentSimulationType;
+
                     GRID_WIDTH = Integer.parseInt(currElement.getElementsByTagName("Width").item(0).getTextContent());
                     GRID_HEIGHT = Integer.parseInt(currElement.getElementsByTagName("Height").item(0).getTextContent());
-                    NodeList listOfCoord = currElement.getElementsByTagName("Cells");
 
-                    //returns the x and y
-                    System.out.println(listOfCoord.item(0));
+                    NodeList rowAndCol = currElement.getElementsByTagName("CellPosition");
+                    for(int j = 0; j < rowAndCol.getLength(); j++){
+                        Node currentPosList = rowAndCol.item(i);
+                        if(currentPosList.getNodeType() == Node.ELEMENT_NODE){
+                            Element pos = (Element)currentPosList;
+                            String row = pos.getElementsByTagName("Row").item(0).getTextContent();
+                            String col = pos.getElementsByTagName("Column").item(0).getTextContent();
+                            System.out.println("row: " + row);
+                            System.out.println("Col: " + col);
+                        }
+                    }
 
 
 
