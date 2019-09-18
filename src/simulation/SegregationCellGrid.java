@@ -31,7 +31,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
             notEmptyCell.setState(entry.getValue());
         }
 
-        //If xml does not have all the configuration,
+        //If xml does not have the configuration so that all configuration will be randomly(while loop will be in an if statement),
         //according to the percentage of empty cells(parameter of constructor), randomly fills grid.
         while(emptyCells.size() > emptyCellNumber) {
             int index = (int) (emptyCells.size() * Math.random());
@@ -40,7 +40,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
 
             //Will be changed later to be more flexible. Right now, 50% for state1, 50% for state2.
 //            tempCell.setState((int) (1.5 + Math.random()));
-            tempCell.setState((Math.random()>this.prob)?CellType.DISATISFIED:CellType.SATISFIED);
+            tempCell.setState((Math.random()>this.prob)?CellType.FIRSTAGENT:CellType.SECONDAGENT);
         }
     }
 

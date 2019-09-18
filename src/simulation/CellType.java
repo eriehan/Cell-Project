@@ -8,20 +8,26 @@ public enum CellType {
     EMPTY(Color.WHITE),
 
     DISATISFIED(Color.RED),
-    SATISFIED(Color.BLUE),
+    FIRSTAGENT(Color.RED),
+    SECONDAGENT(Color.BLUE),
 
     FIREEMPTY(Color.YELLOW),
     BURNING(Color.DARKRED),
-    TREE(Color.GREEN);
+    TREE(Color.GREEN),
+
+    PERCOLATED(Color.BLUE),
+    BLOCKED(Color.BLACK);
+
+
 
     private Color myColor;
 
-    public Color getMyColor() {
-        return this.myColor;
-    }
-
     CellType(Color color) {
         this.myColor = color;
+    }
+
+    public Color getMyColor() {
+        return this.myColor;
     }
 
 }

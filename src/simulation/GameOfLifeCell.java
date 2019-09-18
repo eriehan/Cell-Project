@@ -43,6 +43,4 @@ public class GameOfLifeCell extends Cell {
     private boolean isAlive() {
         return this.getState() == CellType.ALIVE;
     }
-
-
 }

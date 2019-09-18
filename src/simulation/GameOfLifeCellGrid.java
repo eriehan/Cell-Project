@@ -2,7 +2,6 @@ package simulation;
 
 import utils.Point;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class GameOfLifeCellGrid extends CellGrid {
