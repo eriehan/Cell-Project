@@ -38,7 +38,7 @@ public class MainController extends Application {
     private int updateFreq = 100;
     private boolean isStep = false;
     private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
-
+    private String userFile = "xml_files/SimulationTest1.xml"; //TODO: make dynamic
 
     //TODO: subject to change
     private ArrayList<Integer> myCol;
@@ -87,7 +87,7 @@ public class MainController extends Application {
     private void parseXML() throws ParserConfigurationException, IOException, SAXException {
         //TODO: parseXML code
         int numAgents = 0;
-        File xmlFile = new File("xml_files/SimulationTest1.xml");
+        File xmlFile = new File(userFile);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(xmlFile);
@@ -118,8 +118,8 @@ public class MainController extends Application {
                 String a2 = n.getElementsByTagName("Column").item(0).getTextContent();
                 myRow = stringToIntArray(a1);
                 myCol = stringToIntArray(a2);
-//                System.out.println(myRow);
-//                System.out.println(myCol);
+                System.out.println(myRow);
+                System.out.println(myCol);
         }
 
     }
