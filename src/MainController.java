@@ -4,6 +4,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
@@ -11,8 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import userInterface.UserInterface;
-import userInterface.VisualizationConstants;
+import userInterface.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,40 +23,47 @@ import java.io.IOException;
 import static userInterface.VisualizationConstants.*;
 
 public class MainController extends Application {
+    public static final int FRAMES_PER_SECOND = 60;
+    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+
     private UserInterface myUserInterface;
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
     private String myTitle = "Change Me";
-    private int updateTimer; // TODO: backend can use this to control speed of update
+    private File myConfigFile;
+    private int updateTimer;
+    private int updateFreq = 100;
+    private boolean isStep = false;
 
 
     @Override
     public void start(Stage stage) throws Exception {
-        updateTimer =0;
-
-        myUserInterface = new UserInterface(100, 100, myTitle);
+        updateTimer = 0;
+        var animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        myAnimation = animation;
+        myUserInterface = new UserInterface(100, 100, "Some Simulation");
         myUserInterface.getMyGridView().createGrid();
+        initButtons();
         myScene = initScene();
         stage.setScene(myScene);
         stage.setTitle("Cell Society");
         stage.show();
         myStage = stage;
-        var frame = new KeyFrame(Duration.millis(GameConstants.MILLISECOND_DELAY), e -> step(GameConstants.SECOND_DELAY));
-        var animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
+        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         animation.getKeyFrames().add(frame);
-        myAnimation = animation;
-        animation.play();
+//        animation.play();
     }
 
     private void step(double elapsedTime) {
-        if (updateTimer<=100){
-            updateTimer++;
+        if (updateTimer>updateFreq || isStep){
+            updateTimer = 0;
+            myUserInterface.update();
         }
         else{
-            myUserInterface.update();
-            updateTimer=0;
+            updateTimer++;
         }
         // listen to UI
         // update grid
@@ -104,6 +111,41 @@ public class MainController extends Application {
 
     }
 
+    private void initButtons() {
+        SelectFileButton selectFileButton = new SelectFileButton();
+        selectFileButton.setOnAction(value -> selectFilePrompt());
+        this.myUserInterface.getMyButtons().getButtonList().add(selectFileButton);
+        this.myUserInterface.getMyButtons().getButtonList().add(new StartButton(myAnimation));
+        this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation));
+        StepButton stepButton = new StepButton();
+        stepButton.setOnAction(value -> stepProcess());
+        this.myUserInterface.getMyButtons().getButtonList().add(stepButton);
+        SpeedUpButton speedUpButton = new SpeedUpButton();
+        speedUpButton.setOnAction(value -> speedUp());
+        this.myUserInterface.getMyButtons().getButtonList().add(speedUpButton);
+        SlowDownButton slowDownButton = new SlowDownButton();
+        slowDownButton.setOnAction(value -> slowDown());
+        this.myUserInterface.getMyButtons().getButtonList().add(slowDownButton);
+    }
+
+    private void selectFilePrompt(){
+        FileChooser fileChooser = new FileChooser();
+        myConfigFile = fileChooser.showOpenDialog(myStage);
+    }
+
+    private void slowDown() {
+        this.updateFreq *= 2;
+    }
+
+    private void speedUp() {
+        this.updateFreq /= 2;
+    }
+
+    private void stepProcess(){
+        this.isStep = true;
+        this.myAnimation.pause();
+        this.step(SECOND_DELAY);
+    }
 
     public static void main(String[] args) {
         launch(args);
