@@ -15,7 +15,7 @@ public abstract class CellGrid {
     //Iterates through all cells and change state.
     public abstract void changeAllCells();
 
-    protected abstract void assignNeighborsToEachCell();
+    public abstract void assignNeighborsToEachCell();
 
     //will be implemented if user can click one grid and change its state
     //public abstract void changeOneCell(Point point);

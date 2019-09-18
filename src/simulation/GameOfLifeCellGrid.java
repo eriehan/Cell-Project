@@ -12,12 +12,11 @@ public class GameOfLifeCellGrid extends CellGrid {
     public GameOfLifeCellGrid(int numRows, int numCols) {
         this.numOfRows = numRows;
         this.numOfCols = numCols;
-        createEmptyMap();
     }
-
 
     @Override
     public void initializeGrids(Map<Point, Integer> configMap) {
+        createEmptyMap();
         for(Map.Entry<Point, Integer> entry : configMap.entrySet()) {
             getGridOfCells().get(entry.getKey()).setState(entry.getValue());
         }
@@ -66,6 +65,7 @@ public class GameOfLifeCellGrid extends CellGrid {
 
     //creates a map of cells with state==dead
     private void createEmptyMap() {
+        getGridOfCells().clear();
         for(int row = 0; row < numOfRows; row++) {
             for (int col = 0; col < numOfCols; col++) {
                 Point point = new Point(row, col);
@@ -73,4 +73,7 @@ public class GameOfLifeCellGrid extends CellGrid {
             }
         }
     }
+
+    public int getNumOfRows() {return numOfRows;}
+    public int getNumOfCols() {return numOfCols;}
 }

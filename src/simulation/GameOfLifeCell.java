@@ -1,13 +1,6 @@
 package simulation;
 
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-
-
 public class GameOfLifeCell extends Cell {
-
-    private static final Paint DEAD_COLOR = Color.WHITE;
-    private static final Paint ALIVE_COLOR = Color.BLACK;
 
     public GameOfLifeCell(int row, int col, int state) {
         super(row, col, state);
@@ -34,11 +27,6 @@ public class GameOfLifeCell extends Cell {
     @Override
     public void changeState() {
         setState(getNextState());
-    }
-
-    private Paint stateToPaint() {
-        if(isAlive()) {return ALIVE_COLOR;}
-        return DEAD_COLOR;
     }
 
     private boolean isAlive() {return getState() > 0;}
