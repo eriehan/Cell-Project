@@ -7,39 +7,43 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import userInterface.UserInterface;
-import userInterface.VisualizationConstants;
 
 import static userInterface.VisualizationConstants.*;
 
 public class MainController extends Application {
+    public static final int FRAMES_PER_SECOND = 60;
+    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+
     private UserInterface myUserInterface;
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
-    private int updateTimer; // TODO: backend can use this to control speed of update
+    private int updateTimer;
+    private Integer updateFreq = 100;
+
 
 
     @Override
     public void start(Stage stage) throws Exception {
         updateTimer =0;
-
-        myUserInterface = new UserInterface(100, 100, "Some Simulation");
+        var animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        myAnimation = animation;
+        myUserInterface = new UserInterface(100, 100, "Some Simulation", myAnimation);
         myUserInterface.getMyGridView().createGrid();
         myScene = initScene();
         stage.setScene(myScene);
         stage.setTitle("Cell Society");
         stage.show();
         myStage = stage;
-        var frame = new KeyFrame(Duration.millis(GameConstants.MILLISECOND_DELAY), e -> step(GameConstants.SECOND_DELAY));
-        var animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
+        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         animation.getKeyFrames().add(frame);
-        myAnimation = animation;
-        animation.play();
+//        animation.play();
     }
 
     private void step(double elapsedTime) {
-        if (updateTimer<=100){
+        if (updateTimer<=updateFreq){
             updateTimer++;
         }
         else{
@@ -61,6 +65,10 @@ public class MainController extends Application {
         //TODO: parseXML code
 
 
+    }
+
+    public void setUpdateFreq(int newFreq){
+        this.updateFreq = newFreq;
     }
 
     public static void main(String[] args) {

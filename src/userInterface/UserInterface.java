@@ -1,5 +1,6 @@
 package userInterface;
 
+import javafx.animation.Animation;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.layout.HBox;
@@ -15,13 +16,15 @@ public class UserInterface {
     private final int numOfCols;
     private final int numOfRows;
     private final String mySimulationName;
+    private Animation myAnimation;
 
-    public UserInterface(int numOfCols, int numOfRows, String simulationName) {
+    public UserInterface(int numOfCols, int numOfRows, String simulationName, Animation animation) {
         this.numOfCols = numOfCols;
         this.numOfRows = numOfRows;
         this.mySimulationName = simulationName;
         myGridView = new GridView(numOfCols, numOfRows);
-        myButtons = new Buttons();
+        myAnimation = animation;
+        myButtons = new Buttons(myAnimation);
     }
 
     public Group setScene() {
@@ -39,6 +42,7 @@ public class UserInterface {
         hBox.setPadding(new Insets(10, 50, 50, 50));
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
         colTwo.getChildren().addAll(myButtons.getButtonList());
+        colTwo.setPadding(new Insets(30, 0, 0, 0));
         hBox.getChildren().addAll(colOne, colTwo);
         root.getChildren().add(hBox);
         return root;
