@@ -8,17 +8,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import userInterface.*;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static userInterface.VisualizationConstants.*;
 
@@ -31,10 +32,17 @@ public class MainController extends Application {
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
+    private String myTitle = "Change Me";
     private File myConfigFile;
     private int updateTimer;
     private int updateFreq = 100;
     private boolean isStep = false;
+    private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
+    private String userFile = "xml_files/SimulationTest1.xml"; //TODO: make dynamic
+
+    //TODO: subject to change
+    private ArrayList<Integer> myCol;
+    private ArrayList<Integer> myRow;
 
 
     @Override
@@ -52,7 +60,7 @@ public class MainController extends Application {
         initButtons();
         myScene = initScene();
         stage.setScene(myScene);
-        stage.setTitle("Cell Society");
+        stage.setTitle(myTitle);
         stage.show();
         myStage = stage;
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
@@ -74,24 +82,68 @@ public class MainController extends Application {
 
     private Scene initScene() throws IOException, SAXException, ParserConfigurationException {
         Group root = myUserInterface.setScene();
-        // parseXML();
+        parseXML();
         var scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, BACKGROUND_COLOR);
         return scene;
     }
 
     private void parseXML() throws ParserConfigurationException, IOException, SAXException {
-//        //TODO: parseXML code
-//        File xmlFile = new File("simulation1.xml");
-//        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
-//        Document doc = docBuilder.parse(xmlFile);
-//        NodeList typeOfSimulation = doc.getElementsByTagName("Game");
-//        for(int i = 0; i < typeOfSimulation.getLength(); i++){
-//            if(typeOfSimulation.item(i).getAttributes().equals("Game Of Life")){
-//                System.out.println("game of Life");
-//            }
-//        }
+        //TODO: parseXML code
+        int numAgents = 0;
+        File xmlFile = new File(userFile);
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document doc = docBuilder.parse(xmlFile);
 
+        //returns nodeList of elements named "Type"
+        NodeList typeOfSimulation = doc.getElementsByTagName("Type");
+
+
+        //goes through NodeList to get information about the different simulation
+        for(int i = 0; i < typeOfSimulation.getLength(); i++) {
+
+            //gets the i-th simulation type and casts it as a node
+            Node currentSimulationType = typeOfSimulation.item(i);
+            Element currentSimulationElement = (Element) currentSimulationType;
+            if (currentSimulationElement.getAttribute("name").equals(userInputSimulation)) {
+                numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
+
+            }
+
+        }
+        //return row and col arrays
+        for(int i = 0; i < numAgents; i++){
+            NodeList agent = doc.getElementsByTagName("Agent" + i);
+                Element n = (Element)agent.item(0);
+//                System.out.println("row: " + n.getElementsByTagName("Row").item(0).getTextContent());
+//                System.out.println("Col: " + n.getElementsByTagName("Column").item(0).getTextContent());
+                String a1 = n.getElementsByTagName("Row").item(0).getTextContent();
+                String a2 = n.getElementsByTagName("Column").item(0).getTextContent();
+                myRow = stringToIntArray(a1);
+                myCol = stringToIntArray(a2);
+                System.out.println(myRow);
+                System.out.println(myCol);
+        }
+
+    }
+
+    private ArrayList<Integer> stringToIntArray(String s){
+        StringBuilder myStringBuilder = new StringBuilder(s);
+        int startIndex = 0;
+        int endIndex = 1;
+
+        ArrayList<Integer> myInts = new ArrayList<>();
+        while(endIndex < myStringBuilder.length()){
+            if(myStringBuilder.charAt(endIndex) == ' '){
+                myInts.add(Integer.parseInt(myStringBuilder.substring(startIndex, endIndex)));
+                startIndex = endIndex + 1;
+                endIndex = startIndex + 1;
+            }
+            else{
+                endIndex++;
+            }
+        }
+        return myInts;
     }
 
     private void initButtons() {

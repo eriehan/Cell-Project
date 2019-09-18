@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<!--
+
+Read in an XML formatted file that contains the initial settings for a simulation. The file contains three parts:
+
+kind of simulation it represents, as well as a title for this simulation and the author of this data file
+
+settings for global configuration parameters specific to the simulation
+
+width and height of the grid and the initial configuration of the states for the cells in the grid
+-->
+<Simulation>
+    <Author>Diane Lin</Author>
+    <Type name = "Game Of Life">
+        <Width>600</Width>
+        <Height>600</Height>
+        <CellPosition>
+            <!--
+            Only specifies the cells that are on
+            If cells are not on, default off
+            - specifies the x and y pos of the cell that is on
+            -->
+            <Row>76 88 55 89 65 78</Row>
+            <Column>65 78 90 56 87 45</Column>
+        </CellPosition>
+    </Type>
+
+    <Type name = "Wa-Tor">
+        <Width>600</Width>
+        <Height>600</Height>
+        <!--
+        Only specifies Shark and Fish location
+        Does not matter which "agent" you use for which animal
+        -->
+        <agentOne>
+            <Row>7 56 9 76 9 78 54 3 7 45 87 54 89 89</Row>
+            <Column>7 56 9 76 9 78 54 3 7 45 87 54 89 89</Column>
+        </agentOne>
+        <agentTwo>
+            <Row>67 54 34 12 98 70 87 56 43 56 87 67 90</Row>
+            <Column>67 54 34 12 98 70 87 56 43 56 87 67 90</Column>
+        </agentTwo>
+    </Type>
+
+
+    <Type name = "Percolation">
+        <Width>600</Width>
+        <Height>600</Height>
+        <!--
+        Only specifies blocked and open cells
+        Does not matter which "agent" you use for which cell option
+        -->
+        <agentOne>
+            <Row>7 56 9 76 9 78 54 3 7 45 87 54 89 89</Row>
+            <Column>7 56 9 76 9 78 54 3 7 45 87 54 89 89</Column>
+        </agentOne>
+        <agentTwo>
+            <Row></Row>
+            <Column></Column>
+        </agentTwo>
+    </Type>
+
+    <Type name = "Segregation">
+        <Width>600</Width>
+        <Height>600</Height>
+        <!--
+        threshold for satisfaction is rate
+        -->
+        <Rate></Rate>
+        <!--
+        Only specifies the location of the different items that need to be segregated
+        Does not matter which "agent" you use for which color
+        -->
+        <agentOne>
+            <Row></Row>
+            <Column></Column>
+        </agentOne>
+        <agentTwo>
+            <Row></Row>
+            <Column></Column>
+        </agentTwo>
+    </Type>
+
+    <Type name = "Fire">
+        <Width>600</Width>
+        <Height>600</Height>
+        <!--
+         probCatch is rate
+        -->
+        <Rate></Rate>
+
+        <!--
+        Only specifies the location of the trees and the one fire cells
+        Does not matter which "agent" you use for which cell type
+        -->
+        <agentOne>
+            <Row></Row>
+            <Column></Column>
+        </agentOne>
+        <agentTwo>
+            <Row></Row>
+            <Column></Column>
+        </agentTwo>
+    </Type>
+</Simulation>
