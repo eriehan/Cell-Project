@@ -49,7 +49,7 @@ public class MainController extends Application {
         initButtons();
         myScene = initScene();
         stage.setScene(myScene);
-        stage.setTitle("Cell Society");
+        stage.setTitle(myTitle);
         stage.show();
         myStage = stage;
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
