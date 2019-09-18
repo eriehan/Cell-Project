@@ -13,11 +13,10 @@ width and height of the grid and the initial configuration of the states for the
 -->
 <Simulation>
     <Author>Diane Lin</Author>
-    <Type>
-        <Title>Game Of Life</Title>
+    <Game name = "Game Of Life">
         <Width>25</Width>
         <Height>25</Height>
-        <Attributes>
+        <Cells>
             <!--
             Only specifies the cells that are on
             If cells are not on, default off
@@ -55,6 +54,6 @@ width and height of the grid and the initial configuration of the states for the
                 <x>6</x>
                 <y>4</y>
             </Cell>
-        </Attributes>
-    </Type>
+        </Cells>
+    </Game>
 </Simulation>
