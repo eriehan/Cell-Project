@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+
+<!--
+
+Read in an XML formatted file that contains the initial settings for a simulation. The file contains three parts:
+
+kind of simulation it represents, as well as a title for this simulation and the author of this data file
+
+settings for global configuration parameters specific to the simulation
+
+width and height of the grid and the initial configuration of the states for the cells in the grid
+-->
+<Simulation>
+    <Author>Diane Lin</Author>
+    <Type name = "Game Of Life">1</Type>
+    <Type name = "Wa-Tor">2</Type>
+    <Type name = "Percolation">2</Type>
+    <Type name = "Fire">2</Type>
+    <Type name = "Segregation">2</Type>
+
+    <Width>500</Width>
+    <Height>500</Height>
+
+    <Rate>0.25</Rate>
+    <Agent0>
+        <Row>7 56 9 76 9 78 54 3 7 45 87 54 89 89</Row>
+        <Column>7 56 9 76 9 78 54 3 7 45 87 54 89 89</Column>
+    </Agent0>
+
+    <Agent1>
+        <Row>67 54 34 12 98 70 87 56 43 56 87 67 90</Row>
+        <Column>67 54 34 12 98 70 87 56 43 56 87 67 90</Column>
+    </Agent1>
+
+    <!--
+    Potential for more agents
+    -->
+</Simulation>
