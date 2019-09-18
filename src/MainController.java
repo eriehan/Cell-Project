@@ -39,6 +39,10 @@ public class MainController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        initVisualizations(stage);
+    }
+
+    private void initVisualizations(Stage stage) throws Exception{
         updateTimer = 0;
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
@@ -53,7 +57,6 @@ public class MainController extends Application {
         myStage = stage;
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         animation.getKeyFrames().add(frame);
-//        animation.play();
     }
 
     private void step(double elapsedTime) {
@@ -111,6 +114,8 @@ public class MainController extends Application {
     private void selectFilePrompt(){
         FileChooser fileChooser = new FileChooser();
         myConfigFile = fileChooser.showOpenDialog(myStage);
+        // for debug
+        System.out.println("for debug"+ myConfigFile.getAbsolutePath());
     }
 
     private void slowDown() {

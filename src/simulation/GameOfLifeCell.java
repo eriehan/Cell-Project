@@ -10,30 +10,30 @@ public class GameOfLifeCell extends Cell {
     private static final Paint DEAD_COLOR = Color.WHITE;
     private static final Paint ALIVE_COLOR = Color.BLACK;
 
-    private double width;
-    private double height;
-    private Rectangle rectangle;
+//    private double width;
+//    private double height;
+//    private Rectangle rectangle; // Don't think we need to have visualization objs in cell class itself
 
-    public GameOfLifeCell(int state, double width, double height) {
-        super(state);
-        this.width = width;
-        this.height = height;
-
-        rectangle = new Rectangle(width, height, stateToPaint());
+    public GameOfLifeCell(CellType state,int r, int c) {
+        super(state,r,c);
+//        this.width = width;
+//        this.height = height;
+//
+//        rectangle = new Rectangle(width, height, stateToPaint());
     }
 
     @Override
     public void check() {
         int countAlive = 0;
         for(Cell cell : getNeighbors()) {
-            if(cell.getState() > 0) {countAlive++;}
+            if(cell.getState()==CellType.ALIVE) {countAlive++;}
         }
         if(isAlive()) {
             if (countAlive < 2 || countAlive > 3) {
-                setNextState(0);
+                setNextState(CellType.DEAD);
             }
         } else {
-            if(countAlive == 3) {setNextState(1);}
+            if(countAlive == 3 || countAlive ==2) {setNextState(CellType.ALIVE);}
         }
 
     }
@@ -41,18 +41,18 @@ public class GameOfLifeCell extends Cell {
     @Override
     public void changeState() {
         setState(getNextState());
-        rectangle.setFill(stateToPaint());
+//        rectangle.setFill(stateToPaint());
     }
 
-    @Override
-    public Node getNode() {
-        return rectangle;
-    }
+//    @Override
+//    public Node getNode() {
+//        return rectangle;
+//    }
 
     private Paint stateToPaint() {
         if(isAlive()) {return ALIVE_COLOR;}
         return DEAD_COLOR;
     }
 
-    private boolean isAlive() {return getState() > 0;}
+    private boolean isAlive() {return getState() == CellType.ALIVE;}
 }

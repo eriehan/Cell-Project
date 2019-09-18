@@ -8,18 +8,18 @@ public class CellGrid {
 
     private int numOfRows;
     private int numOfCols;
-    private double gridWidth;
-    private double gridHeight;
+//    private double gridWidth;
+//    private double gridHeight; // handled in visualization classes
     private ArrayList<String[]> cellConfig;
 
     //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private ArrayList<ArrayList<Cell>> gridOfCells = new ArrayList<>();
 
-    public CellGrid(int numOfRows, int numOfCols, double gridWidth, double gridHeight, ArrayList<String[]> cellConfig) {
+    public CellGrid(int numOfRows, int numOfCols, ArrayList<String[]> cellConfig) {
         this.numOfRows = numOfRows;
         this.numOfCols = numOfCols;
-        this.gridWidth = gridWidth;
-        this.gridHeight = gridHeight;
+//        this.gridWidth = gridWidth;
+//        this.gridHeight = gridHeight;
 
         //CellConfig is going to be the configuration that is read from the file.
         //The method for reading the file will be in the class that calls this constructor of CellGrid.
@@ -32,16 +32,18 @@ public class CellGrid {
                 if (j == 0) {
                     gridOfCells.add(new ArrayList<>());
                 }
-                gridOfCells.get(i).add(createCell(type, i, j, Integer.parseInt(cellConfig.get(i)[j])));
+//                gridOfCells.get(i).add(createCell(type, i, j, Integer.parseInt(cellConfig.get(i)[j])));
             }
         }
 
         assignNeighborsToEachCell();
     }
 
-    private Cell createCell(String type, int row, int col, int state) {
+    private Cell createCell(String type, int row, int col, CellType state) {
         // switch-case to be added later
-        return new GameOfLifeCell(state, gridWidth / numOfCols, gridHeight / numOfRows);
+//        return new GameOfLifeCell(state, gridWidth / numOfCols, gridHeight / numOfRows);
+        // don't need to store visualization constants here, handled together in visualization classes
+        return new GameOfLifeCell(state, row, col);
     }
 
     private void assignNeighborsToEachCell() {
@@ -53,20 +55,36 @@ public class CellGrid {
     }
 
     private void assignNeighborsToOneCell(Cell cell, int row, int col) {
-        if (!(row == 0 || col == 0)) { cell.addNeighbor(gridOfCells.get(row - 1).get(col - 1)); }
-        if (!(row == 0 || col == numOfCols - 1)) { cell.addNeighbor(gridOfCells.get(row - 1).get(col - 1)); }
-        if (!(row == numOfRows - 1 || col == 0)) { cell.addNeighbor(gridOfCells.get(row + 1).get(col - 1)); }
-        if (!(row == numOfRows - 1 || col == numOfCols - 1)) { cell.addNeighbor(gridOfCells.get(row + 1).get(col + 1)); }
+        if (!(row == 0 || col == 0)) {
+            cell.addNeighbor(gridOfCells.get(row - 1).get(col - 1));
+        }
+        if (!(row == 0 || col == numOfCols - 1)) {
+            cell.addNeighbor(gridOfCells.get(row - 1).get(col - 1));
+        }
+        if (!(row == numOfRows - 1 || col == 0)) {
+            cell.addNeighbor(gridOfCells.get(row + 1).get(col - 1));
+        }
+        if (!(row == numOfRows - 1 || col == numOfCols - 1)) {
+            cell.addNeighbor(gridOfCells.get(row + 1).get(col + 1));
+        }
 
-        if (row != 0) { cell.addNeighbor(gridOfCells.get(row - 1).get(col)); }
-        if (row != numOfRows - 1) { cell.addNeighbor(gridOfCells.get(row + 1).get(col)); }
-        if (col != 0) { cell.addNeighbor(gridOfCells.get(row).get(col - 1)); }
-        if (col != numOfCols - 1) { cell.addNeighbor(gridOfCells.get(row).get(col + 1)); }
+        if (row != 0) {
+            cell.addNeighbor(gridOfCells.get(row - 1).get(col));
+        }
+        if (row != numOfRows - 1) {
+            cell.addNeighbor(gridOfCells.get(row + 1).get(col));
+        }
+        if (col != 0) {
+            cell.addNeighbor(gridOfCells.get(row).get(col - 1));
+        }
+        if (col != numOfCols - 1) {
+            cell.addNeighbor(gridOfCells.get(row).get(col + 1));
+        }
     }
 
 
     //if user wants to change the state of a cell
-    public void changeOneCell (int row, int col, int state){
+    public void changeOneCell(int row, int col, CellType state) {
         Cell cell = gridOfCells.get(row).get(col);
         cell.setState(state);
         cell.changeState();

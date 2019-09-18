@@ -21,7 +21,7 @@ public class GridView {
         this.numOfRows = numOfRows;
     }
 
-    //TODO: need input from backend: color mapping from status to color type, and the status of all cells
+    // TODO: set with config
     public void createGrid() {
         Random ran = new Random();
         for (int r = 0; r < numOfRows; r++) {
@@ -33,6 +33,7 @@ public class GridView {
         }
     }
 
+    // TODO: set with config
     public void updateGrid() {
         myGridPane.getChildren().clear();
         createGrid();
