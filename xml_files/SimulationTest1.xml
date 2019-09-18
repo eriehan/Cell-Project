@@ -23,18 +23,17 @@ width and height of the grid and the initial configuration of the states for the
     <Height>500</Height>
 
     <Rate>0.25</Rate>
-    <Agent1>
+    <Agent0>
         <Row>7 56 9 76 9 78 54 3 7 45 87 54 89 89</Row>
         <Column>7 56 9 76 9 78 54 3 7 45 87 54 89 89</Column>
-    </Agent1>
+    </Agent0>
 
-    <Agent2>
+    <Agent1>
         <Row>67 54 34 12 98 70 87 56 43 56 87 67 90</Row>
         <Column>67 54 34 12 98 70 87 56 43 56 87 67 90</Column>
-    </Agent2>
+    </Agent1>
 
     <!--
     Potential for more agents
     -->
-
 </Simulation>

@@ -19,6 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static userInterface.VisualizationConstants.*;
 
@@ -36,6 +37,12 @@ public class MainController extends Application {
     private int updateTimer;
     private int updateFreq = 100;
     private boolean isStep = false;
+    private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
+
+
+    //TODO: subject to change
+    private ArrayList<Integer> myCol;
+    private ArrayList<Integer> myRow;
 
 
     @Override
@@ -79,7 +86,8 @@ public class MainController extends Application {
 
     private void parseXML() throws ParserConfigurationException, IOException, SAXException {
         //TODO: parseXML code
-        File xmlFile = new File("xml_files/simulation1.xml");
+        int numAgents = 0;
+        File xmlFile = new File("xml_files/SimulationTest1.xml");
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(xmlFile);
@@ -87,48 +95,52 @@ public class MainController extends Application {
         //returns nodeList of elements named "Type"
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
 
+
         //goes through NodeList to get information about the different simulation
-        for(int i = 0; i < typeOfSimulation.getLength(); i++){
+        for(int i = 0; i < typeOfSimulation.getLength(); i++) {
 
             //gets the i-th simulation type and casts it as a node
             Node currentSimulationType = typeOfSimulation.item(i);
-
-            //checks the node's attribute
-            //TODO: make it so it the checking part is not hard coded
-            if(currentSimulationType.getAttributes().item(i).getNodeValue().equals("Game Of Life")) {
-                this.myTitle = "Game Of Life";
-
-                //checks if its an ELEMENT_NODE
-                if(currentSimulationType.getNodeType() == Node.ELEMENT_NODE){
-
-                    //cast the current Node to an element to be able to call methods
-                    Element currElement = (Element)currentSimulationType;
-
-                    GRID_WIDTH = Integer.parseInt(currElement.getElementsByTagName("Width").item(0).getTextContent());
-                    GRID_HEIGHT = Integer.parseInt(currElement.getElementsByTagName("Height").item(0).getTextContent());
-
-                    NodeList rowAndCol = currElement.getElementsByTagName("CellPosition");
-                    for(int j = 0; j < rowAndCol.getLength(); j++){
-                        Node currentPosList = rowAndCol.item(i);
-                        if(currentPosList.getNodeType() == Node.ELEMENT_NODE){
-                            Element pos = (Element)currentPosList;
-                            String row = pos.getElementsByTagName("Row").item(0).getTextContent();
-                            String col = pos.getElementsByTagName("Column").item(0).getTextContent();
-                            System.out.println("row: " + row);
-                            System.out.println("Col: " + col);
-                        }
-                    }
-
-
-
-
-                }
-
-
+            Element currentSimulationElement = (Element) currentSimulationType;
+            if (currentSimulationElement.getAttribute("name").equals(userInputSimulation)) {
+                numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
 
             }
+
+        }
+        //return row and col arrays
+        for(int i = 0; i < numAgents; i++){
+            NodeList agent = doc.getElementsByTagName("Agent" + i);
+                Element n = (Element)agent.item(0);
+//                System.out.println("row: " + n.getElementsByTagName("Row").item(0).getTextContent());
+//                System.out.println("Col: " + n.getElementsByTagName("Column").item(0).getTextContent());
+                String a1 = n.getElementsByTagName("Row").item(0).getTextContent();
+                String a2 = n.getElementsByTagName("Column").item(0).getTextContent();
+                myRow = stringToIntArray(a1);
+                myCol = stringToIntArray(a2);
+//                System.out.println(myRow);
+//                System.out.println(myCol);
         }
 
+    }
+
+    private ArrayList<Integer> stringToIntArray(String s){
+        StringBuilder myStringBuilder = new StringBuilder(s);
+        int startIndex = 0;
+        int endIndex = 1;
+
+        ArrayList<Integer> myInts = new ArrayList<>();
+        while(endIndex < myStringBuilder.length()){
+            if(myStringBuilder.charAt(endIndex) == ' '){
+                myInts.add(Integer.parseInt(myStringBuilder.substring(startIndex, endIndex)));
+                startIndex = endIndex + 1;
+                endIndex = startIndex + 1;
+            }
+            else{
+                endIndex++;
+            }
+        }
+        return myInts;
     }
 
     private void initButtons() {
