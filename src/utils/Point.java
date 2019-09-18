@@ -17,6 +17,14 @@ public class Point {
         return row;
     }
 
+    public void setRow(int r){
+        this.row = r;
+    }
+
+    public void setCol(int c){
+        this.col = c;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other instanceof Point && ((Point) other).getRow()==row && ((Point) other).getCol()==col;

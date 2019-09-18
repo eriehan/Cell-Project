@@ -2,8 +2,8 @@ package simulation;
 
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import utils.Point;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Cell {
@@ -80,18 +80,18 @@ public abstract class Cell {
     }
 
     public int getRow() {
-        return coord.x;
+        return coord.getRow();
     }
 
     public void setRow(int row) {
-        this.coord.x = row;
+        coord.setRow(row);
     }
 
     public int getCol() {
-        return coord.y;
+        return coord.getCol();
     }
 
     public void setCol(int col) {
-        this.coord.y = col;
+        coord.setCol(col);
     }
 }
