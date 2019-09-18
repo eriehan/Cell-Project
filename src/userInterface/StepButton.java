@@ -10,10 +10,5 @@ public class StepButton extends Button {
         super();
         this.setFont(new Font(BUTTON_FONT_SIZE));
         this.setText("STEP");
-        this.setOnAction(value -> buttonAction());
-    }
-
-    public void buttonAction(){
-
     }
 }

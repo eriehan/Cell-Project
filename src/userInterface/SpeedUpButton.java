@@ -10,10 +10,5 @@ public class SpeedUpButton extends Button {
         super();
         this.setFont(new Font(BUTTON_FONT_SIZE));
         this.setText("SPEED UP");
-        this.setOnAction(value -> buttonAction());
-    }
-
-    public void buttonAction(){
-
     }
 }

@@ -23,8 +23,4 @@ public class PauseButton extends Button {
         if (paused) myAnimation.pause();
         else myAnimation.play();
     }
-
-    public boolean getPaused(){
-        return paused;
-    }
 }

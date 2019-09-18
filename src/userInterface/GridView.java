@@ -1,12 +1,9 @@
 package userInterface;
 
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.awt.*;
 import java.util.Random;
 
 import static userInterface.VisualizationConstants.GRID_HEIGHT;
@@ -36,7 +33,7 @@ public class GridView {
         }
     }
 
-    public void updateGrid(){
+    public void updateGrid() {
         myGridPane.getChildren().clear();
         createGrid();
     }

@@ -19,7 +19,7 @@ public class StartButton extends Button {
         this.setOnAction(value -> buttonAction());
     }
 
-    public void buttonAction(){
+    private void buttonAction(){
         if (!started) myAnimation.play();
     }
 }

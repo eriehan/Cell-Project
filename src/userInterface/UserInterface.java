@@ -15,15 +15,13 @@ public class UserInterface {
     private final int numOfCols;
     private final int numOfRows;
     private final String mySimulationName;
-    private Animation myAnimation;
 
-    public UserInterface(int numOfCols, int numOfRows, String simulationName, Animation animation) {
+    public UserInterface(int numOfCols, int numOfRows, String simulationName) {
         this.numOfCols = numOfCols;
         this.numOfRows = numOfRows;
         this.mySimulationName = simulationName;
         myGridView = new GridView(numOfCols, numOfRows);
-        myAnimation = animation;
-        myButtons = new Buttons(myAnimation);
+        myButtons = new Buttons();
     }
 
     public Group setScene() {
@@ -47,7 +45,7 @@ public class UserInterface {
         return root;
     }
 
-    public void update(){
+    public void update() {
         myGridView.updateGrid();
     }
 
