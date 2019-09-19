@@ -9,7 +9,7 @@ public abstract class CellGrid {
     //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private Map<Point, Cell> gridOfCells = new HashMap<>();
 
-    public abstract void initializeGrids(Map<Point, CellType> configMap);
+    public abstract void initializeGrids(Map<Point, CellState> configMap);
     //Iterates through all cells and change nextState
     public abstract void checkAllCells();
     //Iterates through all cells and change state.
@@ -25,4 +25,6 @@ public abstract class CellGrid {
     public void addToGridOfCells(Point point, Cell cell) {
         gridOfCells.put(point, cell);
     }
+
+    public CellState stateOfCellAtPoint(int row, int col) {return gridOfCells.get(new Point(row, col)).getState();}
 }

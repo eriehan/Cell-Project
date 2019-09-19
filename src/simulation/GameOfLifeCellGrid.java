@@ -14,9 +14,11 @@ public class GameOfLifeCellGrid extends CellGrid {
     }
 
     @Override
-    public void initializeGrids(Map<Point, CellType> configMap) {
+    public void initializeGrids(Map<Point, CellState> configMap) {
         createEmptyMap();
-        for(Map.Entry<Point, CellType> entry : configMap.entrySet()) {
+        for(Map.Entry<Point, CellState> entry : configMap.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(getGridOfCells().containsKey(new Point(1, 8)));
             getGridOfCells().get(entry.getKey()).setState(entry.getValue());
         }
     }
@@ -46,6 +48,7 @@ public class GameOfLifeCellGrid extends CellGrid {
 
     private void assignNeighborsToOneCell(int row, int col) {
         Cell cell = cellFromPoint(row, col);
+        cell.clearNeighbors();
 
         if (!(row == 0 || col == 0)) { cell.addCornerNeighbor(cellFromPoint(row-1, col-1));}
         if (!(row == 0 || col == numOfCols - 1)) { cell.addCornerNeighbor(cellFromPoint(row-1, col+1)); }
@@ -56,6 +59,7 @@ public class GameOfLifeCellGrid extends CellGrid {
         if (row != numOfRows - 1) { cell.addEdgeNeighbor(cellFromPoint(row+1, col)); }
         if (col != 0) { cell.addEdgeNeighbor(cellFromPoint(row, col-1)); }
         if (col != numOfCols - 1) { cell.addEdgeNeighbor(cellFromPoint(row, col+1)); }
+
     }
 
     private Cell cellFromPoint(int row, int col) {
@@ -68,7 +72,7 @@ public class GameOfLifeCellGrid extends CellGrid {
         for(int row = 0; row < numOfRows; row++) {
             for (int col = 0; col < numOfCols; col++) {
                 Point point = new Point(row, col);
-                addToGridOfCells(point, new GameOfLifeCell(row, col, CellType.DEAD));
+                addToGridOfCells(point, new GameOfLifeCell(row, col, CellState.DEAD));
             }
         }
     }

@@ -7,7 +7,7 @@ public class GameOfLifeCell extends Cell {
 //    private double height;
 //    private Rectangle rectangle; // Don't think we need to have visualization objs in cell class itself
 
-    public GameOfLifeCell(int r, int c, CellType state) {
+    public GameOfLifeCell(int r, int c, CellState state) {
         super(r, c, state);
     }
 
@@ -15,23 +15,24 @@ public class GameOfLifeCell extends Cell {
     public void check() {
         int countAlive = 0;
         for (Cell cell : getCornerNeighbor()) {
-            if (cell.getState() == CellType.ALIVE) {
+            if (cell.getState() == CellState.ALIVE) {
                 countAlive++;
             }
         }
         for (Cell cell : getEdgeNeighbor()) {
-            if (cell.getState() == CellType.ALIVE) {
+            if (cell.getState() == CellState.ALIVE) {
                 countAlive++;
             }
         }
         if (isAlive()) {
             if (countAlive < 2 || countAlive > 3) {
-                setNextState(CellType.DEAD);
+                setNextState(CellState.DEAD);
             }
+            else {setNextState(CellState.ALIVE);}
         } else {
-            if (countAlive == 3 || countAlive == 2) {
-                setNextState(CellType.ALIVE);
-            }
+            if (countAlive == 3) {
+                setNextState(CellState.ALIVE);
+            } else {setNextState(CellState.DEAD);}
         }
     }
 
@@ -41,6 +42,6 @@ public class GameOfLifeCell extends Cell {
     }
 
     private boolean isAlive() {
-        return this.getState() == CellType.ALIVE;
+        return this.getState() == CellState.ALIVE;
     }
 }

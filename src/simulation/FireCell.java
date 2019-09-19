@@ -1,14 +1,11 @@
 package simulation;
 
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-
 public class FireCell extends Cell {
 
     private double probCatch;
     private boolean fireNearby;
 
-    public FireCell(int row, int col, CellType state, double probCatch) {
+    public FireCell(int row, int col, CellState state, double probCatch) {
         super(row, col, state);
         this.probCatch = probCatch;
     }
@@ -16,20 +13,21 @@ public class FireCell extends Cell {
     @Override
     public void check() {
         //if already burnt or in fire, will be empty at next round.
-        if(getState()==CellType.FIREEMPTY) {setNextState(CellType.FIREEMPTY);}
-        else if(getState()==CellType.BURNING) {setNextState(CellType.FIREEMPTY);}
+        if(getState()== CellState.FIREEMPTY) {setNextState(CellState.FIREEMPTY);}
+        else if(getState()== CellState.BURNING) {setNextState(CellState.FIREEMPTY);}
 
         else {
             for (Cell neighbor : getEdgeNeighbor()) {
-                if (neighbor.getState()==CellType.BURNING) {
-                    fireNearby = true;
-                    return;
+                if (neighbor.getState()== CellState.BURNING) {
+                    fireNearby = true; break;
                 }
             }
             if(fireNearby) {
-                if(Math.random() < probCatch) {setNextState(CellType.BURNING);}
+                int num = (int) (Math.random() * 100);
+                System.out.println(num);
+                if(num <= probCatch) {setNextState(CellState.BURNING);}
             } else {
-                setNextState(CellType.TREE);
+                setNextState(CellState.TREE);
             }
         }
     }

@@ -55,7 +55,7 @@ public class MainController extends Application {
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         myAnimation = animation;
-        myUserInterface = new UserInterface(100, 100, myTitle.toString());
+        myUserInterface = new UserInterface(6, 6, myTitle.toString());
         myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
         myScene = initScene();

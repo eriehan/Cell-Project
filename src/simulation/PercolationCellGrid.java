@@ -10,9 +10,9 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
     }
 
     @Override
-    public void initializeGrids(Map<Point, CellType> configMap) {
+    public void initializeGrids(Map<Point, CellState> configMap) {
         createEmptyMap();
-        for(Map.Entry<Point, CellType> entry : configMap.entrySet()) {
+        for(Map.Entry<Point, CellState> entry : configMap.entrySet()) {
             getGridOfCells().get(entry.getKey()).setState(entry.getValue());
         }
     }
@@ -22,7 +22,7 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
         for(int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
                 Point point = new Point(row, col);
-                addToGridOfCells(point, new PercolationCell(row, col, CellType.EMPTY));
+                addToGridOfCells(point, new PercolationCell(row, col, CellState.EMPTY));
             }
         }
     }

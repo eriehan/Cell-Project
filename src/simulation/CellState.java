@@ -2,7 +2,7 @@ package simulation;
 
 import javafx.scene.paint.Color;
 
-public enum CellType {
+public enum CellState {
     ALIVE(Color.BLACK),
     DEAD(Color.WHITE),
     EMPTY(Color.WHITE),
@@ -22,7 +22,7 @@ public enum CellType {
 
     private Color myColor;
 
-    CellType(Color color) {
+    CellState(Color color) {
         this.myColor = color;
     }
 

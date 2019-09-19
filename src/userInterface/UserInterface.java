@@ -16,9 +16,9 @@ public class UserInterface {
     private final int numOfRows;
     private final String mySimulationName;
 
-    public UserInterface(int numOfCols, int numOfRows, String simulationName) {
-        this.numOfCols = numOfCols;
-        this.numOfRows = numOfRows;
+    public UserInterface(int numofRows, int numofCols, String simulationName) {
+        this.numOfRows = numofRows;
+        this.numOfCols = numofCols;
         this.mySimulationName = simulationName;
         myGridView = new GridView(numOfCols, numOfRows);
         myButtons = new Buttons();

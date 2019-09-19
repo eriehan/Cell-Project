@@ -1,12 +1,13 @@
 package simulation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SegregationCell extends Cell {
 
     private double agentPercent;
 
-    public SegregationCell(int row, int col, CellType state, double agentPercent) {
+    public SegregationCell(int row, int col, CellState state, double agentPercent) {
         super(row, col, state);
 
         this.agentPercent = agentPercent;
@@ -15,7 +16,7 @@ public class SegregationCell extends Cell {
     @Override
     public void check() {
         //if empty, next state is empty.
-        if(getState() == CellType.EMPTY) {setNextState(CellType.EMPTY);}
+        if(getState() == CellState.EMPTY) {setNextState(CellState.EMPTY);}
 
         else {
             int cellsWithSameState = 0;
@@ -24,10 +25,9 @@ public class SegregationCell extends Cell {
                     cellsWithSameState++;
                 }
             }
-
             if (cellsWithSameState < allNeighbors().size() * agentPercent / 100) {
                 //dissatisfied
-                setNextState(CellType.DISATISFIED);
+                setNextState(CellState.DISATISFIED);
             }
             else {
                 setNextState(getState());
@@ -41,7 +41,8 @@ public class SegregationCell extends Cell {
     }
 
     private List<Cell> allNeighbors() {
-        List<Cell> list = getCornerNeighbor();
+        List<Cell> list = new ArrayList<>();
+        list.addAll(getCornerNeighbor());
         list.addAll(getEdgeNeighbor());
         return list;
     }

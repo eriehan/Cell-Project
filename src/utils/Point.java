@@ -29,4 +29,14 @@ public class Point {
     public boolean equals(Object other) {
         return other instanceof Point && ((Point) other).getRow()==row && ((Point) other).getCol()==col;
     }
+
+    @Override
+    public String toString() {
+        return "(" + row + ", " + col + ")";
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
 }

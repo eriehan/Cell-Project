@@ -1,15 +1,13 @@
 package simulation;
 
-import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import utils.Point;
 
 import java.util.ArrayList;
 
 public abstract class Cell {
 
-    private CellType state;
-    private CellType nextState;
+    private CellState state;
+    private CellState nextState;
     private Point coord; // x is row, y is col
 
 
@@ -17,7 +15,7 @@ public abstract class Cell {
     private ArrayList<Cell> edgeNeighbors;
 
 
-    public Cell(int row, int col, CellType state) {
+    public Cell(int row, int col, CellState state) {
         this.state = state;
         this.nextState = state;
         this.coord = new Point(row,col);
@@ -26,11 +24,11 @@ public abstract class Cell {
         edgeNeighbors = new ArrayList<>();
     }
 
-    public void setNextState(CellType nextState) {
+    public void setNextState(CellState nextState) {
         this.nextState = nextState;
     }
 
-    public CellType getNextState() {
+    public CellState getNextState() {
         return nextState;
     }
 
@@ -39,11 +37,11 @@ public abstract class Cell {
 
     public abstract void changeState();
 
-    public CellType getState() {
+    public CellState getState() {
         return state;
     }
 
-    public void setState(CellType state) {
+    public void setState(CellState state) {
         this.state = state;
     }
 
@@ -74,7 +72,7 @@ public abstract class Cell {
 
     //called when the cell needs to move. Changes state with the cell that the cell should move to.
     public void moveToDifferentCell(Cell other) {
-        CellType tempState = getState();
+        CellState tempState = getState();
         setState(other.getState());
         other.setState(tempState);
     }
@@ -91,7 +89,10 @@ public abstract class Cell {
         return coord.getCol();
     }
 
-    public void setCol(int col) {
-        coord.setCol(col);
+    public void setCol(int col) { coord.setCol(col); }
+
+    public void clearNeighbors() {
+        edgeNeighbors.clear();
+        cornerNeighbors.clear();
     }
 }
