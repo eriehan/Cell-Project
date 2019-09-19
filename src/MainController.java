@@ -37,12 +37,14 @@ public class MainController extends Application {
     private int updateTimer;
     private int updateFreq = 30;
     private boolean isStep = false;
-    private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
+    private String userInputSimulation = "Wa-Tor"; //TODO: make dynamic
     private String userFile;
+    private int cellGridRowNum;
+    private int cellGridColNum;
 
     //TODO: subject to change
-    private ArrayList<Integer> myCol;
-    private ArrayList<Integer> myRow;
+    private ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
 
 
     @Override
@@ -96,8 +98,8 @@ public class MainController extends Application {
         Document doc = docBuilder.parse(xmlFile);
 
 
-        GRID_WIDTH = Integer.parseInt(doc.getElementsByTagName("Width").item(0).getTextContent());
-        GRID_HEIGHT = Integer.parseInt(doc.getElementsByTagName("Height").item(0).getTextContent());
+         cellGridColNum = Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
+         cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
 
 
         //returns nodeList of elements named "Type"
@@ -113,20 +115,16 @@ public class MainController extends Application {
             if (currentSimulationElement.getAttribute("name").equals(userInputSimulation)) {
                 this.myTitle = new StringBuilder(currentSimulationElement.getAttribute("name"));
                 numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
-
             }
-
         }
         //return row and col arrays
         for(int i = 0; i < numAgents; i++){
             NodeList agent = doc.getElementsByTagName("Agent" + i);
                 Element n = (Element)agent.item(0);
-                String a1 = n.getElementsByTagName("Row").item(0).getTextContent();
-                String a2 = n.getElementsByTagName("Column").item(0).getTextContent();
-                myRow = stringToIntArray(a1);
-                myCol = stringToIntArray(a2);
-                System.out.println(myRow);
-                System.out.println(myCol);
+                String row = n.getElementsByTagName("Row").item(0).getTextContent();
+                String col = n.getElementsByTagName("Column").item(0).getTextContent();
+                myRowArray.add(stringToIntArray(row));
+                myColArray.add(stringToIntArray(col));
         }
 
     }
