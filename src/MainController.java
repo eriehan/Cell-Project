@@ -45,8 +45,6 @@ public class MainController extends Application {
     //TODO: subject to change
     private ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
-    private ArrayList<Integer> myCol;
-    private ArrayList<Integer> myRow;
 
 
     @Override
@@ -100,8 +98,8 @@ public class MainController extends Application {
         Document doc = docBuilder.parse(xmlFile);
 
 
-         cellGridColNum= Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
-         cellGridRowNum= Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
+         cellGridColNum = Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
+         cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
 
 
         //returns nodeList of elements named "Type"
@@ -127,8 +125,6 @@ public class MainController extends Application {
                 String col = n.getElementsByTagName("Column").item(0).getTextContent();
                 myRowArray.add(stringToIntArray(row));
                 myColArray.add(stringToIntArray(col));
-                System.out.println(myRowArray);
-                System.out.println(myColArray);
         }
 
     }
