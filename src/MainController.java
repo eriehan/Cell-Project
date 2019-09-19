@@ -38,7 +38,7 @@ public class MainController extends Application {
     private int updateFreq = 100;
     private boolean isStep = false;
     private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
-    private String userFile = "xml_files/SimulationTest1.xml"; //TODO: make dynamic
+    private String userFile; //TODO: make dynamic
 
     //TODO: subject to change
     private ArrayList<Integer> myCol;
@@ -82,15 +82,14 @@ public class MainController extends Application {
 
     private Scene initScene() throws IOException, SAXException, ParserConfigurationException {
         Group root = myUserInterface.setScene();
-        parseXML();
         var scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, BACKGROUND_COLOR);
         return scene;
     }
 
-    private void parseXML() throws ParserConfigurationException, IOException, SAXException {
+    private void parseXML(String file) throws IOException, ParserConfigurationException, SAXException {
         //TODO: parseXML code
         int numAgents = 0;
-        File xmlFile = new File(userFile);
+        File xmlFile = new File(String.valueOf(file));
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(xmlFile);
@@ -148,7 +147,18 @@ public class MainController extends Application {
 
     private void initButtons() {
         SelectFileButton selectFileButton = new SelectFileButton();
-        selectFileButton.setOnAction(value -> selectFilePrompt());
+        selectFileButton.setOnAction(value -> {
+            try {
+                selectFilePrompt();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            }
+        });
+
         this.myUserInterface.getMyButtons().getButtonList().add(selectFileButton);
         this.myUserInterface.getMyButtons().getButtonList().add(new StartButton(myAnimation));
         this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation));
@@ -163,10 +173,22 @@ public class MainController extends Application {
         this.myUserInterface.getMyButtons().getButtonList().add(slowDownButton);
     }
 
-    private void selectFilePrompt(){
+    private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
         FileChooser fileChooser = new FileChooser();
         myConfigFile = fileChooser.showOpenDialog(myStage);
-        // for debug
+
+        StringBuilder myFile = new StringBuilder(myConfigFile.toString());
+        for(int i = 0; i < myFile.length(); i++){
+            if(myFile.substring(i, i + 3).equals("xml")){
+                this.userFile = myFile.substring(i);
+                System.out.println(myFile.substring(i));
+                break;
+            }
+
+        }
+
+        parseXML(this.userFile);
+
         System.out.println("for debug"+ myConfigFile.getAbsolutePath());
     }
 
