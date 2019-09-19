@@ -38,7 +38,7 @@ public class MainController extends Application {
     private int updateFreq = 100;
     private boolean isStep = false;
     private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
-    private String userFile; //TODO: make dynamic
+    private String userFile;
 
     //TODO: subject to change
     private ArrayList<Integer> myCol;
@@ -94,6 +94,11 @@ public class MainController extends Application {
         DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(xmlFile);
 
+
+        GRID_WIDTH = Integer.parseInt(doc.getElementsByTagName("Width").item(0).getTextContent());
+        GRID_HEIGHT = Integer.parseInt(doc.getElementsByTagName("Height").item(0).getTextContent());
+
+
         //returns nodeList of elements named "Type"
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
 
@@ -114,8 +119,6 @@ public class MainController extends Application {
         for(int i = 0; i < numAgents; i++){
             NodeList agent = doc.getElementsByTagName("Agent" + i);
                 Element n = (Element)agent.item(0);
-//                System.out.println("row: " + n.getElementsByTagName("Row").item(0).getTextContent());
-//                System.out.println("Col: " + n.getElementsByTagName("Column").item(0).getTextContent());
                 String a1 = n.getElementsByTagName("Row").item(0).getTextContent();
                 String a2 = n.getElementsByTagName("Column").item(0).getTextContent();
                 myRow = stringToIntArray(a1);
