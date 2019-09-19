@@ -17,8 +17,8 @@ import static userInterface.VisualizationConstants.GRID_WIDTH;
 
 public abstract class AbstractGridView {
     private GridPane myGridPane;
-    private final int numOfRows;
-    private final int numOfCols;
+    private int numOfRows;
+    private int numOfCols;
     private CellGrid myCellGrid;
 
     public AbstractGridView(int numOfRows, int numOfCols) {
@@ -36,6 +36,9 @@ public abstract class AbstractGridView {
     }
 
     public void updateGrid() {
+        if (myCellGrid==null){
+            return;
+        }
         myGridPane.getChildren().clear();
         myCellGrid.checkAllCells();
         myCellGrid.changeAllCells();
@@ -50,6 +53,14 @@ public abstract class AbstractGridView {
 
     public int getNumOfRows() {
         return numOfRows;
+    }
+
+    public void setNumOfRows(int n){
+        numOfRows = n;
+    }
+
+    public void setNumOfCols(int n){
+        numOfCols = n;
     }
 
     public int getNumOfCols() {
