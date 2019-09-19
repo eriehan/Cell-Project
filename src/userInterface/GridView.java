@@ -34,7 +34,6 @@ public class GridView extends AbstractGridView {
 
     public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize) {
         Map configMap = new HashMap<Point, CellState>();
-
         switch (s) {
             case "Segregation":
                 for (int i = 0; i < row.size(); i++) {
