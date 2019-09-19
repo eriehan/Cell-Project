@@ -32,7 +32,7 @@ public class MainController extends Application {
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
-    private String myTitle = "Change Me";
+    private StringBuilder myTitle = new StringBuilder("change me"); //TODO: put into new popup for simulation
     private File myConfigFile;
     private int updateTimer;
     private int updateFreq = 100;
@@ -55,12 +55,12 @@ public class MainController extends Application {
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         myAnimation = animation;
-        myUserInterface = new UserInterface(100, 100, "Some Simulation");
+        myUserInterface = new UserInterface(100, 100, myTitle.toString());
         myUserInterface.getMyGridView().createGrid();
         initButtons();
         myScene = initScene();
         stage.setScene(myScene);
-        stage.setTitle(myTitle);
+        stage.setTitle(myTitle.toString());
         stage.show();
         myStage = stage;
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
@@ -110,6 +110,7 @@ public class MainController extends Application {
             Node currentSimulationType = typeOfSimulation.item(i);
             Element currentSimulationElement = (Element) currentSimulationType;
             if (currentSimulationElement.getAttribute("name").equals(userInputSimulation)) {
+                this.myTitle = new StringBuilder(currentSimulationElement.getAttribute("name"));
                 numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
 
             }
