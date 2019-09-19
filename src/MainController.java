@@ -32,13 +32,13 @@ public class MainController extends Application {
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
-    private String myTitle = "Change Me";
+    private StringBuilder myTitle = new StringBuilder("change me"); //TODO: put into new popup for simulation
     private File myConfigFile;
     private int updateTimer;
     private int updateFreq = 30;
     private boolean isStep = false;
     private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
-    private String userFile = "xml_files/SimulationTest1.xml"; //TODO: make dynamic
+    private String userFile;
 
     //TODO: subject to change
     private ArrayList<Integer> myCol;
@@ -55,13 +55,12 @@ public class MainController extends Application {
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         myAnimation = animation;
-        myUserInterface = new UserInterface(100, 100, myTitle);
-//        myUserInterface.getMyGridView().createGrid();
+        myUserInterface = new UserInterface(100, 100, myTitle.toString());
         myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
         myScene = initScene();
         stage.setScene(myScene);
-        stage.setTitle(myTitle);
+        stage.setTitle(myTitle.toString());
         stage.show();
         myStage = stage;
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
@@ -84,18 +83,22 @@ public class MainController extends Application {
 
     private Scene initScene() throws IOException, SAXException, ParserConfigurationException {
         Group root = myUserInterface.setScene();
-        parseXML();
         var scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, BACKGROUND_COLOR);
         return scene;
     }
 
-    private void parseXML() throws ParserConfigurationException, IOException, SAXException {
+    private void parseXML(String file) throws IOException, ParserConfigurationException, SAXException {
         //TODO: parseXML code
         int numAgents = 0;
-        File xmlFile = new File(userFile);
+        File xmlFile = new File(String.valueOf(file));
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(xmlFile);
+
+
+        GRID_WIDTH = Integer.parseInt(doc.getElementsByTagName("Width").item(0).getTextContent());
+        GRID_HEIGHT = Integer.parseInt(doc.getElementsByTagName("Height").item(0).getTextContent());
+
 
         //returns nodeList of elements named "Type"
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
@@ -108,6 +111,7 @@ public class MainController extends Application {
             Node currentSimulationType = typeOfSimulation.item(i);
             Element currentSimulationElement = (Element) currentSimulationType;
             if (currentSimulationElement.getAttribute("name").equals(userInputSimulation)) {
+                this.myTitle = new StringBuilder(currentSimulationElement.getAttribute("name"));
                 numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
 
             }
@@ -117,8 +121,6 @@ public class MainController extends Application {
         for(int i = 0; i < numAgents; i++){
             NodeList agent = doc.getElementsByTagName("Agent" + i);
                 Element n = (Element)agent.item(0);
-//                System.out.println("row: " + n.getElementsByTagName("Row").item(0).getTextContent());
-//                System.out.println("Col: " + n.getElementsByTagName("Column").item(0).getTextContent());
                 String a1 = n.getElementsByTagName("Row").item(0).getTextContent();
                 String a2 = n.getElementsByTagName("Column").item(0).getTextContent();
                 myRow = stringToIntArray(a1);
@@ -150,7 +152,18 @@ public class MainController extends Application {
 
     private void initButtons() {
         SelectFileButton selectFileButton = new SelectFileButton();
-        selectFileButton.setOnAction(value -> selectFilePrompt());
+        selectFileButton.setOnAction(value -> {
+            try {
+                selectFilePrompt();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            }
+        });
+
         this.myUserInterface.getMyButtons().getButtonList().add(selectFileButton);
         this.myUserInterface.getMyButtons().getButtonList().add(new StartButton(myAnimation));
         this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation));
@@ -168,10 +181,22 @@ public class MainController extends Application {
         this.myUserInterface.getMyButtons().getButtonList().add(slowDownButton);
     }
 
-    private void selectFilePrompt(){
+    private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
         FileChooser fileChooser = new FileChooser();
         myConfigFile = fileChooser.showOpenDialog(myStage);
-        // for debug
+
+        StringBuilder myFile = new StringBuilder(myConfigFile.toString());
+        for(int i = 0; i < myFile.length(); i++){
+            if(myFile.substring(i, i + 3).equals("xml")){
+                this.userFile = myFile.substring(i);
+                System.out.println(myFile.substring(i));
+                break;
+            }
+
+        }
+
+        parseXML(this.userFile);
+
         System.out.println("for debug"+ myConfigFile.getAbsolutePath());
     }
 
