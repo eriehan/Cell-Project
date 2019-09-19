@@ -8,6 +8,7 @@ import simulation.CellState;
 import simulation.SegregationCellGrid;
 import utils.Point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,8 @@ public abstract class AbstractGridView {
         myCellGrid.changeAllCells();
         createGrid();
     }
+
+    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
 
     public GridPane getMyGridPane() {
         return myGridPane;

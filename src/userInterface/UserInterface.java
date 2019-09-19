@@ -10,7 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class UserInterface {
-    private GridView myGridView;
+    private AbstractGridView myGridView;
     private Buttons myButtons;
     private final int numOfCols;
     private final int numOfRows;
@@ -49,7 +49,7 @@ public class UserInterface {
         myGridView.updateGrid();
     }
 
-    public GridView getMyGridView() {
+    public AbstractGridView getMyGridView() {
         return myGridView;
     }
 
