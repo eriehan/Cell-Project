@@ -32,11 +32,11 @@ public class GridView extends AbstractGridView {
         }
     }
 
-    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s) {
+    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize) {
         Map configMap = new HashMap<Point, CellState>();
 
         switch (s) {
-            case "Wa-Tor":
+            case "Segregation":
                 for (int i = 0; i < row.size(); i++) {
                     if (i == 0) {
                         for (int j = 0; j < row.get(i).size(); j++) {
@@ -55,7 +55,11 @@ public class GridView extends AbstractGridView {
                         }
                 }
 
+
         }
+
+        //what does the row and col thing represent? total number of row and column?
+        setMyCellGrid(new GameOfLifeCellGrid(rowSize, colSize));
 
 
         //hardcode to see if game of life works
@@ -105,7 +109,7 @@ public class GridView extends AbstractGridView {
 //        configMap.put(new Point(5, 5), CellState.FIRSTAGENT);
 
 
-        setMyCellGrid(new SegregationCellGrid(getNumOfRows(), getNumOfCols(), 33, 30));
+
 
 
 

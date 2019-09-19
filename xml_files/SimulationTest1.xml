@@ -19,8 +19,8 @@ width and height of the grid and the initial configuration of the states for the
     <Type name = "Fire">2</Type>
     <Type name = "Segregation">2</Type>
 
-    <Row>700</Row>
-    <Col>700</Col>
+    <Row>15</Row>
+    <Col>15</Col>
 
     <Rate>0.25</Rate>
     <Agent0>
