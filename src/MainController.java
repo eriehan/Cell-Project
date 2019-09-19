@@ -35,7 +35,7 @@ public class MainController extends Application {
     private String myTitle = "Change Me";
     private File myConfigFile;
     private int updateTimer;
-    private int updateFreq = 100;
+    private int updateFreq = 30;
     private boolean isStep = false;
     private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
     private String userFile = "xml_files/SimulationTest1.xml"; //TODO: make dynamic
@@ -55,8 +55,9 @@ public class MainController extends Application {
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         myAnimation = animation;
-        myUserInterface = new UserInterface(100, 100, "Some Simulation");
-        myUserInterface.getMyGridView().createGrid();
+        myUserInterface = new UserInterface(100, 100, myTitle);
+//        myUserInterface.getMyGridView().createGrid();
+        myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
         myScene = initScene();
         stage.setScene(myScene);
@@ -70,6 +71,7 @@ public class MainController extends Application {
     private void step(double elapsedTime) {
         if (updateTimer>updateFreq || isStep){
             updateTimer = 0;
+
             myUserInterface.update();
         }
         else{
@@ -152,6 +154,9 @@ public class MainController extends Application {
         this.myUserInterface.getMyButtons().getButtonList().add(selectFileButton);
         this.myUserInterface.getMyButtons().getButtonList().add(new StartButton(myAnimation));
         this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation));
+        ResetButton resetButton = new ResetButton(myAnimation);
+        resetButton.setOnAction(value -> resetGrid());
+        this.myUserInterface.getMyButtons().getButtonList().add(resetButton);
         StepButton stepButton = new StepButton();
         stepButton.setOnAction(value -> stepProcess());
         this.myUserInterface.getMyButtons().getButtonList().add(stepButton);
@@ -182,6 +187,12 @@ public class MainController extends Application {
         this.isStep = true;
         this.myAnimation.pause();
         this.step(SECOND_DELAY);
+    }
+
+    private void resetGrid(){
+        this.myUserInterface.getMyGridView().getMyGridPane().getChildren().clear();
+        this.myUserInterface.getMyGridView().generateBlankGrid();
+        myAnimation.pause();
     }
 
     public static void main(String[] args) {

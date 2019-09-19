@@ -6,20 +6,14 @@ import javafx.scene.text.Font;
 
 import static userInterface.VisualizationConstants.BUTTON_FONT_SIZE;
 
-public class StartButton extends Button {
+public class ResetButton extends Button {
     private Animation myAnimation;
 
 
-    public StartButton(Animation animation){
+    public ResetButton(Animation animation){
         super();
         this.myAnimation = animation;
         this.setFont(new Font(BUTTON_FONT_SIZE));
-        this.setText("START");
-        this.setOnAction(value -> buttonAction());
-    }
-
-    private void buttonAction(){
-        myAnimation.play();
-        // TODO: need to make sure that cell grid is initialized
+        this.setText("RESET");
     }
 }

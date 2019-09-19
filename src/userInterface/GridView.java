@@ -33,6 +33,12 @@ public class GridView {
         }
     }
 
+    public void generateBlankGrid() {
+        Rectangle shape = new Rectangle(GRID_WIDTH, GRID_HEIGHT);
+        shape.setFill(Color.LIGHTBLUE);
+        myGridPane.add(shape, 0,0);
+    }
+
     // TODO: set with config
     public void updateGrid() {
         myGridPane.getChildren().clear();
