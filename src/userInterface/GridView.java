@@ -8,7 +8,6 @@ import utils.Point;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import static userInterface.VisualizationConstants.GRID_HEIGHT;
 import static userInterface.VisualizationConstants.GRID_WIDTH;
@@ -17,7 +16,6 @@ public class GridView {
     private GridPane myGridPane;
     private final int numOfRows;
     private final int numOfCols;
-    private final Color[] paints = {Color.LAVENDER, Color.HONEYDEW, Color.CORNFLOWERBLUE, Color.PLUM};
     private CellGrid myCellGrid;
 
     public GridView(int numOfRows, int numOfCols) {
@@ -37,14 +35,6 @@ public class GridView {
                 myGridPane.add(shape, c, r);
             }
         }
-        /*Random ran = new Random();
-        for (int r = 0; r < numOfRows; r++) {
-            for (int c = 0; c < numOfCols; c++) {
-                Rectangle shape = new Rectangle(GRID_WIDTH / numOfCols, GRID_HEIGHT / numOfRows);
-                shape.setFill(paints[ran.nextInt(4)]);
-                myGridPane.add(shape, r, c);
-            }
-        }*/
     }
 
     private void initializeMyCellGrid() {
