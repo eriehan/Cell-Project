@@ -6,6 +6,7 @@ import javafx.scene.shape.Rectangle;
 import simulation.*;
 import utils.Point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class GridView {
         myGridPane = new GridPane();
         this.numOfCols = numOfCols;
         this.numOfRows = numOfRows;
-        initializeMyCellGrid();
+       // initializeMyCellGrid();
     }
 
     // TODO: set with config
@@ -36,8 +37,26 @@ public class GridView {
         }
     }
 
-    private void initializeMyCellGrid() {
+    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col) {
         Map configMap = new HashMap<Point, CellState>();
+
+        for(int i = 0 ; i < row.size(); i++){
+            if(i == 0){
+                for(int j = 0; j < row.get(i).size(); j++){
+                    configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.FIRSTAGENT);
+                }
+            }
+            else{
+                for(int j = 0; j < row.get(i).size(); j++){
+                    configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.SECONDAGENT);
+                }
+            }
+
+
+        }
+
+
+
         //hardcode to see if game of life works
         /*configMap.put(new Point(4, 4), CellState.ALIVE);
         configMap.put(new Point(5, 4), CellState.ALIVE);
@@ -52,35 +71,39 @@ public class GridView {
         configMap.put(new Point(6, 7), CellState.BURNING);
         myCellGrid = new FireCellGrid(numOfRows, numOfCols, 30);*/
 
+        //pass the arraylist of row and col to here and put in configMap
 
-        //hardcode to see if segregation works
-        configMap.put(new Point(0, 1), CellState.FIRSTAGENT);
-        configMap.put(new Point(0, 2), CellState.FIRSTAGENT);
-        configMap.put(new Point(0, 4), CellState.SECONDAGENT);
-        configMap.put(new Point(0, 5), CellState.SECONDAGENT);
-        configMap.put(new Point(1, 0), CellState.FIRSTAGENT);
-        configMap.put(new Point(1, 1), CellState.SECONDAGENT);
-        configMap.put(new Point(1, 3), CellState.SECONDAGENT);
-        configMap.put(new Point(1, 4), CellState.FIRSTAGENT);
-        configMap.put(new Point(1, 5), CellState.FIRSTAGENT);
-        configMap.put(new Point(2, 1), CellState.FIRSTAGENT);
-        configMap.put(new Point(2, 3), CellState.FIRSTAGENT);
-        configMap.put(new Point(2, 4), CellState.SECONDAGENT);
-        configMap.put(new Point(2, 5), CellState.SECONDAGENT);
-        configMap.put(new Point(3, 0), CellState.SECONDAGENT);
-        configMap.put(new Point(3, 1), CellState.FIRSTAGENT);
-        configMap.put(new Point(3, 2), CellState.FIRSTAGENT);
-        configMap.put(new Point(3, 3), CellState.SECONDAGENT);
-        configMap.put(new Point(3, 4), CellState.SECONDAGENT);
-        configMap.put(new Point(3, 5), CellState.FIRSTAGENT);
-        configMap.put(new Point(4, 0), CellState.FIRSTAGENT);
-        configMap.put(new Point(4, 2), CellState.SECONDAGENT);
-        configMap.put(new Point(4, 3), CellState.FIRSTAGENT);
-        configMap.put(new Point(4, 5), CellState.SECONDAGENT);
-        configMap.put(new Point(5, 1), CellState.FIRSTAGENT);
-        configMap.put(new Point(5, 3), CellState.FIRSTAGENT);
-        configMap.put(new Point(5, 4), CellState.SECONDAGENT);
-        configMap.put(new Point(5, 5), CellState.FIRSTAGENT);
+
+//        //hardcode to see if segregation works
+//        configMap.put(new Point(0, 1), CellState.FIRSTAGENT);
+//        configMap.put(new Point(0, 2), CellState.FIRSTAGENT);
+//        configMap.put(new Point(0, 4), CellState.SECONDAGENT);
+//        configMap.put(new Point(0, 5), CellState.SECONDAGENT);
+//        configMap.put(new Point(1, 0), CellState.FIRSTAGENT);
+//        configMap.put(new Point(1, 1), CellState.SECONDAGENT);
+//        configMap.put(new Point(1, 3), CellState.SECONDAGENT);
+//        configMap.put(new Point(1, 4), CellState.FIRSTAGENT);
+//        configMap.put(new Point(1, 5), CellState.FIRSTAGENT);
+//        configMap.put(new Point(2, 1), CellState.FIRSTAGENT);
+//        configMap.put(new Point(2, 3), CellState.FIRSTAGENT);
+//        configMap.put(new Point(2, 4), CellState.SECONDAGENT);
+//        configMap.put(new Point(2, 5), CellState.SECONDAGENT);
+//        configMap.put(new Point(3, 0), CellState.SECONDAGENT);
+//        configMap.put(new Point(3, 1), CellState.FIRSTAGENT);
+//        configMap.put(new Point(3, 2), CellState.FIRSTAGENT);
+//        configMap.put(new Point(3, 3), CellState.SECONDAGENT);
+//        configMap.put(new Point(3, 4), CellState.SECONDAGENT);
+//        configMap.put(new Point(3, 5), CellState.FIRSTAGENT);
+//        configMap.put(new Point(4, 0), CellState.FIRSTAGENT);
+//        configMap.put(new Point(4, 2), CellState.SECONDAGENT);
+//        configMap.put(new Point(4, 3), CellState.FIRSTAGENT);
+//        configMap.put(new Point(4, 5), CellState.SECONDAGENT);
+//        configMap.put(new Point(5, 1), CellState.FIRSTAGENT);
+//        configMap.put(new Point(5, 3), CellState.FIRSTAGENT);
+//        configMap.put(new Point(5, 4), CellState.SECONDAGENT);
+//        configMap.put(new Point(5, 5), CellState.FIRSTAGENT);
+
+
         myCellGrid = new SegregationCellGrid(numOfRows, numOfCols, 33, 30);
 
 

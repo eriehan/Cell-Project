@@ -127,6 +127,8 @@ public class MainController extends Application {
                 myColArray.add(stringToIntArray(col));
         }
 
+        myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray);
+
     }
 
     private ArrayList<Integer> stringToIntArray(String s){
