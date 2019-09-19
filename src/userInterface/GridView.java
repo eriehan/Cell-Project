@@ -22,7 +22,6 @@ public class GridView {
         myGridPane = new GridPane();
         this.numOfCols = numOfCols;
         this.numOfRows = numOfRows;
-
         initializeMyCellGrid();
     }
 
