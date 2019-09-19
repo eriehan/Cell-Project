@@ -32,24 +32,30 @@ public class GridView extends AbstractGridView {
         }
     }
 
-    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col) {
+    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s) {
         Map configMap = new HashMap<Point, CellState>();
 
-        for(int i = 0 ; i < row.size(); i++){
-            if(i == 0){
-                for(int j = 0; j < row.get(i).size(); j++){
-                    configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.FIRSTAGENT);
+        switch (s) {
+            case "Wa-Tor":
+                for (int i = 0; i < row.size(); i++) {
+                    if (i == 0) {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.FIRSTAGENT);
+                        }
+                    } else {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.SECONDAGENT);
+                        }
+                    }
                 }
-            }
-            else{
-                for(int j = 0; j < row.get(i).size(); j++){
-                    configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.SECONDAGENT);
+            case "Game Of Life":
+                for (int i = 0; i < row.size(); i++) {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
+                        }
                 }
-            }
-
 
         }
-
 
 
         //hardcode to see if game of life works
@@ -104,6 +110,7 @@ public class GridView extends AbstractGridView {
 
 
         getMyCellGrid().initializeGrids(configMap);
+
         getMyCellGrid().assignNeighborsToEachCell();
 
     }

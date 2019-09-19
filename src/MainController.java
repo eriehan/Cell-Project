@@ -32,12 +32,12 @@ public class MainController extends Application {
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
-    private StringBuilder myTitle = new StringBuilder("change me"); //TODO: put into new popup for simulation
+    private String myTitle = "change me"; //TODO: put into new popup for simulation
     private File myConfigFile;
     private int updateTimer;
     private int updateFreq = 30;
     private boolean isStep = false;
-    private String userInputSimulation = "Wa-Tor"; //TODO: make dynamic
+    private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
     private String userFile;
     private int cellGridRowNum;
     private int cellGridColNum;
@@ -57,7 +57,7 @@ public class MainController extends Application {
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         myAnimation = animation;
-        myUserInterface = new UserInterface(6, 6, myTitle.toString());
+        myUserInterface = new UserInterface(6, 6, myTitle);
         myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
         myScene = initScene();
@@ -113,7 +113,7 @@ public class MainController extends Application {
             Node currentSimulationType = typeOfSimulation.item(i);
             Element currentSimulationElement = (Element) currentSimulationType;
             if (currentSimulationElement.getAttribute("name").equals(userInputSimulation)) {
-                this.myTitle = new StringBuilder(currentSimulationElement.getAttribute("name"));
+                this.myTitle = currentSimulationElement.getAttribute("name");
                 numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
             }
         }
@@ -127,7 +127,7 @@ public class MainController extends Application {
                 myColArray.add(stringToIntArray(col));
         }
 
-        myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray);
+        myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, userInputSimulation);
 
     }
 
