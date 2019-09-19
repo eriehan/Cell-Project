@@ -17,8 +17,6 @@ public class GameOfLifeCellGrid extends CellGrid {
     public void initializeGrids(Map<Point, CellState> configMap) {
         createEmptyMap();
         for(Map.Entry<Point, CellState> entry : configMap.entrySet()) {
-            System.out.println(entry.getKey());
-            System.out.println(getGridOfCells().containsKey(new Point(1, 8)));
             getGridOfCells().get(entry.getKey()).setState(entry.getValue());
         }
     }
