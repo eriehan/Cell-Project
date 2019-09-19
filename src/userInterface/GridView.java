@@ -13,26 +13,21 @@ import java.util.Map;
 import static userInterface.VisualizationConstants.GRID_HEIGHT;
 import static userInterface.VisualizationConstants.GRID_WIDTH;
 
-public class GridView {
-    private GridPane myGridPane;
-    private final int numOfRows;
-    private final int numOfCols;
-    private CellGrid myCellGrid;
+public class GridView extends AbstractGridView {
 
     public GridView(int numOfRows, int numOfCols) {
-        myGridPane = new GridPane();
-        this.numOfCols = numOfCols;
-        this.numOfRows = numOfRows;
-       // initializeMyCellGrid();
+
+        super(numOfRows, numOfCols);
+
     }
 
     // TODO: set with config
     public void createGrid() {
-        for (int r = 0; r < numOfRows; r++) {
-            for (int c = 0; c < numOfCols; c++) {
-                Rectangle shape = new Rectangle(GRID_WIDTH / numOfCols, GRID_HEIGHT / numOfRows);
-                shape.setFill(myCellGrid.stateOfCellAtPoint(r, c).getMyColor());
-                myGridPane.add(shape, c, r);
+        for (int r = 0; r < getNumOfRows(); r++) {
+            for (int c = 0; c < getNumOfCols(); c++) {
+                Rectangle shape = new Rectangle(GRID_WIDTH / getNumOfCols(), GRID_HEIGHT / getNumOfRows());
+                shape.setFill(getMyCellGrid().stateOfCellAtPoint(r, c).getMyColor());
+                getMyGridPane().add(shape, c, r);
             }
         }
     }
@@ -104,30 +99,14 @@ public class GridView {
 //        configMap.put(new Point(5, 5), CellState.FIRSTAGENT);
 
 
-        myCellGrid = new SegregationCellGrid(numOfRows, numOfCols, 33, 30);
+        setMyCellGrid(new SegregationCellGrid(getNumOfRows(), getNumOfCols(), 33, 30));
 
 
-        myCellGrid.initializeGrids(configMap);
-        myCellGrid.assignNeighborsToEachCell();
+
+        getMyCellGrid().initializeGrids(configMap);
+        getMyCellGrid().assignNeighborsToEachCell();
 
     }
 
-    public void generateBlankGrid() {
-        Rectangle shape = new Rectangle(GRID_WIDTH, GRID_HEIGHT);
-        shape.setFill(Color.LIGHTBLUE);
-        myGridPane.add(shape, 0,0);
-    }
-
-    // TODO: set with config
-    public void updateGrid() {
-        myGridPane.getChildren().clear();
-        myCellGrid.checkAllCells();
-        myCellGrid.changeAllCells();
-        createGrid();
-    }
-
-    public GridPane getMyGridPane() {
-        return myGridPane;
-    }
 }
 
