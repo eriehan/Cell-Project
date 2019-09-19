@@ -8,6 +8,8 @@ public abstract class CellGrid {
 
     //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private Map<Point, Cell> gridOfCells = new HashMap<>();
+    //true when cellgrid is fully stabilized, and nothing will change indefinitely.
+    private boolean finished = false;
 
     public abstract void initializeGrids(Map<Point, CellState> configMap);
     //Iterates through all cells and change nextState
@@ -27,4 +29,8 @@ public abstract class CellGrid {
     }
 
     public CellState stateOfCellAtPoint(int row, int col) {return gridOfCells.get(new Point(row, col)).getState();}
+
+    public boolean isFinished() {return finished;}
+
+    protected void setFinished(boolean finished) {this.finished = finished;}
 }

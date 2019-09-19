@@ -16,8 +16,11 @@ public enum CellState {
     TREE(Color.GREEN),
 
     PERCOLATED(Color.BLUE),
-    BLOCKED(Color.BLACK);
+    BLOCKED(Color.BLACK),
 
+    WATER(Color.BLUE),
+    FISH(Color.CYAN),
+    SHARK(Color.GOLD);
 
 
     private Color myColor;
