@@ -32,7 +32,7 @@ public class MainController extends Application {
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
-    private String myTitle = "change me"; //TODO: put into new popup for simulation
+    private String myTitle = "Simulation"; //TODO: put into new popup for simulation
     private File myConfigFile;
     private int updateTimer;
     private int updateFreq = 30;
@@ -62,7 +62,7 @@ public class MainController extends Application {
         initButtons();
         myScene = initScene();
         stage.setScene(myScene);
-        stage.setTitle(myTitle.toString());
+        stage.setTitle(myTitle);
         stage.show();
         myStage = stage;
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
@@ -74,6 +74,7 @@ public class MainController extends Application {
             updateTimer = 0;
 
             myUserInterface.update();
+
         }
         else{
             updateTimer++;
@@ -98,8 +99,10 @@ public class MainController extends Application {
         Document doc = docBuilder.parse(xmlFile);
 
 
-        cellGridColNum = Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
-        cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
+         cellGridColNum = Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
+         myUserInterface.setNumOfCols(cellGridColNum);
+         cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
+         myUserInterface.setNumOfRows(cellGridRowNum);
 
 
         //returns nodeList of elements named "Type"
@@ -114,17 +117,18 @@ public class MainController extends Application {
             Element currentSimulationElement = (Element) currentSimulationType;
             if (currentSimulationElement.getAttribute("name").equals(userInputSimulation)) {
                 this.myTitle = currentSimulationElement.getAttribute("name");
+                myUserInterface.changeTitle(this.myTitle);
                 numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
             }
         }
         //return row and col arrays
         for(int i = 0; i < numAgents; i++){
             NodeList agent = doc.getElementsByTagName("Agent" + i);
-            Element n = (Element)agent.item(0);
-            String row = n.getElementsByTagName("Row").item(0).getTextContent();
-            String col = n.getElementsByTagName("Column").item(0).getTextContent();
-            myRowArray.add(stringToIntArray(row));
-            myColArray.add(stringToIntArray(col));
+                Element n = (Element)agent.item(0);
+                String row = n.getElementsByTagName("Row").item(0).getTextContent();
+                String col = n.getElementsByTagName("Column").item(0).getTextContent();
+                myRowArray.add(stringToIntArray(row));
+                myColArray.add(stringToIntArray(col));
         }
 
         myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, userInputSimulation, cellGridRowNum, cellGridColNum);
