@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import simulation.CellGrid;
 import simulation.CellState;
+import simulation.GameOfLifeCellGrid;
 import simulation.SegregationCellGrid;
 import utils.Point;
 
@@ -45,8 +46,40 @@ public abstract class AbstractGridView {
         createGrid();
     }
 
-    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
+//    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
+    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize) {
+        Map configMap = new HashMap<Point, CellState>();
 
+        switch (s) {
+            case "Segregation":
+                for (int i = 0; i < row.size(); i++) {
+                    if (i == 0) {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.FIRSTAGENT);
+                        }
+                    } else {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.SECONDAGENT);
+                        }
+                    }
+                }
+            case "Game Of Life":
+                for (int i = 0; i < row.size(); i++) {
+                    for (int j = 0; j < row.get(i).size(); j++) {
+                        configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
+                    }
+                }
+
+
+        }
+        //what does the row and col thing represent? total number of row and column?
+        setMyCellGrid(new GameOfLifeCellGrid(rowSize, colSize));
+
+        getMyCellGrid().initializeGrids(configMap);
+
+        getMyCellGrid().assignNeighborsToEachCell();
+
+    }
     public GridPane getMyGridPane() {
         return myGridPane;
     }
@@ -74,5 +107,7 @@ public abstract class AbstractGridView {
     public void setMyCellGrid(CellGrid myCellGrid) {
         this.myCellGrid = myCellGrid;
     }
+
+
 }
 

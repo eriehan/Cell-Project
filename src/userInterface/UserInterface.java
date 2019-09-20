@@ -99,5 +99,14 @@ public class UserInterface {
         this.colOne.getChildren().add(this.simulationFilePath);
     }
 
+    public void setCellShape(CellShapeType type){
+        if (type == CellShapeType.RECTANGLE) myGridView = new GridView(numOfRows,numOfCols);
+        if (type == CellShapeType.TRIANGLE) myGridView = new TriangleGridView(numOfRows,numOfCols);
+        myGridView.generateBlankGrid();
+        colOne.getChildren().clear();
+        colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
+    }
+
+
 
 }

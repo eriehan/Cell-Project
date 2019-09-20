@@ -58,7 +58,7 @@ public class MainController extends Application {
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         myAnimation = animation;
-        myUserInterface = new UserInterface(6, 6, myTitle);
+        myUserInterface = new UserInterface(10, 10, myTitle);
         myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
         myScene = initScene();
@@ -128,7 +128,9 @@ public class MainController extends Application {
             myRowArray.add(stringToIntArray(row));
             myColArray.add(stringToIntArray(col));
         }
-
+        // TODO: can be initialized to TRIANGLE or RECTANGLE
+//        myUserInterface.setCellShape(CellShapeType.RECTANGLE);
+        myUserInterface.setCellShape(CellShapeType.TRIANGLE);
         myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, userInputSimulation, cellGridRowNum, cellGridColNum);
 
     }
