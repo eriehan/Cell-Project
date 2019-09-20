@@ -78,7 +78,10 @@ public class WaTorCell extends Cell {
 
         WaTorCell waTorCell = (WaTorCell) other;
         if (waTorCell.getState() == CellState.SHARK) {
-            if (waTorCell.getState() == CellState.FISH) { energy += waTorCell.getEnergy(); setState(CellState.EMPTY);}
+            if (getState() == CellState.FISH) {
+                energy += waTorCell.getEnergy();
+                setState(CellState.EMPTY);
+            }
             energy--;
         }
 
