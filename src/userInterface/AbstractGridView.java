@@ -8,6 +8,7 @@ import simulation.CellState;
 import simulation.SegregationCellGrid;
 import utils.Point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,8 +17,8 @@ import static userInterface.VisualizationConstants.GRID_WIDTH;
 
 public abstract class AbstractGridView {
     private GridPane myGridPane;
-    private final int numOfRows;
-    private final int numOfCols;
+    private int numOfRows;
+    private int numOfCols;
     private CellGrid myCellGrid;
 
     public AbstractGridView(int numOfRows, int numOfCols) {
@@ -35,11 +36,16 @@ public abstract class AbstractGridView {
     }
 
     public void updateGrid() {
+        if (myCellGrid==null){
+            return;
+        }
         myGridPane.getChildren().clear();
         myCellGrid.checkAllCells();
         myCellGrid.changeAllCells();
         createGrid();
     }
+
+    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
 
     public GridPane getMyGridPane() {
         return myGridPane;
@@ -47,6 +53,14 @@ public abstract class AbstractGridView {
 
     public int getNumOfRows() {
         return numOfRows;
+    }
+
+    public void setNumOfRows(int n){
+        numOfRows = n;
+    }
+
+    public void setNumOfCols(int n){
+        numOfCols = n;
     }
 
     public int getNumOfCols() {

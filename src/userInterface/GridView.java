@@ -49,9 +49,9 @@ public class GridView extends AbstractGridView {
                 }
             case "Game Of Life":
                 for (int i = 0; i < row.size(); i++) {
-                        for (int j = 0; j < row.get(i).size(); j++) {
-                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
-                        }
+                    for (int j = 0; j < row.get(i).size(); j++) {
+                        configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
+                    }
                 }
 
 
