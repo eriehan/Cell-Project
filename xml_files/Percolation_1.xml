@@ -2,11 +2,7 @@
 
 <Simulation>
     <Author>Diane Lin</Author>
-    <Type name = "Game Of Life">1</Type>
-    <Type name = "Wa-Tor">2</Type>
     <Type name = "Percolation">2</Type>
-    <Type name = "Fire">2</Type>
-    <Type name = "Segregation">2</Type>
 
     <Row>150</Row>
     <Col>150</Col>
