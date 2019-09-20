@@ -44,10 +44,10 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     @Override
     public void checkAllCells() {
         findFishesAndSharks();
-        for(Cell shark : sharks) {
-            shark.check();
-        } for(Cell fish : fishes) {
+        for(Cell fish : fishes) {
             fish.check();
+        } for(Cell shark : sharks) {
+            shark.check();
         }
     }
 
