@@ -12,6 +12,8 @@ public class VisualizationConstants {
     public static final int GRID_WIDTH = 400;
     public static final int GRID_HEIGHT = 400;
     public static final int BUTTON_FONT_SIZE = 20;
+    public static final int ERROR_MSG_FONT_SIZE = 15;
+    public static final int FILE_PATH_FONT_SIZE = 12;
 
 
 
