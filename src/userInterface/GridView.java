@@ -1,14 +1,6 @@
 package userInterface;
 
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import simulation.*;
-import utils.Point;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static userInterface.VisualizationConstants.GRID_HEIGHT;
 import static userInterface.VisualizationConstants.GRID_WIDTH;

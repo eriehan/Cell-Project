@@ -1,20 +1,9 @@
 package userInterface;
 
 import javafx.scene.Group;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import simulation.CellGrid;
-import simulation.CellState;
-import simulation.GameOfLifeCellGrid;
-import simulation.SegregationCellGrid;
-import utils.Point;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static userInterface.VisualizationConstants.GRID_HEIGHT;
 import static userInterface.VisualizationConstants.GRID_WIDTH;
@@ -48,7 +37,6 @@ public class TriangleGridView extends AbstractGridView {
 
     @Override
     public void createGrid() {
-        System.out.println("for debug");
         boolean rowFlag = true;
         double width = GRID_WIDTH / getNumOfCols() * 2;
         double height = GRID_HEIGHT / getNumOfRows();
