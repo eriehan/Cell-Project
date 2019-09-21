@@ -206,6 +206,7 @@ public class MainController extends Application {
     }
 
     private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
+        resetGrid();
         FileChooser fileChooser = new FileChooser();
         myConfigFile = fileChooser.showOpenDialog(myStage);
 
