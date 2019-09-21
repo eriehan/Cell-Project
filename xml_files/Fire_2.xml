@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Simulation>
+    <Author>Diane Lin</Author>
+    <Type name = "Fire">1</Type>
+    <Row>30</Row>
+    <Col>30</Col>
+    <Rate>45</Rate>
+    <Agent0>
+        <Row>12 15 17 15 4 3 2 7 19 26 20</Row>
+        <Column>0 7 12 11 10 3 12 15 19 17 16</Column>
+    </Agent0>
+</Simulation>
