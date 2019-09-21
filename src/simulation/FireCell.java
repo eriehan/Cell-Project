@@ -5,6 +5,7 @@ public class FireCell extends Cell {
     private static final CellAttribute PROBCATCH = CellAttribute.PROBCATCH;
 
     private boolean fireNearby;
+    private double probCatch;
 
     public FireCell(int row, int col, CellState state, double probCatch) {
         super(row, col, state);

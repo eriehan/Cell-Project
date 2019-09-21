@@ -29,6 +29,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     @Override
     public void initializeGrids(Map<Point, CellState> configMap) {
         createEmptyMap();
+        System.out.println(configMap.size());
         for(Map.Entry<Point, CellState> entry : configMap.entrySet()) {
             Cell cell =  getGridOfCells().get(entry.getKey());
             CellState state = entry.getValue();
@@ -60,7 +61,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         for(int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
                 Point point = new Point(row, col);
-                addToGridOfCells(point, new WaTorCell(row, col, CellState.EMPTY, 0,0));
+                addToGridOfCells(point, new WaTorCell(row, col, CellState.WATER, 0,0));
             }
         }
     }
@@ -77,6 +78,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     }
 
     private void assignAttributes(Cell cell, int index) {
+        System.out.println(cell.getRow() + ", " + cell.getCol() + ", " + cell.getState());
         cell.putAttribute(REPRODUCE, reproductions.get(index));
         cell.putAttribute(INI_ENERGY, energies.get(index));
         cell.putAttribute(ENERGY, energies.get(index));
