@@ -10,7 +10,6 @@ public class GridView extends AbstractGridView {
     public GridView(int numOfRows, int numOfCols) {
 
         super(numOfRows, numOfCols);
-
     }
 
     // TODO: set with config

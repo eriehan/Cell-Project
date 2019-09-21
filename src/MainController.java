@@ -106,8 +106,9 @@ public class MainController extends Application {
         cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
         myUserInterface.setNumOfRows(cellGridRowNum);
 
-        int temp = Integer.parseInt(doc.getElementsByTagName("Rate").item(0).getTextContent());
-        this.rate = temp/100;
+        this.rate = Integer.parseInt(doc.getElementsByTagName("Rate").item(0).getTextContent());
+
+       // System.out.println(rate);
         //returns nodeList of elements named "Type"
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
 

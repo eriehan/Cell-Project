@@ -102,16 +102,13 @@ public abstract class AbstractGridView {
             case "Fire":
                // System.out.println("entered Fire");
                 for (int i = 0; i < row.size(); i++) {
-                    if (i == 0) {
-                        for (int j = 0; j < row.get(i).size(); j++) {
-                            System.out.println("entered");
-                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BURNING);
-                        }
+                    for (int j = 0; j < row.get(i).size(); j++) {
+                        configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BURNING);
                     }
                 }
-
-                setMyCellGrid(new FireCellGrid(numOfRows, numOfCols, rate));
+                setMyCellGrid(new FireCellGrid(rowSize, colSize, rate));
                 break;
+
         }
 
 
