@@ -64,7 +64,7 @@ public abstract class AbstractGridView {
                     }
                 }
                 //TODO: make this work
-              //  setMyCellGrid(new SegregationCellGrid(rowSize, colSize, rate, rate));
+                setMyCellGrid(new SegregationCellGrid(rowSize, colSize, (int)rate, (int)rate));
                 break;
             case "Game Of Life":
                 for (int i = 0; i < row.size(); i++) {
