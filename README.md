@@ -44,8 +44,26 @@ Data files needed:
 Interesting data files:
 
 Features implemented: 
-
-
+* create a simulation cell grid that updates each step based on the previous state
+* implemented the five different CA simulations: game of life, segregation, predator-prey, fire, and percolation.
+* simulation initial configuration is contained in XML files, and is parsed in by the program to initialize the simulation. The configuration includes:
+    * type of simulation
+    * shape of the grid cells (currently support rectangle and triangle)
+    * dimensions of the simulation grid (number of rows and columns)
+    * initial grid setup
+* friendly user interface for user to start and control simulation progress
+    * grid display
+        * display the grid status at each state, the size of each individual cell is determined by xml file's number of row and columns, while the overall size of the grid stays constant for every simulation.
+        * 
+    * buttons
+        * select file: select configuration file that sets up the simulation (if the user choose a new simulation)
+        * start: start simulation
+        * pause / resume: pause and resume the simulation
+        * reset: reset the grid back to blank grid
+        * step: step through the simulation step by step
+        * speed up & slow down: change simulation animation rate
+    * error messages to guide users
+    
 Assumptions or Simplifications:
 
 Known Bugs:

@@ -13,7 +13,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import userInterface.*;
-import utils.Point;
 
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,37 +22,52 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import static userInterface.VisualizationConstants.*;
 
 public class MainController extends Application {
-    public static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    public static final String RESOURCE_FILE_PATH = "resources/MainResources";
+
+    private int framesPerSecond;
+    private int millisecondDelay;
+    private double secondDelay;
+
 
     private UserInterface myUserInterface;
     private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
-    private String myTitle = "Simulation";
+    private String myTitle;
     private File myConfigFile;
     private int updateTimer;
-    private int updateFreq = 30;
+    private int updateFreq;
     private boolean isStep = false;
     private String userFile;
     private int cellGridRowNum;
     private int cellGridColNum;
     private ArrayList<Integer> EnergyArray = new ArrayList<>();
     private ArrayList<Integer> MaturityArray = new ArrayList<>();
-    //TODO: subject to change
     private ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
     private double rate;
+    private ResourceBundle resourceBundle;
 
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        initializeResources();
         initVisualizations(stage);
+    }
+
+    private void initializeResources() {
+        resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
+        framesPerSecond = Integer.parseInt(resourceBundle.getString("FPS"));
+        millisecondDelay = 1000 / framesPerSecond;
+        secondDelay = 1.0 / framesPerSecond;
+        updateFreq = Integer.parseInt(resourceBundle.getString("InitialUpdateFreq"));
+        myTitle = resourceBundle.getString("InitialTitle");
     }
 
     private void initVisualizations(Stage stage) throws Exception {
@@ -69,7 +83,7 @@ public class MainController extends Application {
         stage.setTitle(myTitle);
         stage.show();
         myStage = stage;
-        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
+        var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> step(secondDelay));
         animation.getKeyFrames().add(frame);
     }
 
@@ -80,9 +94,6 @@ public class MainController extends Application {
         } else {
             updateTimer++;
         }
-        // listen to UI
-        // update grid
-        // update view
     }
 
     private Scene initScene() throws IOException, SAXException, ParserConfigurationException {
@@ -92,7 +103,6 @@ public class MainController extends Application {
     }
 
     private void parseXML(String file) throws IOException, ParserConfigurationException, SAXException {
-        //TODO: parseXML code
         //System.out.println("ENTERED");
         int numAgents = 0;
         File xmlFile = new File(String.valueOf(file));
@@ -108,7 +118,7 @@ public class MainController extends Application {
 
         this.rate = Integer.parseInt(doc.getElementsByTagName("Rate").item(0).getTextContent());
 
-       // System.out.println(rate);
+        // System.out.println(rate);
         //returns nodeList of elements named "Type"
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
 
@@ -119,24 +129,21 @@ public class MainController extends Application {
             //gets the i-th simulation type and casts it as a node
             Node currentSimulationType = typeOfSimulation.item(i);
             Element currentSimulationElement = (Element) currentSimulationType;
-                this.myTitle = currentSimulationElement.getAttribute("name");
-                System.out.println(this.myTitle);
-                myUserInterface.changeTitle(this.myTitle);
-                numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
+            this.myTitle = currentSimulationElement.getAttribute("name");
+            System.out.println(this.myTitle);
+            myUserInterface.changeTitle(this.myTitle);
+            numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
         }
-       // System.out.println(numAgents);
+        // System.out.println(numAgents);
         //return row and col arrays
         for (int i = 0; i < numAgents; i++) {
             NodeList agent = doc.getElementsByTagName("Agent" + i);
             Element n = (Element) agent.item(0);
-            if(myTitle.equals("Wa-Tor")){
+            if (myTitle.equals("Wa-Tor")) {
                 EnergyArray.add(Integer.parseInt(n.getElementsByTagName("Energy").item(0).getTextContent()));
                 MaturityArray.add(Integer.parseInt(n.getElementsByTagName("Mature").item(0).getTextContent()));
 
             }
-
-
-           // System.out.println(EnergyAndMaturityArray);
 
             String row = n.getElementsByTagName("Row").item(0).getTextContent();
             String col = n.getElementsByTagName("Column").item(0).getTextContent();
@@ -174,7 +181,7 @@ public class MainController extends Application {
     }
 
     private void initButtons() {
-        SelectFileButton selectFileButton = new SelectFileButton();
+        SimulationButton selectFileButton = new SimulationButton(resourceBundle.getString("SelectFile"));
         selectFileButton.setOnAction(value -> {
             try {
                 selectFilePrompt();
@@ -188,20 +195,25 @@ public class MainController extends Application {
         });
 
         this.myUserInterface.getMyButtons().getButtonList().add(selectFileButton);
-        StartButton startButton = new StartButton();
+        SimulationButton startButton = new SimulationButton(resourceBundle.getString("Start"));
         startButton.setOnAction(value -> startSimulation());
         this.myUserInterface.getMyButtons().getButtonList().add(startButton);
-        this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation));
-        ResetButton resetButton = new ResetButton(myAnimation);
+
+        this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation, resourceBundle.getString("Pause")));
+
+        SimulationButton resetButton = new SimulationButton(resourceBundle.getString("Reset"));
         resetButton.setOnAction(value -> resetGrid());
         this.myUserInterface.getMyButtons().getButtonList().add(resetButton);
-        StepButton stepButton = new StepButton();
+
+        SimulationButton stepButton = new SimulationButton(resourceBundle.getString("Step"));
         stepButton.setOnAction(value -> stepProcess());
         this.myUserInterface.getMyButtons().getButtonList().add(stepButton);
-        SpeedUpButton speedUpButton = new SpeedUpButton();
+
+        SimulationButton speedUpButton = new SimulationButton(resourceBundle.getString("SpeedUp"));
         speedUpButton.setOnAction(value -> speedUp());
         this.myUserInterface.getMyButtons().getButtonList().add(speedUpButton);
-        SlowDownButton slowDownButton = new SlowDownButton();
+
+        SimulationButton slowDownButton = new SimulationButton(resourceBundle.getString("SlowDown"));
         slowDownButton.setOnAction(value -> slowDown());
         this.myUserInterface.getMyButtons().getButtonList().add(slowDownButton);
     }
@@ -215,19 +227,16 @@ public class MainController extends Application {
         for (int i = 0; i < myFile.length(); i++) {
             if (myFile.substring(i, i + 3).equals("xml")) {
                 this.userFile = myFile.substring(i);
-                //System.out.println(myFile.substring(i));
                 break;
             }
         }
-        this.myUserInterface.displaySimulationFilePath("Configuration File: "+myConfigFile.getName());
+        this.myUserInterface.displaySimulationFilePath("Configuration File: " + myConfigFile.getName());
         parseXML(this.userFile);
-
-        System.out.println("for debug" + myConfigFile.getAbsolutePath());
     }
 
     private void startSimulation() {
         if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
-            this.myUserInterface.displayErrorMsg("Select simulation config first!");
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
             return;
         }
         this.myAnimation.play();
@@ -235,7 +244,7 @@ public class MainController extends Application {
 
     private void slowDown() {
         if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
-            this.myUserInterface.displayErrorMsg("Select simulation config first!");
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
             return;
         }
         this.updateFreq *= 2;
@@ -243,7 +252,7 @@ public class MainController extends Application {
 
     private void speedUp() {
         if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
-            this.myUserInterface.displayErrorMsg("Select simulation config first!");
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
             return;
         }
         this.updateFreq /= 2;
@@ -251,12 +260,12 @@ public class MainController extends Application {
 
     private void stepProcess() {
         if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
-            this.myUserInterface.displayErrorMsg("Select simulation config first!");
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
             return;
         }
         this.isStep = true;
         this.myAnimation.pause();
-        this.step(SECOND_DELAY);
+        this.step(secondDelay);
     }
 
     private void resetGrid() {
