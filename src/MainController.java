@@ -13,6 +13,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import userInterface.*;
+import utils.Point;
+
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,14 +40,15 @@ public class MainController extends Application {
     private int updateTimer;
     private int updateFreq = 30;
     private boolean isStep = false;
-    private String userInputSimulation = "Game Of Life"; //TODO: make dynamic
     private String userFile;
     private int cellGridRowNum;
     private int cellGridColNum;
-
+    private ArrayList<Integer> EnergyArray = new ArrayList<>();
+    private ArrayList<Integer> MaturityArray = new ArrayList<>();
     //TODO: subject to change
     private ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
+    private double rate;
 
 
     @Override
@@ -90,6 +93,7 @@ public class MainController extends Application {
 
     private void parseXML(String file) throws IOException, ParserConfigurationException, SAXException {
         //TODO: parseXML code
+        //System.out.println("ENTERED");
         int numAgents = 0;
         File xmlFile = new File(String.valueOf(file));
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -102,7 +106,8 @@ public class MainController extends Application {
         cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
         myUserInterface.setNumOfRows(cellGridRowNum);
 
-
+        int temp = Integer.parseInt(doc.getElementsByTagName("Rate").item(0).getTextContent());
+        this.rate = temp/100;
         //returns nodeList of elements named "Type"
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
 
@@ -113,25 +118,36 @@ public class MainController extends Application {
             //gets the i-th simulation type and casts it as a node
             Node currentSimulationType = typeOfSimulation.item(i);
             Element currentSimulationElement = (Element) currentSimulationType;
-            if (currentSimulationElement.getAttribute("name").equals(userInputSimulation)) {
                 this.myTitle = currentSimulationElement.getAttribute("name");
+                System.out.println(this.myTitle);
                 myUserInterface.changeTitle(this.myTitle);
                 numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
-            }
         }
+       // System.out.println(numAgents);
         //return row and col arrays
         for (int i = 0; i < numAgents; i++) {
             NodeList agent = doc.getElementsByTagName("Agent" + i);
             Element n = (Element) agent.item(0);
+            if(myTitle.equals("Wa-Tor")){
+                EnergyArray.add(Integer.parseInt(n.getElementsByTagName("Energy").item(0).getTextContent()));
+                MaturityArray.add(Integer.parseInt(n.getElementsByTagName("Mature").item(0).getTextContent()));
+
+            }
+
+
+           // System.out.println(EnergyAndMaturityArray);
+
             String row = n.getElementsByTagName("Row").item(0).getTextContent();
             String col = n.getElementsByTagName("Column").item(0).getTextContent();
             myRowArray.add(stringToIntArray(row));
             myColArray.add(stringToIntArray(col));
         }
+
         // TODO: can be initialized to TRIANGLE or RECTANGLE
-//        myUserInterface.setCellShape(CellShapeType.RECTANGLE);
-        myUserInterface.setCellShape(CellShapeType.TRIANGLE);
-        myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, userInputSimulation, cellGridRowNum, cellGridColNum);
+        myUserInterface.setCellShape(CellShapeType.RECTANGLE);
+        //myUserInterface.setCellShape(CellShapeType.TRIANGLE);
+        myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, myTitle,
+                cellGridRowNum, cellGridColNum, EnergyArray, MaturityArray, rate);
 
     }
 
@@ -194,7 +210,7 @@ public class MainController extends Application {
         for (int i = 0; i < myFile.length(); i++) {
             if (myFile.substring(i, i + 3).equals("xml")) {
                 this.userFile = myFile.substring(i);
-                System.out.println(myFile.substring(i));
+                //System.out.println(myFile.substring(i));
                 break;
             }
         }

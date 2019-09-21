@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
+
+<!--      1. initial energy of sharks
+       2. energy that fish gives
+       3. time shark must survive to make a baby
+       4. time fish must survive to make a baby -->
+
 <Simulation>
     <Author>Diane Lin</Author>
     <Type name = "Wa-Tor">2</Type>
 
-    <Row>150</Row>
-    <Col>150</Col>
-
-    <Rate>0.25</Rate>
+    <Row>10</Row>
+    <Col>10</Col>
+    <Rate>0</Rate>
     <Agent0>
+        <Energy>3</Energy>
+        <Mature>10</Mature>
         <Row>0 5 4 3 5 2 3 1 5 3 2 1</Row>
         <Column>2 4 5 3 1 0 3 2 2 1 3 4</Column>
     </Agent0>
 
     <Agent1>
+        <Energy>2</Energy>
+        <Mature>6</Mature>
         <Row>2 4 5 3 1 0 3 2 2 1 3 6</Row>
         <Column>0 5 4 3 5 2 3 1 5 3 2 1</Column>
     </Agent1>

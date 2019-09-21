@@ -3,10 +3,7 @@ package userInterface;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import simulation.CellGrid;
-import simulation.CellState;
-import simulation.GameOfLifeCellGrid;
-import simulation.SegregationCellGrid;
+import simulation.*;
 import utils.Point;
 
 import java.util.ArrayList;
@@ -47,7 +44,8 @@ public abstract class AbstractGridView {
     }
 
 //    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
-    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize) {
+    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize,
+                                     ArrayList<Integer> energyArray, ArrayList<Integer> maturityArray, double rate) {
         Map configMap = new HashMap<Point, CellState>();
 
         switch (s) {
@@ -63,17 +61,55 @@ public abstract class AbstractGridView {
                         }
                     }
                 }
+                //TODO: make this work
+              //  setMyCellGrid(new SegregationCellGrid(rowSize, colSize, rate, rate));
             case "Game Of Life":
                 for (int i = 0; i < row.size(); i++) {
                     for (int j = 0; j < row.get(i).size(); j++) {
                         configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
                     }
                 }
+                setMyCellGrid(new GameOfLifeCellGrid(rowSize, colSize));
 
+            case "Wa-Tor":
+                for (int i = 0; i < row.size(); i++) {
+                    if (i == 0) {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.SHARK);
+                        }
+                    } else {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.FISH);
+                        }
+                    }
+                }
 
+                setMyCellGrid(new WaTorCellGrid(rowSize, colSize, maturityArray, energyArray));
+
+            case "Percolation":
+                for (int i = 0; i < row.size(); i++) {
+                    for (int j = 0; j < row.get(i).size(); j++) {
+                        configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
+                    }
+                }
+                setMyCellGrid(new PercolationCellGrid(rowSize, colSize));
+            case "Fire":
+                for (int i = 0; i < row.size(); i++) {
+                    if (i == 0) {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BURNING);
+                        }
+                    } else {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
+                        }
+                    }
+                }
+
+                setMyCellGrid(new FireCellGrid(numOfRows, numOfCols, rate));
         }
-        //what does the row and col thing represent? total number of row and column?
-        setMyCellGrid(new GameOfLifeCellGrid(rowSize, colSize));
+
+
 
         getMyCellGrid().initializeGrids(configMap);
 
