@@ -6,15 +6,13 @@ import javafx.scene.text.Font;
 
 import static userInterface.VisualizationConstants.BUTTON_FONT_SIZE;
 
-public class PauseButton extends Button {
+public class PauseButton extends SimulationButton {
     private boolean paused = false;
     private Animation myAnimation;
 
-    public PauseButton(Animation animation){
-        super();
+    public PauseButton(Animation animation, String name){
+        super(name);
         this.myAnimation = animation;
-        this.setFont(new Font(BUTTON_FONT_SIZE));
-        this.setText("PAUSE/RESUME");
         this.setOnAction(value -> buttonAction());
     }
 
