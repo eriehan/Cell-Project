@@ -69,7 +69,7 @@ Assumptions or Simplifications:
 Known Bugs:
 
 Extra credit:
-
+* triangular grid cells
 
 ### Notes
 

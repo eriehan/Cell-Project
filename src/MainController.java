@@ -52,6 +52,7 @@ public class MainController extends Application {
     private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
     private double rate;
     private ResourceBundle resourceBundle;
+    private AbstractGridView initialGridView;
 
 
     @Override
@@ -180,7 +181,7 @@ public class MainController extends Application {
         return myInts;
     }
 
-    private void initButtons() {
+    private void initButtons() throws IOException, SAXException, ParserConfigurationException{
         SimulationButton selectFileButton = new SimulationButton(resourceBundle.getString("SelectFile"));
         selectFileButton.setOnAction(value -> {
             try {
@@ -197,6 +198,7 @@ public class MainController extends Application {
         this.myUserInterface.getMyButtons().getButtonList().add(selectFileButton);
         SimulationButton startButton = new SimulationButton(resourceBundle.getString("Start"));
         startButton.setOnAction(value -> startSimulation());
+
         this.myUserInterface.getMyButtons().getButtonList().add(startButton);
 
         this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation, resourceBundle.getString("Pause")));
@@ -219,7 +221,6 @@ public class MainController extends Application {
     }
 
     private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
-        resetGrid();
         FileChooser fileChooser = new FileChooser();
         myConfigFile = fileChooser.showOpenDialog(myStage);
 
@@ -232,6 +233,7 @@ public class MainController extends Application {
         }
         this.myUserInterface.displaySimulationFilePath("Configuration File: " + myConfigFile.getName());
         parseXML(this.userFile);
+        this.myAnimation.pause();
     }
 
     private void startSimulation() {
@@ -247,7 +249,7 @@ public class MainController extends Application {
             this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
             return;
         }
-        this.updateFreq *= 2;
+        this.updateFreq *= 1.5;
     }
 
     private void speedUp() {
@@ -255,7 +257,7 @@ public class MainController extends Application {
             this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
             return;
         }
-        this.updateFreq /= 2;
+        this.updateFreq /= 1.5;
     }
 
     private void stepProcess() {
@@ -271,6 +273,7 @@ public class MainController extends Application {
     private void resetGrid() {
         this.myUserInterface.getMyGridView().getMyGridPane().getChildren().clear();
         this.myUserInterface.getMyGridView().generateBlankGrid();
+        this.myUserInterface.getMyGridView().resetCellGrid();
         myAnimation.pause();
     }
 
