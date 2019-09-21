@@ -92,10 +92,18 @@ public abstract class AbstractGridView {
 
             case "Percolation":
                 for (int i = 0; i < row.size(); i++) {
-                    for (int j = 0; j < row.get(i).size(); j++) {
-                        configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BLOCKED);
+                    if(i == 0) {
+                        for (int j = 0; j < row.get(i).size(); j++) {
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.PERCOLATED);
+                        }
                     }
+                    else{
+                        for(int j = 0; j < row.get(i).size(); j++){
+                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BLOCKED);
+                        }
                 }
+
+            }
                 setMyCellGrid(new PercolationCellGrid(rowSize, colSize));
                 break;
 
