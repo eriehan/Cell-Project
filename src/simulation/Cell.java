@@ -3,6 +3,8 @@ package simulation;
 import utils.Point;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Cell {
 
@@ -13,7 +15,7 @@ public abstract class Cell {
 
     private ArrayList<Cell> cornerNeighbors;
     private ArrayList<Cell> edgeNeighbors;
-
+    private Map<CellAttribute, Integer> attributes = new HashMap<>();
 
     public Cell(int row, int col, CellState state) {
         this.state = state;
@@ -31,7 +33,6 @@ public abstract class Cell {
     public CellState getNextState() {
         return nextState;
     }
-
 
     public abstract void check();
 
@@ -72,9 +73,8 @@ public abstract class Cell {
 
     //called when the cell needs to move. Changes state with the cell that the cell should move to.
     public void moveToDifferentCell(Cell other) {
-        CellState tempState = getState();
-        setState(other.getState());
-        other.setState(tempState);
+        nextState = other.getState();
+        other.setNextState(state);
     }
 
     public int getRow() {
@@ -94,5 +94,13 @@ public abstract class Cell {
     public void clearNeighbors() {
         edgeNeighbors.clear();
         cornerNeighbors.clear();
+    }
+
+    public void putAttribute(CellAttribute cellAttribute, int value) {
+        attributes.put(cellAttribute, value);
+    }
+
+    public int getAttribute(CellAttribute cellAttribute) {
+        return attributes.get(cellAttribute);
     }
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class SegregationCellGrid extends GameOfLifeCellGrid {
 
-    private double agentPercent;
+    private int agentPercent;
     private double prob = 0.5;
     private int emptyCellNumber;
     private List<Cell> emptyCells = new ArrayList<>();
@@ -16,10 +16,10 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     private List<Cell> newEmptyCells = new ArrayList<>();
 
     //more parameters to be added :
-    public SegregationCellGrid(int numRows, int numCols, double agentPercent, double emptyPercent) {
+    public SegregationCellGrid(int numRows, int numCols, int agentPercent, int emptyPercent) {
         super(numRows, numCols);
         this.agentPercent = agentPercent;
-        emptyCellNumber = (int) (numRows * numCols * emptyPercent/100);
+        emptyCellNumber = (int) (numRows * numCols * emptyPercent/100.0);
     }
 
     @Override

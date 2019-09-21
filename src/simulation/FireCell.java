@@ -2,16 +2,20 @@ package simulation;
 
 public class FireCell extends Cell {
 
-    private double probCatch;
+    private static final CellAttribute PROBCATCH = CellAttribute.PROBCATCH;
+
     private boolean fireNearby;
 
-    public FireCell(int row, int col, CellState state, double probCatch) {
+    public FireCell(int row, int col, CellState state, int probCatch) {
         super(row, col, state);
-        this.probCatch = probCatch;
+
+        putAttribute(PROBCATCH, probCatch);
     }
 
     @Override
     public void check() {
+        int probCatch = getAttribute(PROBCATCH);
+
         //if already burnt or in fire, will be empty at next round.
         if(getState()== CellState.FIREEMPTY) {setNextState(CellState.FIREEMPTY);}
         else if(getState()== CellState.BURNING) {setNextState(CellState.FIREEMPTY);}

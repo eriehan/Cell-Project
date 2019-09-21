@@ -5,33 +5,37 @@ import java.util.List;
 
 public class SegregationCell extends Cell {
 
-    private double agentPercent;
+    private static final CellState EMPTY = CellState.EMPTY;
+    private static final CellState DISATISFIED = CellState.DISATISFIED;
 
-    public SegregationCell(int row, int col, CellState state, double agentPercent) {
+    private int agentPercent;
+
+    public SegregationCell(int row, int col, CellState state, int agentPercent) {
         super(row, col, state);
 
+        putAttribute(CellAttribute.AGENTPERCENT, agentPercent);
         this.agentPercent = agentPercent;
     }
 
     @Override
     public void check() {
         //if empty, next state is empty.
-        if(getState() == CellState.EMPTY) {setNextState(CellState.EMPTY);}
+        if(getState() == EMPTY) {setNextState(CellState.EMPTY);}
 
         else {
             int cellsWithSameState = 0;
+            int notEmptyNeighbors = 0;
             for (Cell other : allNeighbors()) {
-                if (other.getState() == getState()) {
-                    cellsWithSameState++;
+                if(other.getState() != EMPTY) {
+                    if (other.getState() == getState()) { cellsWithSameState++; }
+                    notEmptyNeighbors++;
                 }
             }
-            if (cellsWithSameState < allNeighbors().size() * agentPercent / 100) {
+            if (cellsWithSameState < notEmptyNeighbors * agentPercent / 100.0) {
                 //dissatisfied
-                setNextState(CellState.DISATISFIED);
+                setNextState(DISATISFIED);
             }
-            else {
-                setNextState(getState());
-            }
+            else { setNextState(getState()); }
         }
     }
 
@@ -45,13 +49,5 @@ public class SegregationCell extends Cell {
         list.addAll(getCornerNeighbor());
         list.addAll(getEdgeNeighbor());
         return list;
-    }
-
-    @Override
-    public void moveToDifferentCell(Cell other) {
-        super.moveToDifferentCell(other);
-
-        setNextState(getState());
-        other.setNextState(other.getState());
     }
 }

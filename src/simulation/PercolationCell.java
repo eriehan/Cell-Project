@@ -4,12 +4,15 @@ import java.util.List;
 
 public class PercolationCell extends Cell{
 
+    private static final CellState PERCOLATED = CellState.PERCOLATED;
+    private static final CellState EMPTY = CellState.EMPTY;
+
     public PercolationCell(int row, int col, CellState state) {
         super(row, col, state);
     }
     @Override
     public void check() {
-        if(toBePercolated()) {setNextState(CellState.PERCOLATED);}
+        if(toBePercolated()) {setNextState(PERCOLATED);}
         else {setNextState(getState());}
     }
 
@@ -25,9 +28,9 @@ public class PercolationCell extends Cell{
     }
 
     private boolean toBePercolated() {
-        if(getState()!= CellState.EMPTY) {return false;}
+        if(getState()!= EMPTY) {return false;}
         for(Cell neighbor : allNeighbors()) {
-            if(neighbor.getState() == CellState.PERCOLATED) {
+            if(neighbor.getState() == PERCOLATED) {
                 return true;
             }
         }

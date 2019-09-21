@@ -4,116 +4,94 @@ import java.util.List;
 
 public class WaTorCell extends Cell {
 
-    private int reproduce;
-    private int initialEnergy;
+    private static final CellAttribute ENERGY = CellAttribute.ENERGY;
+    private static final CellAttribute INI_ENERGY = CellAttribute.INITIAL_ENERGY;
+    private static final CellAttribute SURVIVE  = CellAttribute.SURVIVEDTIME;
+    private static final CellAttribute REPRODUCE = CellAttribute.REPRODUCTION;
+    private static final CellState FISH = CellState.FISH;
+    private static final CellState EMPTY = CellState.EMPTY;
+    private static final CellState SHARK = CellState.SHARK;
 
-    private int energy;
-    private int survivedTime = 0;
+    private boolean moved;
 
     public WaTorCell(int row, int col, CellState state, int reproduce, int energy) {
         super(row, col, state);
-        this.reproduce = reproduce;
-        this.energy = energy;
-        this.initialEnergy = energy;
+
+        putAttribute(ENERGY, energy);
+        putAttribute(SURVIVE, 0);
+        putAttribute(INI_ENERGY, energy);
+        putAttribute(REPRODUCE, reproduce);
     }
 
     //highly important for the fish cells to call this method before the shark cells do.
     //Code is designed so that all the fish move first, and sharks move after that.
     @Override
     public void check() {
+        if((getState()==FISH && getNextState()==SHARK) || getState() == EMPTY) {return;}
+
+        if(getState() == FISH) {
+            checkAndMoveToNeighbor(EMPTY);
+        }
+        else if(getState() == SHARK) {
+            checkAndMoveToNeighbor(FISH);
+            checkAndMoveToNeighbor(EMPTY);
+        }
+
+        if(!moved) {
+            putAttribute(SURVIVE, getAttribute(SURVIVE)+1);
+            if(getState()==SHARK) {
+                int energy = getAttribute(ENERGY);
+                putAttribute(ENERGY, energy--);
+                if(energy==0) {setNextState(EMPTY);}
+            }
+        }
+    }
+
+    private void checkAndMoveToNeighbor(CellState state) {
+        int index = (int) (Math.random() * getEdgeNeighbor().size());
         List<Cell> neighbors = getEdgeNeighbor();
-        int index = (int) Math.random() * neighbors.size();
-        if(getState() == CellState.FISH) {
-            //move to one of the adjacent empty grid.
-            for(int i = index; i<index+neighbors.size(); i++) {
-                Cell other = neighbors.get(i % neighbors.size());
-                if(other.getState() == CellState.EMPTY) {
-                    moveToDifferentCell(other);
-                }
-            }
-        } else if(getState() == CellState.SHARK) {
-            //if find a fish, move to the fish
-            for(int i  = index; i<index+neighbors.size(); i++) {
-                Cell other = neighbors.get(i % neighbors.size());
-                if(other.getState() == CellState.FISH) {
-                    moveToDifferentCell(other);
-                }
-            }
-            //if no fish found, move to empty grid
-            for(int i  = index; i<index+neighbors.size(); i++) {
-                Cell other = neighbors.get(i % neighbors.size());
-                if(other.getState() == CellState.FISH) {
-                    moveToDifferentCell(other);
-                }
+        for (int i = index; i < index + neighbors.size(); i++) {
+            Cell other = neighbors.get(i % neighbors.size());
+            if (other.getNextState() == state) {
+                moveToDifferentCell(other);
+                moved = true;
             }
         }
     }
 
     @Override
     public void changeState() {
-        if(getState() == CellState.SHARK && energy == 0) {setNextState(CellState.EMPTY);}
         setState(getNextState());
-    }
-
-    public int getReproduce() {
-        return reproduce;
-    }
-
-    public void setReproduce(int reproduce) {
-        this.reproduce = reproduce;
-    }
-
-    public int getEnergy() {
-        return energy;
-    }
-
-    public void setEnergy(int energy) {
-        this.energy = energy;
+        moved = false;
     }
 
     @Override
     public void moveToDifferentCell(Cell other) {
-        if (!(other instanceof WaTorCell)) { return; }
-        super.moveToDifferentCell(other);
+        if (getState()==CellState.EMPTY) {return;}
+        int energy = getAttribute(ENERGY);
 
-        WaTorCell waTorCell = (WaTorCell) other;
-        if (waTorCell.getState() == CellState.SHARK) {
-            if (getState() == CellState.FISH) {
-                energy += waTorCell.getEnergy();
-                setState(CellState.EMPTY);
-            }
+        setNextState(other.getNextState());
+        other.setNextState(getState());
+
+        if (getState() == CellState.SHARK) {
+            if (other.getNextState() == CellState.FISH) { energy += other.getAttribute(ENERGY); setNextState(EMPTY);}
             energy--;
+            if(energy==0) {
+                other.setNextState(EMPTY);
+            }
         }
 
-        waTorCell.setEnergy(energy);
-        waTorCell.setNextState(waTorCell.getState());
-        waTorCell.setReproduce(reproduce);
-        waTorCell.setInitialEnergy(initialEnergy);
-        waTorCell.setSurvivedTime(survivedTime++);
-        survivedTime = 0;
+        other.putAttribute(ENERGY, energy);
+        other.putAttribute(REPRODUCE, getAttribute(REPRODUCE));
+        other.putAttribute(INI_ENERGY, getAttribute(INI_ENERGY));
+        other.putAttribute(SURVIVE, getAttribute(SURVIVE)+1);
 
-        if(survivedTime > reproduce) {
-            setNextState(waTorCell.getState());
-            energy = initialEnergy;
-            waTorCell.setSurvivedTime(0);
-        } else {
-            setNextState(CellState.EMPTY);
-        }
-    }
+        if(other.getAttribute(SURVIVE) > getAttribute(REPRODUCE)) {
+            setNextState(getState());
+            putAttribute(ENERGY, getAttribute(INI_ENERGY));
+            other.putAttribute(SURVIVE, 0);
+        } else {setNextState(CellState.EMPTY);}
 
-    public int getSurvivedTime() {
-        return survivedTime;
-    }
-
-    public void setSurvivedTime(int survivedTime) {
-        this.survivedTime = survivedTime;
-    }
-
-    public int getInitialEnergy() {
-        return initialEnergy;
-    }
-
-    public void setInitialEnergy(int initialEnergy) {
-        this.initialEnergy = initialEnergy;
+        putAttribute(SURVIVE, 0);
     }
 }
