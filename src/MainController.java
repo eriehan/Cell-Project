@@ -146,6 +146,9 @@ public class MainController extends Application {
         // TODO: can be initialized to TRIANGLE or RECTANGLE
         myUserInterface.setCellShape(CellShapeType.RECTANGLE);
         //myUserInterface.setCellShape(CellShapeType.TRIANGLE);
+        System.out.println(myRowArray);
+        System.out.println(myTitle);
+        System.out.println(myRowArray);
         myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, myTitle,
                 cellGridRowNum, cellGridColNum, EnergyArray, MaturityArray, rate);
 

@@ -48,6 +48,8 @@ public abstract class AbstractGridView {
                                      ArrayList<Integer> energyArray, ArrayList<Integer> maturityArray, double rate) {
         Map configMap = new HashMap<Point, CellState>();
 
+        System.out.println(s);
+
         switch (s) {
             case "Segregation":
                 for (int i = 0; i < row.size(); i++) {
@@ -63,6 +65,7 @@ public abstract class AbstractGridView {
                 }
                 //TODO: make this work
               //  setMyCellGrid(new SegregationCellGrid(rowSize, colSize, rate, rate));
+                break;
             case "Game Of Life":
                 for (int i = 0; i < row.size(); i++) {
                     for (int j = 0; j < row.get(i).size(); j++) {
@@ -70,7 +73,7 @@ public abstract class AbstractGridView {
                     }
                 }
                 setMyCellGrid(new GameOfLifeCellGrid(rowSize, colSize));
-
+                break;
             case "Wa-Tor":
                 for (int i = 0; i < row.size(); i++) {
                     if (i == 0) {
@@ -85,28 +88,30 @@ public abstract class AbstractGridView {
                 }
 
                 setMyCellGrid(new WaTorCellGrid(rowSize, colSize, maturityArray, energyArray));
+                break;
 
             case "Percolation":
                 for (int i = 0; i < row.size(); i++) {
                     for (int j = 0; j < row.get(i).size(); j++) {
-                        configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
+                        configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BLOCKED);
                     }
                 }
                 setMyCellGrid(new PercolationCellGrid(rowSize, colSize));
+                break;
+
             case "Fire":
+               // System.out.println("entered Fire");
                 for (int i = 0; i < row.size(); i++) {
                     if (i == 0) {
                         for (int j = 0; j < row.get(i).size(); j++) {
+                            System.out.println("entered");
                             configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BURNING);
-                        }
-                    } else {
-                        for (int j = 0; j < row.get(i).size(); j++) {
-                            configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.ALIVE);
                         }
                     }
                 }
 
                 setMyCellGrid(new FireCellGrid(numOfRows, numOfCols, rate));
+                break;
         }
 
 

@@ -4,8 +4,8 @@
     <Author>Diane Lin</Author>
     <Type name = "Percolation">2</Type>
 
-    <Row>20</Row>
-    <Col>20</Col>
+    <Row>10</Row>
+    <Col>10</Col>
 
     <Rate>25</Rate>
     <Agent0>
