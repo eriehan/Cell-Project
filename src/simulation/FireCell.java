@@ -6,10 +6,10 @@ public class FireCell extends Cell {
 
     private boolean fireNearby;
 
-    public FireCell(int row, int col, CellState state, int probCatch) {
+    public FireCell(int row, int col, CellState state, double probCatch) {
         super(row, col, state);
 
-        putAttribute(PROBCATCH, probCatch);
+        putAttribute(PROBCATCH, (int) probCatch);
     }
 
     @Override

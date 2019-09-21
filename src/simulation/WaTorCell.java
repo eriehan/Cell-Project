@@ -23,10 +23,9 @@ public class WaTorCell extends Cell {
         putAttribute(REPRODUCE, reproduce);
     }
 
-    //highly important for the fish cells to call this method before the shark cells do.
-    //Code is designed so that all the fish move first, and sharks move after that.
     @Override
     public void check() {
+        //If fish was already eaten by a shark, it will remain that way
         if((getState()==FISH && getNextState()==SHARK) || getState() == EMPTY) {return;}
 
         if(getState() == FISH) {
@@ -36,7 +35,7 @@ public class WaTorCell extends Cell {
             checkAndMoveToNeighbor(FISH);
             checkAndMoveToNeighbor(EMPTY);
         }
-
+        //if this cell cannot move. (baby can only be made when the cell moves)
         if(!moved) {
             putAttribute(SURVIVE, getAttribute(SURVIVE)+1);
             if(getState()==SHARK) {
@@ -48,6 +47,8 @@ public class WaTorCell extends Cell {
     }
 
     private void checkAndMoveToNeighbor(CellState state) {
+        //in order to move to random neighbor that has the required nextState
+        // (need to use nextState because the neighbor cell may have already moved)
         int index = (int) (Math.random() * getEdgeNeighbor().size());
         List<Cell> neighbors = getEdgeNeighbor();
         for (int i = index; i < index + neighbors.size(); i++) {
@@ -67,14 +68,14 @@ public class WaTorCell extends Cell {
 
     @Override
     public void moveToDifferentCell(Cell other) {
-        if (getState()==CellState.EMPTY) {return;}
+        if (getState()==EMPTY) {return;}
         int energy = getAttribute(ENERGY);
 
         setNextState(other.getNextState());
         other.setNextState(getState());
 
-        if (getState() == CellState.SHARK) {
-            if (other.getNextState() == CellState.FISH) { energy += other.getAttribute(ENERGY); setNextState(EMPTY);}
+        if (getState() == SHARK) {
+            if (other.getNextState() == FISH) { energy += other.getAttribute(ENERGY); setNextState(EMPTY);}
             energy--;
             if(energy==0) {
                 other.setNextState(EMPTY);
@@ -90,7 +91,7 @@ public class WaTorCell extends Cell {
             setNextState(getState());
             putAttribute(ENERGY, getAttribute(INI_ENERGY));
             other.putAttribute(SURVIVE, 0);
-        } else {setNextState(CellState.EMPTY);}
+        } else {setNextState(EMPTY);}
 
         putAttribute(SURVIVE, 0);
     }

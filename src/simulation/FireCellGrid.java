@@ -7,7 +7,7 @@ import java.util.Map;
 public class FireCellGrid extends GameOfLifeCellGrid{
     private double probCatch;
 
-    public FireCellGrid(int numRows, int numCols, int probCatch) {
+    public FireCellGrid(int numRows, int numCols, double probCatch) {
         super(numRows, numCols);
         this.probCatch = probCatch;
     }

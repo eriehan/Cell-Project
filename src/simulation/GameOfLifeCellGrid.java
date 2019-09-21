@@ -1,5 +1,6 @@
 package simulation;
 
+import userInterface.CellShapeType;
 import utils.Point;
 
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 public class GameOfLifeCellGrid extends CellGrid {
     private int numOfRows;
     private int numOfCols;
+    private CellShapeType cellShapeType;
 
     public GameOfLifeCellGrid(int numRows, int numCols) {
         this.numOfRows = numRows;
