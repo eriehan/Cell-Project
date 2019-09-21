@@ -1,5 +1,6 @@
 package simulation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WaTorCell extends Cell {
@@ -9,10 +10,10 @@ public class WaTorCell extends Cell {
     private static final CellAttribute SURVIVE  = CellAttribute.SURVIVEDTIME;
     private static final CellAttribute REPRODUCE = CellAttribute.REPRODUCTION;
     private static final CellState FISH = CellState.FISH;
-    private static final CellState EMPTY = CellState.EMPTY;
+    private static final CellState WATER = CellState.WATER;
     private static final CellState SHARK = CellState.SHARK;
 
-    private boolean moved;
+    private boolean moved = false;
 
     public WaTorCell(int row, int col, CellState state, int reproduce, int energy) {
         super(row, col, state);
@@ -26,14 +27,12 @@ public class WaTorCell extends Cell {
     @Override
     public void check() {
         //If fish was already eaten by a shark, it will remain that way
-        if((getState()==FISH && getNextState()==SHARK) || getState() == EMPTY) {return;}
+        if((getState()==FISH && getNextState()==SHARK) || getState() == WATER) {return;}
 
-        if(getState() == FISH) {
-            checkAndMoveToNeighbor(EMPTY);
-        }
+        if(getState() == FISH) { checkAndMoveToNeighbor(WATER); }
         else if(getState() == SHARK) {
             checkAndMoveToNeighbor(FISH);
-            checkAndMoveToNeighbor(EMPTY);
+            if(!moved) {checkAndMoveToNeighbor(WATER);}
         }
         //if this cell cannot move. (baby can only be made when the cell moves)
         if(!moved) {
@@ -41,58 +40,60 @@ public class WaTorCell extends Cell {
             if(getState()==SHARK) {
                 int energy = getAttribute(ENERGY);
                 putAttribute(ENERGY, energy--);
-                if(energy==0) {setNextState(EMPTY);}
+                if(energy==0) {setNextState(WATER);}
             }
         }
+        moved = false;
     }
 
     private void checkAndMoveToNeighbor(CellState state) {
         //in order to move to random neighbor that has the required nextState
         // (need to use nextState because the neighbor cell may have already moved)
-        int index = (int) (Math.random() * getEdgeNeighbor().size());
-        List<Cell> neighbors = getEdgeNeighbor();
-        for (int i = index; i < index + neighbors.size(); i++) {
-            Cell other = neighbors.get(i % neighbors.size());
-            if (other.getNextState() == state) {
-                moveToDifferentCell(other);
-                moved = true;
-            }
+        List<Cell> possibleNeighbors = new ArrayList<>();
+        for(Cell cell : getEdgeNeighbor()) {
+            if(cell.getNextState() == state) { possibleNeighbors.add(cell); }
         }
+
+        if(possibleNeighbors.isEmpty()) {return;}
+        else {
+            int index = (int) (Math.random() * possibleNeighbors.size());
+            moveToDifferentCell(possibleNeighbors.get(index));
+        }
+        moved = true;
     }
 
     @Override
-    public void changeState() {
-        setState(getNextState());
-        moved = false;
-    }
+    public void changeState() { setState(getNextState()); }
 
     @Override
     public void moveToDifferentCell(Cell other) {
-        if (getState()==EMPTY) {return;}
+        System.out.println(getState() +", " +  getRow() + ", " + getCol());
+        System.out.println("to " + other.getState() + ", " + other.getRow() + ", " + other.getCol());
+        System.out.println("which will be " + other.getNextState() + ", " + other.getRow() + ", " + other.getCol());
+        if (getState()==WATER) {return;} //empty cells don't move. sharks and fishes can move.
         int energy = getAttribute(ENERGY);
-
         setNextState(other.getNextState());
         other.setNextState(getState());
 
         if (getState() == SHARK) {
-            if (other.getNextState() == FISH) { energy += other.getAttribute(ENERGY); setNextState(EMPTY);}
-            energy--;
-            if(energy==0) {
-                other.setNextState(EMPTY);
+            if (getNextState() == FISH) {
+                System.out.println(other.getAttribute(ENERGY));
+                energy += other.getAttribute(ENERGY);
+                setNextState(WATER);
             }
+            energy--;
+            if(energy==0) { other.setNextState(WATER); }
         }
-
         other.putAttribute(ENERGY, energy);
         other.putAttribute(REPRODUCE, getAttribute(REPRODUCE));
         other.putAttribute(INI_ENERGY, getAttribute(INI_ENERGY));
         other.putAttribute(SURVIVE, getAttribute(SURVIVE)+1);
 
-        if(other.getAttribute(SURVIVE) > getAttribute(REPRODUCE)) {
+        if(other.getAttribute(SURVIVE) > other.getAttribute(REPRODUCE)) {
             setNextState(getState());
             putAttribute(ENERGY, getAttribute(INI_ENERGY));
             other.putAttribute(SURVIVE, 0);
-        } else {setNextState(EMPTY);}
-
+        }
         putAttribute(SURVIVE, 0);
     }
 }

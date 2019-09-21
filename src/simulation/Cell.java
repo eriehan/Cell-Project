@@ -46,7 +46,6 @@ public abstract class Cell {
         this.state = state;
     }
 
-
     public void addCornerNeighbor(Cell neighbor) {
         cornerNeighbors.add(neighbor);
     }
