@@ -4,8 +4,8 @@
     <Author>Diane Lin</Author>
     <Type name = "Fire">2</Type>
 
-    <Row>150</Row>
-    <Col>150</Col>
+    <Row>50</Row>
+    <Col>50</Col>
 
     <Rate>0.25</Rate>
     <Agent0>

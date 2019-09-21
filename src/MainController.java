@@ -129,8 +129,8 @@ public class MainController extends Application {
             myColArray.add(stringToIntArray(col));
         }
         // TODO: can be initialized to TRIANGLE or RECTANGLE
-//        myUserInterface.setCellShape(CellShapeType.RECTANGLE);
-        myUserInterface.setCellShape(CellShapeType.TRIANGLE);
+        myUserInterface.setCellShape(CellShapeType.RECTANGLE);
+//        myUserInterface.setCellShape(CellShapeType.TRIANGLE);
         myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, userInputSimulation, cellGridRowNum, cellGridColNum);
 
     }

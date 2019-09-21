@@ -1,6 +1,5 @@
 package userInterface;
 
-import javafx.animation.Animation;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.layout.HBox;
