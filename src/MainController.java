@@ -100,74 +100,66 @@ public class MainController extends Application {
         return scene;
     }
 
+
+
     private void parseXML(String file) throws IOException, ParserConfigurationException, SAXException {
         ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
         ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
-        //System.out.println("ENTERED");
         int numAgents = 0;
         File xmlFile = new File(String.valueOf(file));
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse(xmlFile);
+        determineCellShape(doc);
+        setUpSimulationParameters(myColArray, myRowArray, numAgents, doc);
+        myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, myTitle,
+                cellGridRowNum, cellGridColNum, EnergyArray, MaturityArray, rate);
 
+    }
 
+    private void determineCellShape(Document doc) {
+        Node shapeNode = doc.getElementsByTagName("Shape").item(0);
+        Element shapeElement = (Element) shapeNode;
+        String shape = shapeElement.getAttribute("name");
+        switch(shape){
+            case "triangle":
+                myUserInterface.setCellShape(CellShapeType.TRIANGLE);
+                break;
+
+            case "rectangle":
+                myUserInterface.setCellShape(CellShapeType.RECTANGLE);
+                break;
+        }
+    }
+
+    private void setUpSimulationParameters(ArrayList<ArrayList<Integer>> myColArray, ArrayList<ArrayList<Integer>> myRowArray, int numAgents, Document doc) {
         cellGridColNum = Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
         myUserInterface.setNumOfCols(cellGridColNum);
         cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
         myUserInterface.setNumOfRows(cellGridRowNum);
-
         this.rate = Integer.parseInt(doc.getElementsByTagName("Rate").item(0).getTextContent());
-
-        Node shapeNode = doc.getElementsByTagName("Shape").item(0);
-        Element shapeElement = (Element) shapeNode;
-        String shape = shapeElement.getAttribute("name");
-        System.out.println("shape: " + shape);
-
-        // System.out.println(rate);
-        //returns nodeList of elements named "Type"
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
-
-
         //goes through NodeList to get information about the different simulation
         for (int i = 0; i < typeOfSimulation.getLength(); i++) {
-
             //gets the i-th simulation type and casts it as a node
             Node currentSimulationType = typeOfSimulation.item(i);
             Element currentSimulationElement = (Element) currentSimulationType;
             this.myTitle = currentSimulationElement.getAttribute("name");
-            System.out.println(this.myTitle);
             myUserInterface.changeTitle(this.myTitle);
             numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
         }
-        // System.out.println(numAgents);
-        //return row and col arrays
         for (int i = 0; i < numAgents; i++) {
             NodeList agent = doc.getElementsByTagName("Agent" + i);
             Element n = (Element) agent.item(0);
             if (myTitle.equals("Wa-Tor")) {
                 EnergyArray.add(Integer.parseInt(n.getElementsByTagName("Energy").item(0).getTextContent()));
                 MaturityArray.add(Integer.parseInt(n.getElementsByTagName("Mature").item(0).getTextContent()));
-
             }
-
             String row = n.getElementsByTagName("Row").item(0).getTextContent();
             String col = n.getElementsByTagName("Column").item(0).getTextContent();
             myRowArray.add(stringToIntArray(row));
             myColArray.add(stringToIntArray(col));
         }
-
-        // TODO: can be initialized to TRIANGLE or RECTANGLE
-        myUserInterface.setCellShape(CellShapeType.RECTANGLE);
-        if (shape != null && shape.equals("triangle")) {
-            System.out.println("for debug");
-            myUserInterface.setCellShape(CellShapeType.TRIANGLE);
-        }
-        System.out.println(myRowArray);
-        System.out.println(myTitle);
-        System.out.println(myRowArray);
-        myUserInterface.getMyGridView().initializeMyCellGrid(myRowArray, myColArray, myTitle,
-                cellGridRowNum, cellGridColNum, EnergyArray, MaturityArray, rate);
-
     }
 
     private ArrayList<Integer> stringToIntArray(String s) {
