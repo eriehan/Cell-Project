@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 import static userInterface.VisualizationConstants.*;
 
 public class MainController extends Application {
-    public static final String RESOURCE_FILE_PATH = "resources/MainResources";
+    private static final String RESOURCE_FILE_PATH = "resources/MainResources";
 
     private int framesPerSecond;
     private int millisecondDelay;
@@ -99,7 +99,7 @@ public class MainController extends Application {
 
     private Scene initScene() throws IOException, SAXException, ParserConfigurationException {
         Group root = myUserInterface.setScene();
-        var scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, BACKGROUND_COLOR);
+        var scene = new Scene(root, Integer.parseInt(resourceBundle.getString("WindowWidth")), Integer.parseInt(resourceBundle.getString("WindowHeight")), BACKGROUND_COLOR);
         return scene;
     }
 
@@ -223,7 +223,10 @@ public class MainController extends Application {
     private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
         FileChooser fileChooser = new FileChooser();
         myConfigFile = fileChooser.showOpenDialog(myStage);
-
+        if (myConfigFile==null){
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_noFileSelected"));
+            return;
+        }
         StringBuilder myFile = new StringBuilder(myConfigFile.toString());
         for (int i = 0; i < myFile.length(); i++) {
             if (myFile.substring(i, i + 3).equals("xml")) {

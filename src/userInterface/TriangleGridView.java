@@ -5,8 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
-import static userInterface.VisualizationConstants.GRID_HEIGHT;
-import static userInterface.VisualizationConstants.GRID_WIDTH;
+
 
 public class TriangleGridView extends AbstractGridView {
     private Group myTriangleGroup;
@@ -19,7 +18,7 @@ public class TriangleGridView extends AbstractGridView {
 
     @Override
     public void generateBlankGrid() {
-        Rectangle rectangle = new Rectangle(GRID_WIDTH, GRID_HEIGHT);
+        Rectangle rectangle = new Rectangle(this.getGridWidth(), this.getGridHeight());
         rectangle.setFill(Color.LIGHTBLUE);
         myTriangleGroup.getChildren().add(rectangle);
     }
@@ -38,8 +37,8 @@ public class TriangleGridView extends AbstractGridView {
     @Override
     public void createGrid() {
         boolean rowFlag = true;
-        double width = GRID_WIDTH / getNumOfCols() * 2;
-        double height = GRID_HEIGHT / getNumOfRows();
+        double width = this.getGridWidth() / getNumOfCols() * 2;
+        double height = this.getGridHeight() / getNumOfRows();
         for (int r = 0; r < getNumOfRows(); r++) {
             for (int c = 0; c < getNumOfCols() / 2; c++) {
                 Polygon upTriangle = new Polygon();

@@ -2,8 +2,6 @@ package userInterface;
 
 import javafx.scene.shape.Rectangle;
 
-import static userInterface.VisualizationConstants.GRID_HEIGHT;
-import static userInterface.VisualizationConstants.GRID_WIDTH;
 
 public class GridView extends AbstractGridView {
 
@@ -16,7 +14,7 @@ public class GridView extends AbstractGridView {
     public void createGrid() {
         for (int r = 0; r < getNumOfRows(); r++) {
             for (int c = 0; c < getNumOfCols(); c++) {
-                Rectangle shape = new Rectangle(GRID_WIDTH / getNumOfCols(), GRID_HEIGHT / getNumOfRows());
+                Rectangle shape = new Rectangle(this.getGridWidth() / getNumOfCols(), this.getGridHeight() / getNumOfRows());
                 shape.setFill(getMyCellGrid().stateOfCellAtPoint(r, c).getMyColor());
                 getMyGridPane().add(shape, c, r);
             }

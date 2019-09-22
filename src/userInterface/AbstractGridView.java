@@ -1,7 +1,6 @@
 package userInterface;
 
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import simulation.*;
 import utils.Point;
@@ -9,28 +8,36 @@ import utils.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-import static userInterface.VisualizationConstants.GRID_HEIGHT;
-import static userInterface.VisualizationConstants.GRID_WIDTH;
+import static userInterface.VisualizationConstants.BLANK_GRID_COLOR;
 
 public abstract class AbstractGridView {
+    private static final String RESOURCE_FILE_PATH = "resources/MainResources";
     private GridPane myGridPane;
     private int numOfRows;
     private int numOfCols;
+    private int gridWidth;
+    private int gridHeight;
     private CellGrid myCellGrid;
     private Map<Point, CellState> initialConfigMap;
+    private ResourceBundle resourceBundle;
+
 
     public AbstractGridView(int numOfRows, int numOfCols) {
         myGridPane = new GridPane();
         this.numOfCols = numOfCols;
         this.numOfRows = numOfRows;
+        this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
+        this.gridWidth = Integer.parseInt(resourceBundle.getString("GridWidth"));
+        this.gridHeight = Integer.parseInt(resourceBundle.getString("GridHeight"));
     }
 
     public abstract void createGrid();
 
     public void generateBlankGrid() {
-        Rectangle shape = new Rectangle(GRID_WIDTH, GRID_HEIGHT);
-        shape.setFill(Color.LIGHTBLUE);
+        Rectangle shape = new Rectangle(this.gridWidth, this.gridHeight);
+        shape.setFill(BLANK_GRID_COLOR);
         myGridPane.add(shape, 0, 0);
     }
 
@@ -125,6 +132,9 @@ public abstract class AbstractGridView {
     }
 
     public void resetCellGrid(){
+        if (initialConfigMap == null){
+            return;
+        }
         getMyCellGrid().initializeGrids(this.initialConfigMap);
         getMyCellGrid().assignNeighborsToEachCell();
     }
@@ -156,6 +166,15 @@ public abstract class AbstractGridView {
     public void setMyCellGrid(CellGrid myCellGrid) {
         this.myCellGrid = myCellGrid;
     }
+
+    public int getGridWidth(){
+        return this.gridWidth;
+    }
+    public int getGridHeight(){
+        return this.gridHeight;
+    }
+
+
 
 
 }

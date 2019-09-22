@@ -9,10 +9,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.util.ResourceBundle;
+
 import static userInterface.VisualizationConstants.ERROR_MSG_FONT_SIZE;
 import static userInterface.VisualizationConstants.FILE_PATH_FONT_SIZE;
 
 public class UserInterface {
+    private static final String RESOURCE_FILE_PATH = "resources/MainResources";
+
     private AbstractGridView myGridView;
     private Group myGroup;
     private VBox colTwo;
@@ -25,12 +29,14 @@ public class UserInterface {
     private int errorMsgTimer = -1;
     private Text errorMsg;
     private Text simulationFilePath;
+    private ResourceBundle resourceBundle;
 
     public UserInterface(int numofRows, int numofCols, String simulationName) {
         this.numOfRows = numofRows;
         this.numOfCols = numofCols;
         this.simulationTitle = new Text(simulationName);
-        simulationTitle.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
+        simulationTitle.setFont(Font.font("Arial", FontWeight.BOLD, Integer.parseInt(resourceBundle.getString("TitleFont"))));
         myGridView = new GridView(numOfCols, numOfRows);
         myButtons = new Buttons();
     }
