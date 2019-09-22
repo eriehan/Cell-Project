@@ -27,6 +27,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
         createEmptyMap();
         //If xml already has the whole configuration, grid will be filled accordingly
         for(Map.Entry<Point, CellState> entry : configMap.entrySet()) {
+            System.out.println(entry.getKey());
             Cell notEmptyCell = getGridOfCells().get(entry.getKey());
             emptyCells.remove(notEmptyCell);
             notEmptyCell.setState(entry.getValue());

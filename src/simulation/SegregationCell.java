@@ -21,7 +21,6 @@ public class SegregationCell extends Cell {
     public void check() {
         //if empty, next state is empty.
         if(getState() == EMPTY) {setNextState(CellState.EMPTY);}
-
         else {
             int cellsWithSameState = 0;
             int notEmptyNeighbors = 0;
@@ -31,10 +30,7 @@ public class SegregationCell extends Cell {
                     notEmptyNeighbors++;
                 }
             }
-            if (cellsWithSameState < notEmptyNeighbors * agentPercent / 100.0) {
-                //dissatisfied
-                setNextState(DISATISFIED);
-            }
+            if (cellsWithSameState < notEmptyNeighbors * agentPercent / 100.0) { setNextState(DISATISFIED); }
             else { setNextState(getState()); }
         }
     }

@@ -82,7 +82,8 @@ public class WaTorCell extends Cell {
                 setNextState(WATER);
             }
             energy--;
-            if(energy==0) { other.setNextState(WATER); }
+            System.out.println(energy);
+            if(energy==0) { other.setNextState(WATER);}
         }
         other.putAttribute(ENERGY, energy);
         other.putAttribute(REPRODUCE, getAttribute(REPRODUCE));

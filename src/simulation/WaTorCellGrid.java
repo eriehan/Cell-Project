@@ -56,6 +56,20 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         }
     }
 
+    @Override
+    protected void assignNeighborsToOneCell(int row, int col) {
+        super.assignNeighborsToOneCell(row, col);
+        Cell cell = cellFromPoint(row, col);
+        if(row==0) {cell.addEdgeNeighbor(cellFromPoint(getNumOfRows()-1, col));}
+        if(row==getNumOfRows()-1) {cell.addEdgeNeighbor(cellFromPoint(0, col));}
+        if(col==0) {cell.addEdgeNeighbor(cellFromPoint(row, getNumOfCols()-1));}
+        if(col==getNumOfCols()-1) {cell.addEdgeNeighbor(cellFromPoint(row, 0));}
+    }
+
+    private Cell cellFromPoint(int row, int col) {
+        return getGridOfCells().get(new Point(row, col));
+    }
+
     private void createEmptyMap() {
         getGridOfCells().clear();
         for(int row = 0; row < getNumOfRows(); row++) {

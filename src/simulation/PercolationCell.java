@@ -3,16 +3,15 @@ package simulation;
 import java.util.List;
 
 public class PercolationCell extends Cell{
-
     private static final CellState PERCOLATED = CellState.PERCOLATED;
-    private static final CellState EMPTY = CellState.EMPTY;
+    private static final CellState OPEN = CellState.OPEN;
 
     public PercolationCell(int row, int col, CellState state) {
         super(row, col, state);
     }
     @Override
     public void check() {
-        if(toBePercolated()) {setNextState(PERCOLATED);}
+        if(getState() == OPEN && percolatedCellNearby()) {setNextState(PERCOLATED);}
         else {setNextState(getState());}
     }
 
@@ -27,10 +26,9 @@ public class PercolationCell extends Cell{
         return list;
     }
 
-    private boolean toBePercolated() {
-        if(getState()!= EMPTY) {return false;}
-        for(Cell neighbor : allNeighbors()) {
-            if(neighbor.getState() == PERCOLATED) {
+    private boolean percolatedCellNearby() {
+        for (Cell neighbor : allNeighbors()) {
+            if (neighbor.getState() == PERCOLATED) {
                 return true;
             }
         }

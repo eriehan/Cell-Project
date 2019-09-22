@@ -3,43 +3,34 @@ package simulation;
 public class FireCell extends Cell {
 
     private static final CellAttribute PROBCATCH = CellAttribute.PROBCATCH;
+    private static final CellState TREE = CellState.TREE;
+    private static final CellState FIREEMPTY = CellState.FIREEMPTY;
+    private static final CellState BURNING = CellState.BURNING;
 
-    private boolean fireNearby;
     private double probCatch;
 
     public FireCell(int row, int col, CellState state, double probCatch) {
         super(row, col, state);
-
+        this.probCatch = probCatch;
         putAttribute(PROBCATCH, (int) probCatch);
     }
 
     @Override
     public void check() {
-        int probCatch = getAttribute(PROBCATCH);
-
-        //if already burnt or in fire, will be empty at next round.
-        if(getState()== CellState.FIREEMPTY) {setNextState(CellState.FIREEMPTY);}
-        else if(getState()== CellState.BURNING) {setNextState(CellState.FIREEMPTY);}
-
-        else {
-            for (Cell neighbor : getEdgeNeighbor()) {
-                if (neighbor.getState()== CellState.BURNING) {
-                    fireNearby = true; break;
-                }
-            }
-            if(fireNearby) {
-                int num = (int) (Math.random() * 100);
-                System.out.println(num);
-                if(num <= probCatch) {setNextState(CellState.BURNING);}
-            } else {
-                setNextState(CellState.TREE);
-            }
+        if(getState() == CellState.TREE) {
+            if(isFireNearby() && Math.random() * 100 <= probCatch) { setNextState(BURNING);}
+            else { setNextState(CellState.TREE); }
         }
+        else {setNextState(FIREEMPTY);}
     }
 
     @Override
-    public void changeState() {
-        fireNearby = false;
-        setState(getNextState());
+    public void changeState() { setState(getNextState()); }
+
+    private boolean isFireNearby() {
+        for (Cell neighbor : getEdgeNeighbor()) {
+            if (neighbor.getState()== CellState.BURNING) { return true; }
+        }
+        return false;
     }
 }

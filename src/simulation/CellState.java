@@ -15,6 +15,7 @@ public enum CellState {
     BURNING(Color.DARKRED),
     TREE(Color.GREEN),
 
+    OPEN(Color.WHITE),
     PERCOLATED(Color.BLUE),
     BLOCKED(Color.BLACK),
 

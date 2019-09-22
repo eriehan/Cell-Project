@@ -11,27 +11,9 @@ public class GameOfLifeCell extends Cell {
 
     @Override
     public void check() {
-        int countAlive = 0;
-        for (Cell cell : getCornerNeighbor()) {
-            if (cell.getState() == ALIVE) {
-                countAlive++;
-            }
-        }
-        for (Cell cell : getEdgeNeighbor()) {
-            if (cell.getState() == ALIVE) {
-                countAlive++;
-            }
-        }
-        if (isAlive()) {
-            if (countAlive < 2 || countAlive > 3) {
-                setNextState(DEAD);
-            }
-            else {setNextState(ALIVE);}
-        } else {
-            if (countAlive == 3) {
-                setNextState(ALIVE);
-            } else {setNextState(DEAD);}
-        }
+        int aliveNeighbors = aliveNeighbors();
+        if(willLive(aliveNeighbors)) {setNextState(ALIVE);}
+        else {setNextState(DEAD);}
     }
 
     @Override
@@ -39,7 +21,18 @@ public class GameOfLifeCell extends Cell {
         setState(getNextState());
     }
 
-    private boolean isAlive() {
-        return this.getState() == ALIVE;
+    private int aliveNeighbors() {
+        int countAlive = 0;
+        for (Cell cell : getCornerNeighbor()) {
+            if (cell.getState() == ALIVE) { countAlive++; }
+        }
+        for (Cell cell : getEdgeNeighbor()) {
+            if (cell.getState() == ALIVE) { countAlive++; }
+        }
+        return countAlive;
+    }
+
+    private boolean willLive(int aliveNeighbors) {
+        return (getState() == DEAD && aliveNeighbors == 3) || (getState() == ALIVE && (aliveNeighbors == 2 || aliveNeighbors == 3));
     }
 }

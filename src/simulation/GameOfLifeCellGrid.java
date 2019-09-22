@@ -46,7 +46,7 @@ public class GameOfLifeCellGrid extends CellGrid {
         }
     }
 
-    private void assignNeighborsToOneCell(int row, int col) {
+    protected void assignNeighborsToOneCell(int row, int col) {
         Cell cell = cellFromPoint(row, col);
         cell.clearNeighbors();
 

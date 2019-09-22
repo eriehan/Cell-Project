@@ -22,7 +22,7 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
         for(int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
                 Point point = new Point(row, col);
-                addToGridOfCells(point, new PercolationCell(row, col, CellState.EMPTY));
+                addToGridOfCells(point, new PercolationCell(row, col, CellState.OPEN));
             }
         }
     }
