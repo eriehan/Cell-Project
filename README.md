@@ -70,11 +70,24 @@ MainController
     * error messages to guide users
     
 **Assumptions or Simplifications:**
+For the Wa-tor simulation, we assume that the individual sharks and fish don't 'move simultaneously' at each turn (round). This is to prevent two situations
+1. A shark eats a fish, but that fish doesn't know that and tries to move to another cell. 
+2. A shark/fish moves to a grid, but another cell of the same type simultaneously tries to move to that grid
+
+Thus, the individual cells in the wa-tor simulation have to take turns. However, the sharks will have too much advantage if they can all
+move before the fishes can move, and vice versa. We fixed these problems by simplifying the wa-tor simulation so that we shuffle the list
+that has all the fish and sharks, and decide each cell's movement by looking at the neighbor cells' future states (nextState).
+
+By using this logic, the cell will not think that its neighbor is a fish/shark if it had already moved or was eaten. It will also be able
+to realize when another cell had moved to one of its neighbor grid, which was initially empty. This will eliminate the possibility of any
+conflict from simultaneous movements. And as the cells move at a random order, the results will be more 'natural'.
 
 **Known Bugs:**
+When the size(# of rows, cols) of the 2D grid of cells gets very big, the simulations sometimes do not work well.
 
 **Extra credit:**
 * triangular grid cells
+* segregation -> possible to initialize the grids randomly according to the amount of empty cells - which can be in the xml - there should be. 
 
 ### Notes
 * Steps to start a simulation:
