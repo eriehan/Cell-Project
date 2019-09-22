@@ -48,11 +48,8 @@ public class MainController extends Application {
     private int cellGridColNum;
     private ArrayList<Integer> EnergyArray = new ArrayList<>();
     private ArrayList<Integer> MaturityArray = new ArrayList<>();
-//    private ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
-//    private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
     private double rate;
     private ResourceBundle resourceBundle;
-    private AbstractGridView initialGridView;
 
 
     @Override
@@ -121,6 +118,11 @@ public class MainController extends Application {
 
         this.rate = Integer.parseInt(doc.getElementsByTagName("Rate").item(0).getTextContent());
 
+        Node shapeNode = doc.getElementsByTagName("Shape").item(0);
+        Element shapeElement = (Element) shapeNode;
+        String shape = shapeElement.getAttribute("name");
+        System.out.println("shape: " + shape);
+
         // System.out.println(rate);
         //returns nodeList of elements named "Type"
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
@@ -156,7 +158,10 @@ public class MainController extends Application {
 
         // TODO: can be initialized to TRIANGLE or RECTANGLE
         myUserInterface.setCellShape(CellShapeType.RECTANGLE);
-        //myUserInterface.setCellShape(CellShapeType.TRIANGLE);
+        if (shape != null && shape.equals("triangle")) {
+            System.out.println("for debug");
+            myUserInterface.setCellShape(CellShapeType.TRIANGLE);
+        }
         System.out.println(myRowArray);
         System.out.println(myTitle);
         System.out.println(myRowArray);
@@ -183,7 +188,7 @@ public class MainController extends Application {
         return myInts;
     }
 
-    private void initButtons() throws IOException, SAXException, ParserConfigurationException{
+    private void initButtons() throws IOException, SAXException, ParserConfigurationException {
         SimulationButton selectFileButton = new SimulationButton(resourceBundle.getString("SelectFile"));
         selectFileButton.setOnAction(value -> {
             try {
@@ -225,7 +230,7 @@ public class MainController extends Application {
     private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
         FileChooser fileChooser = new FileChooser();
         myConfigFile = fileChooser.showOpenDialog(myStage);
-        if (myConfigFile==null){
+        if (myConfigFile == null) {
             this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_noFileSelected"));
             return;
         }

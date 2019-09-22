@@ -6,7 +6,6 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
 
-
 public class TriangleGridView extends AbstractGridView {
     private Group myTriangleGroup;
 

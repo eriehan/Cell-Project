@@ -3,7 +3,7 @@
 
 <Simulation>
     <Author>Diane Lin</Author>
-    <Shape name = "rectangle">1</Shape>
+    <Shape name = "triangle">1</Shape>
     <Type name = "Wa-Tor">2</Type>
 
     <Row>10</Row>

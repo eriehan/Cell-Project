@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Simulation>
     <Author>Diane Lin</Author>
+    <Shape name = "rectangle">1</Shape>
     <Type name = "Fire">1</Type>
     <Row>30</Row>
     <Col>30</Col>

@@ -33,17 +33,22 @@ Configuration: Diane Lin
 
 ### Resources Used
 https://www2.cs.duke.edu/courses/compsci308/fall19/assign/02_simulation/
+https://docs.oracle.com/javase/8/javafx/api/javafx
 
 
 ### Running the Program
 
-Main class: MainController
+**Main class:** 
 
-Data files needed: 
+MainController
 
-Interesting data files:
+**Data files needed:** 
+* xml configuration files to initialize the simulation parameters and simulation grid
+* MainResources.properties to initialize game constants such as window size etc.
 
-Features implemented: 
+**Interesting data files:**
+
+**Features implemented:** 
 * create a simulation cell grid that updates each step based on the previous state
 * implemented the five different CA simulations: game of life, segregation, predator-prey, fire, and percolation.
 * simulation initial configuration is contained in XML files, and is parsed in by the program to initialize the simulation. The configuration includes:
@@ -64,15 +69,22 @@ Features implemented:
         * speed up & slow down: change simulation animation rate
     * error messages to guide users
     
-Assumptions or Simplifications:
+**Assumptions or Simplifications:**
 
-Known Bugs:
+**Known Bugs:**
 
-Extra credit:
+**Extra credit:**
 * triangular grid cells
 
 ### Notes
-
+* Steps to start a simulation:
+    1. Run MainController()
+    2. click "select file" to choose an XML file in the xml_files folder
+    3. click "start" to start the simulation
+    4. During the simulation, you can use "pause", "step", "speed up", "slow down" buttons to control the simulation progress
+    5. click "reset" to reset the grid to initial state
+    5. click "select file" againt to start a new simulation 
 
 ### Impressions
+* For this project, our team has a clear delegation of work. This helped to increase efficiency, since everyone is clear about what they need to work on. Also, it reduces many pontential merge conflicts in GIT. 
 

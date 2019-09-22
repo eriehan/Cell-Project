@@ -2,6 +2,7 @@
 
 <Simulation>
     <Author>Diane Lin</Author>
+    <Shape name = "rectangle">1</Shape>
     <Type name = "Segregation">2</Type>
 
     <Row>20</Row>

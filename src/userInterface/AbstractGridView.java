@@ -42,7 +42,7 @@ public abstract class AbstractGridView {
     }
 
     public void updateGrid() {
-        if (myCellGrid==null){
+        if (myCellGrid == null) {
             return;
         }
         myGridPane.getChildren().clear();
@@ -51,7 +51,7 @@ public abstract class AbstractGridView {
         myCellGrid.changeAllCells();
     }
 
-//    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
+    //    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
     public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize,
                                      ArrayList<Integer> energyArray, ArrayList<Integer> maturityArray, double rate) {
         Map configMap = new HashMap<Point, CellState>();
@@ -72,7 +72,7 @@ public abstract class AbstractGridView {
                     }
                 }
                 //TODO: make this work
-                setMyCellGrid(new SegregationCellGrid(rowSize, colSize, (int)rate, (int)rate));
+                setMyCellGrid(new SegregationCellGrid(rowSize, colSize, (int) rate, (int) rate));
                 break;
             case "Game Of Life":
                 for (int i = 0; i < row.size(); i++) {
@@ -100,23 +100,22 @@ public abstract class AbstractGridView {
 
             case "Percolation":
                 for (int i = 0; i < row.size(); i++) {
-                    if(i == 0) {
+                    if (i == 0) {
                         for (int j = 0; j < row.get(i).size(); j++) {
                             configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.PERCOLATED);
                         }
-                    }
-                    else{
-                        for(int j = 0; j < row.get(i).size(); j++){
+                    } else {
+                        for (int j = 0; j < row.get(i).size(); j++) {
                             configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BLOCKED);
                         }
-                }
+                    }
 
-            }
+                }
                 setMyCellGrid(new PercolationCellGrid(rowSize, colSize));
                 break;
 
             case "Fire":
-               // System.out.println("entered Fire");
+                // System.out.println("entered Fire");
                 for (int i = 0; i < row.size(); i++) {
                     for (int j = 0; j < row.get(i).size(); j++) {
                         configMap.put(new Point(row.get(i).get(j), col.get(i).get(j)), CellState.BURNING);
@@ -131,8 +130,8 @@ public abstract class AbstractGridView {
         getMyCellGrid().assignNeighborsToEachCell();
     }
 
-    public void resetCellGrid(){
-        if (initialConfigMap == null){
+    public void resetCellGrid() {
+        if (initialConfigMap == null) {
             return;
         }
         getMyCellGrid().initializeGrids(this.initialConfigMap);
@@ -147,11 +146,11 @@ public abstract class AbstractGridView {
         return numOfRows;
     }
 
-    public void setNumOfRows(int n){
+    public void setNumOfRows(int n) {
         numOfRows = n;
     }
 
-    public void setNumOfCols(int n){
+    public void setNumOfCols(int n) {
         numOfCols = n;
     }
 
@@ -167,14 +166,13 @@ public abstract class AbstractGridView {
         this.myCellGrid = myCellGrid;
     }
 
-    public int getGridWidth(){
+    public int getGridWidth() {
         return this.gridWidth;
     }
-    public int getGridHeight(){
+
+    public int getGridHeight() {
         return this.gridHeight;
     }
-
-
 
 
 }

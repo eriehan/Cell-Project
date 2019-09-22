@@ -2,6 +2,7 @@
 
 <Simulation>
     <Author>Diane Lin</Author>
+    <Shape name = "rectangle">1</Shape>
     <Type name = "Fire">1</Type>
     <Row>10</Row>
     <Col>10</Col>
