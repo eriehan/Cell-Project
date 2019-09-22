@@ -101,7 +101,6 @@ public class MainController extends Application {
     }
 
 
-
     private void parseXML(String file) throws IOException, ParserConfigurationException, SAXException {
         ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
         ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
