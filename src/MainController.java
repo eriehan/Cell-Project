@@ -48,8 +48,8 @@ public class MainController extends Application {
     private int cellGridColNum;
     private ArrayList<Integer> EnergyArray = new ArrayList<>();
     private ArrayList<Integer> MaturityArray = new ArrayList<>();
-    private ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
-    private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
+//    private ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
+//    private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
     private double rate;
     private ResourceBundle resourceBundle;
     private AbstractGridView initialGridView;
@@ -104,6 +104,8 @@ public class MainController extends Application {
     }
 
     private void parseXML(String file) throws IOException, ParserConfigurationException, SAXException {
+        ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
         //System.out.println("ENTERED");
         int numAgents = 0;
         File xmlFile = new File(String.valueOf(file));
