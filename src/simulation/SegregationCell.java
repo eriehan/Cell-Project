@@ -10,7 +10,7 @@ public class SegregationCell extends Cell {
     private static final CellState EMPTY = CellState.EMPTY;
     private static final CellState DISATISFIED = CellState.DISATISFIED;
     public static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(CellState.EMPTY,CellState.DISATISFIED));
+            Collections.unmodifiableList(Arrays.asList(CellState.EMPTY, CellState.DISATISFIED));
 
     private int agentPercent;
 
@@ -24,18 +24,24 @@ public class SegregationCell extends Cell {
     @Override
     public void check() {
         //if empty, next state is empty.
-        if(getState() == EMPTY) {setNextState(CellState.EMPTY);}
-        else {
+        if (getState() == EMPTY) {
+            setNextState(CellState.EMPTY);
+        } else {
             int cellsWithSameState = 0;
             int notEmptyNeighbors = 0;
             for (Cell other : allNeighbors()) {
-                if(other.getState() != EMPTY) {
-                    if (other.getState() == getState()) { cellsWithSameState++; }
+                if (other.getState() != EMPTY) {
+                    if (other.getState() == getState()) {
+                        cellsWithSameState++;
+                    }
                     notEmptyNeighbors++;
                 }
             }
-            if (cellsWithSameState < notEmptyNeighbors * agentPercent / 100.0) { setNextState(DISATISFIED); }
-            else { setNextState(getState()); }
+            if (cellsWithSameState < notEmptyNeighbors * agentPercent / 100.0) {
+                setNextState(DISATISFIED);
+            } else {
+                setNextState(getState());
+            }
         }
     }
 
@@ -47,8 +53,8 @@ public class SegregationCell extends Cell {
     @Override
     public void setNextStateOnClick() {
         int i = STATES_LIST.indexOf(this.getState());
-        if (STATES_LIST.size()<=i) i = -1;
-        this.setState(STATES_LIST.get(i+1));
+        if (STATES_LIST.size() <= i) i = -1;
+        this.setState(STATES_LIST.get(i + 1));
     }
 
     private List<Cell> allNeighbors() {

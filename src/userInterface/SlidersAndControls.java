@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public class SlidersAndControls {
     private ArrayList<SimulationSlider> sliderList;
     private VBox myCol;
-    public SlidersAndControls(){
+
+    public SlidersAndControls() {
         sliderList = new ArrayList<>();
         myCol = new VBox();
         myCol.setSpacing(15);
@@ -18,12 +19,12 @@ public class SlidersAndControls {
         return myCol;
     }
 
-    public void addSlider(SimulationSlider slider){
+    public void addSlider(SimulationSlider slider) {
         myCol.getChildren().add(slider.getMyHBox());
         sliderList.add(slider);
     }
 
-    public void addChoiceBox(SimulationChoice choice){
+    public void addChoiceBox(SimulationChoice choice) {
         myCol.getChildren().add(choice.getMyHBox());
     }
 }

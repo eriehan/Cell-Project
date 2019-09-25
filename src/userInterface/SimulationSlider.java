@@ -12,8 +12,8 @@ public class SimulationSlider {
     private Slider mySlider;
     private HBox myHBox;
 
-    public SimulationSlider(double min, double max, double defaultValue, String label){
-        mySlider = new Slider(min,max,defaultValue);
+    public SimulationSlider(double min, double max, double defaultValue, String label) {
+        mySlider = new Slider(min, max, defaultValue);
         mySlider.setShowTickLabels(true);
         mySlider.setShowTickMarks(true);
         mySlider.setMajorTickUnit(0.5);

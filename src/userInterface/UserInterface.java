@@ -110,15 +110,14 @@ public class UserInterface {
         this.colOne.getChildren().add(this.simulationFilePath);
     }
 
-    public void setCellShape(CellShapeType type){
-        if (type == CellShapeType.RECTANGLE) myGridView = new RectangleGridView(numOfRows,numOfCols);
-        if (type == CellShapeType.TRIANGLE) myGridView = new TriangleGridView(numOfRows,numOfCols);
-        if (type == CellShapeType.HEXAGON) myGridView = new HexagonGridView(numOfRows,numOfCols);
+    public void setCellShape(CellShapeType type) {
+        if (type == CellShapeType.RECTANGLE) myGridView = new RectangleGridView(numOfRows, numOfCols);
+        if (type == CellShapeType.TRIANGLE) myGridView = new TriangleGridView(numOfRows, numOfCols);
+        if (type == CellShapeType.HEXAGON) myGridView = new HexagonGridView(numOfRows, numOfCols);
         myGridView.generateBlankGrid();
         colOne.getChildren().clear();
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
     }
-
 
 
 }

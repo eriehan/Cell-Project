@@ -11,7 +11,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
 
     private final static CellAttribute ENERGY = CellAttribute.ENERGY;
     private final static CellAttribute INI_ENERGY = CellAttribute.INITIAL_ENERGY;
-    private final static CellAttribute SURVIVE  = CellAttribute.SURVIVEDTIME;
+    private final static CellAttribute SURVIVE = CellAttribute.SURVIVEDTIME;
     private final static CellAttribute REPRODUCE = CellAttribute.REPRODUCTION;
 
     private List<Integer> reproductions;
@@ -30,28 +30,31 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     public void initializeGrids(Map<Point, CellState> configMap) {
         createEmptyMap();
         System.out.println(configMap.size());
-        for(Map.Entry<Point, CellState> entry : configMap.entrySet()) {
-            Cell cell =  getGridOfCells().get(entry.getKey());
+        for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
+            Cell cell = getGridOfCells().get(entry.getKey());
             CellState state = entry.getValue();
             cell.setState(state);
             cell.setNextState(state);
 
-            if(state == CellState.FISH) { assignAttributes(cell, 0); }
-            else if(state == CellState.SHARK) { assignAttributes(cell, 1); }
+            if (state == CellState.FISH) {
+                assignAttributes(cell, 0);
+            } else if (state == CellState.SHARK) {
+                assignAttributes(cell, 1);
+            }
         }
     }
 
     @Override
     public void checkAllCells() {
         findFishesAndSharks();
-        for(Cell fishOrShark : fishesAndSharks) {
+        for (Cell fishOrShark : fishesAndSharks) {
             fishOrShark.check();
         }
     }
 
     @Override
     public void changeAllCells() {
-        for(Cell cell : getGridOfCells().values()) {
+        for (Cell cell : getGridOfCells().values()) {
             cell.changeState();
         }
     }
@@ -60,10 +63,18 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     protected void assignNeighborsToOneCell(int row, int col) {
         super.assignNeighborsToOneCell(row, col);
         Cell cell = cellFromPoint(row, col);
-        if(row==0) {cell.addEdgeNeighbor(cellFromPoint(getNumOfRows()-1, col));}
-        if(row==getNumOfRows()-1) {cell.addEdgeNeighbor(cellFromPoint(0, col));}
-        if(col==0) {cell.addEdgeNeighbor(cellFromPoint(row, getNumOfCols()-1));}
-        if(col==getNumOfCols()-1) {cell.addEdgeNeighbor(cellFromPoint(row, 0));}
+        if (row == 0) {
+            cell.addEdgeNeighbor(cellFromPoint(getNumOfRows() - 1, col));
+        }
+        if (row == getNumOfRows() - 1) {
+            cell.addEdgeNeighbor(cellFromPoint(0, col));
+        }
+        if (col == 0) {
+            cell.addEdgeNeighbor(cellFromPoint(row, getNumOfCols() - 1));
+        }
+        if (col == getNumOfCols() - 1) {
+            cell.addEdgeNeighbor(cellFromPoint(row, 0));
+        }
     }
 
     private Cell cellFromPoint(int row, int col) {
@@ -72,17 +83,17 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
 
     private void createEmptyMap() {
         getGridOfCells().clear();
-        for(int row = 0; row < getNumOfRows(); row++) {
+        for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
                 Point point = new Point(row, col);
-                addToGridOfCells(point, new WaTorCell(row, col, CellState.WATER, 0,0));
+                addToGridOfCells(point, new WaTorCell(row, col, CellState.WATER, 0, 0));
             }
         }
     }
 
     private void findFishesAndSharks() {
         fishesAndSharks.clear();
-        for(Cell cell : getGridOfCells().values()) {
+        for (Cell cell : getGridOfCells().values()) {
             if (cell.getState() == CellState.SHARK || cell.getState() == CellState.FISH) {
                 fishesAndSharks.add(cell);
             }

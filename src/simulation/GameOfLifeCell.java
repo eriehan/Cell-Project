@@ -18,8 +18,11 @@ public class GameOfLifeCell extends Cell {
     @Override
     public void check() {
         int aliveNeighbors = aliveNeighbors();
-        if(willLive(aliveNeighbors)) {setNextState(ALIVE);}
-        else {setNextState(DEAD);}
+        if (willLive(aliveNeighbors)) {
+            setNextState(ALIVE);
+        } else {
+            setNextState(DEAD);
+        }
     }
 
     @Override
@@ -30,10 +33,14 @@ public class GameOfLifeCell extends Cell {
     private int aliveNeighbors() {
         int countAlive = 0;
         for (Cell cell : getCornerNeighbor()) {
-            if (cell.getState() == ALIVE) { countAlive++; }
+            if (cell.getState() == ALIVE) {
+                countAlive++;
+            }
         }
         for (Cell cell : getEdgeNeighbor()) {
-            if (cell.getState() == ALIVE) { countAlive++; }
+            if (cell.getState() == ALIVE) {
+                countAlive++;
+            }
         }
         return countAlive;
     }
@@ -41,8 +48,8 @@ public class GameOfLifeCell extends Cell {
     @Override
     public void setNextStateOnClick() {
         int i = STATES_LIST.indexOf(this.getState());
-        if (STATES_LIST.size()<=i) i = -1;
-        this.setState(STATES_LIST.get(i+1));
+        if (STATES_LIST.size() <= i) i = -1;
+        this.setState(STATES_LIST.get(i + 1));
     }
 
     private boolean willLive(int aliveNeighbors) {
