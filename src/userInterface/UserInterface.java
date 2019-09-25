@@ -119,5 +119,4 @@ public class UserInterface {
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
     }
 
-
 }

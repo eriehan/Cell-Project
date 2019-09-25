@@ -56,7 +56,6 @@ public class MainController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         initializeResources();
         initVisualizations(stage);
     }
@@ -187,6 +186,9 @@ public class MainController extends Application {
     }
 
     private void initButtons() throws IOException, SAXException, ParserConfigurationException {
+
+        this.myUserInterface.getMyButtons().getButtonList().add(new InfoButton(resourceBundle.getString("Help"),resourceBundle.getString("HelpWindowTitle"), resourceBundle.getString("HelpHeaderText"), resourceBundle.getString("HelpContentText")));
+
         SimulationButton selectFileButton = new SimulationButton(resourceBundle.getString("SelectFile"));
         selectFileButton.setOnAction(value -> {
             try {
@@ -232,6 +234,7 @@ public class MainController extends Application {
         edgeTypeChoice.getChoiceBox().setValue(resourceBundle.getString("EdgeTypes").split(",")[0]);
         edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> setEdgeType((String) edgeTypeChoice.getChoiceBox().getValue()));
         this.myUserInterface.getMySlidersAndControls().addChoiceBox(edgeTypeChoice);
+
     }
 
     private void setEdgeType(String edgeType) {
