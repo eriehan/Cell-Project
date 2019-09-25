@@ -10,7 +10,7 @@ public class SegregationCell extends Cell {
     private static final CellState EMPTY = CellState.EMPTY;
     private static final CellState DISATISFIED = CellState.DISATISFIED;
     public static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(CellState.EMPTY,CellState.DISATISFIED));
+            Collections.unmodifiableList(Arrays.asList(EMPTY, CellState.FIRSTAGENT, CellState.SECONDAGENT));
 
     private int agentPercent;
 
@@ -19,6 +19,7 @@ public class SegregationCell extends Cell {
 
         putAttribute(CellAttribute.AGENTPERCENT, agentPercent);
         this.agentPercent = agentPercent;
+        setPossibleStates(STATES_LIST);
     }
 
     @Override
@@ -42,13 +43,6 @@ public class SegregationCell extends Cell {
     @Override
     public void changeState() {
         setState(getNextState());
-    }
-
-    @Override
-    public void setNextStateOnClick() {
-        int i = STATES_LIST.indexOf(this.getState());
-        if (STATES_LIST.size()<=i) i = -1;
-        this.setState(STATES_LIST.get(i+1));
     }
 
     private List<Cell> allNeighbors() {

@@ -15,7 +15,7 @@ public class WaTorCell extends Cell {
     private static final CellState WATER = CellState.WATER;
     private static final CellState SHARK = CellState.SHARK;
     public static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(CellState.FISH, CellState.WATER,CellState.SHARK));
+            Collections.unmodifiableList(Arrays.asList(WATER, FISH ,SHARK));
 
     private boolean moved = false;
 
@@ -26,6 +26,7 @@ public class WaTorCell extends Cell {
         putAttribute(SURVIVE, 0);
         putAttribute(INI_ENERGY, energy);
         putAttribute(REPRODUCE, reproduce);
+        setPossibleStates(STATES_LIST);
     }
 
     @Override
@@ -48,14 +49,6 @@ public class WaTorCell extends Cell {
             }
         }
         moved = false;
-    }
-
-    @Override
-    public void setNextStateOnClick() {
-        int i = STATES_LIST.indexOf(this.getState());
-        i++;
-        if (STATES_LIST.size()<=i) i = 0;
-        this.setState(STATES_LIST.get(i));
     }
 
     private void checkAndMoveToNeighbor(CellState state) {

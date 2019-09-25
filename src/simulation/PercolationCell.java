@@ -7,11 +7,13 @@ import java.util.List;
 public class PercolationCell extends Cell{
     private static final CellState PERCOLATED = CellState.PERCOLATED;
     private static final CellState OPEN = CellState.OPEN;
-    public static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(CellState.PERCOLATED, CellState.OPEN));
+    private static final CellState BLOCKED = CellState.BLOCKED;
+    private static final List<CellState> STATES_LIST =
+            Collections.unmodifiableList(Arrays.asList(OPEN, BLOCKED));
 
     public PercolationCell(int row, int col, CellState state) {
         super(row, col, state);
+        setPossibleStates(STATES_LIST);
     }
     @Override
     public void check() {
@@ -28,13 +30,6 @@ public class PercolationCell extends Cell{
         List<Cell> list = getCornerNeighbor();
         list.addAll(getEdgeNeighbor());
         return list;
-    }
-
-    @Override
-    public void setNextStateOnClick() {
-        int i = STATES_LIST.indexOf(this.getState());
-        if (STATES_LIST.size()<=i) i = -1;
-        this.setState(STATES_LIST.get(i+1));
     }
 
     private boolean percolatedCellNearby() {

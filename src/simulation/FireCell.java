@@ -10,7 +10,7 @@ public class FireCell extends Cell {
     private static final CellState FIREEMPTY = CellState.FIREEMPTY;
     private static final CellState BURNING = CellState.BURNING;
     public static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(CellState.TREE, CellState.FIREEMPTY,CellState.BURNING));
+            Collections.unmodifiableList(Arrays.asList(TREE, FIREEMPTY, BURNING));
 
     private double probCatch;
 
@@ -18,6 +18,7 @@ public class FireCell extends Cell {
         super(row, col, state);
         this.probCatch = probCatch;
         putAttribute(PROBCATCH, (int) probCatch);
+        setPossibleStates(STATES_LIST);
     }
 
     @Override
@@ -31,13 +32,6 @@ public class FireCell extends Cell {
 
     @Override
     public void changeState() { setState(getNextState()); }
-
-    @Override
-    public void setNextStateOnClick() {
-        int i = STATES_LIST.indexOf(this.getState());
-        if (STATES_LIST.size()<=i) i = -1;
-        this.setState(STATES_LIST.get(i+1));
-    }
 
     private boolean isFireNearby() {
         for (Cell neighbor : getEdgeNeighbor()) {

@@ -5,6 +5,7 @@ import utils.Point;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Cell {
@@ -17,6 +18,8 @@ public abstract class Cell {
     private ArrayList<Cell> cornerNeighbors;
     private ArrayList<Cell> edgeNeighbors;
     private Map<CellAttribute, Integer> attributes = new HashMap<>();
+
+    private List<CellState> possibleStates = new ArrayList<>();
 
     public Cell(int row, int col, CellState state) {
         this.state = state;
@@ -106,6 +109,19 @@ public abstract class Cell {
         return attributes.get(cellAttribute);
     }
 
-    public abstract void setNextStateOnClick();
+    public List<CellState> getPossibleStates() {
+        return possibleStates;
+    }
+
+    protected void setPossibleStates(List<CellState> possibleStates) {
+        this.possibleStates = possibleStates;
+    }
+
+    protected void setNextStateOnClick() {
+        if(!possibleStates.contains(state)) {System.out.println("Fix code"); return;}
+        int index = possibleStates.indexOf(getState());
+        if (possibleStates.size()==index-1) index = -1;
+        setState(possibleStates.get(index+1));
+    }
 
 }
