@@ -1,6 +1,5 @@
 package userInterface;
 
-import javafx.animation.Animation;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.layout.HBox;
@@ -22,7 +21,7 @@ public class UserInterface {
     private VBox colTwo;
     private VBox colOne;
     private Buttons myButtons;
-    private Sliders mySliders;
+    private SlidersAndControls mySlidersAndControls;
     private int numOfCols;
     private int numOfRows;
     private Text simulationTitle;
@@ -40,7 +39,7 @@ public class UserInterface {
         simulationTitle.setFont(Font.font("Arial", FontWeight.BOLD, Integer.parseInt(resourceBundle.getString("TitleFont"))));
         myGridView = new RectangleGridView(numOfCols, numOfRows);
         myButtons = new Buttons();
-        mySliders = new Sliders();
+        mySlidersAndControls = new SlidersAndControls();
     }
 
     public Group setScene() {
@@ -51,7 +50,7 @@ public class UserInterface {
         hBox.setPadding(new Insets(10, 50, 50, 50));
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
         colTwo.getChildren().addAll(myButtons.getButtonList());
-        colTwo.getChildren().addAll(mySliders.getMyCol());
+        colTwo.getChildren().addAll(mySlidersAndControls.getMyCol());
         colTwo.setPadding(new Insets(60, 0, 0, 0));
         hBox.getChildren().addAll(colOne, colTwo);
         root.getChildren().add(hBox);
@@ -75,8 +74,8 @@ public class UserInterface {
         return myButtons;
     }
 
-    public Sliders getMySliders() {
-        return mySliders;
+    public SlidersAndControls getMySlidersAndControls() {
+        return mySlidersAndControls;
     }
 
     public void changeTitle(String s) {

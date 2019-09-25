@@ -2,8 +2,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
@@ -235,14 +233,25 @@ public class MainController extends Application {
         this.myUserInterface.getMyButtons().getButtonList().add(saveButton);
 
         SimulationSlider speedSlider = new SimulationSlider(0, 2, 1, resourceBundle.getString("Speed"));
-        speedSlider.getMySlider().valueProperty().addListener(
-                new ChangeListener<Number>() {
-                    public void changed(ObservableValue<? extends Number>
-                                                observable, Number oldValue, Number newValue) {
-                        updateFreq = Math.round(normalUpdateFreq / newValue.floatValue());
-                    }
-                });
-        this.myUserInterface.getMySliders().addSlider(speedSlider);
+        speedSlider.getMySlider().valueProperty().addListener(e -> {
+            Double newValue = (double) Math.round(speedSlider.getMySlider().getValue());
+            updateFreq = Math.round(normalUpdateFreq / newValue.floatValue());
+        });
+        this.myUserInterface.getMySlidersAndControls().addSlider(speedSlider);
+
+        String edgeTypes = resourceBundle.getString("EdgeTypes");
+        SimulationChoice edgeTypeChoice = new SimulationChoice(edgeTypes.split(","), resourceBundle.getString("EdgeTypeChoiceBox"));
+        edgeTypeChoice.getChoiceBox().setValue(edgeTypes.split(",")[0]);
+        edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> {
+            String edgeType = (String) edgeTypeChoice.getChoiceBox().getValue();
+            System.out.println(edgeType);
+            setEdgeType(edgeType);
+        });
+        this.myUserInterface.getMySlidersAndControls().addChoiceBox(edgeTypeChoice);
+    }
+
+    private void setEdgeType(String edgeType) {
+        //TODO: set edge type @Eric
     }
 
     private void save() {

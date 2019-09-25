@@ -1,5 +1,7 @@
 package userInterface;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
@@ -7,29 +9,26 @@ import javafx.scene.text.Font;
 
 import static userInterface.VisualizationConstants.BUTTON_FONT_SIZE;
 
-public class SimulationSlider {
-    private Slider mySlider;
+public class SimulationChoice {
+    private ChoiceBox choiceBox;
     private HBox myHBox;
 
-    public SimulationSlider(double min, double max, double defaultValue, String label){
-        mySlider = new Slider(min,max,defaultValue);
-        mySlider.setShowTickLabels(true);
-        mySlider.setShowTickMarks(true);
-        mySlider.setMajorTickUnit(1);
+    public SimulationChoice(String[] choices, String label){
+        choiceBox = new ChoiceBox(FXCollections.observableArrayList(choices));
         Label myLabel = new Label();
         myLabel.setText(label);
         myLabel.setFont(new Font(BUTTON_FONT_SIZE));
         myHBox = new HBox();
-        myHBox.setSpacing(15);
+        myHBox.setSpacing(10);
         this.myHBox.getChildren().add(myLabel);
-        this.myHBox.getChildren().add(mySlider);
+        this.myHBox.getChildren().add(choiceBox);
     }
 
     public HBox getMyHBox() {
         return myHBox;
     }
 
-    public Slider getMySlider() {
-        return mySlider;
+    public ChoiceBox getChoiceBox() {
+        return choiceBox;
     }
 }
