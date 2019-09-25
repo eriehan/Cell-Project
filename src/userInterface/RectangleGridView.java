@@ -1,9 +1,7 @@
 package userInterface;
 
-import javafx.animation.Animation;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
-import simulation.CellState;
 
 
 public class RectangleGridView extends AbstractGridView {
@@ -24,6 +22,12 @@ public class RectangleGridView extends AbstractGridView {
                 shape.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row, col));
             }
         }
+    }
+
+    @Override
+    public void displayGrid() {
+        getMyGridPane().getChildren().clear();
+        createGrid();
     }
 
     private void changeState(int r, int c) {

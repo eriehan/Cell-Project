@@ -25,17 +25,6 @@ public class TriangleGridView extends AbstractGridView {
     }
 
     @Override
-    public void updateGrid() {
-        if (getMyCellGrid() == null) {
-            return;
-        }
-        myTriangleGroup.getChildren().clear();
-        getMyCellGrid().checkAllCells();
-        getMyCellGrid().changeAllCells();
-        createGrid();
-    }
-
-    @Override
     public void createGrid() {
         boolean rowFlag = true;
         double width = this.getGridWidth() / getNumOfCols() * 2;
@@ -63,15 +52,21 @@ public class TriangleGridView extends AbstractGridView {
                 upTriangle.setLayoutX(rowFlag ? c * width : (c + 0.5) * width);
                 upTriangle.setFill(rowFlag ? firstColor : secondColor);
                 final int row = r;
-                final int upCol = rowFlag ? c * 2:c * 2+1;
-                final int downCol = rowFlag ? c * 2+1:c * 2;
-                upTriangle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row,upCol));
+                final int upCol = rowFlag ? c * 2 : c * 2 + 1;
+                final int downCol = rowFlag ? c * 2 + 1 : c * 2;
+                upTriangle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row, upCol));
                 downTriangle.setLayoutX(rowFlag ? (c + 0.5) * width : c * width);
                 downTriangle.setFill(rowFlag ? secondColor : firstColor);
-                downTriangle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row,downCol));
+                downTriangle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row, downCol));
             }
             rowFlag = !rowFlag;
         }
+    }
+
+    @Override
+    public void displayGrid() {
+        myTriangleGroup.getChildren().clear();
+        createGrid();
     }
 
     private void changeState(int r, int c) {

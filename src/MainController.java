@@ -56,7 +56,6 @@ public class MainController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         initializeResources();
         initVisualizations(stage);
     }
@@ -187,6 +186,9 @@ public class MainController extends Application {
     }
 
     private void initButtons() throws IOException, SAXException, ParserConfigurationException {
+
+        this.myUserInterface.getMyButtons().getButtonList().add(new InfoButton(resourceBundle.getString("Help"),resourceBundle.getString("HelpWindowTitle"), resourceBundle.getString("HelpHeaderText"), resourceBundle.getString("HelpContentText")));
+
         SimulationButton selectFileButton = new SimulationButton(resourceBundle.getString("SelectFile"));
         selectFileButton.setOnAction(value -> {
             try {
@@ -206,7 +208,7 @@ public class MainController extends Application {
 
         this.myUserInterface.getMyButtons().getButtonList().add(startButton);
 
-        this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation, resourceBundle.getString("Pause")));
+        this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation, resourceBundle.getString("Pause"), resourceBundle.getString("Resume")));
 
         SimulationButton resetButton = new SimulationButton(resourceBundle.getString("Reset"));
         resetButton.setOnAction(value -> resetGrid());
@@ -216,16 +218,8 @@ public class MainController extends Application {
         stepButton.setOnAction(value -> stepProcess());
         this.myUserInterface.getMyButtons().getButtonList().add(stepButton);
 
-//        SimulationButton speedUpButton = new SimulationButton(resourceBundle.getString("SpeedUp"));
-//        speedUpButton.setOnAction(value -> speedUp());
-//        this.myUserInterface.getMyButtons().getButtonList().add(speedUpButton);
-//
-//        SimulationButton slowDownButton = new SimulationButton(resourceBundle.getString("SlowDown"));
-//        slowDownButton.setOnAction(value -> slowDown());
-//        this.myUserInterface.getMyButtons().getButtonList().add(slowDownButton);
-
         SimulationButton setStateButton = new SimulationButton(resourceBundle.getString("SetState"));
-        setStateButton.setOnAction(value -> setState());
+        setStateButton.setOnAction(value -> setState(setStateButton));
         this.myUserInterface.getMyButtons().getButtonList().add(setStateButton);
 
         SimulationButton saveButton = new SimulationButton(resourceBundle.getString("Save"));
@@ -233,33 +227,31 @@ public class MainController extends Application {
         this.myUserInterface.getMyButtons().getButtonList().add(saveButton);
 
         SimulationSlider speedSlider = new SimulationSlider(0, 2, 1, resourceBundle.getString("Speed"));
-        speedSlider.getMySlider().valueProperty().addListener(e -> {
-            Double newValue = (double) Math.round(speedSlider.getMySlider().getValue());
-            updateFreq = Math.round(normalUpdateFreq / newValue.floatValue());
-        });
+        speedSlider.getMySlider().valueProperty().addListener(e -> updateSpeed((double) Math.round(speedSlider.getMySlider().getValue())));
         this.myUserInterface.getMySlidersAndControls().addSlider(speedSlider);
 
-        String edgeTypes = resourceBundle.getString("EdgeTypes");
-        SimulationChoice edgeTypeChoice = new SimulationChoice(edgeTypes.split(","), resourceBundle.getString("EdgeTypeChoiceBox"));
-        edgeTypeChoice.getChoiceBox().setValue(edgeTypes.split(",")[0]);
-        edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> {
-            String edgeType = (String) edgeTypeChoice.getChoiceBox().getValue();
-            System.out.println(edgeType);
-            setEdgeType(edgeType);
-        });
+        SimulationChoice edgeTypeChoice = new SimulationChoice(resourceBundle.getString("EdgeTypes").split(","), resourceBundle.getString("EdgeTypeChoiceBox"));
+        edgeTypeChoice.getChoiceBox().setValue(resourceBundle.getString("EdgeTypes").split(",")[0]);
+        edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> setEdgeType((String) edgeTypeChoice.getChoiceBox().getValue()));
         this.myUserInterface.getMySlidersAndControls().addChoiceBox(edgeTypeChoice);
+
     }
 
     private void setEdgeType(String edgeType) {
+        System.out.println("for debug: " + edgeType);
         //TODO: set edge type @Eric
     }
 
     private void save() {
+        if (!checkFileSelected()) return;
         //TODO: save... @Dianne
     }
 
-    private void setState() {
+    private void setState(SimulationButton simulationButton) {
+        if (!checkFileSelected()) return;
         this.setState = !setState;
+        if (setState) simulationButton.setText(resourceBundle.getString("Resume"));
+        else simulationButton.setText(resourceBundle.getString("SetState"));
     }
 
     private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
@@ -282,45 +274,32 @@ public class MainController extends Application {
     }
 
     private void startSimulation() {
-        if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
-            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
-            return;
-        }
+        if (!checkFileSelected()) return;
         this.myAnimation.play();
     }
 
-    private void slowDown() {
-        if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
-            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
-            return;
-        }
-        this.updateFreq *= 1.5;
-    }
-
-    private void speedUp() {
-        if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
-            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
-            return;
-        }
-        this.updateFreq /= 1.5;
+    private void updateSpeed(Double sliderInput) {
+        updateFreq = Math.round(normalUpdateFreq / sliderInput.floatValue());
     }
 
     private void stepProcess() {
-        if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
-            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
-            return;
-        }
+        if (!checkFileSelected()) return;
         this.isStep = true;
         this.myAnimation.pause();
         this.step(secondDelay);
     }
 
     private void resetGrid() {
-        this.myUserInterface.getMyGridView().getMyGridPane().getChildren().clear();
-        this.myUserInterface.getMyGridView().generateBlankGrid();
         this.myUserInterface.getMyGridView().resetCellGrid();
         this.setState = false;
         myAnimation.pause();
+    }
+
+    private boolean checkFileSelected() {
+        if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
+        }
+        return myUserInterface.getMyGridView().getMyCellGrid() != null;
     }
 
 

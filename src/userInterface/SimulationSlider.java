@@ -6,16 +6,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
 import static userInterface.VisualizationConstants.BUTTON_FONT_SIZE;
+import static userInterface.VisualizationConstants.SLIDER_WIDTH;
 
 public class SimulationSlider {
     private Slider mySlider;
     private HBox myHBox;
 
-    public SimulationSlider(double min, double max, double defaultValue, String label){
-        mySlider = new Slider(min,max,defaultValue);
+    public SimulationSlider(double min, double max, double defaultValue, String label) {
+        mySlider = new Slider(min, max, defaultValue);
         mySlider.setShowTickLabels(true);
         mySlider.setShowTickMarks(true);
-        mySlider.setMajorTickUnit(1);
+        mySlider.setMajorTickUnit(0.5);
+        mySlider.setPrefWidth(SLIDER_WIDTH);
         Label myLabel = new Label();
         myLabel.setText(label);
         myLabel.setFont(new Font(BUTTON_FONT_SIZE));

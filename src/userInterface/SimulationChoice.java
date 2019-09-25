@@ -13,7 +13,7 @@ public class SimulationChoice {
     private ChoiceBox choiceBox;
     private HBox myHBox;
 
-    public SimulationChoice(String[] choices, String label){
+    public SimulationChoice(String[] choices, String label) {
         choiceBox = new ChoiceBox(FXCollections.observableArrayList(choices));
         Label myLabel = new Label();
         myLabel.setText(label);

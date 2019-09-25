@@ -1,6 +1,5 @@
 package simulation;
 
-import javafx.scene.shape.Shape;
 import utils.Point;
 
 import java.util.ArrayList;

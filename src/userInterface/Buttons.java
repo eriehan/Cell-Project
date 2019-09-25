@@ -1,6 +1,5 @@
 package userInterface;
 
-import javafx.animation.Animation;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
