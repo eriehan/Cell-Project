@@ -9,7 +9,7 @@ public class PercolationCell extends Cell{
     private static final CellState OPEN = CellState.OPEN;
     private static final CellState BLOCKED = CellState.BLOCKED;
     private static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(OPEN, BLOCKED));
+            Collections.unmodifiableList(Arrays.asList(OPEN, BLOCKED, PERCOLATED));
 
     public PercolationCell(int row, int col, CellState state) {
         super(row, col, state);
