@@ -1,6 +1,5 @@
 package userInterface;
 
-import javafx.animation.Animation;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import simulation.*;
@@ -47,9 +46,9 @@ public abstract class AbstractGridView {
             return;
         }
         myGridPane.getChildren().clear();
-        createGrid();
         myCellGrid.checkAllCells();
         myCellGrid.changeAllCells();
+        createGrid();
     }
 
     //    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
@@ -175,5 +174,8 @@ public abstract class AbstractGridView {
         return this.gridHeight;
     }
 
+    public void setGridHeight(int gridHeight) {
+        this.gridHeight = gridHeight;
+    }
 }
 

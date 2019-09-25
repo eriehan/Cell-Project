@@ -130,6 +130,9 @@ public class MainController extends Application {
             case "rectangle":
                 myUserInterface.setCellShape(CellShapeType.RECTANGLE);
                 break;
+            case "hexagon":
+                myUserInterface.setCellShape(CellShapeType.HEXAGON);
+                break;
         }
     }
 
