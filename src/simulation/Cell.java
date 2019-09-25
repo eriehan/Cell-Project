@@ -117,10 +117,12 @@ public abstract class Cell {
     }
 
     protected void setNextStateOnClick() {
+        System.out.println(possibleStates.size());
         if(!possibleStates.contains(state)) {System.out.println("Fix code"); return;}
         int index = possibleStates.indexOf(getState());
-        if (possibleStates.size()==index-1) index = -1;
+        if (possibleStates.size()==index+1) index = -1;
         setState(possibleStates.get(index+1));
+        //setNextState(getState());
     }
 
 }

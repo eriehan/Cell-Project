@@ -9,10 +9,11 @@ public class GameOfLifeCell extends Cell {
     private static final CellState ALIVE = CellState.ALIVE;
     private static final CellState DEAD = CellState.DEAD;
     private static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(ALIVE, DEAD));
+            Collections.unmodifiableList(Arrays.asList(DEAD, ALIVE));
 
     public GameOfLifeCell(int r, int c, CellState state) {
         super(r, c, state);
+        setPossibleStates(STATES_LIST);
     }
 
     @Override
@@ -20,7 +21,6 @@ public class GameOfLifeCell extends Cell {
         int aliveNeighbors = aliveNeighbors();
         if(willLive(aliveNeighbors)) {setNextState(ALIVE);}
         else {setNextState(DEAD);}
-        setPossibleStates(STATES_LIST);
     }
 
     @Override
