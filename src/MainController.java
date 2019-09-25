@@ -2,6 +2,8 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
@@ -42,6 +44,7 @@ public class MainController extends Application {
     private File myConfigFile;
     private int updateTimer;
     private int updateFreq;
+    private int normalUpdateFreq;
     private boolean isStep = false;
     private String userFile;
     private int cellGridRowNum;
@@ -65,7 +68,8 @@ public class MainController extends Application {
         framesPerSecond = Integer.parseInt(resourceBundle.getString("FPS"));
         millisecondDelay = 1000 / framesPerSecond;
         secondDelay = 1.0 / framesPerSecond;
-        updateFreq = Integer.parseInt(resourceBundle.getString("InitialUpdateFreq"));
+        normalUpdateFreq = Integer.parseInt(resourceBundle.getString("InitialUpdateFreq"));
+        updateFreq = normalUpdateFreq;
         myTitle = resourceBundle.getString("InitialTitle");
     }
 
@@ -214,13 +218,13 @@ public class MainController extends Application {
         stepButton.setOnAction(value -> stepProcess());
         this.myUserInterface.getMyButtons().getButtonList().add(stepButton);
 
-        SimulationButton speedUpButton = new SimulationButton(resourceBundle.getString("SpeedUp"));
-        speedUpButton.setOnAction(value -> speedUp());
-        this.myUserInterface.getMyButtons().getButtonList().add(speedUpButton);
-
-        SimulationButton slowDownButton = new SimulationButton(resourceBundle.getString("SlowDown"));
-        slowDownButton.setOnAction(value -> slowDown());
-        this.myUserInterface.getMyButtons().getButtonList().add(slowDownButton);
+//        SimulationButton speedUpButton = new SimulationButton(resourceBundle.getString("SpeedUp"));
+//        speedUpButton.setOnAction(value -> speedUp());
+//        this.myUserInterface.getMyButtons().getButtonList().add(speedUpButton);
+//
+//        SimulationButton slowDownButton = new SimulationButton(resourceBundle.getString("SlowDown"));
+//        slowDownButton.setOnAction(value -> slowDown());
+//        this.myUserInterface.getMyButtons().getButtonList().add(slowDownButton);
 
         SimulationButton setStateButton = new SimulationButton(resourceBundle.getString("SetState"));
         setStateButton.setOnAction(value -> setState());
@@ -229,6 +233,16 @@ public class MainController extends Application {
         SimulationButton saveButton = new SimulationButton(resourceBundle.getString("Save"));
         saveButton.setOnAction(value -> save());
         this.myUserInterface.getMyButtons().getButtonList().add(saveButton);
+
+        SimulationSlider speedSlider = new SimulationSlider(0, 2, 1, resourceBundle.getString("Speed"));
+        speedSlider.getMySlider().valueProperty().addListener(
+                new ChangeListener<Number>() {
+                    public void changed(ObservableValue<? extends Number>
+                                                observable, Number oldValue, Number newValue) {
+                        updateFreq = Math.round(normalUpdateFreq / newValue.floatValue());
+                    }
+                });
+        this.myUserInterface.getMySliders().addSlider(speedSlider);
     }
 
     private void save() {

@@ -19,10 +19,10 @@ public class UserInterface {
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
 
     private AbstractGridView myGridView;
-    private Group myGroup;
     private VBox colTwo;
     private VBox colOne;
     private Buttons myButtons;
+    private Sliders mySliders;
     private int numOfCols;
     private int numOfRows;
     private Text simulationTitle;
@@ -31,7 +31,6 @@ public class UserInterface {
     private Text errorMsg;
     private Text simulationFilePath;
     private ResourceBundle resourceBundle;
-    private Animation myAnimation;
 
     public UserInterface(int numofRows, int numofCols, String simulationName) {
         this.numOfRows = numofRows;
@@ -41,6 +40,7 @@ public class UserInterface {
         simulationTitle.setFont(Font.font("Arial", FontWeight.BOLD, Integer.parseInt(resourceBundle.getString("TitleFont"))));
         myGridView = new RectangleGridView(numOfCols, numOfRows);
         myButtons = new Buttons();
+        mySliders = new Sliders();
     }
 
     public Group setScene() {
@@ -51,7 +51,8 @@ public class UserInterface {
         hBox.setPadding(new Insets(10, 50, 50, 50));
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
         colTwo.getChildren().addAll(myButtons.getButtonList());
-        colTwo.setPadding(new Insets(30, 0, 0, 0));
+        colTwo.getChildren().addAll(mySliders.getMyCol());
+        colTwo.setPadding(new Insets(60, 0, 0, 0));
         hBox.getChildren().addAll(colOne, colTwo);
         root.getChildren().add(hBox);
         return root;
@@ -72,6 +73,10 @@ public class UserInterface {
 
     public Buttons getMyButtons() {
         return myButtons;
+    }
+
+    public Sliders getMySliders() {
+        return mySliders;
     }
 
     public void changeTitle(String s) {

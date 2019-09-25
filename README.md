@@ -101,3 +101,5 @@ When the size(# of rows, cols) of the 2D grid of cells gets very big, the simula
 ### Impressions
 * For this project, our team has a clear delegation of work. This helped to increase efficiency, since everyone is clear about what they need to work on. Also, it reduces many pontential merge conflicts in GIT. 
 
+Design decision:
+1. hexagon grid cell -> shrink grid height overall 
