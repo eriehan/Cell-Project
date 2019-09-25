@@ -1,10 +1,14 @@
 package simulation;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class PercolationCell extends Cell{
     private static final CellState PERCOLATED = CellState.PERCOLATED;
     private static final CellState OPEN = CellState.OPEN;
+    public static final List<CellState> STATES_LIST =
+            Collections.unmodifiableList(Arrays.asList(CellState.PERCOLATED, CellState.OPEN));
 
     public PercolationCell(int row, int col, CellState state) {
         super(row, col, state);
@@ -24,6 +28,13 @@ public class PercolationCell extends Cell{
         List<Cell> list = getCornerNeighbor();
         list.addAll(getEdgeNeighbor());
         return list;
+    }
+
+    @Override
+    public void setNextStateOnClick() {
+        int i = STATES_LIST.indexOf(this.getState());
+        if (STATES_LIST.size()<=i) i = -1;
+        this.setState(STATES_LIST.get(i+1));
     }
 
     private boolean percolatedCellNearby() {

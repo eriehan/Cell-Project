@@ -1,5 +1,6 @@
 package userInterface;
 
+import javafx.animation.Animation;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import simulation.*;
@@ -173,7 +174,6 @@ public abstract class AbstractGridView {
     public int getGridHeight() {
         return this.gridHeight;
     }
-
 
 }
 

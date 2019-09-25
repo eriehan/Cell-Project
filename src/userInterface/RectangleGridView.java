@@ -1,12 +1,14 @@
 package userInterface;
 
+import javafx.animation.Animation;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import simulation.CellState;
 
 
-public class GridView extends AbstractGridView {
+public class RectangleGridView extends AbstractGridView {
 
-    public GridView(int numOfRows, int numOfCols) {
-
+    public RectangleGridView(int numOfRows, int numOfCols) {
         super(numOfRows, numOfCols);
     }
 
@@ -17,8 +19,16 @@ public class GridView extends AbstractGridView {
                 Rectangle shape = new Rectangle(this.getGridWidth() / getNumOfCols(), this.getGridHeight() / getNumOfRows());
                 shape.setFill(getMyCellGrid().stateOfCellAtPoint(r, c).getMyColor());
                 getMyGridPane().add(shape, c, r);
+                final int row = r;
+                final int col = c;
+                shape.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row, col));
             }
         }
+    }
+
+    private void changeState(int r, int c) {
+        this.getMyCellGrid().setStateOfCellAtPointOnClick(r, c);
+        createGrid();
     }
 }
 

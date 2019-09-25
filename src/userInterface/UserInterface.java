@@ -1,5 +1,6 @@
 package userInterface;
 
+import javafx.animation.Animation;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.layout.HBox;
@@ -30,6 +31,7 @@ public class UserInterface {
     private Text errorMsg;
     private Text simulationFilePath;
     private ResourceBundle resourceBundle;
+    private Animation myAnimation;
 
     public UserInterface(int numofRows, int numofCols, String simulationName) {
         this.numOfRows = numofRows;
@@ -37,7 +39,7 @@ public class UserInterface {
         this.simulationTitle = new Text(simulationName);
         this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
         simulationTitle.setFont(Font.font("Arial", FontWeight.BOLD, Integer.parseInt(resourceBundle.getString("TitleFont"))));
-        myGridView = new GridView(numOfCols, numOfRows);
+        myGridView = new RectangleGridView(numOfCols, numOfRows);
         myButtons = new Buttons();
     }
 
@@ -105,7 +107,7 @@ public class UserInterface {
     }
 
     public void setCellShape(CellShapeType type){
-        if (type == CellShapeType.RECTANGLE) myGridView = new GridView(numOfRows,numOfCols);
+        if (type == CellShapeType.RECTANGLE) myGridView = new RectangleGridView(numOfRows,numOfCols);
         if (type == CellShapeType.TRIANGLE) myGridView = new TriangleGridView(numOfRows,numOfCols);
         myGridView.generateBlankGrid();
         colOne.getChildren().clear();

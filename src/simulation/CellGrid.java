@@ -1,6 +1,7 @@
 package simulation;
 
 import utils.Point;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,10 @@ public abstract class CellGrid {
 
     public CellState stateOfCellAtPoint(int row, int col) {return gridOfCells.get(new Point(row, col)).getState();}
 
+    public void setStateOfCellAtPointOnClick(int row, int col) {gridOfCells.get(new Point(row, col)).setNextStateOnClick();}
+
     public boolean isFinished() {return finished;}
 
     protected void setFinished(boolean finished) {this.finished = finished;}
+
 }

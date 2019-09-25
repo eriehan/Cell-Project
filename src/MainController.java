@@ -50,6 +50,7 @@ public class MainController extends Application {
     private ArrayList<Integer> MaturityArray = new ArrayList<>();
     private double rate;
     private ResourceBundle resourceBundle;
+    private boolean setState = false;
 
 
     @Override
@@ -86,6 +87,7 @@ public class MainController extends Application {
     }
 
     private void step(double elapsedTime) {
+        if (setState) return;
         if (updateTimer > updateFreq || isStep) {
             updateTimer = 0;
             myUserInterface.update();
@@ -120,7 +122,7 @@ public class MainController extends Application {
         Node shapeNode = doc.getElementsByTagName("Shape").item(0);
         Element shapeElement = (Element) shapeNode;
         String shape = shapeElement.getAttribute("name");
-        switch(shape){
+        switch (shape) {
             case "triangle":
                 myUserInterface.setCellShape(CellShapeType.TRIANGLE);
                 break;
@@ -216,6 +218,22 @@ public class MainController extends Application {
         SimulationButton slowDownButton = new SimulationButton(resourceBundle.getString("SlowDown"));
         slowDownButton.setOnAction(value -> slowDown());
         this.myUserInterface.getMyButtons().getButtonList().add(slowDownButton);
+
+        SimulationButton setStateButton = new SimulationButton(resourceBundle.getString("SetState"));
+        setStateButton.setOnAction(value -> setState());
+        this.myUserInterface.getMyButtons().getButtonList().add(setStateButton);
+
+        SimulationButton saveButton = new SimulationButton(resourceBundle.getString("Save"));
+        saveButton.setOnAction(value -> save());
+        this.myUserInterface.getMyButtons().getButtonList().add(saveButton);
+    }
+
+    private void save() {
+        //TODO: save... @Dianne
+    }
+
+    private void setState() {
+        this.setState = !setState;
     }
 
     private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
@@ -275,6 +293,7 @@ public class MainController extends Application {
         this.myUserInterface.getMyGridView().getMyGridPane().getChildren().clear();
         this.myUserInterface.getMyGridView().generateBlankGrid();
         this.myUserInterface.getMyGridView().resetCellGrid();
+        this.setState = false;
         myAnimation.pause();
     }
 

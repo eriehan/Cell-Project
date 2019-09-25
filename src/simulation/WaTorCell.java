@@ -1,6 +1,8 @@
 package simulation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class WaTorCell extends Cell {
@@ -12,6 +14,8 @@ public class WaTorCell extends Cell {
     private static final CellState FISH = CellState.FISH;
     private static final CellState WATER = CellState.WATER;
     private static final CellState SHARK = CellState.SHARK;
+    public static final List<CellState> STATES_LIST =
+            Collections.unmodifiableList(Arrays.asList(CellState.FISH, CellState.WATER,CellState.SHARK));
 
     private boolean moved = false;
 
@@ -44,6 +48,14 @@ public class WaTorCell extends Cell {
             }
         }
         moved = false;
+    }
+
+    @Override
+    public void setNextStateOnClick() {
+        int i = STATES_LIST.indexOf(this.getState());
+        i++;
+        if (STATES_LIST.size()<=i) i = 0;
+        this.setState(STATES_LIST.get(i));
     }
 
     private void checkAndMoveToNeighbor(CellState state) {

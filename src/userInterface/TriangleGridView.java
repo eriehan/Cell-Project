@@ -1,6 +1,8 @@
 package userInterface;
 
+import javafx.animation.Animation;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -60,11 +62,21 @@ public class TriangleGridView extends AbstractGridView {
                 Color secondColor = getMyCellGrid().stateOfCellAtPoint(r, c * 2 + 1).getMyColor();
                 upTriangle.setLayoutX(rowFlag ? c * width : (c + 0.5) * width);
                 upTriangle.setFill(rowFlag ? firstColor : secondColor);
+                final int row = r;
+                final int upCol = rowFlag ? c * 2:c * 2+1;
+                final int downCol = rowFlag ? c * 2+1:c * 2;
+                upTriangle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row,upCol));
                 downTriangle.setLayoutX(rowFlag ? (c + 0.5) * width : c * width);
                 downTriangle.setFill(rowFlag ? secondColor : firstColor);
+                downTriangle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row,downCol));
             }
             rowFlag = !rowFlag;
         }
+    }
+
+    private void changeState(int r, int c) {
+        this.getMyCellGrid().setStateOfCellAtPointOnClick(r, c);
+        createGrid();
     }
 
 

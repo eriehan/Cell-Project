@@ -1,5 +1,6 @@
 package simulation;
 
+import javafx.scene.shape.Shape;
 import utils.Point;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public abstract class Cell {
     public Cell(int row, int col, CellState state) {
         this.state = state;
         this.nextState = state;
-        this.coord = new Point(row,col);
+        this.coord = new Point(row, col);
 
         cornerNeighbors = new ArrayList<>();
         edgeNeighbors = new ArrayList<>();
@@ -88,7 +89,9 @@ public abstract class Cell {
         return coord.getCol();
     }
 
-    public void setCol(int col) { coord.setCol(col); }
+    public void setCol(int col) {
+        coord.setCol(col);
+    }
 
     public void clearNeighbors() {
         edgeNeighbors.clear();
@@ -102,4 +105,7 @@ public abstract class Cell {
     public int getAttribute(CellAttribute cellAttribute) {
         return attributes.get(cellAttribute);
     }
+
+    public abstract void setNextStateOnClick();
+
 }
