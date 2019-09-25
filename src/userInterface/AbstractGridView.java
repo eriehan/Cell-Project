@@ -45,10 +45,9 @@ public abstract class AbstractGridView {
         if (myCellGrid == null) {
             return;
         }
-        myGridPane.getChildren().clear();
         myCellGrid.checkAllCells();
         myCellGrid.changeAllCells();
-        createGrid();
+        displayGrid();
     }
 
     //    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
@@ -128,14 +127,18 @@ public abstract class AbstractGridView {
         this.initialConfigMap = configMap;
         getMyCellGrid().initializeGrids(configMap);
         getMyCellGrid().assignNeighborsToEachCell();
+        displayGrid();
     }
+
+    public abstract void displayGrid();
 
     public void resetCellGrid() {
         if (initialConfigMap == null) {
             return;
         }
-        getMyCellGrid().initializeGrids(this.initialConfigMap);
+        getMyCellGrid().initializeGrids(initialConfigMap);
         getMyCellGrid().assignNeighborsToEachCell();
+        displayGrid();
     }
 
     public GridPane getMyGridPane() {

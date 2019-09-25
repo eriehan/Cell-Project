@@ -25,17 +25,6 @@ public class TriangleGridView extends AbstractGridView {
     }
 
     @Override
-    public void updateGrid() {
-        if (getMyCellGrid() == null) {
-            return;
-        }
-        myTriangleGroup.getChildren().clear();
-        getMyCellGrid().checkAllCells();
-        getMyCellGrid().changeAllCells();
-        createGrid();
-    }
-
-    @Override
     public void createGrid() {
         boolean rowFlag = true;
         double width = this.getGridWidth() / getNumOfCols() * 2;
@@ -72,6 +61,12 @@ public class TriangleGridView extends AbstractGridView {
             }
             rowFlag = !rowFlag;
         }
+    }
+
+    @Override
+    public void displayGrid(){
+        myTriangleGroup.getChildren().clear();
+        createGrid();
     }
 
     private void changeState(int r, int c) {

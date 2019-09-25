@@ -47,11 +47,11 @@ public class UserInterface {
         colOne = new VBox(20);
         colTwo = new VBox(20);
         HBox hBox = new HBox(20);
-        hBox.setPadding(new Insets(10, 50, 50, 50));
+        hBox.setPadding(new Insets(20, 50, 50, 50));
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
         colTwo.getChildren().addAll(myButtons.getButtonList());
         colTwo.getChildren().addAll(mySlidersAndControls.getMyCol());
-        colTwo.setPadding(new Insets(60, 0, 0, 0));
+        colTwo.setPadding(new Insets(70, 0, 0, 0));
         hBox.getChildren().addAll(colOne, colTwo);
         root.getChildren().add(hBox);
         return root;

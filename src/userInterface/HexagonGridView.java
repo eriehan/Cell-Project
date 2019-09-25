@@ -25,15 +25,6 @@ public class HexagonGridView extends AbstractGridView {
     }
 
     @Override
-    public void updateGrid() {
-        if (getMyCellGrid() == null) return;
-        myHexagonGroup.getChildren().clear();
-        getMyCellGrid().checkAllCells();
-        getMyCellGrid().changeAllCells();
-        createGrid();
-    }
-
-    @Override
     public void createGrid() {
         boolean rowFlag = true;
         double width = this.getGridWidth() / (getNumOfCols()*1.5 + 0.25) ;
@@ -58,6 +49,12 @@ public class HexagonGridView extends AbstractGridView {
             }
             rowFlag = !rowFlag;
         }
+    }
+
+    @Override
+    public void displayGrid(){
+        myHexagonGroup.getChildren().clear();
+        createGrid();
     }
 
     private void changeState(int r, int c) {

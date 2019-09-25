@@ -26,6 +26,12 @@ public class RectangleGridView extends AbstractGridView {
         }
     }
 
+    @Override
+    public void displayGrid(){
+        getMyGridPane().getChildren().clear();
+        createGrid();
+    }
+
     private void changeState(int r, int c) {
         this.getMyCellGrid().setStateOfCellAtPointOnClick(r, c);
         createGrid();
