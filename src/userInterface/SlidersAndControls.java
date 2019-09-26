@@ -5,13 +5,14 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class SlidersAndControls {
+    private static final int SPACING = 15;
     private ArrayList<SimulationSlider> sliderList;
     private VBox myCol;
 
     public SlidersAndControls() {
         sliderList = new ArrayList<>();
         myCol = new VBox();
-        myCol.setSpacing(15);
+        myCol.setSpacing(SPACING);
     }
 
 

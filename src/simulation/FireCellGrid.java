@@ -15,16 +15,20 @@ public class FireCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void initializeControlPannel() {
-        String[] sliderArrays = getControlPanel().getResourceBundle().getString("FireControls").split(";");
-        for (String sliderArray : sliderArrays){
-            String[] sliderValues = sliderArray.split(",");
-            SimulationSlider probCatchSlider = new SimulationSlider(Integer.parseInt(sliderValues[0]),Integer.parseInt(sliderValues[1]),Integer.parseInt(sliderValues[2]),sliderValues[3]);
+        String[] controlsList = getControlPanel().getResourceBundle().getString("FireControls").split(",");
+        for (String controlType : controlsList) {
+            int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));
+            int maxVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "max"));
+            int defaultVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "default"));
+            String title = getControlPanel().getResourceBundle().getString(controlType + "." + "title");
+            SimulationSlider probCatchSlider = new SimulationSlider(minVal, maxVal, defaultVal, title);
             probCatchSlider.getMySlider().valueProperty().addListener(e -> updateProbCatch((double) Math.round(probCatchSlider.getMySlider().getValue())));
             getControlPanel().getMyColPanel().getChildren().add(probCatchSlider.getvBox());
+
         }
     }
 
-    private void updateProbCatch(double newProbCatch){
+    private void updateProbCatch(double newProbCatch) {
         //TODO
     }
 
