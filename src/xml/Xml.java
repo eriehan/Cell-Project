@@ -5,20 +5,32 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import simulation.Cell;
+import simulation.CellState;
+import userInterface.AbstractGridView;
 import userInterface.CellShapeType;
 import userInterface.UserInterface;
+import utils.Point;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Xml {
     private ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
     private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
     private File xmlFile;
+    private String shape;
     private int numAgents = 0;
     private int cellGridColNum;
     private int cellGridRowNum;
@@ -142,7 +154,7 @@ public class Xml {
     private void determineCellShape(Document doc) {
         Node shapeNode = doc.getElementsByTagName("Shape").item(0);
         Element shapeElement = (Element) shapeNode;
-        String shape = shapeElement.getAttribute("name");
+        shape = shapeElement.getAttribute("name");
         switch (shape) {
             case "triangle":
                 this.myUserInterface.setCellShape(CellShapeType.TRIANGLE);
@@ -154,5 +166,163 @@ public class Xml {
                 this.myUserInterface.setCellShape(CellShapeType.HEXAGON);
                 break;
         }
+    }
+
+    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
+        System.out.println("entered");
+        Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
+
+        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
+        ArrayList<Integer> agent1Row = new ArrayList<>();
+        ArrayList<Integer> agent2Row = new ArrayList<>();
+        ArrayList<Integer> agent1Col = new ArrayList<>();
+        ArrayList<Integer> agent2Col = new ArrayList<>();
+        for (Map.Entry<Point, Cell> entry: myMap.entrySet()
+        ) {
+            Cell c = entry.getValue();
+            //have one for the single states
+            if(c.getState().equals(CellState.PERCOLATED) || c.getState().equals(CellState.ALIVE) ||
+                    c.getState().equals(CellState.FIRSTAGENT)||
+                    c.getState().equals(CellState.SHARK) || c.getState().equals(CellState.BURNING)){
+                agent1Row.add(entry.getKey().getRow());
+                agent1Col.add(entry.getKey().getCol());
+            }
+            else if (c.getState().equals(CellState.SECONDAGENT) || c.getState().equals(CellState.FISH)
+            || c.getState().equals(CellState.BLOCKED)){
+                agent2Row.add(entry.getKey().getRow());
+                agent2Col.add(entry.getKey().getCol());
+            }
+        }
+
+        if(agent1Col.size() != 0){
+            colArray.add(agent1Col);
+        }
+        if(agent2Col.size() != 0){
+            colArray.add(agent2Col);
+        }
+        if(agent1Row.size() != 0){
+            rowArray.add(agent1Row);
+        }
+        if(agent2Row.size() != 0){
+            rowArray.add(agent2Row);
+        }
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.newDocument();
+
+        //make root element
+        Element root = document.createElement("Simulation");
+        document.appendChild(root);
+
+        //Shape element
+        Element shape = document.createElement("Shape");
+        shape.appendChild(document.createTextNode("1"));
+        shape.setAttribute("name", this.shape);
+        root.appendChild(shape);
+
+        Element type = document.createElement("Type");
+        type.setAttribute("name", this.myTitle);
+        type.appendChild(document.createTextNode("1"));
+        root.appendChild(type);
+
+        Element Row = document.createElement("Row");
+        Row.appendChild(document.createTextNode(Integer.toString(this.cellGridRowNum)));
+        root.appendChild(Row);
+
+        Element Col = document.createElement("Col");
+        Col.appendChild(document.createTextNode(Integer.toString(this.cellGridColNum)));
+        root.appendChild(Col);
+
+        Element Rate = document.createElement("Rate");
+        Rate.appendChild(document.createTextNode(Integer.toString(this.rate)));
+        root.appendChild(Rate);
+
+        System.out.println(rowArray);
+
+        if(rowArray.size() >= 1){
+            Element agent0 = document.createElement("Agent0");
+            Element row0 = document.createElement("Row");
+
+            String s = "" + rowArray.get(0).get(0);
+            for(int i = 1; i < rowArray.get(0).size(); i++){
+                s = s + " " + rowArray.get(0).get(i);
+            }
+
+            row0.appendChild(document.createTextNode(s));
+            agent0.appendChild(row0);
+
+
+            String c = "" + colArray.get(0).get(0);
+            for(int i = 1; i < colArray.get(0).size(); i++){
+                c = c + " " + colArray.get(0).get(i);
+            }
+            Element col0 = document.createElement("Column");
+            col0.appendChild(document.createTextNode(c));
+            agent0.appendChild(col0);
+            root.appendChild(agent0);
+
+            System.out.println(rowArray);
+
+            if(rowArray.size() > 1) {
+                Element agent1 = document.createElement("Agent1");
+                Element row1 = document.createElement(("Row"));
+                String r1 = "" + rowArray.get(1).get(0);
+                for (int i = 1; i < rowArray.get(1).size(); i++) {
+                    r1 = r1 + " " + rowArray.get(1).get(i);
+                }
+                row1.appendChild(document.createTextNode(r1));
+                agent1.appendChild(row1);
+
+                Element col1 = document.createElement("Column");
+                String c1 = "" + rowArray.get(1).get(0);
+                for (int i = 1; i < colArray.get(1).size(); i++) {
+                    c1 = c1 + " " + colArray.get(1).get(i);
+                }
+                col1.appendChild(document.createTextNode(c1));
+                agent1.appendChild(col1);
+                root.appendChild(agent1);
+            }
+        }
+//        else{
+//            Element agent0 = document.createElement("Agent0");
+//            Element row0 = document.createElement("Row");
+//
+//            String s = "" + rowArray.get(0).get(0);
+//            for(int i = 1; i < rowArray.get(0).size(); i++){
+//                s = s + " " + rowArray.get(0).get(i);
+//            }
+//
+//            row0.appendChild(document.createTextNode(s));
+//            agent0.appendChild(row0);
+//
+//
+//            String c = "" + colArray.get(0).get(0);
+//            for(int i = 1; i < colArray.get(0).size(); i++){
+//                c = c + " " + colArray.get(0).get(i);
+//            }
+//            Element col0 = document.createElement("Column");
+//            col0.appendChild(document.createTextNode(c));
+//            agent0.appendChild(col0);
+//            root.appendChild(agent0);
+//           // root.appendChild(agent0);
+//
+//
+//        }
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource domSource = new DOMSource(document);
+        StringBuilder file = new StringBuilder(String.valueOf(xmlFilePath));
+        String filePath = file.substring(0, file.length() - 5);
+        filePath = filePath + "Saved.xml";
+        System.out.println(filePath);
+        StreamResult streamResult = new StreamResult(new File(filePath));
+        System.out.println(streamResult);
+        transformer.transform(domSource, streamResult);
+
+
+
     }
 }

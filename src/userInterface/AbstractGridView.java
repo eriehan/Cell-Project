@@ -2,10 +2,15 @@ package userInterface;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import simulation.*;
 import utils.Point;
 import xml.Xml;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +28,7 @@ public abstract class AbstractGridView {
     private CellGrid myCellGrid;
     private Map<Point, CellState> initialConfigMap;
     private ResourceBundle resourceBundle;
+    private Map configMap = new HashMap<Point, CellState>();
 
 
     public AbstractGridView(int numOfRows, int numOfCols) {
@@ -51,14 +57,9 @@ public abstract class AbstractGridView {
         displayGrid();
     }
 
-    //    public abstract void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize);
-//    public void initializeMyCellGrid(ArrayList<ArrayList<Integer>> row, ArrayList<ArrayList<Integer>> col, String s, int rowSize, int colSize,
-//                                     ArrayList<Integer> energyArray, ArrayList<Integer> maturityArray, double rate) {
     public void initializeMyCellGrid(Xml myXml){
 
-        Map configMap = new HashMap<Point, CellState>();
-
-        //System.out.println(s);
+        //Map configMap = new HashMap<Point, CellState>();
 
         switch (myXml.getMyTitle()) {
             case "Segregation":
@@ -73,7 +74,7 @@ public abstract class AbstractGridView {
                         }
                     }
                 }
-                //TODO: make this work
+
                 setMyCellGrid(new SegregationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), (int) myXml.getRate(), (int) myXml.getRate()));
                 break;
             case "Game Of Life":
@@ -127,11 +128,13 @@ public abstract class AbstractGridView {
                 break;
 
         }
+
         this.initialConfigMap = configMap;
         getMyCellGrid().initializeGrids(configMap);
         getMyCellGrid().assignNeighborsToEachCell();
         displayGrid();
     }
+
 
     public abstract void displayGrid();
 
@@ -183,5 +186,7 @@ public abstract class AbstractGridView {
     public void setGridHeight(int gridHeight) {
         this.gridHeight = gridHeight;
     }
+
+
 }
 

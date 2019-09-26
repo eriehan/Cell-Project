@@ -14,10 +14,10 @@ import xml.Xml;
 
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import static userInterface.VisualizationConstants.*;
@@ -133,7 +133,15 @@ public class MainController extends Application {
         this.myUserInterface.getMyButtons().getButtonList().add(setStateButton);
 
         SimulationButton saveButton = new SimulationButton(resourceBundle.getString("Save"));
-        saveButton.setOnAction(value -> save());
+        saveButton.setOnAction(value -> {
+            try {
+                save();
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+        });
         this.myUserInterface.getMyButtons().getButtonList().add(saveButton);
 
         SimulationSlider speedSlider = new SimulationSlider(0, 2, 1, resourceBundle.getString("Speed"));
@@ -152,8 +160,10 @@ public class MainController extends Application {
         //TODO: set edge type @Eric
     }
 
-    private void save() {
+    private void save() throws TransformerException, ParserConfigurationException {
         if (!checkFileSelected()) return;
+        myXml.saveCurrentSimulation(this.myUserInterface.getMyGridView(), myConfigFile);
+        System.out.println("configFile: " + myConfigFile);
         //TODO: save... @Dianne
     }
 
@@ -182,7 +192,6 @@ public class MainController extends Application {
         myXml = new Xml(this.myUserInterface);
         myXml.parse(this.userFile);
         myUserInterface.getMyGridView().initializeMyCellGrid(myXml);
-        //parseXML(this.userFile);
         this.myAnimation.pause();
     }
 
