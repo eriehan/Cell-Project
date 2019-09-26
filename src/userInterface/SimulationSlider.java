@@ -9,6 +9,8 @@ import static userInterface.VisualizationConstants.SLIDER_FONT_SIZE;
 import static userInterface.VisualizationConstants.SLIDER_WIDTH;
 
 public class SimulationSlider {
+    private static final int NUM_OF_TICKS = 5;
+    private static final int SPACING = 5;
     private Slider mySlider;
     private VBox vBox;
 
@@ -16,13 +18,13 @@ public class SimulationSlider {
         mySlider = new Slider(min, max, defaultValue);
         mySlider.setShowTickLabels(true);
         mySlider.setShowTickMarks(true);
-        mySlider.setMajorTickUnit((max-min)/10);
+        mySlider.setMajorTickUnit((max-min)/NUM_OF_TICKS);
         mySlider.setPrefWidth(SLIDER_WIDTH);
         Label myLabel = new Label();
         myLabel.setText(label);
         myLabel.setFont(new Font(SLIDER_FONT_SIZE));
         vBox = new VBox();
-        vBox.setSpacing(5);
+        vBox.setSpacing(SPACING);
         this.vBox.getChildren().add(myLabel);
         this.vBox.getChildren().add(mySlider);
     }
