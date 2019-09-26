@@ -3,6 +3,7 @@
 <Simulation>
     <Author>Diane Lin</Author>
     <Shape name = "rectangle">1</Shape>
+    <Saved>0</Saved>
     <Type name = "Fire">1</Type>
     <Row>10</Row>
     <Col>10</Col>

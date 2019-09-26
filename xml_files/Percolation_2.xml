@@ -4,6 +4,7 @@
     <Author>Diane Lin</Author>
     <Shape name = "rectangle">1</Shape>
     <Type name = "Percolation">2</Type>
+    <Saved>0</Saved>
 
     <Row>70</Row>
     <Col>70</Col>

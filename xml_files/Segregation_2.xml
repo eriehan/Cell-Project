@@ -4,6 +4,7 @@
     <Author>Diane Lin</Author>
     <Shape name = "rectangle">1</Shape>
     <Type name = "Segregation">2</Type>
+    <Saved>0</Saved>
 
     <Row>20</Row>
     <Col>20</Col>

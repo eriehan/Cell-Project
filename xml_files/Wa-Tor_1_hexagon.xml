@@ -4,6 +4,7 @@
 <Simulation>
     <Author>Diane Lin</Author>
     <Shape name = "hexagon">1</Shape>
+    <Saved>0</Saved>
     <Type name = "Wa-Tor">2</Type>
 
     <Row>10</Row>

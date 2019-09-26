@@ -169,7 +169,6 @@ public class Xml {
     }
 
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
-        System.out.println("entered");
         Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
 
         ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
@@ -216,11 +215,16 @@ public class Xml {
         Element root = document.createElement("Simulation");
         document.appendChild(root);
 
+        Element saved = document.createElement("Saved");
+        saved.appendChild(document.createTextNode("1"));
+        root.appendChild(saved);
+
         //Shape element
         Element shape = document.createElement("Shape");
         shape.appendChild(document.createTextNode("1"));
         shape.setAttribute("name", this.shape);
         root.appendChild(shape);
+
 
         Element type = document.createElement("Type");
         type.setAttribute("name", this.myTitle);
@@ -238,8 +242,6 @@ public class Xml {
         Element Rate = document.createElement("Rate");
         Rate.appendChild(document.createTextNode(Integer.toString(this.rate)));
         root.appendChild(Rate);
-
-        System.out.println(rowArray);
 
         if(rowArray.size() >= 1){
             Element agent0 = document.createElement("Agent0");
@@ -285,37 +287,13 @@ public class Xml {
                 root.appendChild(agent1);
             }
         }
-//        else{
-//            Element agent0 = document.createElement("Agent0");
-//            Element row0 = document.createElement("Row");
-//
-//            String s = "" + rowArray.get(0).get(0);
-//            for(int i = 1; i < rowArray.get(0).size(); i++){
-//                s = s + " " + rowArray.get(0).get(i);
-//            }
-//
-//            row0.appendChild(document.createTextNode(s));
-//            agent0.appendChild(row0);
-//
-//
-//            String c = "" + colArray.get(0).get(0);
-//            for(int i = 1; i < colArray.get(0).size(); i++){
-//                c = c + " " + colArray.get(0).get(i);
-//            }
-//            Element col0 = document.createElement("Column");
-//            col0.appendChild(document.createTextNode(c));
-//            agent0.appendChild(col0);
-//            root.appendChild(agent0);
-//           // root.appendChild(agent0);
-//
-//
-//        }
+
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSource = new DOMSource(document);
         StringBuilder file = new StringBuilder(String.valueOf(xmlFilePath));
-        String filePath = file.substring(0, file.length() - 5);
+        String filePath = file.substring(0, file.length() - 4);
         filePath = filePath + "Saved.xml";
         System.out.println(filePath);
         StreamResult streamResult = new StreamResult(new File(filePath));
