@@ -30,11 +30,15 @@ public class FireCell extends Cell {
     }
 
     @Override
-    public void changeState() { setState(getNextState()); }
+    public void changeState() {
+        setState(getNextState());
+    }
 
     private boolean isFireNearby() {
         for (Cell neighbor : getEdgeNeighbor()) {
-            if (neighbor.getState()== CellState.BURNING) { return true; }
+            if (neighbor.getState()== CellState.BURNING) {
+                return true;
+            }
         }
         return false;
     }
