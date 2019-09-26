@@ -152,7 +152,6 @@ public class MainController extends Application {
         edgeTypeChoice.getChoiceBox().setValue(resourceBundle.getString("EdgeTypes").split(",")[0]);
         edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> setEdgeType((String) edgeTypeChoice.getChoiceBox().getValue()));
         this.myUserInterface.getMySlidersAndControls().addChoiceBox(edgeTypeChoice);
-
     }
 
     private void setEdgeType(String edgeType) {
@@ -192,6 +191,7 @@ public class MainController extends Application {
         myXml = new Xml(this.myUserInterface);
         myXml.parse(this.userFile);
         myUserInterface.getMyGridView().initializeMyCellGrid(myXml);
+        this.myUserInterface.addSimulationControls();
         this.myAnimation.pause();
     }
 

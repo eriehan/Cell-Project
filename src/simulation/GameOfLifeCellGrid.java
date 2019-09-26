@@ -1,6 +1,8 @@
 package simulation;
 
 import userInterface.CellShapeType;
+import userInterface.SimulationButton;
+import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.Map;
@@ -9,6 +11,10 @@ public class GameOfLifeCellGrid extends CellGrid {
 
     public GameOfLifeCellGrid(int numRows, int numCols) {
         super(numRows, numCols);
+    }
+
+    @Override
+    public void initializeControlPannel() {
     }
 
     @Override
