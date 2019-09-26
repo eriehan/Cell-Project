@@ -27,7 +27,7 @@ public class Point {
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof Point && ((Point) other).getRow()==row && ((Point) other).getCol()==col;
+        return other.getClass().equals(getClass()) && ((Point) other).getRow()==row && ((Point) other).getCol()==col;
     }
 
     @Override
