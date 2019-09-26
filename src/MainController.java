@@ -9,12 +9,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.xml.sax.SAXException;
 import userInterface.*;
-<<<<<<< HEAD
 import xml.*;
 
-=======
-import xml.Xml;
->>>>>>> 6398e2d0405a2ca7af11ede14a78c54c09b2c38b
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
