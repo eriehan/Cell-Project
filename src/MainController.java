@@ -81,7 +81,7 @@ public class MainController extends Application {
 
     private void step(double elapsedTime) {
         if (setState) return;
-        if (updateTimer > updateFreq || isStep) {
+        else if (updateTimer > updateFreq) {
             updateTimer = 0;
             myUserInterface.update();
         } else {
@@ -208,7 +208,7 @@ public class MainController extends Application {
         if (!checkFileSelected()) return;
         this.isStep = true;
         this.myAnimation.pause();
-        this.step(secondDelay);
+        this.myUserInterface.update();
     }
 
     private void resetGrid() {
