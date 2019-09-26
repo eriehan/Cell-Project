@@ -14,8 +14,8 @@ public abstract class Cell {
     private Point coord; // x is row, y is col
 
 
-    private ArrayList<Cell> cornerNeighbors;
-    private ArrayList<Cell> edgeNeighbors;
+    private List<Cell> cornerNeighbors = new ArrayList<>();
+    private List<Cell> edgeNeighbors = new ArrayList<>();
     private Map<CellAttribute, Integer> attributes = new HashMap<>();
 
     private List<CellState> possibleStates = new ArrayList<>();
@@ -57,11 +57,11 @@ public abstract class Cell {
         edgeNeighbors.add(neighbor);
     }
 
-    public ArrayList<Cell> getCornerNeighbor() {
+    public List<Cell> getCornerNeighbor() {
         return cornerNeighbors;
     }
 
-    public ArrayList<Cell> getEdgeNeighbor() {
+    public List<Cell> getEdgeNeighbor() {
         return edgeNeighbors;
     }
 
@@ -143,5 +143,16 @@ public abstract class Cell {
     @Override
     public int hashCode() {
         return coord.toString().hashCode() + "Cell".hashCode();
+    }
+
+    protected int countNeighborsWithState(CellState state) {
+        int count = 0;
+        for (Cell cell : getCornerNeighbor()) {
+            if (cell.getState() == state) { count++; }
+        }
+        for (Cell cell : getEdgeNeighbor()) {
+            if (cell.getState() == state) { count++; }
+        }
+        return count;
     }
 }
