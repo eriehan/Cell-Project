@@ -16,7 +16,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -151,6 +150,7 @@ public class Xml {
                 endIndex++;
             }
         }
+        myInts.add(Integer.parseInt("" + myStringBuilder.charAt(myStringBuilder.length()-1)));
         return myInts;
     }
 
@@ -248,6 +248,14 @@ public class Xml {
 
         if(rowArray.size() >= 1){
             Element agent0 = document.createElement("Agent0");
+            if(this.myTitle.equals("Wa-Tor")){
+                Element energy = document.createElement("Energy");
+                energy.appendChild(document.createTextNode(Integer.toString(this.getEnergyArray().get(0))));
+                agent0.appendChild(energy);
+                Element maturity = document.createElement("Mature");
+                maturity.appendChild(document.createTextNode(Integer.toString(this.getMaturityArray().get(0))));
+                agent0.appendChild(maturity);
+            }
             Element row0 = document.createElement("Row");
 
             String s = "" + rowArray.get(0).get(0);
@@ -272,6 +280,14 @@ public class Xml {
 
             if(rowArray.size() > 1) {
                 Element agent1 = document.createElement("Agent1");
+                if(this.myTitle.equals("Wa-Tor")){
+                    Element energy = document.createElement("Energy");
+                    energy.appendChild(document.createTextNode(Integer.toString(this.getEnergyArray().get(1))));
+                    agent1.appendChild(energy);
+                    Element maturity = document.createElement("Mature");
+                    maturity.appendChild(document.createTextNode(Integer.toString(this.getMaturityArray().get(1))));
+                    agent1.appendChild(maturity);
+                }
                 Element row1 = document.createElement(("Row"));
                 String r1 = "" + rowArray.get(1).get(0);
                 for (int i = 1; i < rowArray.get(1).size(); i++) {

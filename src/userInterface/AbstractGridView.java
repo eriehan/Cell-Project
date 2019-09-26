@@ -59,17 +59,17 @@ public abstract class AbstractGridView {
 
     public void initializeMyCellGrid(Xml myXml){
 
-        //Map configMap = new HashMap<Point, CellState>();
 
         switch (myXml.getMyTitle()) {
             case "Segregation":
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
+                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
                     if (i == 0) {
-                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                        for (int j = 0; j < size; j++) {
                             configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FIRSTAGENT);
                         }
                     } else {
-                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                        for (int j = 0; j < size; j++) {
                             configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.SECONDAGENT);
                         }
                     }
@@ -79,7 +79,8 @@ public abstract class AbstractGridView {
                 break;
             case "Game Of Life":
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-                    for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
+                    for (int j = 0; j < size; j++) {
                         configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.ALIVE);
                     }
                 }
@@ -87,12 +88,13 @@ public abstract class AbstractGridView {
                 break;
             case "Wa-Tor":
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
+                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
                     if (i == 0) {
-                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                        for (int j = 0; j < size; j++) {
                             configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.SHARK);
                         }
                     } else {
-                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                        for (int j = 0; j < size; j++) {
                             configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FISH);
                         }
                     }
@@ -103,12 +105,13 @@ public abstract class AbstractGridView {
 
             case "Percolation":
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
+                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
                     if (i == 0) {
-                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                        for (int j = 0; j < size; j++) {
                             configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.PERCOLATED);
                         }
                     } else {
-                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                        for (int j = 0; j < size; j++) {
                             configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.BLOCKED);
                         }
                     }
@@ -121,12 +124,13 @@ public abstract class AbstractGridView {
 
 
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
+                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
                     if (i == 0) {
-                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                        for (int j = 0; j < size; j++) {
                             configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.BURNING);
                         }
                     } else {
-                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                        for (int j = 0; j < size; j++) {
                             configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FIREEMPTY);
                         }
                     }
