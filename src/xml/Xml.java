@@ -31,7 +31,8 @@ public class Xml {
     private ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
     private File xmlFile;
     private String shape;
-    private int numAgents = 0;
+    private int isSaved;
+    private int numAgents;
     private int cellGridColNum;
     private int cellGridRowNum;
     private int rate;
@@ -51,6 +52,7 @@ public class Xml {
     public int getNumAgents(){
         return this.numAgents;
     }
+     public int getIsSaved(){return this.isSaved;}
 
     public int getCellGridColNum(){
         return this.cellGridColNum;
@@ -109,6 +111,7 @@ public class Xml {
         this.cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
         this.myUserInterface.setNumOfRows(this.cellGridRowNum);
         this.rate = Integer.parseInt(doc.getElementsByTagName("Rate").item(0).getTextContent());
+        this.isSaved = Integer.parseInt(doc.getElementsByTagName("Saved").item(0).getTextContent());
         NodeList typeOfSimulation = doc.getElementsByTagName("Type");
         //goes through NodeList to get information about the different simulation
         for (int i = 0; i < typeOfSimulation.getLength(); i++) {
@@ -188,7 +191,7 @@ public class Xml {
                 agent1Col.add(entry.getKey().getCol());
             }
             else if (c.getState().equals(CellState.SECONDAGENT) || c.getState().equals(CellState.FISH)
-            || c.getState().equals(CellState.BLOCKED)){
+            || c.getState().equals(CellState.BLOCKED) || c.getState().equals(CellState.FIREEMPTY)){
                 agent2Row.add(entry.getKey().getRow());
                 agent2Col.add(entry.getKey().getCol());
             }
@@ -228,7 +231,7 @@ public class Xml {
 
         Element type = document.createElement("Type");
         type.setAttribute("name", this.myTitle);
-        type.appendChild(document.createTextNode("1"));
+        type.appendChild(document.createTextNode(Integer.toString(numAgents)));
         root.appendChild(type);
 
         Element Row = document.createElement("Row");

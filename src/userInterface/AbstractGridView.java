@@ -118,12 +118,21 @@ public abstract class AbstractGridView {
                 break;
 
             case "Fire":
-                // System.out.println("entered Fire");
+
+
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-                    for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
-                        configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.BURNING);
+                    if (i == 0) {
+                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.BURNING);
+                        }
+                    } else {
+                        for (int j = 0; j < myXml.getMyColArray().get(i).size(); j++) {
+                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FIREEMPTY);
+                        }
                     }
+
                 }
+
                 setMyCellGrid(new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate()));
                 break;
 
