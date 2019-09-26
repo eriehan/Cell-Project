@@ -8,8 +8,11 @@ import java.util.Map;
 
 public class SegregationCellGrid extends GameOfLifeCellGrid {
 
+    private static final double HUNDRED = 100.0;
+    private static final double HALF = 0.5;
+
     private int agentPercent;
-    private double prob = 0.5;
+    private double prob = HALF;
     private int emptyCellNumber;
     private List<Cell> emptyCells = new ArrayList<>();
     private List<Cell> dissatisfiedCells = new ArrayList<>();
@@ -19,7 +22,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     public SegregationCellGrid(int numRows, int numCols, int agentPercent, int emptyPercent) {
         super(numRows, numCols);
         this.agentPercent = agentPercent;
-        emptyCellNumber = (int) (numRows * numCols * emptyPercent/100.0);
+        emptyCellNumber = (int) (numRows * numCols * emptyPercent/HUNDRED);
     }
 
     @Override
@@ -57,7 +60,9 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
                 dissatisfiedCells.add(cell);
             }
         }
-        if(dissatisfiedCells.size() == 0) {setFinished(true);}
+        if(dissatisfiedCells.isEmpty()) {
+            setFinished(true);
+        }
         System.out.println(dissatisfiedCells.size());
     }
 
@@ -69,16 +74,16 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
             Cell emptyCell = (!emptyCells.isEmpty())? emptyCells.get((int) (Math.random() * emptyCells.size()))
                     : newEmptyCells.get((int) (Math.random() * newEmptyCells.size()));
 
-            if(!emptyCells.isEmpty()) {emptyCells.remove(emptyCell);}
-            else {newEmptyCells.remove(emptyCell);}
+            if(!emptyCells.isEmpty()) {
+                emptyCells.remove(emptyCell);
+            } else {
+                newEmptyCells.remove(emptyCell);
+            }
             dissatisfiedCells.remove(dissatisfiedCell);
             newEmptyCells.add(dissatisfiedCell);
-
             dissatisfiedCell.moveToDifferentCell(emptyCell);
         }
-
         super.changeAllCells();
-
         dissatisfiedCells.clear();
         emptyCells.addAll(newEmptyCells);
         newEmptyCells.clear();

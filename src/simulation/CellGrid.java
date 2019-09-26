@@ -1,5 +1,6 @@
 package simulation;
 
+import userInterface.ControlPanel;
 import userInterface.CellShapeType;
 import utils.Point;
 
@@ -16,11 +17,15 @@ public abstract class CellGrid {
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
     private int numOfCols;
+    private ControlPanel controlPanel;
 
     public CellGrid(int numRows, int numCols) {
         this.numOfRows = numRows;
         this.numOfCols = numCols;
+        this.controlPanel = new ControlPanel();
     }
+
+    public abstract void initializeControlPannel();
 
     public abstract void initializeGrids(Map<Point, CellState> configMap);
 
@@ -56,15 +61,30 @@ public abstract class CellGrid {
 
     protected void cellGridExpand() {
         //only executed when gridLimit is Infinite
-        if(gridLimit != GridLimit.INFINITE) {return;}
-
+        if(gridLimit != GridLimit.INFINITE) {
+            return;
+        }
         boolean expand = false;
-        if(!isColEmpty(0)) {expand = true; addColOnLeft();}
-        if(!isColEmpty(getNumOfCols()-1)) {expand = true; addColOnRight();}
-        if(!isRowEmpty(0)) {expand = true; addRowOnTop();}
-        if(!isRowEmpty(getNumOfRows()-1)) {expand = true; addRowOnBottom();}
+        if(!isColEmpty(0)) {
+            expand = true;
+            addColOnLeft();
+        }
+        if(!isColEmpty(getNumOfCols()-1)) {
+            expand = true;
+            addColOnRight();
+        }
+        if(!isRowEmpty(0)) {
+            expand = true;
+            addRowOnTop();
+        }
+        if(!isRowEmpty(getNumOfRows()-1)) {
+            expand = true;
+            addRowOnBottom();
+        }
 
-        if(expand) {assignNeighborsToEachCell();}
+        if(expand) {
+            assignNeighborsToEachCell();
+        }
     }
 
     public Map<Point, Cell> getGridOfCells() {
@@ -128,10 +148,16 @@ public abstract class CellGrid {
         this.numOfCols = numOfCols;
     }
 
+    public ControlPanel getControlPanel() {
+        return controlPanel;
+    }
+
     protected boolean isRowEmpty(int rowNum) {
         for(int col=0; col<numOfCols; col++) {
             Cell cell = cellFromPoint(rowNum, col);
-            if(cell.getState() != cell.getPossibleStates().get(0)) {return false;}
+            if(cell.getState() != cell.getPossibleStates().get(0)) {
+                return false;
+            }
         }
         return true;
     }
@@ -139,7 +165,9 @@ public abstract class CellGrid {
     protected boolean isColEmpty(int colNum) {
         for(int row=0; row<numOfRows; row++) {
             Cell cell = cellFromPoint(row, colNum);
-            if(cell.getState() != cell.getPossibleStates().get(0)) {return false;}
+            if(cell.getState() != cell.getPossibleStates().get(0)) {
+                return false;
+            }
         }
         return true;
     }

@@ -10,6 +10,8 @@ public class GameOfLifeCell extends Cell {
     private static final CellState DEAD = CellState.DEAD;
     private static final List<CellState> STATES_LIST =
             Collections.unmodifiableList(Arrays.asList(DEAD, ALIVE));
+    private static final int ADEQUATEPOPULATION = 2;
+    private static final int PERFECTPOPULATION = 3;
 
     public GameOfLifeCell(int r, int c, CellState state) {
         super(r, c, state);
@@ -18,8 +20,10 @@ public class GameOfLifeCell extends Cell {
 
     @Override
     public void check() {
-        int aliveNeighbors = aliveNeighbors();
-        if(willLive(aliveNeighbors)) {setNextState(ALIVE);}
+        int aliveNeighbors = countNeighborsWithState(ALIVE, true);
+        if(willLive(aliveNeighbors)) {
+            setNextState(ALIVE);
+        }
         else {setNextState(DEAD);}
     }
 
@@ -28,18 +32,15 @@ public class GameOfLifeCell extends Cell {
         setState(getNextState());
     }
 
-    private int aliveNeighbors() {
-        int countAlive = 0;
-        for (Cell cell : getCornerNeighbor()) {
-            if (cell.getState() == ALIVE) { countAlive++; }
-        }
-        for (Cell cell : getEdgeNeighbor()) {
-            if (cell.getState() == ALIVE) { countAlive++; }
-        }
-        return countAlive;
+    private boolean willLive(int aliveNeighbors) {
+        return deadAndWillLive(aliveNeighbors) || aliveAndWillLive(aliveNeighbors);
     }
 
-    private boolean willLive(int aliveNeighbors) {
-        return (getState() == DEAD && aliveNeighbors == 3) || (getState() == ALIVE && (aliveNeighbors == 2 || aliveNeighbors == 3));
+    private boolean deadAndWillLive(int aliveNeighbors) {
+        return getState() == DEAD && aliveNeighbors == PERFECTPOPULATION;
+    }
+
+    private boolean aliveAndWillLive(int aliveNeighbors) {
+        return getState() == ALIVE && (aliveNeighbors == ADEQUATEPOPULATION || aliveNeighbors == PERFECTPOPULATION);
     }
 }

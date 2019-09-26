@@ -2,10 +2,7 @@ package simulation;
 
 import utils.Point;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Cell {
 
@@ -14,8 +11,8 @@ public abstract class Cell {
     private Point coord; // x is row, y is col
 
 
-    private ArrayList<Cell> cornerNeighbors;
-    private ArrayList<Cell> edgeNeighbors;
+    private List<Cell> cornerNeighbors = new ArrayList<>();
+    private List<Cell> edgeNeighbors = new ArrayList<>();
     private Map<CellAttribute, Integer> attributes = new HashMap<>();
 
     private List<CellState> possibleStates = new ArrayList<>();
@@ -57,20 +54,20 @@ public abstract class Cell {
         edgeNeighbors.add(neighbor);
     }
 
-    public ArrayList<Cell> getCornerNeighbor() {
+    public List<Cell> getCornerNeighbor() {
         return cornerNeighbors;
     }
 
-    public ArrayList<Cell> getEdgeNeighbor() {
+    public List<Cell> getEdgeNeighbor() {
         return edgeNeighbors;
     }
 
-    public void setCornerNeighbors(ArrayList<Cell> cornerNeighbors) {
-        this.cornerNeighbors = cornerNeighbors;
+    public void addCornerNeighbors(Cell neighbor, int index) {
+        cornerNeighbors.add(index, neighbor);
     }
 
-    public void setEdgeNeighbors(ArrayList<Cell> edgeNeighbors) {
-        this.edgeNeighbors = edgeNeighbors;
+    public void addEdgeNeighbors(Cell neighbor, int index) {
+        cornerNeighbors.add(index, neighbor);
     }
 
     //called when the cell needs to move. Changes state with the cell that the cell should move to.
@@ -119,7 +116,8 @@ public abstract class Cell {
     }
 
     public List<CellState> getPossibleStates() {
-        return possibleStates;
+        List<CellState> states = possibleStates;
+        return states;
     }
 
     protected void setPossibleStates(List<CellState> possibleStates) {
@@ -128,20 +126,44 @@ public abstract class Cell {
 
     protected void setNextStateOnClick() {
         System.out.println(possibleStates.size());
-        if(!possibleStates.contains(state)) {System.out.println("Fix code"); return;}
+        if(!possibleStates.contains(state)) {
+            System.out.println("Fix code");
+            return;
+        }
         int index = possibleStates.indexOf(getState());
-        if (possibleStates.size()==index+1) index = -1;
+        if (possibleStates.size()==index+1) {
+            index = -1;
+        }
         setState(possibleStates.get(index+1));
         //setNextState(getState());
     }
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof Cell && other.hashCode() == hashCode();
+        return other.getClass().equals(this.getClass()) && other.hashCode() == hashCode();
     }
 
     @Override
     public int hashCode() {
         return coord.toString().hashCode() + "Cell".hashCode();
+    }
+
+    protected int countNeighborsWithState(CellState state, boolean cornersInclude) {
+        int count = 0;
+        for (Cell cell : getEdgeNeighbor()) {
+            if (cell.getState() == state) {
+                count++;
+            }
+        }
+        if(!cornersInclude) {
+            return count;
+        }
+
+        for (Cell cell : getCornerNeighbor()) {
+            if (cell.getState() == state) {
+                count++;
+            }
+        }
+        return count;
     }
 }

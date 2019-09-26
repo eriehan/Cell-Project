@@ -1,7 +1,6 @@
 package simulation;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class FireCell extends Cell {
@@ -20,21 +19,32 @@ public class FireCell extends Cell {
         setPossibleStates(STATES_LIST);
     }
 
+
     @Override
     public void check() {
         if(getState() == CellState.TREE) {
-            if(isFireNearby() && Math.random() * 100 <= probCatch) { setNextState(BURNING);}
-            else { setNextState(CellState.TREE); }
+            if(isFireNearby() && Math.random() * 100 <= probCatch) {
+                setNextState(BURNING);
+            }
+            else {
+                setNextState(CellState.TREE);
+            }
         }
-        else {setNextState(FIREEMPTY);}
+        else {
+            setNextState(FIREEMPTY);
+        }
     }
 
     @Override
-    public void changeState() { setState(getNextState()); }
+    public void changeState() {
+        setState(getNextState());
+    }
 
     private boolean isFireNearby() {
         for (Cell neighbor : getEdgeNeighbor()) {
-            if (neighbor.getState()== CellState.BURNING) { return true; }
+            if (neighbor.getState()== CellState.BURNING) {
+                return true;
+            }
         }
         return false;
     }

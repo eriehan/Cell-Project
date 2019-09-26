@@ -16,24 +16,26 @@ import static userInterface.VisualizationConstants.FILE_PATH_FONT_SIZE;
 
 public class UserInterface {
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
-
+    private static final int ERROR_MSG_TIME_LIMIT = 5;
+    private static final int SPACING = 20;
+    private static final double PADDING_TOP = 20;
+    private static final double PADDING_OTHER = 50;
     private AbstractGridView myGridView;
     private VBox colTwo;
     private VBox colOne;
+    private HBox hBox;
     private Buttons myButtons;
     private SlidersAndControls mySlidersAndControls;
     private int numOfCols;
     private int numOfRows;
     private Text simulationTitle;
-    private int errorMsgTimeLimit = 5;
     private int errorMsgTimer = -1;
     private Text errorMsg;
     private Text simulationFilePath;
     private ResourceBundle resourceBundle;
 
-    public UserInterface(int numofRows, int numofCols, String simulationName) {
-        this.numOfRows = numofRows;
-        this.numOfCols = numofCols;
+
+    public UserInterface(String simulationName) {
         this.simulationTitle = new Text(simulationName);
         this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
         simulationTitle.setFont(Font.font("Arial", FontWeight.BOLD, Integer.parseInt(resourceBundle.getString("TitleFont"))));
@@ -44,14 +46,14 @@ public class UserInterface {
 
     public Group setScene() {
         var root = new Group();
-        colOne = new VBox(20);
-        colTwo = new VBox(20);
-        HBox hBox = new HBox(20);
-        hBox.setPadding(new Insets(20, 50, 50, 50));
+        colOne = new VBox(SPACING);
+        colTwo = new VBox(SPACING);
+        hBox = new HBox(SPACING);
+        hBox.setPadding(new Insets(PADDING_TOP , PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
         colTwo.getChildren().addAll(myButtons.getButtonList());
         colTwo.getChildren().addAll(mySlidersAndControls.getMyCol());
-        colTwo.setPadding(new Insets(70, 0, 0, 0));
+        colTwo.setPadding(new Insets(PADDING_TOP + Integer.parseInt(resourceBundle.getString("TitleFont")),  PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
         hBox.getChildren().addAll(colOne, colTwo);
         root.getChildren().add(hBox);
         return root;
@@ -60,10 +62,15 @@ public class UserInterface {
     public void update() {
         myGridView.updateGrid();
         if (this.errorMsgTimer != -1) errorMsgTimer++;
-        if (this.errorMsgTimer > this.errorMsgTimeLimit) {
+        if (this.errorMsgTimer > this.ERROR_MSG_TIME_LIMIT) {
             this.colTwo.getChildren().remove(this.errorMsg);
             this.errorMsgTimer = -1;
         }
+    }
+
+    public void addSimulationControls(){
+        this.getMyGridView().getMyCellGrid().initializeControlPannel();
+        this.hBox.getChildren().add(this.getMyGridView().getMyCellGrid().getControlPanel().getMyColPanel());
     }
 
     public AbstractGridView getMyGridView() {
@@ -76,6 +83,10 @@ public class UserInterface {
 
     public SlidersAndControls getMySlidersAndControls() {
         return mySlidersAndControls;
+    }
+
+    public HBox gethBox() {
+        return hBox;
     }
 
     public void changeTitle(String s) {

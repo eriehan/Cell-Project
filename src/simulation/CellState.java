@@ -21,7 +21,12 @@ public enum CellState {
 
     WATER(Color.BLUE),
     FISH(Color.CYAN),
-    SHARK(Color.GOLD);
+    SHARK(Color.GOLD),
+
+    ROCK(Color.BLUE),
+    PAPER(Color.RED),
+    SCISSOR(Color.GREEN);
+
 
 
     private Color myColor;

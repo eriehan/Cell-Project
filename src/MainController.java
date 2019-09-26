@@ -9,20 +9,26 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.xml.sax.SAXException;
 import userInterface.*;
+<<<<<<< HEAD
 import xml.*;
 
+=======
+import xml.Xml;
+>>>>>>> 6398e2d0405a2ca7af11ede14a78c54c09b2c38b
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
-import static userInterface.VisualizationConstants.*;
+import static userInterface.VisualizationConstants.BACKGROUND_COLOR;
 
 public class MainController extends Application {
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
+    private static final int MILLIS_IN_SEC = 1000;
+    private static final double UNIT_SEC = 1.0;
 
     private int framesPerSecond;
     private int millisecondDelay;
@@ -54,8 +60,8 @@ public class MainController extends Application {
     private void initializeResources() {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
         framesPerSecond = Integer.parseInt(resourceBundle.getString("FPS"));
-        millisecondDelay = 1000 / framesPerSecond;
-        secondDelay = 1.0 / framesPerSecond;
+        millisecondDelay = MILLIS_IN_SEC / framesPerSecond;
+        secondDelay = UNIT_SEC / framesPerSecond;
         normalUpdateFreq = Integer.parseInt(resourceBundle.getString("InitialUpdateFreq"));
         updateFreq = normalUpdateFreq;
         myTitle = resourceBundle.getString("InitialTitle");
@@ -66,7 +72,7 @@ public class MainController extends Application {
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         myAnimation = animation;
-        myUserInterface = new UserInterface(10, 10, myTitle);
+        myUserInterface = new UserInterface( myTitle);
         myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
         myScene = initScene();
@@ -151,7 +157,6 @@ public class MainController extends Application {
         edgeTypeChoice.getChoiceBox().setValue(resourceBundle.getString("EdgeTypes").split(",")[0]);
         edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> setEdgeType((String) edgeTypeChoice.getChoiceBox().getValue()));
         this.myUserInterface.getMySlidersAndControls().addChoiceBox(edgeTypeChoice);
-
     }
 
     private void setEdgeType(String edgeType) {
@@ -195,6 +200,7 @@ public class MainController extends Application {
 
         myXml.parse(this.userFile);
         myUserInterface.getMyGridView().initializeMyCellGrid(myXml);
+        this.myUserInterface.addSimulationControls();
         this.myAnimation.pause();
     }
 

@@ -8,11 +8,17 @@ import javafx.scene.shape.Rectangle;
 
 
 public class HexagonGridView extends AbstractGridView {
+    private static final double WIDTH_PADDING_RATIO = 0.25;
+    private static final double WIDTH_PADDING_RATIO_LONG = 0.75;
+    private static final double WIDTH_EACH_HEX_RATIO = 1.5;
+    private static final double HEIGHT_EACH_HEX_RATIO = 0.5;
+    private static final int HEIGHT_OF_GRID_RATIO = 2;
+    private static final double START_POINT = 0.0;
     private Group myHexagonGroup;
 
     public HexagonGridView(int numOfRows, int numOfCols) {
         super(numOfRows, numOfCols);
-        this.setGridHeight(this.getGridHeight() / 2);
+        this.setGridHeight(this.getGridHeight() / HEIGHT_OF_GRID_RATIO);
         myHexagonGroup = new Group();
         getMyGridPane().getChildren().add(myHexagonGroup);
     }
@@ -27,20 +33,20 @@ public class HexagonGridView extends AbstractGridView {
     @Override
     public void createGrid() {
         boolean rowFlag = true;
-        double width = this.getGridWidth() / (getNumOfCols() * 1.5 + 0.25);
-        double height = this.getGridHeight() / (getNumOfRows() * 0.5 + 0.5);
+        double width = this.getGridWidth() / (getNumOfCols() * WIDTH_EACH_HEX_RATIO + WIDTH_PADDING_RATIO);
+        double height = this.getGridHeight() / (getNumOfRows() * HEIGHT_EACH_HEX_RATIO + HEIGHT_EACH_HEX_RATIO);
         for (int r = 0; r < getNumOfRows(); r++) {
             for (int c = 0; c < getNumOfCols(); c++) {
                 Polygon hexagon = new Polygon();
                 hexagon.getPoints().addAll(
-                        0.0, height / 2,
-                        0.25 * width, 0.0,
-                        0.75 * width, 0.0,
-                        width, height / 2,
-                        0.75 * width, height,
-                        0.25 * width, height);
-                hexagon.setLayoutY(r * height / 2);
-                hexagon.setLayoutX(rowFlag ? 0.75 * width + c * 1.5 * width : c * 1.5 * width);
+                        START_POINT, height * HEIGHT_EACH_HEX_RATIO,
+                        WIDTH_PADDING_RATIO * width, START_POINT,
+                        WIDTH_PADDING_RATIO_LONG * width, START_POINT,
+                        width, height / HEIGHT_OF_GRID_RATIO,
+                        WIDTH_PADDING_RATIO_LONG * width, height,
+                        WIDTH_PADDING_RATIO * width, height);
+                hexagon.setLayoutY(r * height * HEIGHT_EACH_HEX_RATIO);
+                hexagon.setLayoutX(rowFlag ? WIDTH_PADDING_RATIO_LONG * width + c * WIDTH_EACH_HEX_RATIO * width : c * WIDTH_EACH_HEX_RATIO * width);
                 myHexagonGroup.getChildren().add(hexagon);
                 hexagon.setFill(getMyCellGrid().stateOfCellAtPoint(r, c).getMyColor());
                 final int row = r;

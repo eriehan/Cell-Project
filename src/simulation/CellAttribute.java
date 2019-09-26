@@ -6,5 +6,6 @@ public enum CellAttribute {
     REPRODUCTION,
     INITIAL_ENERGY,
     ENERGY,
-    SURVIVEDTIME;
+    SURVIVEDTIME,
+    THRESHOLD;
 }
