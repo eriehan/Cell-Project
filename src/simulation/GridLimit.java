@@ -14,10 +14,18 @@ public enum GridLimit {
                 int row = cellEntry.getKey().getRow();
                 int col = cellEntry.getKey().getCol();
 
-                if(!(row == 0 || col == 0)) {addNeighbor(cell, gridOfCells, row-1, col-1, numOfRows, numOfCols, true);}
-                if(!(row == 0 || col == numOfCols - 1)) { addNeighbor(cell, gridOfCells, row-1, col+1, numOfRows, numOfCols, true);}
-                if(!(row == numOfRows - 1 || col == 0)) {addNeighbor(cell, gridOfCells, row+1, col-1, numOfRows, numOfCols, true);}
-                if(!(row == numOfRows - 1 || col == numOfCols - 1)) {addNeighbor(cell, gridOfCells, row+1, col+1, numOfRows, numOfCols, true);}
+                if(!(row == 0 || col == 0)) {
+                    addNeighbor(cell, gridOfCells, row-1, col-1, numOfRows, numOfCols, true);
+                }
+                if(!(row == 0 || col == numOfCols - 1)) {
+                    addNeighbor(cell, gridOfCells, row-1, col+1, numOfRows, numOfCols, true);
+                }
+                if(!(row == numOfRows - 1 || col == 0)) {
+                    addNeighbor(cell, gridOfCells, row+1, col-1, numOfRows, numOfCols, true);
+                }
+                if(!(row == numOfRows - 1 || col == numOfCols - 1)) {
+                    addNeighbor(cell, gridOfCells, row+1, col+1, numOfRows, numOfCols, true);
+                }
             }
         }
 
@@ -28,10 +36,18 @@ public enum GridLimit {
                 int row = cellEntry.getKey().getRow();
                 int col = cellEntry.getKey().getCol();
 
-                if (!(row == 0)) { addNeighbor(cell, gridOfCells, row - 1, col, numOfRows, numOfCols, false); }
-                if (!(row == numOfRows - 1)) { addNeighbor(cell, gridOfCells, row + 1, col, numOfRows, numOfCols, false); }
-                if (!(col == 0)) { addNeighbor(cell, gridOfCells, row, col - 1, numOfRows, numOfCols, false); }
-                if (!(col == numOfCols - 1)) { addNeighbor(cell, gridOfCells, row, col + 1, numOfRows, numOfCols, false); }
+                if (!(row == 0)) {
+                    addNeighbor(cell, gridOfCells, row - 1, col, numOfRows, numOfCols, false);
+                }
+                if (!(row == numOfRows - 1)) {
+                    addNeighbor(cell, gridOfCells, row + 1, col, numOfRows, numOfCols, false);
+                }
+                if (!(col == 0)) {
+                    addNeighbor(cell, gridOfCells, row, col - 1, numOfRows, numOfCols, false);
+                }
+                if (!(col == numOfCols - 1)) {
+                    addNeighbor(cell, gridOfCells, row, col + 1, numOfRows, numOfCols, false);
+                }
             }
         }
 
@@ -113,11 +129,17 @@ public enum GridLimit {
     public abstract void assignNeighborsHexagonal(Cell cell, int row, int col);
 
     protected Cell cellFromPoint(Map<Point, Cell> gridOfCells, int row, int col, int numOfRows, int numOfCols) {
-        if(row<0) {row = numOfRows-1;}
-        else if(row>=numOfRows) {row = 0;}
+        row  %= numOfRows;
+        col %= numOfCols;
+        /*if(row<0) {
+            row = numOfRows-1;
+        }
+        else if(row>=numOfRows) {
+            row = 0;
+        }
 
         if(col<0) {col = numOfCols-1;}
-        else if(col>=numOfCols) {col = 0;}
+        else if(col>=numOfCols) {col = 0;}*/
 
         return gridOfCells.get(new Point(row, col));
     }

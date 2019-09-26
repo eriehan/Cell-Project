@@ -23,10 +23,16 @@ public class FireCell extends Cell {
     @Override
     public void check() {
         if(getState() == CellState.TREE) {
-            if(isFireNearby() && Math.random() * 100 <= probCatch) { setNextState(BURNING);}
-            else { setNextState(CellState.TREE); }
+            if(isFireNearby() && Math.random() * 100 <= probCatch) {
+                setNextState(BURNING);
+            }
+            else {
+                setNextState(CellState.TREE);
+            }
         }
-        else {setNextState(FIREEMPTY);}
+        else {
+            setNextState(FIREEMPTY);
+        }
     }
 
     @Override
