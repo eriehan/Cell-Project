@@ -1,8 +1,5 @@
 package simulation;
 
-import userInterface.CellShapeType;
-import userInterface.SimulationButton;
-import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.Map;

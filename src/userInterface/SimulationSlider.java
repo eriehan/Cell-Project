@@ -5,7 +5,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-import static userInterface.VisualizationConstants.*;
+import static userInterface.VisualizationConstants.SLIDER_FONT_SIZE;
+import static userInterface.VisualizationConstants.SLIDER_WIDTH;
 
 public class SimulationSlider {
     private Slider mySlider;

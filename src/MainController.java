@@ -11,16 +11,13 @@ import org.xml.sax.SAXException;
 import userInterface.*;
 import xml.Xml;
 
-
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-import static userInterface.VisualizationConstants.*;
+import static userInterface.VisualizationConstants.BACKGROUND_COLOR;
 
 public class MainController extends Application {
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";

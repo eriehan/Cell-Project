@@ -1,10 +1,6 @@
 package userInterface;
 
 import javafx.animation.Animation;
-import javafx.scene.control.Button;
-import javafx.scene.text.Font;
-
-import static userInterface.VisualizationConstants.BUTTON_FONT_SIZE;
 
 public class PauseButton extends SimulationButton {
     private boolean paused = false;
