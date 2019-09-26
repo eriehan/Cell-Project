@@ -10,6 +10,7 @@ public class ControlPanel {
     private static final double PADDING_TOP = 100;
     private static final double PADDING_OTHER = 0;
     private static final String RESOURCE_FILE_PATH = "resources/ControlResources";
+    private static final int SPACING = 15;
     private ResourceBundle resourceBundle;
     private ArrayList<SimulationSlider> sliderList;
     private VBox myColPanel;
@@ -17,7 +18,7 @@ public class ControlPanel {
     public ControlPanel() {
         sliderList = new ArrayList<>();
         myColPanel = new VBox();
-        myColPanel.setSpacing(15);
+        myColPanel.setSpacing(SPACING);
         myColPanel.setPadding(new Insets(PADDING_TOP,PADDING_OTHER,PADDING_OTHER,PADDING_OTHER));
         this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
     }

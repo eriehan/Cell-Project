@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import static userInterface.VisualizationConstants.BUTTON_FONT_SIZE;
 
 public class SimulationChoice {
+    private static final int SPACING = 10;
     private ChoiceBox choiceBox;
     private HBox myHBox;
 
@@ -18,7 +19,7 @@ public class SimulationChoice {
         myLabel.setText(label);
         myLabel.setFont(new Font(BUTTON_FONT_SIZE));
         myHBox = new HBox();
-        myHBox.setSpacing(10);
+        myHBox.setSpacing(SPACING);
         this.myHBox.getChildren().add(myLabel);
         this.myHBox.getChildren().add(choiceBox);
     }
