@@ -14,16 +14,16 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     private final static CellAttribute SURVIVE = CellAttribute.SURVIVEDTIME;
     private final static CellAttribute REPRODUCE = CellAttribute.REPRODUCTION;
 
-    private List<Integer> reproductions = new ArrayList<>();
-    private List<Integer> energies = new ArrayList<>();
+    private List<Integer> reproductions;
+    private List<Integer> energies;
     private List<Cell> fishesAndSharks = new ArrayList<>();
 
     //reproductions is a list of time needed for fish and shark to reproduce
     //energies.get(0) = energy that shark gets by eating fish, energies.get(1) = shark's initial energy
     public WaTorCellGrid(int numRows, int numCols, List<Integer> reproductions, List<Integer> energies) {
         super(numRows, numCols);
-        Collections.copy(this.reproductions, reproductions);
-        Collections.copy(this.energies, energies);
+        this.reproductions = new ArrayList<>(reproductions);
+        this.energies = new ArrayList<>(energies);
     }
 
     @Override
