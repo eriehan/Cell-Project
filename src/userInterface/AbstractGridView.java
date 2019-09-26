@@ -94,7 +94,7 @@ public abstract class AbstractGridView {
                         }
                     }
                 }
-
+                System.out.println(myXml.getMyColArray());
                 setMyCellGrid(new WaTorCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getMaturityArray(), myXml.getEnergyArray()));
                 break;
 

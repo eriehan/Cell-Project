@@ -17,7 +17,7 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
+
 
 import static userInterface.VisualizationConstants.BACKGROUND_COLOR;
 
@@ -192,9 +192,8 @@ public class MainController extends Application {
 
         //check which xml to make
         whichXml();
-
-
         myXml.parse(this.userFile);
+        //System.out.println("In Main: " +myXml.getMaturityArray());
         myUserInterface.getMyGridView().initializeMyCellGrid(myXml);
         this.myUserInterface.addSimulationControls();
         this.myAnimation.pause();
