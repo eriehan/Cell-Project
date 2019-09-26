@@ -2,16 +2,10 @@ package userInterface;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import simulation.*;
 import utils.Point;
-import xml.Xml;
+import xml.AbstractXml;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -57,7 +51,7 @@ public abstract class AbstractGridView {
         displayGrid();
     }
 
-    public void initializeMyCellGrid(Xml myXml){
+    public void initializeMyCellGrid(AbstractXml myXml){
 
 
         switch (myXml.getMyTitle()) {
@@ -87,6 +81,7 @@ public abstract class AbstractGridView {
                 setMyCellGrid(new GameOfLifeCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum()));
                 break;
             case "Wa-Tor":
+
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
                     int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
                     if (i == 0) {

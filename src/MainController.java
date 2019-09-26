@@ -9,8 +9,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.xml.sax.SAXException;
 import userInterface.*;
-import xml.Xml;
-
+import xml.*;
 
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,7 +28,7 @@ public class MainController extends Application {
     private int millisecondDelay;
     private double secondDelay;
 
-    private Xml myXml;
+    private AbstractXml myXml;
     private UserInterface myUserInterface;
     private Scene myScene;
     private Stage myStage;
@@ -189,10 +188,43 @@ public class MainController extends Application {
             }
         }
         this.myUserInterface.displaySimulationFilePath("Configuration File: " + myConfigFile.getName());
-        myXml = new Xml(this.myUserInterface);
+
+        //check which xml to make
+        whichXml();
+
+
         myXml.parse(this.userFile);
         myUserInterface.getMyGridView().initializeMyCellGrid(myXml);
         this.myAnimation.pause();
+    }
+
+    private void whichXml(){
+        StringBuilder myFile = new StringBuilder(myConfigFile.toString());
+        String s = "";
+        for (int i = 0; i < myFile.length(); i++) {
+            if (myFile.substring(i, i + 10).equals("/xml_files")) {
+                s = myFile.substring(i+11);
+                System.out.println(s);
+                break;
+            }
+        }
+
+        if(s.charAt(0) == 'W'){
+            myXml = new WaTorXml(this.myUserInterface);
+        }
+        else if(s.charAt(0) == 'F'){
+            myXml = new FireXml((this.myUserInterface));
+        }
+        else if(s.charAt(0) == 'P'){
+            myXml = new PercolationXml(this.myUserInterface);
+        }
+        else if(s.charAt(0) == 'S'){
+            myXml = new SegregationXml(this.myUserInterface);
+        }
+        else if(s.charAt(0) == 'G'){
+            myXml = new GameOfLifeXml(this.myUserInterface);
+        }
+
     }
 
     private void startSimulation() {
