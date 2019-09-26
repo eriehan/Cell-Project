@@ -31,12 +31,18 @@ public class SegregationCell extends Cell {
             int notEmptyNeighbors = 0;
             for (Cell other : allNeighbors()) {
                 if(other.getState() != EMPTY) {
-                    if (other.getState() == getState()) { cellsWithSameState++; }
+                    if (other.getState() == getState()) {
+                        cellsWithSameState++;
+                    }
                     notEmptyNeighbors++;
                 }
             }
-            if (cellsWithSameState < notEmptyNeighbors * agentPercent / 100.0) { setNextState(DISATISFIED); }
-            else { setNextState(getState()); }
+            if (cellsWithSameState < notEmptyNeighbors * agentPercent / 100.0) {
+                setNextState(DISATISFIED);
+            }
+            else {
+                setNextState(getState());
+            }
         }
     }
 

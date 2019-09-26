@@ -58,18 +58,19 @@ public abstract class Cell {
     }
 
     public List<Cell> getCornerNeighbor() {
-        return cornerNeighbors;
+        List<Cell> tempCornerNeighbors = cornerNeighbors;
+        return tempCornerNeighbors;
     }
 
     public List<Cell> getEdgeNeighbor() {
         return edgeNeighbors;
     }
 
-    public void setCornerNeighbors(ArrayList<Cell> cornerNeighbors) {
+    public void addCornerNeighbors(List<Cell> cornerNeighbors) {
         this.cornerNeighbors = cornerNeighbors;
     }
 
-    public void setEdgeNeighbors(ArrayList<Cell> edgeNeighbors) {
+    public void addEdgeNeighbors(List<Cell> edgeNeighbors) {
         this.edgeNeighbors = edgeNeighbors;
     }
 
@@ -119,7 +120,8 @@ public abstract class Cell {
     }
 
     public List<CellState> getPossibleStates() {
-        return possibleStates;
+        List<CellState> states = possibleStates;
+        return states;
     }
 
     protected void setPossibleStates(List<CellState> possibleStates) {
@@ -128,9 +130,13 @@ public abstract class Cell {
 
     protected void setNextStateOnClick() {
         System.out.println(possibleStates.size());
-        if(!possibleStates.contains(state)) {System.out.println("Fix code"); return;}
+        if(!possibleStates.contains(state)) {
+            System.out.println("Fix code"); return;
+        }
         int index = possibleStates.indexOf(getState());
-        if (possibleStates.size()==index+1) index = -1;
+        if (possibleStates.size()==index+1) {
+            index = -1;
+        }
         setState(possibleStates.get(index+1));
         //setNextState(getState());
     }

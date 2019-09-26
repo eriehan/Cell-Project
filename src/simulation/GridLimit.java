@@ -33,17 +33,16 @@ public enum GridLimit {
                 if (!(col == 0)) { addNeighbor(cell, gridOfCells, row, col - 1, numOfRows, numOfCols, false); }
                 if (!(col == numOfCols - 1)) { addNeighbor(cell, gridOfCells, row, col + 1, numOfRows, numOfCols, false); }
             }
-
         }
 
         @Override
         public void assignNeighborsTriangular(Cell cell, int row, int col) {
-
+            return;
         }
 
         @Override
         public void assignNeighborsHexagonal(Cell cell, int row, int col) {
-
+            return;
         }
 
     },
@@ -78,12 +77,12 @@ public enum GridLimit {
 
         @Override
         public void assignNeighborsTriangular(Cell cell, int row, int col) {
-
+            return;
         }
 
         @Override
         public void assignNeighborsHexagonal(Cell cell, int row, int col) {
-
+            return;
         }
     },
     INFINITE {

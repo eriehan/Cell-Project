@@ -2,7 +2,6 @@ package simulation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class WaTorCell extends Cell {

@@ -16,8 +16,12 @@ public class PercolationCell extends Cell{
     }
     @Override
     public void check() {
-        if(getState() == OPEN && percolatedCellNearby()) {setNextState(PERCOLATED);}
-        else {setNextState(getState());}
+        if(getState() == OPEN && percolatedCellNearby()) {
+            setNextState(PERCOLATED);
+        }
+        else {
+            setNextState(getState());
+        }
     }
 
     @Override
