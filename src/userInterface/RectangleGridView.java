@@ -12,9 +12,9 @@ public class RectangleGridView extends AbstractGridView {
 
     // TODO: set with config
     public void createGrid() {
-        for (int r = 0; r < getNumOfRows(); r++) {
-            for (int c = 0; c < getNumOfCols(); c++) {
-                Rectangle shape = new Rectangle(this.getGridWidth() / getNumOfCols(), this.getGridHeight() / getNumOfRows());
+        for (int r = 0; r < getMyCellGrid().getNumOfRows(); r++) {
+            for (int c = 0; c < getMyCellGrid().getNumOfCols(); c++) {
+                Rectangle shape = new Rectangle(this.getGridWidth() / getMyCellGrid().getNumOfCols(), this.getGridHeight() / getMyCellGrid().getNumOfRows());
                 shape.setFill(getMyCellGrid().stateOfCellAtPoint(r, c).getMyColor());
                 getMyGridPane().add(shape, c, r);
                 final int row = r;

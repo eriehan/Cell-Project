@@ -50,6 +50,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         for (Cell cell : getGridOfCells().values()) {
             cell.changeState();
         }
+        cellGridExpand();
     }
 
     @Override
@@ -57,6 +58,12 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         Cell cell = getGridOfCells().get(new Point(row, col));
         cell.setNextStateOnClick();
         changeOneCell(cell, cell.getState());
+    }
+
+    @Override
+    public void addEmptyStateToCell(int row, int col) {
+        Point point = new Point(row, col);
+        addToGridOfCells(point, new WaTorCell(row, col, CellState.WATER, 0, 0));
     }
 
     private Cell cellFromPoint(int row, int col) {

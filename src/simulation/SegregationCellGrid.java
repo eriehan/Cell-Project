@@ -48,6 +48,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void checkAllCells() {
+        cellGridExpand();
         for(Cell cell : getGridOfCells().values()) {
             cell.check();
             //if dissatisfied
@@ -81,16 +82,22 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
         dissatisfiedCells.clear();
         emptyCells.addAll(newEmptyCells);
         newEmptyCells.clear();
+        cellGridExpand();
+    }
+
+    @Override
+    public void addEmptyStateToCell(int row, int col) {
+        Point point = new Point(row, col);
+        Cell segregationCell = new SegregationCell(row, col, CellState.EMPTY, agentPercent);
+        addToGridOfCells(point, segregationCell);
+        emptyCells.add(segregationCell);
     }
 
     private void createEmptyMap() {
         getGridOfCells().clear();
         for(int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
-                Point point = new Point(row, col);
-                Cell segregationCell = new SegregationCell(row, col, CellState.EMPTY, agentPercent);
-                addToGridOfCells(point, segregationCell);
-                emptyCells.add(segregationCell);
+                addEmptyStateToCell(row, col);
             }
         }
     }

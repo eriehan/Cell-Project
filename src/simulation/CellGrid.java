@@ -12,7 +12,7 @@ public abstract class CellGrid {
     private Map<Point, Cell> gridOfCells = new HashMap<>();
     //true when cellgrid is fully stabilized, and nothing will change indefinitely.
     private boolean finished = false;
-    private GridLimit gridLimit = GridLimit.TOROIDAL;
+    private GridLimit gridLimit = GridLimit.INFINITE;
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
     private int numOfCols;
@@ -30,6 +30,21 @@ public abstract class CellGrid {
     //Iterates through all cells and change state.
     public abstract void changeAllCells();
 
+    protected void createEmptyRow(int row) {
+        for(int col=0; col<getNumOfCols(); col++) {
+            addEmptyStateToCell(row, col);
+        }
+    }
+
+    protected void createEmptyCol(int col) {
+        for(int row=0; row<getNumOfRows(); row++) {
+            addEmptyStateToCell(row, col);
+        }
+    }
+
+    public abstract void addEmptyStateToCell(int row, int col);
+
+    //Must be called for initializing by gridView
     public void assignNeighborsToEachCell() {
         if(cellShapeType==CellShapeType.RECTANGLE) {
             gridLimit.assignEdgeNeighborsSquare(gridOfCells, numOfRows, numOfCols);
@@ -39,6 +54,18 @@ public abstract class CellGrid {
         }
     }
 
+    protected void cellGridExpand() {
+        //only executed when gridLimit is Infinite
+        if(gridLimit != GridLimit.INFINITE) {return;}
+
+        boolean expand = false;
+        if(!isColEmpty(0)) {expand = true; addColOnLeft();}
+        if(!isColEmpty(getNumOfCols()-1)) {expand = true; addColOnRight();}
+        if(!isRowEmpty(0)) {expand = true; addRowOnTop();}
+        if(!isRowEmpty(getNumOfRows()-1)) {expand = true; addRowOnBottom();}
+
+        if(expand) {assignNeighborsToEachCell();}
+    }
 
     public Map<Point, Cell> getGridOfCells() {
         return gridOfCells;
@@ -99,5 +126,54 @@ public abstract class CellGrid {
 
     public void setNumOfCols(int numOfCols) {
         this.numOfCols = numOfCols;
+    }
+
+    protected boolean isRowEmpty(int rowNum) {
+        for(int col=0; col<numOfCols; col++) {
+            Cell cell = cellFromPoint(rowNum, col);
+            if(cell.getState() != cell.getPossibleStates().get(0)) {return false;}
+        }
+        return true;
+    }
+
+    protected boolean isColEmpty(int colNum) {
+        for(int row=0; row<numOfRows; row++) {
+            Cell cell = cellFromPoint(row, colNum);
+            if(cell.getState() != cell.getPossibleStates().get(0)) {return false;}
+        }
+        return true;
+    }
+
+    private void addRowOnTop() {
+        numOfRows++;
+        createEmptyRow(numOfRows-1);
+        for(int i=numOfRows-1; i>=1; i--) {
+            for(int j=0; j<numOfCols; j++) {
+                gridOfCells.put(new Point(i, j), cellFromPoint(i-1, j));
+            }
+        }
+        createEmptyRow(0);
+    }
+
+    private void addRowOnBottom() {
+        numOfRows++;
+        createEmptyRow(numOfRows-1);
+    }
+
+    private void addColOnLeft() {
+        numOfCols++;
+        createEmptyCol(numOfCols-1);
+        System.out.println(getGridOfCells().size());
+        for(int col=numOfCols-1; col>=1; col--) {
+            for(int row=0; row<numOfRows; row++) {
+                gridOfCells.put(new Point(row, col), cellFromPoint(row, col-1));
+            }
+        }
+        createEmptyCol(0);
+    }
+
+    private void addColOnRight() {
+        numOfCols++;
+        createEmptyCol(numOfCols-1);
     }
 }

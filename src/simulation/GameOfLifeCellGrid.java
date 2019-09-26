@@ -31,6 +31,13 @@ public class GameOfLifeCellGrid extends CellGrid {
         for (Cell cell : getGridOfCells().values()) {
             cell.changeState();
         }
+        cellGridExpand();
+    }
+
+    @Override
+    public void addEmptyStateToCell(int row, int col) {
+        Point point = new Point(row, col);
+        addToGridOfCells(point, new GameOfLifeCell(row, col, CellState.DEAD));
     }
 
     //creates a map of cells with state==dead
@@ -38,8 +45,7 @@ public class GameOfLifeCellGrid extends CellGrid {
         getGridOfCells().clear();
         for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
-                Point point = new Point(row, col);
-                addToGridOfCells(point, new GameOfLifeCell(row, col, CellState.DEAD));
+                addEmptyStateToCell(row, col);
             }
         }
     }

@@ -14,8 +14,7 @@ public class WaTorCell extends Cell {
     private static final CellState FISH = CellState.FISH;
     private static final CellState WATER = CellState.WATER;
     private static final CellState SHARK = CellState.SHARK;
-    public static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(WATER, FISH ,SHARK));
+    public static final List<CellState> STATES_LIST = Arrays.asList(WATER, FISH ,SHARK);
 
     private boolean moved = false;
 

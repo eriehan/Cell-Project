@@ -17,12 +17,17 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
         }
     }
 
+    @Override
+    public void addEmptyStateToCell(int row, int col) {
+        Point point = new Point(row, col);
+        addToGridOfCells(point, new PercolationCell(row, col, CellState.OPEN));
+    }
+
     private void createEmptyMap() {
         getGridOfCells().clear();
         for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
-                Point point = new Point(row, col);
-                addToGridOfCells(point, new PercolationCell(row, col, CellState.OPEN));
+                addEmptyStateToCell(row, col);
             }
         }
     }
