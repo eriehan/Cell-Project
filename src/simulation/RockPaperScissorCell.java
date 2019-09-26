@@ -21,7 +21,9 @@ public class RockPaperScissorCell extends Cell {
 
     @Override
     public void check() {
-        if(changeToWinner()) {setNextState(winningCellState());}
+        if(changeToWinner()) {
+            setNextState(winningCellState());
+        }
     }
 
     @Override
@@ -36,7 +38,7 @@ public class RockPaperScissorCell extends Cell {
     private CellState winningCellState() {
         int index = STATES_LIST.indexOf(getState());
         index++;
-        if(index==STATES_LIST.size()) {index = 0;}
+        index %= STATES_LIST.size();
         return STATES_LIST.get(index);
     }
 

@@ -21,7 +21,9 @@ public class GameOfLifeCell extends Cell {
     @Override
     public void check() {
         int aliveNeighbors = countNeighborsWithState(ALIVE, true);
-        if(willLive(aliveNeighbors)) {setNextState(ALIVE);}
+        if(willLive(aliveNeighbors)) {
+            setNextState(ALIVE);
+        }
         else {setNextState(DEAD);}
     }
 

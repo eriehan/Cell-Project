@@ -30,9 +30,13 @@ public class WaTorCell extends Cell {
     @Override
     public void check() {
         //If fish was already eaten by a shark, it will remain that way
-        if((getState()==FISH && getNextState()==SHARK) || getState() == WATER) {return;}
+        if((getState()==FISH && getNextState()==SHARK) || getState() == WATER) {
+            return;
+        }
 
-        if(getState() == FISH) { checkAndMoveToNeighbor(WATER); }
+        if(getState() == FISH) {
+            checkAndMoveToNeighbor(WATER);
+        }
         else if(getState() == SHARK) {
             checkAndMoveToNeighbor(FISH);
             if(!moved) {
@@ -58,10 +62,14 @@ public class WaTorCell extends Cell {
         // (need to use nextState because the neighbor cell may have already moved)
         List<Cell> possibleNeighbors = new ArrayList<>();
         for(Cell cell : getEdgeNeighbor()) {
-            if(cell.getNextState() == state) { possibleNeighbors.add(cell); }
+            if(cell.getNextState() == state) {
+                possibleNeighbors.add(cell);
+            }
         }
 
-        if(possibleNeighbors.isEmpty()) {return;}
+        if(possibleNeighbors.isEmpty()) {
+            return;
+        }
         else {
             int index = (int) (Math.random() * possibleNeighbors.size());
             moveToDifferentCell(possibleNeighbors.get(index));

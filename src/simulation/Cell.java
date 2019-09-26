@@ -2,10 +2,7 @@ package simulation;
 
 import utils.Point;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Cell {
 
@@ -58,20 +55,19 @@ public abstract class Cell {
     }
 
     public List<Cell> getCornerNeighbor() {
-        List<Cell> tempCornerNeighbors = cornerNeighbors;
-        return tempCornerNeighbors;
+        return cornerNeighbors;
     }
 
     public List<Cell> getEdgeNeighbor() {
         return edgeNeighbors;
     }
 
-    public void addCornerNeighbors(List<Cell> cornerNeighbors) {
-        this.cornerNeighbors = cornerNeighbors;
+    public void addCornerNeighbors(Cell neighbor, int index) {
+        cornerNeighbors.add(index, neighbor);
     }
 
-    public void addEdgeNeighbors(List<Cell> edgeNeighbors) {
-        this.edgeNeighbors = edgeNeighbors;
+    public void addEdgeNeighbors(Cell neighbor, int index) {
+        cornerNeighbors.add(index, neighbor);
     }
 
     //called when the cell needs to move. Changes state with the cell that the cell should move to.
@@ -131,7 +127,8 @@ public abstract class Cell {
     protected void setNextStateOnClick() {
         System.out.println(possibleStates.size());
         if(!possibleStates.contains(state)) {
-            System.out.println("Fix code"); return;
+            System.out.println("Fix code");
+            return;
         }
         int index = possibleStates.indexOf(getState());
         if (possibleStates.size()==index+1) {
@@ -143,7 +140,7 @@ public abstract class Cell {
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof Cell && other.hashCode() == hashCode();
+        return other.getClass().equals(this.getClass()) && other.hashCode() == hashCode();
     }
 
     @Override
