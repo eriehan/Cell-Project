@@ -33,14 +33,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
             Cell cell = getGridOfCells().get(entry.getKey());
             CellState state = entry.getValue();
-            cell.setState(state);
-            cell.setNextState(state);
-
-            if (state == CellState.FISH) {
-                assignAttributes(cell, 0);
-            } else if (state == CellState.SHARK) {
-                assignAttributes(cell, 1);
-            }
+            changeOneCell(cell, state);
         }
     }
 
@@ -60,21 +53,10 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     }
 
     @Override
-    protected void assignNeighborsToOneCell(int row, int col) {
-        super.assignNeighborsToOneCell(row, col);
-        Cell cell = cellFromPoint(row, col);
-        if (row == 0) {
-            cell.addEdgeNeighbor(cellFromPoint(getNumOfRows() - 1, col));
-        }
-        if (row == getNumOfRows() - 1) {
-            cell.addEdgeNeighbor(cellFromPoint(0, col));
-        }
-        if (col == 0) {
-            cell.addEdgeNeighbor(cellFromPoint(row, getNumOfCols() - 1));
-        }
-        if (col == getNumOfCols() - 1) {
-            cell.addEdgeNeighbor(cellFromPoint(row, 0));
-        }
+    public void setStateOfCellAtPointOnClick(int row, int col) {
+        Cell cell = getGridOfCells().get(new Point(row, col));
+        cell.setNextStateOnClick();
+        changeOneCell(cell, cell.getState());
     }
 
     private Cell cellFromPoint(int row, int col) {
@@ -104,8 +86,19 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
 
     private void assignAttributes(Cell cell, int index) {
         System.out.println(cell.getRow() + ", " + cell.getCol() + ", " + cell.getState());
+        cell.putAttribute(SURVIVE, 0);
         cell.putAttribute(REPRODUCE, reproductions.get(index));
         cell.putAttribute(INI_ENERGY, energies.get(index));
         cell.putAttribute(ENERGY, energies.get(index));
+    }
+
+    private void changeOneCell(Cell cell, CellState state) {
+        cell.setState(state);
+        cell.setNextState(state);
+        if (state == CellState.FISH) {
+            assignAttributes(cell, 0);
+        } else if (state == CellState.SHARK) {
+            assignAttributes(cell, 1);
+        }
     }
 }

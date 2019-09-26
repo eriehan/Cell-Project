@@ -9,8 +9,7 @@ public class FireCell extends Cell {
     private static final CellState TREE = CellState.TREE;
     private static final CellState FIREEMPTY = CellState.FIREEMPTY;
     private static final CellState BURNING = CellState.BURNING;
-    public static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(TREE, FIREEMPTY, BURNING));
+    public static final List<CellState> STATES_LIST = Arrays.asList(TREE, FIREEMPTY, BURNING);
 
     private double probCatch;
 
@@ -28,6 +27,7 @@ public class FireCell extends Cell {
             else { setNextState(CellState.TREE); }
         }
         else {setNextState(FIREEMPTY);}
+        System.out.println(getCornerNeighbor().size());
     }
 
     @Override

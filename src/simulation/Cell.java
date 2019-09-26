@@ -79,6 +79,8 @@ public abstract class Cell {
         other.setNextState(state);
     }
 
+    public Point getCoord() {return coord;}
+
     public int getRow() {
         return coord.getRow();
     }
@@ -96,7 +98,15 @@ public abstract class Cell {
     }
 
     public void clearNeighbors() {
+        clearEdgeNeighbors();
+        clearCornerNeighbors();
+    }
+
+    public void clearEdgeNeighbors() {
         edgeNeighbors.clear();
+    }
+
+    public void clearCornerNeighbors() {
         cornerNeighbors.clear();
     }
 
@@ -125,4 +135,13 @@ public abstract class Cell {
         //setNextState(getState());
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Cell && other.hashCode() == hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return coord.toString().hashCode() + "Cell".hashCode();
+    }
 }
