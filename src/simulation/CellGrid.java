@@ -12,7 +12,7 @@ public abstract class CellGrid {
     private Map<Point, Cell> gridOfCells = new HashMap<>();
     //true when cellgrid is fully stabilized, and nothing will change indefinitely.
     private boolean finished = false;
-    private GridLimit gridLimit = GridLimit.INFINITE;
+    private GridLimit gridLimit = GridLimit.TOROIDAL;
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
     private int numOfCols;
