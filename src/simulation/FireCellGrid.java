@@ -1,5 +1,6 @@
 package simulation;
 
+import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.Map;
@@ -10,6 +11,18 @@ public class FireCellGrid extends GameOfLifeCellGrid {
     public FireCellGrid(int numRows, int numCols, double probCatch) {
         super(numRows, numCols);
         this.probCatch = probCatch;
+    }
+
+    @Override
+    public void initializeControlPannel() {
+        String[] probcatchSliderValues = getControlPanel().getResourceBundle().getString("FireControls").split(",");
+        SimulationSlider probCatchSlider = new SimulationSlider(Integer.parseInt(probcatchSliderValues[0]),Integer.parseInt(probcatchSliderValues[1]),Integer.parseInt(probcatchSliderValues[2]),probcatchSliderValues[3]);
+        probCatchSlider.getMySlider().valueProperty().addListener(e -> updateProbCatch((double) Math.round(probCatchSlider.getMySlider().getValue())));
+        getControlPanel().getMyColPanel().getChildren().add(probCatchSlider.getvBox());
+    }
+
+    private void updateProbCatch(double newProbCatch){
+        //TODO
     }
 
     @Override

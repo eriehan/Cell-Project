@@ -11,16 +11,13 @@ import org.xml.sax.SAXException;
 import userInterface.*;
 import xml.Xml;
 
-
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-import static userInterface.VisualizationConstants.*;
+import static userInterface.VisualizationConstants.BACKGROUND_COLOR;
 
 public class MainController extends Application {
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
@@ -152,7 +149,6 @@ public class MainController extends Application {
         edgeTypeChoice.getChoiceBox().setValue(resourceBundle.getString("EdgeTypes").split(",")[0]);
         edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> setEdgeType((String) edgeTypeChoice.getChoiceBox().getValue()));
         this.myUserInterface.getMySlidersAndControls().addChoiceBox(edgeTypeChoice);
-
     }
 
     private void setEdgeType(String edgeType) {
@@ -192,6 +188,7 @@ public class MainController extends Application {
         myXml = new Xml(this.myUserInterface);
         myXml.parse(this.userFile);
         myUserInterface.getMyGridView().initializeMyCellGrid(myXml);
+        this.myUserInterface.addSimulationControls();
         this.myAnimation.pause();
     }
 

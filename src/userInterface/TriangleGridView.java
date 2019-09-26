@@ -1,6 +1,5 @@
 package userInterface;
 
-import javafx.animation.Animation;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

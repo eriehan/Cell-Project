@@ -1,7 +1,6 @@
 package simulation;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class FireCell extends Cell {
@@ -19,6 +18,7 @@ public class FireCell extends Cell {
         putAttribute(PROBCATCH, (int) probCatch);
         setPossibleStates(STATES_LIST);
     }
+
 
     @Override
     public void check() {

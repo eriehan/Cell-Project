@@ -20,6 +20,7 @@ public class UserInterface {
     private AbstractGridView myGridView;
     private VBox colTwo;
     private VBox colOne;
+    private HBox hBox;
     private Buttons myButtons;
     private SlidersAndControls mySlidersAndControls;
     private int numOfCols;
@@ -30,6 +31,7 @@ public class UserInterface {
     private Text errorMsg;
     private Text simulationFilePath;
     private ResourceBundle resourceBundle;
+
 
     public UserInterface(int numofRows, int numofCols, String simulationName) {
         this.numOfRows = numofRows;
@@ -46,7 +48,7 @@ public class UserInterface {
         var root = new Group();
         colOne = new VBox(20);
         colTwo = new VBox(20);
-        HBox hBox = new HBox(20);
+        hBox = new HBox(20);
         hBox.setPadding(new Insets(20, 50, 50, 50));
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
         colTwo.getChildren().addAll(myButtons.getButtonList());
@@ -66,6 +68,11 @@ public class UserInterface {
         }
     }
 
+    public void addSimulationControls(){
+        this.getMyGridView().getMyCellGrid().initializeControlPannel();
+        this.hBox.getChildren().add(this.getMyGridView().getMyCellGrid().getControlPanel().getMyColPanel());
+    }
+
     public AbstractGridView getMyGridView() {
         return myGridView;
     }
@@ -76,6 +83,10 @@ public class UserInterface {
 
     public SlidersAndControls getMySlidersAndControls() {
         return mySlidersAndControls;
+    }
+
+    public HBox gethBox() {
+        return hBox;
     }
 
     public void changeTitle(String s) {

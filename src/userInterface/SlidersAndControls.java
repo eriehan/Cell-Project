@@ -20,7 +20,7 @@ public class SlidersAndControls {
     }
 
     public void addSlider(SimulationSlider slider) {
-        myCol.getChildren().add(slider.getMyHBox());
+        myCol.getChildren().add(slider.getvBox());
         sliderList.add(slider);
     }
 

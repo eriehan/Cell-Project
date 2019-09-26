@@ -1,5 +1,6 @@
 package simulation;
 
+import userInterface.ControlPanel;
 import userInterface.CellShapeType;
 import utils.Point;
 
@@ -16,11 +17,15 @@ public abstract class CellGrid {
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
     private int numOfCols;
+    private ControlPanel controlPanel;
 
     public CellGrid(int numRows, int numCols) {
         this.numOfRows = numRows;
         this.numOfCols = numCols;
+        this.controlPanel = new ControlPanel();
     }
+
+    public abstract void initializeControlPannel();
 
     public abstract void initializeGrids(Map<Point, CellState> configMap);
 
@@ -126,6 +131,10 @@ public abstract class CellGrid {
 
     public void setNumOfCols(int numOfCols) {
         this.numOfCols = numOfCols;
+    }
+
+    public ControlPanel getControlPanel() {
+        return controlPanel;
     }
 
     protected boolean isRowEmpty(int rowNum) {
