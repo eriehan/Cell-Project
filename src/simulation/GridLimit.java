@@ -129,9 +129,7 @@ public enum GridLimit {
     public abstract void assignNeighborsHexagonal(Cell cell, int row, int col);
 
     protected Cell cellFromPoint(Map<Point, Cell> gridOfCells, int row, int col, int numOfRows, int numOfCols) {
-        row  %= numOfRows;
-        col %= numOfCols;
-        /*if(row<0) {
+        if(row<0) {
             row = numOfRows-1;
         }
         else if(row>=numOfRows) {
@@ -139,7 +137,7 @@ public enum GridLimit {
         }
 
         if(col<0) {col = numOfCols-1;}
-        else if(col>=numOfCols) {col = 0;}*/
+        else if(col>=numOfCols) {col = 0;}
 
         return gridOfCells.get(new Point(row, col));
     }
