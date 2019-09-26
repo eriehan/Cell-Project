@@ -25,7 +25,9 @@ public class RockPaperScissorCell extends Cell {
     }
 
     @Override
-    public void changeState() { setState(getNextState()); }
+    public void changeState() {
+        setState(getNextState());
+    }
 
     public void changeThreshold(int threshhold) {
         putAttribute(THRESHOLD, threshhold);
@@ -39,6 +41,6 @@ public class RockPaperScissorCell extends Cell {
     }
 
     private boolean changeToWinner() {
-        return countNeighborsWithState(winningCellState()) >= threshhold;
+        return countNeighborsWithState(winningCellState(), true) >= threshhold;
     }
 }

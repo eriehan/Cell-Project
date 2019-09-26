@@ -35,15 +35,19 @@ public class WaTorCell extends Cell {
         if(getState() == FISH) { checkAndMoveToNeighbor(WATER); }
         else if(getState() == SHARK) {
             checkAndMoveToNeighbor(FISH);
-            if(!moved) {checkAndMoveToNeighbor(WATER);}
+            if(!moved) {
+                checkAndMoveToNeighbor(WATER);
+            }
         }
         //if this cell cannot move. (baby can only be made when the cell moves)
         if(!moved) {
             putAttribute(SURVIVE, getAttribute(SURVIVE)+1);
             if(getState()==SHARK) {
-                int energy = getAttribute(ENERGY);
-                putAttribute(ENERGY, energy--);
-                if(energy==0) {setNextState(WATER);}
+                int energy = getAttribute(ENERGY) - 1;
+                putAttribute(ENERGY, energy);
+                if(energy==0) {
+                    setNextState(WATER);
+                }
             }
         }
         moved = false;
@@ -73,7 +77,9 @@ public class WaTorCell extends Cell {
         System.out.println(getState() +", " +  getRow() + ", " + getCol());
         System.out.println("to " + other.getState() + ", " + other.getRow() + ", " + other.getCol());
         System.out.println("which will be " + other.getNextState() + ", " + other.getRow() + ", " + other.getCol());
-        if (getState()==WATER) {return;} //empty cells don't move. sharks and fishes can move.
+        if (getState()==WATER) {
+            return;
+        } //empty cells don't move. sharks and fishes can move.
         int energy = getAttribute(ENERGY);
         setNextState(other.getNextState());
         other.setNextState(getState());
@@ -86,18 +92,24 @@ public class WaTorCell extends Cell {
             }
             energy--;
             System.out.println(energy);
-            if(energy==0) { other.setNextState(WATER);}
+            if(energy==0) {
+                other.setNextState(WATER);
+            }
         }
         other.putAttribute(ENERGY, energy);
         other.putAttribute(REPRODUCE, getAttribute(REPRODUCE));
         other.putAttribute(INI_ENERGY, getAttribute(INI_ENERGY));
         other.putAttribute(SURVIVE, getAttribute(SURVIVE)+1);
 
+        waterIfDead(other);
+        putAttribute(SURVIVE, 0);
+    }
+
+    private void waterIfDead(Cell other) {
         if(other.getAttribute(SURVIVE) > other.getAttribute(REPRODUCE)) {
             setNextState(getState());
             putAttribute(ENERGY, getAttribute(INI_ENERGY));
             other.putAttribute(SURVIVE, 0);
         }
-        putAttribute(SURVIVE, 0);
     }
 }

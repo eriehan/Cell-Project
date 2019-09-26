@@ -9,6 +9,7 @@ public class SegregationCell extends Cell {
 
     private static final CellState EMPTY = CellState.EMPTY;
     private static final CellState DISATISFIED = CellState.DISATISFIED;
+    private static final double HUNDRED = 100.0;
     public static final List<CellState> STATES_LIST =
             Collections.unmodifiableList(Arrays.asList(EMPTY, CellState.FIRSTAGENT, CellState.SECONDAGENT));
 
@@ -25,24 +26,25 @@ public class SegregationCell extends Cell {
     @Override
     public void check() {
         //if empty, next state is empty.
-        if(getState() == EMPTY) {setNextState(CellState.EMPTY);}
-        else {
-            int cellsWithSameState = 0;
-            int notEmptyNeighbors = 0;
-            for (Cell other : allNeighbors()) {
-                if(other.getState() != EMPTY) {
-                    if (other.getState() == getState()) {
-                        cellsWithSameState++;
-                    }
-                    notEmptyNeighbors++;
+        if(getState() == EMPTY) {
+            setNextState(CellState.EMPTY);
+            return;
+        }
+        int cellsWithSameState = 0;
+        int notEmptyNeighbors = 0;
+        for (Cell other : allNeighbors()) {
+            if(other.getState() != EMPTY) {
+                if (other.getState() == getState()) {
+                    cellsWithSameState++;
                 }
+                notEmptyNeighbors++;
             }
-            if (cellsWithSameState < notEmptyNeighbors * agentPercent / 100.0) {
-                setNextState(DISATISFIED);
-            }
-            else {
-                setNextState(getState());
-            }
+        }
+        if (cellsWithSameState < notEmptyNeighbors * agentPercent / HUNDRED) {
+            setNextState(DISATISFIED);
+        }
+        else {
+            setNextState(getState());
         }
     }
 

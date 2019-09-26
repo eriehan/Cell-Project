@@ -2,6 +2,7 @@ package simulation;
 
 import utils.Point;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,16 +15,16 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     private final static CellAttribute SURVIVE = CellAttribute.SURVIVEDTIME;
     private final static CellAttribute REPRODUCE = CellAttribute.REPRODUCTION;
 
-    private List<Integer> reproductions;
-    private List<Integer> energies;
+    private List<Integer> reproductions = new ArrayList<>();
+    private List<Integer> energies = new ArrayList<>();
     private List<Cell> fishesAndSharks = new ArrayList<>();
 
     //reproductions is a list of time needed for fish and shark to reproduce
     //energies.get(0) = energy that shark gets by eating fish, energies.get(1) = shark's initial energy
     public WaTorCellGrid(int numRows, int numCols, List<Integer> reproductions, List<Integer> energies) {
         super(numRows, numCols);
-        this.reproductions = reproductions;
-        this.energies = energies;
+        Collections.copy(this.reproductions, reproductions);
+        Collections.copy(this.energies, energies);
     }
 
     @Override
@@ -64,10 +65,6 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
         addToGridOfCells(point, new WaTorCell(row, col, CellState.WATER, 0, 0));
-    }
-
-    private Cell cellFromPoint(int row, int col) {
-        return getGridOfCells().get(new Point(row, col));
     }
 
     private void createEmptyMap() {

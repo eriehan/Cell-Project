@@ -151,13 +151,21 @@ public abstract class Cell {
         return coord.toString().hashCode() + "Cell".hashCode();
     }
 
-    protected int countNeighborsWithState(CellState state) {
+    protected int countNeighborsWithState(CellState state, boolean cornersInclude) {
         int count = 0;
-        for (Cell cell : getCornerNeighbor()) {
-            if (cell.getState() == state) { count++; }
-        }
         for (Cell cell : getEdgeNeighbor()) {
-            if (cell.getState() == state) { count++; }
+            if (cell.getState() == state) {
+                count++;
+            }
+        }
+        if(!cornersInclude) {
+            return count;
+        }
+
+        for (Cell cell : getCornerNeighbor()) {
+            if (cell.getState() == state) {
+                count++;
+            }
         }
         return count;
     }
