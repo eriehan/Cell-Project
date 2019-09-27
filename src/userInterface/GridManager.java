@@ -97,6 +97,8 @@ public class GridManager {
 
                 }
                 this.initialConfigMap = configMap;
+                //check if rate was changed
+
                 cellGrid = new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate());
                 break;
         }

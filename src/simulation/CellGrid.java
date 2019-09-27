@@ -26,6 +26,8 @@ public abstract class CellGrid {
         this.controlPanel = new ControlPanel();
     }
 
+
+
     public void initializeControlPanel() {
         this.controlPanel.getMyColPane().getChildren().clear();
     }

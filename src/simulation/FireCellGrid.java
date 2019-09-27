@@ -3,15 +3,20 @@ package simulation;
 import userInterface.SimulationSlider;
 import utils.Point;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class FireCellGrid extends GameOfLifeCellGrid {
     private double probCatch;
+    private Map myConfigMap = new HashMap<Point, CellState>();
 
     public FireCellGrid(int numRows, int numCols, double probCatch) {
         super(numRows, numCols);
+
         this.probCatch = probCatch;
+
     }
+
 
     @Override
     public void initializeControlPanel() {
@@ -26,7 +31,14 @@ public class FireCellGrid extends GameOfLifeCellGrid {
     private void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "PropCatch"
-        System.out.println(type);
+        //System.out.println(inputPercentage);
+        this.probCatch = inputPercentage;
+        System.out.println("probCatch in SliderAction: " + probCatch);
+        createMapFullOfTrees();
+        initializeGrids(myConfigMap);
+        assignNeighborsToEachCell();
+
+       // System.out.println(type);
     }
 
     @Override
@@ -34,7 +46,9 @@ public class FireCellGrid extends GameOfLifeCellGrid {
         createMapFullOfTrees();
         for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
             getGridOfCells().get(entry.getKey()).setState(entry.getValue());
+            myConfigMap.put(entry.getKey(), entry.getValue());
         }
+
     }
 
     @Override
@@ -45,6 +59,7 @@ public class FireCellGrid extends GameOfLifeCellGrid {
     @Override
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
+        System.out.println("probCatch in addEmptyStateToCel;: " + probCatch);
         addToGridOfCells(point, new FireCell(row, col, CellState.TREE, probCatch));
     }
 

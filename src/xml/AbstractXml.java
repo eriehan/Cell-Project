@@ -9,7 +9,6 @@ import simulation.Cell;
 import simulation.CellState;
 import userInterface.AbstractGridView;
 import userInterface.CellShapeType;
-import userInterface.SimulationButton;
 import userInterface.UserInterface;
 import utils.Point;
 
@@ -17,7 +16,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -88,10 +86,7 @@ public abstract class AbstractXml {
         this.doc = this.docBuilder.parse(this.xmlFile);
         determineCellShape(this.doc);
         setUpSimulationParameters();
-       // setUpSimulationParameters(this.myColArray, this.myRowArray, this.doc);
     }
-
-   // protected abstract void setUpSimulationParameters(ArrayList<ArrayList<Integer>> myColArray, ArrayList<ArrayList<Integer>> myRowArray, Document doc);
 
 
 
@@ -259,7 +254,6 @@ public abstract class AbstractXml {
         col.appendChild(document.createTextNode(convertArrayToString(colArray)));
         agentElement.appendChild(row);
         agentElement.appendChild(col);
-       // (Element)document.getElementsByTagName("Simulation").item(0).appendChild(agentElement);
         document.getFirstChild().appendChild(agentElement);
     }
 
@@ -281,7 +275,6 @@ public abstract class AbstractXml {
         en.appendChild(document.createTextNode(Integer.toString(energy)));
         agentElement.appendChild(ma);
         agentElement.appendChild(en);
-        // (Element)document.getElementsByTagName("Simulation").item(0).appendChild(agentElement);
         document.getFirstChild().appendChild(agentElement);
     }
 
@@ -310,11 +303,8 @@ public abstract class AbstractXml {
         for(int i = 0; i < rowArray.size(); i++){
             addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
         }
-//        addAgents(document, "0", rowArray.get(0), colArray.get(0));
-//        addAgents(document, "1", rowArray.get(1), colArray.get(1));
         createXmlFilePath(document, xmlFilePath);
     }
-   // public abstract void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException;
 
     protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
                                          File xmlFilePath) throws TransformerException, ParserConfigurationException {
@@ -326,8 +316,7 @@ public abstract class AbstractXml {
         for(int i = 0; i < rowArray.size(); i++){
             addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
         }
-//        addAgents(document, "0", rowArray.get(0), colArray.get(0));
-//        addAgents(document, "1", rowArray.get(1), colArray.get(1));
+
         createXmlFilePath(document, xmlFilePath);
     }
 
@@ -337,5 +326,4 @@ public abstract class AbstractXml {
 
     public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
 
-    // public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
 }

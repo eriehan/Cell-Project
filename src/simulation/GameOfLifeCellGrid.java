@@ -10,6 +10,9 @@ public class GameOfLifeCellGrid extends CellGrid {
         super(numRows, numCols);
     }
 
+
+
+
     @Override
     public void initializeControlPanel() {
         return;
