@@ -158,7 +158,6 @@ public abstract class Cell {
         if(!cornersInclude) {
             return count;
         }
-
         for (Cell cell : getCornerNeighbor()) {
             if (cell.getState() == state) {
                 count++;

@@ -3,6 +3,7 @@ package xml;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import simulation.Cell;
 import simulation.CellState;
@@ -86,10 +87,40 @@ public abstract class AbstractXml {
         this.docBuilder = this.documentBuilderFactory.newDocumentBuilder();
         this.doc = this.docBuilder.parse(this.xmlFile);
         determineCellShape(this.doc);
-        setUpSimulationParameters(this.myColArray, this.myRowArray, this.doc);
+        setUpSimulationParameters();
+       // setUpSimulationParameters(this.myColArray, this.myRowArray, this.doc);
     }
 
-    protected abstract void setUpSimulationParameters(ArrayList<ArrayList<Integer>> myColArray, ArrayList<ArrayList<Integer>> myRowArray, Document doc);
+   // protected abstract void setUpSimulationParameters(ArrayList<ArrayList<Integer>> myColArray, ArrayList<ArrayList<Integer>> myRowArray, Document doc);
+
+
+
+    protected void setUpSimulationParameters(){
+            this.cellGridColNum = Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
+            this.myUserInterface.setNumOfCols(this.cellGridColNum);
+            this.cellGridRowNum = Integer.parseInt(doc.getElementsByTagName("Row").item(0).getTextContent());
+            this.myUserInterface.setNumOfRows(this.cellGridRowNum);
+            this.rate = Integer.parseInt(doc.getElementsByTagName("Rate").item(0).getTextContent());
+            this.isSaved = Integer.parseInt(doc.getElementsByTagName("Saved").item(0).getTextContent());
+            NodeList typeOfSimulation = doc.getElementsByTagName("Type");
+            //goes through NodeList to get information about the different simulation
+            for (int i = 0; i < typeOfSimulation.getLength(); i++) {
+                //gets the i-th simulation type and casts it as a node
+                Node currentSimulationType = typeOfSimulation.item(i);
+                Element currentSimulationElement = (Element) currentSimulationType;
+                this.myTitle = currentSimulationElement.getAttribute("name");
+                this.myUserInterface.changeTitle(this.myTitle);
+                this.numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
+            }
+            for (int i = 0; i < this.numAgents; i++) {
+                NodeList agent = doc.getElementsByTagName("Agent" + i);
+                Element n = (Element) agent.item(0);
+                String row = n.getElementsByTagName("Row").item(0).getTextContent();
+                String col = n.getElementsByTagName("Column").item(0).getTextContent();
+                myRowArray.add(stringToIntArray(row));
+                myColArray.add(stringToIntArray(col));
+            }
+    }
 
     private void determineCellShape(Document doc) {
         Node shapeNode = doc.getElementsByTagName("Shape").item(0);
@@ -166,7 +197,8 @@ public abstract class AbstractXml {
         return myInts;
     }
 
-    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2){
+    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, List<ArrayList<Integer>> colArray,
+                                 List<ArrayList<Integer>> rowArray){
         agent0Col = new ArrayList<>();
         agent0Row = new ArrayList<>();
         agent1Col = new ArrayList<>();
@@ -184,6 +216,11 @@ public abstract class AbstractXml {
             }
         }
 
+        colArray.add(agent0Col);
+        colArray.add(agent1Col);
+        rowArray.add(agent0Row);
+        rowArray.add(agent1Row);
+
 
     }
 
@@ -196,7 +233,7 @@ public abstract class AbstractXml {
     }
 
 
-    protected void saveCellState(Map<Point, Cell> myMap, CellState state1){
+    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, List<ArrayList<Integer>> colArray, List<ArrayList<Integer>> rowArray){
         agent0Col = new ArrayList<>();
         agent0Row = new ArrayList<>();
         for (Map.Entry<Point, Cell> entry: myMap.entrySet()
@@ -207,6 +244,8 @@ public abstract class AbstractXml {
                 agent0Col.add(entry.getKey().getCol());
             }
         }
+        colArray.add(agent0Col);
+        rowArray.add(agent0Row);
 
     }
 
@@ -260,10 +299,43 @@ public abstract class AbstractXml {
 
     }
 
-    public abstract void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException;
 
+    protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
+                                         CellState state2, File xmlFilePath) throws ParserConfigurationException, TransformerException {
+        Document document = stageXml();
+        Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
+        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
+        saveCellState(myMap, state1, state2, colArray, rowArray);
+        for(int i = 0; i < rowArray.size(); i++){
+            addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
+        }
+//        addAgents(document, "0", rowArray.get(0), colArray.get(0));
+//        addAgents(document, "1", rowArray.get(1), colArray.get(1));
+        createXmlFilePath(document, xmlFilePath);
+    }
+   // public abstract void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException;
+
+    protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
+                                         File xmlFilePath) throws TransformerException, ParserConfigurationException {
+        Document document = stageXml();
+        Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
+        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
+        saveCellState(myMap, state1, colArray, rowArray);
+        for(int i = 0; i < rowArray.size(); i++){
+            addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
+        }
+//        addAgents(document, "0", rowArray.get(0), colArray.get(0));
+//        addAgents(document, "1", rowArray.get(1), colArray.get(1));
+        createXmlFilePath(document, xmlFilePath);
+    }
 
     public abstract List<Integer> getMaturityArray();
 
     public abstract List<Integer> getEnergyArray();
+
+    public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
+
+    // public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
 }

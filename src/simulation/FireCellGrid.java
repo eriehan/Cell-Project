@@ -15,6 +15,7 @@ public class FireCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void initializeControlPannel() {
+        this.getControlPanel().getMyColPanel().getChildren().clear();
         String[] controlsList = getControlPanel().getResourceBundle().getString("FireControls").split(",");
         for (String controlType : controlsList) {
             int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));

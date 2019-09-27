@@ -190,11 +190,12 @@ public class MainController extends Application {
 
         //check which xml to make
         whichXml();
-
-
         myXml.parse(this.userFile);
+
+        //System.out.println("In Main: " +myXml.getMaturityArray());
         myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
         this.myUserInterface.addSimulationControls();
+        this.myUserInterface.getMyGridView().displayGrid();
         this.myAnimation.pause();
     }
 
