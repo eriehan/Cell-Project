@@ -23,21 +23,9 @@ public class SegregationXml extends AbstractXml {
     }
 
 
-    @Override
+
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws TransformerException, ParserConfigurationException {
-        Document document = stageXml();
-        System.out.println("Entered");
-        Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
-        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
-        saveCellState(myMap, CellState.FIRSTAGENT, CellState.SECONDAGENT);
-        colArray.add(agent0Col);
-        colArray.add(agent1Col);
-        rowArray.add(agent0Row);
-        rowArray.add(agent1Row);
-        addAgents(document, "0", rowArray.get(0), colArray.get(0));
-        addAgents(document, "1", rowArray.get(1), colArray.get(1));
-        createXmlFilePath(document, xmlFilePath);
+        super.saveCurrentSimulation(myGridView, CellState.FIRSTAGENT, CellState.SECONDAGENT, xmlFilePath);
 
     }
 

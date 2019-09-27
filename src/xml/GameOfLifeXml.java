@@ -23,18 +23,9 @@ public class GameOfLifeXml extends AbstractXml {
     }
 
 
-    @Override
+
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
-        Document document = stageXml();
-        System.out.println("Entered");
-        Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
-        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
-        saveCellState(myMap, CellState.ALIVE);
-        colArray.add(agent0Col);
-        rowArray.add(agent0Row);
-        addAgents(document, "0", rowArray.get(0), colArray.get(0));
-        createXmlFilePath(document, xmlFilePath);
+        super.saveCurrentSimulation(myGridView, CellState.ALIVE, xmlFilePath);
     }
 
     @Override

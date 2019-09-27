@@ -24,22 +24,9 @@ public class PercolationXml extends AbstractXml {
 
 
 
-    @Override
-    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
-        Document document = stageXml();
-        System.out.println("Entered");
-        Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
-        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
-        saveCellState(myMap, CellState.BLOCKED, CellState.PERCOLATED);
-        colArray.add(agent0Col);
-        colArray.add(agent1Col);
-        rowArray.add(agent0Row);
-        rowArray.add(agent1Row);
-        addAgents(document, "0", rowArray.get(0), colArray.get(0));
-        addAgents(document, "1", rowArray.get(1), colArray.get(1));
-        createXmlFilePath(document, xmlFilePath);
 
+    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
+        super.saveCurrentSimulation(myGridView, CellState.PERCOLATED, CellState.BLOCKED, xmlFilePath);
     }
 
     @Override

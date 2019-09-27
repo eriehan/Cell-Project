@@ -14,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class WaTorXml extends AbstractXml{
@@ -40,18 +41,14 @@ public class WaTorXml extends AbstractXml{
 
     }
 
-    @Override
+
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
+        //super.saveCurrentSimulation(myGridView, xmlFilePath);
         Document document = stageXml();
-        System.out.println("Entered");
         Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
-        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
-        saveCellState(myMap, CellState.SHARK, CellState.FISH);
-        colArray.add(agent0Col);
-        colArray.add(agent1Col);
-        rowArray.add(agent0Row);
-        rowArray.add(agent1Row);
+        List<ArrayList<Integer>> colArray = new ArrayList<>();
+        List<ArrayList<Integer>> rowArray = new ArrayList<>();
+        saveCellState(myMap, CellState.SHARK, CellState.FISH, colArray, rowArray);
         addAgents(document, "0", rowArray.get(0), colArray.get(0),
                 getMaturityArray().get(0), getEnergyArray().get(0));
         addAgents(document, "1", rowArray.get(1), colArray.get(1),

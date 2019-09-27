@@ -197,7 +197,8 @@ public abstract class AbstractXml {
         return myInts;
     }
 
-    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2){
+    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, List<ArrayList<Integer>> colArray,
+                                 List<ArrayList<Integer>> rowArray){
         agent0Col = new ArrayList<>();
         agent0Row = new ArrayList<>();
         agent1Col = new ArrayList<>();
@@ -215,6 +216,11 @@ public abstract class AbstractXml {
             }
         }
 
+        colArray.add(agent0Col);
+        colArray.add(agent1Col);
+        rowArray.add(agent0Row);
+        rowArray.add(agent1Row);
+
 
     }
 
@@ -227,7 +233,7 @@ public abstract class AbstractXml {
     }
 
 
-    protected void saveCellState(Map<Point, Cell> myMap, CellState state1){
+    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, List<ArrayList<Integer>> colArray, List<ArrayList<Integer>> rowArray){
         agent0Col = new ArrayList<>();
         agent0Row = new ArrayList<>();
         for (Map.Entry<Point, Cell> entry: myMap.entrySet()
@@ -238,6 +244,8 @@ public abstract class AbstractXml {
                 agent0Col.add(entry.getKey().getCol());
             }
         }
+        colArray.add(agent0Col);
+        rowArray.add(agent0Row);
 
     }
 
@@ -291,10 +299,43 @@ public abstract class AbstractXml {
 
     }
 
-    public abstract void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException;
 
+    protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
+                                         CellState state2, File xmlFilePath) throws ParserConfigurationException, TransformerException {
+        Document document = stageXml();
+        Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
+        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
+        saveCellState(myMap, state1, state2, colArray, rowArray);
+        for(int i = 0; i < rowArray.size(); i++){
+            addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
+        }
+//        addAgents(document, "0", rowArray.get(0), colArray.get(0));
+//        addAgents(document, "1", rowArray.get(1), colArray.get(1));
+        createXmlFilePath(document, xmlFilePath);
+    }
+   // public abstract void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException;
+
+    protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
+                                         File xmlFilePath) throws TransformerException, ParserConfigurationException {
+        Document document = stageXml();
+        Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
+        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
+        saveCellState(myMap, state1, colArray, rowArray);
+        for(int i = 0; i < rowArray.size(); i++){
+            addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
+        }
+//        addAgents(document, "0", rowArray.get(0), colArray.get(0));
+//        addAgents(document, "1", rowArray.get(1), colArray.get(1));
+        createXmlFilePath(document, xmlFilePath);
+    }
 
     public abstract List<Integer> getMaturityArray();
 
     public abstract List<Integer> getEnergyArray();
+
+    public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
+
+    // public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
 }
