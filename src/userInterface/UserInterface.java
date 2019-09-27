@@ -22,12 +22,9 @@ public class UserInterface {
     private static final double PADDING_TOP = 20;
     private static final double PADDING_OTHER = 50;
     private AbstractGridView myGridView;
-    private VBox colTwo;
-    private VBox colOne;
-    private VBox controlCol;
+    private VBox titleAndGridCol;
     private HBox hBox;
-    private Buttons myButtons;
-    private SlidersAndControls mySlidersAndControls;
+    private ControlsManager myControlsManager;
     private int numOfCols;
     private int numOfRows;
     private Text simulationTitle;
@@ -42,23 +39,18 @@ public class UserInterface {
         this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
         simulationTitle.setFont(TITLE_FONT);
         myGridView = new RectangleGridView(numOfCols, numOfRows);
-        myButtons = new Buttons();
-        mySlidersAndControls = new SlidersAndControls();
+        myControlsManager = new ControlsManager();
     }
 
     public Group setScene() {
         var root = new Group();
-        colOne = new VBox(SPACING);
-        colTwo = new VBox(SPACING);
-        controlCol = new VBox(SPACING);
+        titleAndGridCol = new VBox(SPACING);
         hBox = new HBox(SPACING);
         hBox.setPadding(new Insets(PADDING_TOP , PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
-        colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
-        colTwo.getChildren().addAll(myButtons.getButtonList());
-        colTwo.getChildren().addAll(mySlidersAndControls.getMyCol());
-        colTwo.setPadding(new Insets(PADDING_TOP + Integer.parseInt(resourceBundle.getString("TitleFont")),  PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
-        hBox.getChildren().addAll(colOne, colTwo);
-        hBox.getChildren().add(controlCol);
+        titleAndGridCol.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
+        hBox.getChildren().add(titleAndGridCol);
+        hBox.getChildren().add(myControlsManager.getMyPane());
+
         root.getChildren().add(hBox);
         return root;
     }
@@ -67,27 +59,24 @@ public class UserInterface {
         myGridView.updateGrid();
         if (this.errorMsgTimer != -1) errorMsgTimer++;
         if (this.errorMsgTimer > ERROR_MSG_TIME_LIMIT) {
-            this.colTwo.getChildren().remove(this.errorMsg);
+            this.getMyControlsManager().getMyConstantCol().getChildren().remove(this.errorMsg);
             this.errorMsgTimer = -1;
         }
     }
 
     public void addSimulationControls(){
-        this.getMyGridView().getGridManager().getCellGrid().initializeControlPannel();
-        this.controlCol.getChildren().clear();
-        this.controlCol.getChildren().add(this.getMyGridView().getGridManager().getCellGrid().getControlPanel().getMyColPanel());
+        this.getMyGridView().getGridManager().getCellGrid().initializeControlPanel();
+        this.getMyControlsManager().getMySimulationCol().getChildren().clear();
+        this.getMyControlsManager().getMySimulationCol().getChildren().add(this.getMyGridView().getGridManager().getCellGrid().getControlPanel().getMyColPane());
     }
 
     public AbstractGridView getMyGridView() {
         return myGridView;
     }
 
-    public Buttons getMyButtons() {
-        return myButtons;
-    }
 
-    public SlidersAndControls getMySlidersAndControls() {
-        return mySlidersAndControls;
+    public ControlsManager getMyControlsManager() {
+        return myControlsManager;
     }
 
     public void changeTitle(String s) {
@@ -106,12 +95,12 @@ public class UserInterface {
 
     public void displayErrorMsg(String errorMessage) {
         if (errorMsgTimer != -1) {
-            this.colTwo.getChildren().remove(this.errorMsg);
+            this.getMyControlsManager().getMyConstantCol().getChildren().remove(this.errorMsg);
         }
         this.errorMsg = new Text(errorMessage);
         this.errorMsg.setFont(Font.font("Arial", FontWeight.BOLD, ERROR_MSG_FONT_SIZE));
         this.errorMsg.setFill(Color.ORANGE);
-        this.colTwo.getChildren().add(this.errorMsg);
+        this.getMyControlsManager().getMyConstantCol().getChildren().add(this.errorMsg);
         this.errorMsgTimer = 0;
     }
 
@@ -119,7 +108,7 @@ public class UserInterface {
         this.simulationFilePath = new Text(filePath);
         this.simulationFilePath.setFont(Font.font("Arial", FontWeight.BOLD, FILE_PATH_FONT_SIZE));
         this.simulationFilePath.setFill(Color.CORNFLOWERBLUE);
-        this.colOne.getChildren().add(this.simulationFilePath);
+        this.titleAndGridCol.getChildren().add(this.simulationFilePath);
     }
 
     public void setCellShape(CellShapeType type) {
@@ -127,8 +116,8 @@ public class UserInterface {
         if (type == CellShapeType.TRIANGLE) myGridView = new TriangleGridView(numOfRows, numOfCols);
         if (type == CellShapeType.HEXAGON) myGridView = new HexagonGridView(numOfRows, numOfCols);
         myGridView.generateBlankGrid();
-        colOne.getChildren().clear();
-        colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
+        titleAndGridCol.getChildren().clear();
+        titleAndGridCol.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
     }
 
 }

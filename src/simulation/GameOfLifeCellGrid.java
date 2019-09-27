@@ -11,7 +11,7 @@ public class GameOfLifeCellGrid extends CellGrid {
     }
 
     @Override
-    public void initializeControlPannel() {
+    public void initializeControlPanel() {
         return ;
     }
 

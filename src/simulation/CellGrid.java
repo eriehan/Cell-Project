@@ -25,8 +25,8 @@ public abstract class CellGrid {
         this.controlPanel = new ControlPanel();
     }
 
-    public void initializeControlPannel(){
-        this.controlPanel.getMyColPanel().getChildren().clear();
+    public void initializeControlPanel(){
+        this.controlPanel.getMyColPane().getChildren().clear();
     };
 
     public abstract void initializeGrids(Map<Point, CellState> configMap);

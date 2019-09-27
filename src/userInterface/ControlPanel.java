@@ -13,19 +13,19 @@ public class ControlPanel {
     private static final int SPACING = 15;
     private ResourceBundle resourceBundle;
     private ArrayList<SimulationSlider> sliderList;
-    private VBox myColPanel;
+    private VBox myColPane;
 
     public ControlPanel() {
         sliderList = new ArrayList<>();
-        myColPanel = new VBox();
-        myColPanel.setSpacing(SPACING);
-        myColPanel.setPadding(new Insets(PADDING_TOP,PADDING_OTHER,PADDING_OTHER,PADDING_OTHER));
+        myColPane = new VBox();
+        myColPane.setSpacing(SPACING);
+        myColPane.setPadding(new Insets(PADDING_TOP,PADDING_OTHER,PADDING_OTHER,PADDING_OTHER));
         this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
     }
 
 
-    public VBox getMyColPanel() {
-        return myColPanel;
+    public VBox getMyColPane() {
+        return myColPane;
     }
 
     public ResourceBundle getResourceBundle() {

@@ -95,8 +95,7 @@ public class MainController extends Application {
     }
 
     private void initButtons() {
-
-        this.myUserInterface.getMyButtons().getButtonList().add(new InfoButton(resourceBundle.getString("Help"),resourceBundle.getString("HelpWindowTitle"), resourceBundle.getString("HelpHeaderText"), resourceBundle.getString("HelpContentText")));
+        this.myUserInterface.getMyControlsManager().addButton(new InfoButton(resourceBundle.getString("Help"),resourceBundle.getString("HelpWindowTitle"), resourceBundle.getString("HelpHeaderText"), resourceBundle.getString("HelpContentText")));
 
         SimulationButton selectFileButton = new SimulationButton(resourceBundle.getString("SelectFile"));
         selectFileButton.setOnAction(value -> {
@@ -111,25 +110,26 @@ public class MainController extends Application {
             }
         });
 
-        this.myUserInterface.getMyButtons().getButtonList().add(selectFileButton);
+        this.myUserInterface.getMyControlsManager().addButton(selectFileButton);
         SimulationButton startButton = new SimulationButton(resourceBundle.getString("Start"));
         startButton.setOnAction(value -> startSimulation());
 
-        this.myUserInterface.getMyButtons().getButtonList().add(startButton);
 
-        this.myUserInterface.getMyButtons().getButtonList().add(new PauseButton(myAnimation, resourceBundle.getString("Pause"), resourceBundle.getString("Resume")));
+        this.myUserInterface.getMyControlsManager().addButton(startButton);
+        this.myUserInterface.getMyControlsManager().addButton(new PauseButton(myAnimation, resourceBundle.getString("Pause"), resourceBundle.getString("Resume")));
 
         SimulationButton resetButton = new SimulationButton(resourceBundle.getString("Reset"));
         resetButton.setOnAction(value -> resetGrid());
-        this.myUserInterface.getMyButtons().getButtonList().add(resetButton);
+        this.myUserInterface.getMyControlsManager().addButton(resetButton);
+
 
         SimulationButton stepButton = new SimulationButton(resourceBundle.getString("Step"));
         stepButton.setOnAction(value -> stepProcess());
-        this.myUserInterface.getMyButtons().getButtonList().add(stepButton);
 
+        this.myUserInterface.getMyControlsManager().addButton(stepButton);
         SimulationButton setStateButton = new SimulationButton(resourceBundle.getString("SetState"));
         setStateButton.setOnAction(value -> setState(setStateButton));
-        this.myUserInterface.getMyButtons().getButtonList().add(setStateButton);
+        this.myUserInterface.getMyControlsManager().addButton(setStateButton);
 
         SimulationButton saveButton = new SimulationButton(resourceBundle.getString("Save"));
         saveButton.setOnAction(value -> {
@@ -141,16 +141,16 @@ public class MainController extends Application {
                 e.printStackTrace();
             }
         });
-        this.myUserInterface.getMyButtons().getButtonList().add(saveButton);
+        this.myUserInterface.getMyControlsManager().addButton(saveButton);
 
-        SimulationSlider speedSlider = new SimulationSlider(0, 2, 1, resourceBundle.getString("Speed"));
+        SimulationSlider speedSlider = new SimulationSlider(Double.parseDouble(resourceBundle.getString("Speed.min")), Double.parseDouble(resourceBundle.getString("Speed.max")), Double.parseDouble(resourceBundle.getString("Speed.default")), resourceBundle.getString("Speed"));
         speedSlider.getMySlider().valueProperty().addListener(e -> updateSpeed((double) Math.round(speedSlider.getMySlider().getValue())));
-        this.myUserInterface.getMySlidersAndControls().addSlider(speedSlider);
+        this.myUserInterface.getMyControlsManager().addSlider(speedSlider);
 
         SimulationChoice edgeTypeChoice = new SimulationChoice(resourceBundle.getString("EdgeTypes").split(","), resourceBundle.getString("EdgeTypeChoiceBox"));
         edgeTypeChoice.getChoiceBox().setValue(resourceBundle.getString("EdgeTypes").split(",")[0]);
         edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> setEdgeType((String) edgeTypeChoice.getChoiceBox().getValue()));
-        this.myUserInterface.getMySlidersAndControls().addChoiceBox(edgeTypeChoice);
+        this.myUserInterface.getMyControlsManager().addChoiceBox(edgeTypeChoice);
     }
 
     private void setEdgeType(String edgeType) {

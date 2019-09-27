@@ -14,8 +14,8 @@ public class FireCellGrid extends GameOfLifeCellGrid {
     }
 
     @Override
-    public void initializeControlPannel() {
-        this.getControlPanel().getMyColPanel().getChildren().clear();
+    public void initializeControlPanel() {
+        this.getControlPanel().getMyColPane().getChildren().clear();
         String[] controlsList = getControlPanel().getResourceBundle().getString("FireControls").split(",");
         for (String controlType : controlsList) {
             int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));
@@ -24,8 +24,7 @@ public class FireCellGrid extends GameOfLifeCellGrid {
             String title = getControlPanel().getResourceBundle().getString(controlType + "." + "title");
             SimulationSlider probCatchSlider = new SimulationSlider(minVal, maxVal, defaultVal, title);
             probCatchSlider.getMySlider().valueProperty().addListener(e -> updateProbCatch((double) Math.round(probCatchSlider.getMySlider().getValue())));
-            getControlPanel().getMyColPanel().getChildren().add(probCatchSlider.getvBox());
-
+            getControlPanel().getMyColPane().getChildren().add(probCatchSlider.getvBox());
         }
     }
 
