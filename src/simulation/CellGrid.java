@@ -154,6 +154,10 @@ public abstract class CellGrid {
         return controlPanel;
     }
 
+    public void setControlPanel (ControlPanel newControlPanel){
+        controlPanel = newControlPanel;
+    }
+
     protected boolean isRowEmpty(int rowNum) {
         for(int col=0; col<numOfCols; col++) {
             Cell cell = cellFromPoint(rowNum, col);

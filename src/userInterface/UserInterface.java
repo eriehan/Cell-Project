@@ -24,6 +24,7 @@ public class UserInterface {
     private AbstractGridView myGridView;
     private VBox colTwo;
     private VBox colOne;
+    private VBox controlCol;
     private HBox hBox;
     private Buttons myButtons;
     private SlidersAndControls mySlidersAndControls;
@@ -49,6 +50,7 @@ public class UserInterface {
         var root = new Group();
         colOne = new VBox(SPACING);
         colTwo = new VBox(SPACING);
+        controlCol = new VBox(SPACING);
         hBox = new HBox(SPACING);
         hBox.setPadding(new Insets(PADDING_TOP , PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
         colOne.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
@@ -56,6 +58,7 @@ public class UserInterface {
         colTwo.getChildren().addAll(mySlidersAndControls.getMyCol());
         colTwo.setPadding(new Insets(PADDING_TOP + Integer.parseInt(resourceBundle.getString("TitleFont")),  PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
         hBox.getChildren().addAll(colOne, colTwo);
+        hBox.getChildren().add(controlCol);
         root.getChildren().add(hBox);
         return root;
     }
@@ -71,7 +74,8 @@ public class UserInterface {
 
     public void addSimulationControls(){
         this.getMyGridView().getGridManager().getCellGrid().initializeControlPannel();
-        this.hBox.getChildren().add(this.getMyGridView().getGridManager().getCellGrid().getControlPanel().getMyColPanel());
+        this.controlCol.getChildren().clear();
+        this.controlCol.getChildren().add(this.getMyGridView().getGridManager().getCellGrid().getControlPanel().getMyColPanel());
     }
 
     public AbstractGridView getMyGridView() {

@@ -36,6 +36,7 @@ public class GridManager {
                 }
                 this.initialConfigMap = configMap;
                 cellGrid = new SegregationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), (int) myXml.getRate(), (int) myXml.getRate());
+                break;
             case "Game Of Life":
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
                     int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
@@ -45,6 +46,7 @@ public class GridManager {
                 }
                 this.initialConfigMap = configMap;
                 cellGrid =  new GameOfLifeCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum());
+                break;
             case "Wa-Tor":
 
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
@@ -61,6 +63,7 @@ public class GridManager {
                 }
                 this.initialConfigMap = configMap;
                 cellGrid = new WaTorCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getMaturityArray(), myXml.getEnergyArray());
+                break;
             case "Percolation":
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
                     int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
@@ -77,10 +80,9 @@ public class GridManager {
                 }
                 this.initialConfigMap = configMap;
                 cellGrid = new PercolationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum());
+                break;
 
             case "Fire":
-
-
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
                     int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
                     if (i == 0) {
@@ -96,11 +98,14 @@ public class GridManager {
                 }
                 this.initialConfigMap = configMap;
                 cellGrid = new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate());
+                break;
         }
 
         cellGrid.initializeGrids(initialConfigMap);
         cellGrid.assignNeighborsToEachCell();
     }
+
+
 
     public CellGrid getCellGrid() {
         return cellGrid;
