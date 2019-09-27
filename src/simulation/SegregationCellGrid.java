@@ -1,5 +1,6 @@
 package simulation;
 
+import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.ArrayList;
@@ -23,6 +24,22 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
         super(numRows, numCols);
         this.agentPercent = agentPercent;
         emptyCellNumber = (int) (numRows * numCols * emptyPercent/HUNDRED);
+    }
+
+    @Override
+    public void initializeControlPanel() {
+        this.getControlPanel().getMyColPane().getChildren().clear();
+        String[] controlsList = getControlPanel().getResourceBundle().getString("SegregationControls").split(",");
+        for (String controlType : controlsList) {
+            SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
+            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType,(double) Math.round(segregationSlider.getMySlider().getValue())));
+        }
+    }
+
+    private void sliderAction(String type, double inputPercentage){
+        //TODO: added slider actions @Eric
+        // type: "AgentRatio", "Similarity", "EmptyPercent"
+        System.out.println(type);
     }
 
     @Override

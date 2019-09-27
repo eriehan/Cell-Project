@@ -2,6 +2,7 @@ package simulation;
 
 import userInterface.ControlPanel;
 import userInterface.CellShapeType;
+import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.HashMap;
@@ -25,9 +26,21 @@ public abstract class CellGrid {
         this.controlPanel = new ControlPanel();
     }
 
-    public void initializeControlPanel(){
+    public void initializeControlPanel() {
         this.controlPanel.getMyColPane().getChildren().clear();
-    };
+    }
+
+    ;
+
+    public SimulationSlider createSliderFromResourceFile(String controlType) {
+        int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));
+        int maxVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "max"));
+        int defaultVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "default"));
+        String title = getControlPanel().getResourceBundle().getString(controlType + "." + "title");
+        SimulationSlider slider = new SimulationSlider(minVal, maxVal, defaultVal, title);
+        controlPanel.getMyColPane().getChildren().add(slider.getvBox());
+        return slider;
+    }
 
     public abstract void initializeGrids(Map<Point, CellState> configMap);
 
@@ -38,13 +51,13 @@ public abstract class CellGrid {
     public abstract void changeAllCells();
 
     protected void createEmptyRow(int row) {
-        for(int col=0; col<getNumOfCols(); col++) {
+        for (int col = 0; col < getNumOfCols(); col++) {
             addEmptyStateToCell(row, col);
         }
     }
 
     protected void createEmptyCol(int col) {
-        for(int row=0; row<getNumOfRows(); row++) {
+        for (int row = 0; row < getNumOfRows(); row++) {
             addEmptyStateToCell(row, col);
         }
     }
@@ -58,28 +71,28 @@ public abstract class CellGrid {
 
     protected void cellGridExpand() {
         //only executed when gridLimit is Infinite
-        if(gridLimit != GridLimit.INFINITE) {
+        if (gridLimit != GridLimit.INFINITE) {
             return;
         }
         boolean expand = false;
-        if(!isColEmpty(0)) {
+        if (!isColEmpty(0)) {
             expand = true;
             addColOnLeft();
         }
-        if(!isColEmpty(getNumOfCols()-1)) {
+        if (!isColEmpty(getNumOfCols() - 1)) {
             expand = true;
             addColOnRight();
         }
-        if(!isRowEmpty(0)) {
+        if (!isRowEmpty(0)) {
             expand = true;
             addRowOnTop();
         }
-        if(!isRowEmpty(getNumOfRows()-1)) {
+        if (!isRowEmpty(getNumOfRows() - 1)) {
             expand = true;
             addRowOnBottom();
         }
 
-        if(expand) {
+        if (expand) {
             assignNeighborsToEachCell();
         }
     }
@@ -149,14 +162,14 @@ public abstract class CellGrid {
         return controlPanel;
     }
 
-    public void setControlPanel (ControlPanel newControlPanel){
+    public void setControlPanel(ControlPanel newControlPanel) {
         controlPanel = newControlPanel;
     }
 
     private boolean isRowEmpty(int rowNum) {
-        for(int col=0; col<numOfCols; col++) {
+        for (int col = 0; col < numOfCols; col++) {
             Cell cell = cellFromPoint(rowNum, col);
-            if(cell.getState() != cell.getPossibleStates().get(0)) {
+            if (cell.getState() != cell.getPossibleStates().get(0)) {
                 return false;
             }
         }
@@ -164,9 +177,9 @@ public abstract class CellGrid {
     }
 
     private boolean isColEmpty(int colNum) {
-        for(int row=0; row<numOfRows; row++) {
+        for (int row = 0; row < numOfRows; row++) {
             Cell cell = cellFromPoint(row, colNum);
-            if(cell.getState() != cell.getPossibleStates().get(0)) {
+            if (cell.getState() != cell.getPossibleStates().get(0)) {
                 return false;
             }
         }
@@ -175,10 +188,10 @@ public abstract class CellGrid {
 
     private void addRowOnTop() {
         numOfRows++;
-        createEmptyRow(numOfRows-1);
-        for(int i=numOfRows-1; i>=1; i--) {
-            for(int j=0; j<numOfCols; j++) {
-                gridOfCells.put(new Point(i, j), cellFromPoint(i-1, j));
+        createEmptyRow(numOfRows - 1);
+        for (int i = numOfRows - 1; i >= 1; i--) {
+            for (int j = 0; j < numOfCols; j++) {
+                gridOfCells.put(new Point(i, j), cellFromPoint(i - 1, j));
             }
         }
         createEmptyRow(0);
@@ -186,16 +199,16 @@ public abstract class CellGrid {
 
     private void addRowOnBottom() {
         numOfRows++;
-        createEmptyRow(numOfRows-1);
+        createEmptyRow(numOfRows - 1);
     }
 
     private void addColOnLeft() {
         numOfCols++;
-        createEmptyCol(numOfCols-1);
+        createEmptyCol(numOfCols - 1);
         System.out.println(getGridOfCells().size());
-        for(int col=numOfCols-1; col>=1; col--) {
-            for(int row=0; row<numOfRows; row++) {
-                gridOfCells.put(new Point(row, col), cellFromPoint(row, col-1));
+        for (int col = numOfCols - 1; col >= 1; col--) {
+            for (int row = 0; row < numOfRows; row++) {
+                gridOfCells.put(new Point(row, col), cellFromPoint(row, col - 1));
             }
         }
         createEmptyCol(0);
@@ -203,6 +216,6 @@ public abstract class CellGrid {
 
     private void addColOnRight() {
         numOfCols++;
-        createEmptyCol(numOfCols-1);
+        createEmptyCol(numOfCols - 1);
     }
 }

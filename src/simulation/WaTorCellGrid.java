@@ -1,5 +1,6 @@
 package simulation;
 
+import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.ArrayList;
@@ -24,6 +25,22 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         super(numRows, numCols);
         this.reproductions = new ArrayList<>(reproductions);
         this.energies = new ArrayList<>(energies);
+    }
+
+    @Override
+    public void initializeControlPanel() {
+        this.getControlPanel().getMyColPane().getChildren().clear();
+        String[] controlsList = getControlPanel().getResourceBundle().getString("WaTorControls").split(",");
+        for (String controlType : controlsList) {
+            SimulationSlider watorSlider = createSliderFromResourceFile(controlType);
+            watorSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType,(double) Math.round(watorSlider.getMySlider().getValue())));
+        }
+    }
+
+    private void sliderAction(String type, double inputPercentage){
+        //TODO: added slider actions @Eric
+        // type: SharkEnergy,FishEnergy,SharkMaturityDate,FishMaturityDate,WaterPercent,FishSharkRatio
+        System.out.println(type);
     }
 
     @Override

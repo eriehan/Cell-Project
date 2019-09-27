@@ -162,7 +162,6 @@ public class MainController extends Application {
         if (!checkFileSelected()) return;
         myXml.saveCurrentSimulation(this.myUserInterface.getMyGridView(), myConfigFile);
         System.out.println("configFile: " + myConfigFile);
-        //TODO: save... @Dianne
     }
 
     private void setState(SimulationButton simulationButton) {

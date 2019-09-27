@@ -10,7 +10,6 @@ public class RectangleGridView extends AbstractGridView {
         super(numOfRows, numOfCols);
     }
 
-    // TODO: set with config
     public void createGrid() {
         double regWidth = this.getGridWidth() / getGridManager().getCellGrid().getNumOfCols();
         double regHeight = this.getGridHeight() / getGridManager().getCellGrid().getNumOfRows();

@@ -18,19 +18,15 @@ public class FireCellGrid extends GameOfLifeCellGrid {
         this.getControlPanel().getMyColPane().getChildren().clear();
         String[] controlsList = getControlPanel().getResourceBundle().getString("FireControls").split(",");
         for (String controlType : controlsList) {
-            int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));
-            int maxVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "max"));
-            int defaultVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "default"));
-            String title = getControlPanel().getResourceBundle().getString(controlType + "." + "title");
-            SimulationSlider probCatchSlider = new SimulationSlider(minVal, maxVal, defaultVal, title);
-            probCatchSlider.getMySlider().valueProperty().addListener(e -> updateProbCatch((double) Math.round(probCatchSlider.getMySlider().getValue())));
-            getControlPanel().getMyColPane().getChildren().add(probCatchSlider.getvBox());
+            SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
+            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType,(double) Math.round(segregationSlider.getMySlider().getValue())));
         }
     }
 
-    private void updateProbCatch(double newProbCatch) {
-        //TODO
-        this.probCatch = newProbCatch;
+    private void sliderAction(String type, double inputPercentage){
+        //TODO: added slider actions @Eric
+        // type: "PropCatch"
+        System.out.println(type);
     }
 
     @Override
