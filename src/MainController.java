@@ -104,12 +104,9 @@ public class MainController extends Application {
         selectFileButton.setOnAction(value -> {
             try {
                 selectFilePrompt();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
+            } catch (IOException | ParserConfigurationException| SAXException e) {
+                this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
+                return;
             }
         });
 
