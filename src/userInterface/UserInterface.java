@@ -16,6 +16,7 @@ import static userInterface.VisualizationConstants.FILE_PATH_FONT_SIZE;
 
 public class UserInterface {
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
+    private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 30);
     private static final int ERROR_MSG_TIME_LIMIT = 5;
     private static final int SPACING = 20;
     private static final double PADDING_TOP = 20;
@@ -38,7 +39,7 @@ public class UserInterface {
     public UserInterface(String simulationName) {
         this.simulationTitle = new Text(simulationName);
         this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
-        simulationTitle.setFont(Font.font("Arial", FontWeight.BOLD, Integer.parseInt(resourceBundle.getString("TitleFont"))));
+        simulationTitle.setFont(TITLE_FONT);
         myGridView = new RectangleGridView(numOfCols, numOfRows);
         myButtons = new Buttons();
         mySlidersAndControls = new SlidersAndControls();
@@ -62,15 +63,15 @@ public class UserInterface {
     public void update() {
         myGridView.updateGrid();
         if (this.errorMsgTimer != -1) errorMsgTimer++;
-        if (this.errorMsgTimer > this.ERROR_MSG_TIME_LIMIT) {
+        if (this.errorMsgTimer > ERROR_MSG_TIME_LIMIT) {
             this.colTwo.getChildren().remove(this.errorMsg);
             this.errorMsgTimer = -1;
         }
     }
 
     public void addSimulationControls(){
-        this.getMyGridView().getMyCellGrid().initializeControlPannel();
-        this.hBox.getChildren().add(this.getMyGridView().getMyCellGrid().getControlPanel().getMyColPanel());
+        this.getMyGridView().getGridManager().getCellGrid().initializeControlPannel();
+        this.hBox.getChildren().add(this.getMyGridView().getGridManager().getCellGrid().getControlPanel().getMyColPanel());
     }
 
     public AbstractGridView getMyGridView() {
@@ -83,10 +84,6 @@ public class UserInterface {
 
     public SlidersAndControls getMySlidersAndControls() {
         return mySlidersAndControls;
-    }
-
-    public HBox gethBox() {
-        return hBox;
     }
 
     public void changeTitle(String s) {

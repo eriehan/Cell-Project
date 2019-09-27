@@ -3,15 +3,16 @@ package userInterface;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Buttons {
-    private ArrayList<Button> buttonList;
+    private List<Button> buttonList;
 
     public Buttons() {
         buttonList = new ArrayList<>();
     }
 
-    public ArrayList<Button> getButtonList() {
+    public List<Button> getButtonList() {
         return buttonList;
     }
 }

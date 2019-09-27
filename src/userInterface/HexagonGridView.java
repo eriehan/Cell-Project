@@ -48,7 +48,7 @@ public class HexagonGridView extends AbstractGridView {
                 hexagon.setLayoutY(r * height * HEIGHT_EACH_HEX_RATIO);
                 hexagon.setLayoutX(rowFlag ? WIDTH_PADDING_RATIO_LONG * width + c * WIDTH_EACH_HEX_RATIO * width : c * WIDTH_EACH_HEX_RATIO * width);
                 myHexagonGroup.getChildren().add(hexagon);
-                hexagon.setFill(getMyCellGrid().stateOfCellAtPoint(r, c).getMyColor());
+                hexagon.setFill(getGridManager().getColorOfCellAtPoint(r,c));
                 final int row = r;
                 final int col = c;
                 hexagon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row, col));
@@ -64,7 +64,7 @@ public class HexagonGridView extends AbstractGridView {
     }
 
     private void changeState(int r, int c) {
-        this.getMyCellGrid().setStateOfCellAtPointOnClick(r, c);
+        getGridManager().setStateOfCellAtPointOnClick(r, c);
         createGrid();
     }
 

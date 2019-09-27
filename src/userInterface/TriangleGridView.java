@@ -48,17 +48,14 @@ public class TriangleGridView extends AbstractGridView {
                         width, height);
                 downTriangle.setLayoutY(r * height);
                 myTriangleGroup.getChildren().add(downTriangle);
-
-                Color firstColor = getMyCellGrid().stateOfCellAtPoint(r, c * WIDTH_RATIO).getMyColor();
-                Color secondColor = getMyCellGrid().stateOfCellAtPoint(r, c * WIDTH_RATIO + 1).getMyColor();
-                upTriangle.setLayoutX(rowFlag ? c * width : (c + WIDTH_PADDING_RATIO) * width);
-                upTriangle.setFill(rowFlag ? firstColor : secondColor);
                 final int row = r;
                 final int upCol = rowFlag ? c * WIDTH_RATIO : c * WIDTH_RATIO + 1;
                 final int downCol = rowFlag ? c * WIDTH_RATIO + 1 : c * WIDTH_RATIO;
+                upTriangle.setLayoutX(rowFlag ? c * width : (c + WIDTH_PADDING_RATIO) * width);
+                upTriangle.setFill(getGridManager().getColorOfCellAtPoint(row, upCol));
                 upTriangle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row, upCol));
                 downTriangle.setLayoutX(rowFlag ? (c + WIDTH_PADDING_RATIO) * width : c * width);
-                downTriangle.setFill(rowFlag ? secondColor : firstColor);
+                downTriangle.setFill(getGridManager().getColorOfCellAtPoint(row, downCol));
                 downTriangle.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> changeState(row, downCol));
             }
             rowFlag = !rowFlag;
@@ -72,7 +69,7 @@ public class TriangleGridView extends AbstractGridView {
     }
 
     private void changeState(int r, int c) {
-        this.getMyCellGrid().setStateOfCellAtPointOnClick(r, c);
+        this.getGridManager().getCellGrid().setStateOfCellAtPointOnClick(r, c);
         createGrid();
     }
 

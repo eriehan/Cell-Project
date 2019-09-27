@@ -9,19 +9,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.xml.sax.SAXException;
 import userInterface.*;
-<<<<<<< HEAD
 import xml.*;
-
-=======
-import xml.Xml;
->>>>>>> 6398e2d0405a2ca7af11ede14a78c54c09b2c38b
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 import static userInterface.VisualizationConstants.BACKGROUND_COLOR;
 
@@ -199,7 +193,7 @@ public class MainController extends Application {
 
 
         myXml.parse(this.userFile);
-        myUserInterface.getMyGridView().initializeMyCellGrid(myXml);
+        myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
         this.myUserInterface.addSimulationControls();
         this.myAnimation.pause();
     }
@@ -250,16 +244,16 @@ public class MainController extends Application {
     }
 
     private void resetGrid() {
-        this.myUserInterface.getMyGridView().resetCellGrid();
+        this.myUserInterface.getMyGridView().resetGridView();
         this.setState = false;
         myAnimation.pause();
     }
 
     private boolean checkFileSelected() {
-        if (myUserInterface.getMyGridView().getMyCellGrid() == null) {
+        if (myUserInterface.getMyGridView().getGridManager()== null) {
             this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
         }
-        return myUserInterface.getMyGridView().getMyCellGrid() != null;
+        return myUserInterface.getMyGridView().getGridManager() != null;
     }
 
 

@@ -12,12 +12,12 @@ public class RectangleGridView extends AbstractGridView {
 
     // TODO: set with config
     public void createGrid() {
-        double regWidth = this.getGridWidth() / getMyCellGrid().getNumOfCols();
-        double regHeight = this.getGridHeight() / getMyCellGrid().getNumOfRows();
-        for (int r = 0; r < getMyCellGrid().getNumOfRows(); r++) {
-            for (int c = 0; c < getMyCellGrid().getNumOfCols(); c++) {
+        double regWidth = this.getGridWidth() / getGridManager().getCellGrid().getNumOfCols();
+        double regHeight = this.getGridHeight() / getGridManager().getCellGrid().getNumOfRows();
+        for (int r = 0; r < getGridManager().getCellGrid().getNumOfRows(); r++) {
+            for (int c = 0; c < getGridManager().getCellGrid().getNumOfCols(); c++) {
                 Rectangle shape = new Rectangle(regWidth,regHeight);
-                shape.setFill(getMyCellGrid().stateOfCellAtPoint(r, c).getMyColor());
+                shape.setFill(this.getGridManager().getColorOfCellAtPoint(r,c));
                 getMyGridPane().add(shape, c, r);
                 final int row = r;
                 final int col = c;
@@ -33,7 +33,7 @@ public class RectangleGridView extends AbstractGridView {
     }
 
     private void changeState(int r, int c) {
-        this.getMyCellGrid().setStateOfCellAtPointOnClick(r, c);
+        getGridManager().setStateOfCellAtPointOnClick(r, c);
         createGrid();
     }
 }

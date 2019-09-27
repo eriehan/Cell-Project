@@ -54,7 +54,7 @@ public class FireXml extends AbstractXml{
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
         Document document = stageXml();
         System.out.println("Entered");
-        Map<Point, Cell> myMap = myGridView.getMyCellGrid().getGridOfCells();
+        Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
         ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
         ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
         saveCellState(myMap, CellState.BURNING, CellState.FIREEMPTY);
