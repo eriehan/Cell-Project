@@ -9,13 +9,12 @@ public class RockPaperScissorCell extends Cell {
     private static final CellState SCISSOR = CellState.SCISSOR;
     private static final CellAttribute THRESHOLD = CellAttribute.THRESHOLD;
 
-    private static final List<CellState> STATES_LIST = Arrays.asList();
-
-    private int threshhold;
+    private static final List<CellState> STATES_LIST = Arrays.asList(ROCK, PAPER, SCISSOR);
+    private int threshold;
 
     public RockPaperScissorCell(int row, int col, CellState state, int threshhold) {
         super(row, col, state);
-        this.threshhold = threshhold;
+        this.threshold = threshhold;
         putAttribute(THRESHOLD, threshhold);
     }
 
@@ -43,6 +42,6 @@ public class RockPaperScissorCell extends Cell {
     }
 
     private boolean changeToWinner() {
-        return countNeighborsWithState(winningCellState(), true) >= threshhold;
+        return countNeighborsWithState(winningCellState(), true) >= threshold;
     }
 }
