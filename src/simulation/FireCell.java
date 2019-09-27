@@ -22,15 +22,13 @@ public class FireCell extends Cell {
 
     @Override
     public void check() {
-        if(getState() == CellState.TREE) {
-            if(isFireNearby() && Math.random() * 100 <= probCatch) {
+        if (getState() == CellState.TREE) {
+            if (isFireNearby() && Math.random() * 100 <= probCatch) {
                 setNextState(BURNING);
-            }
-            else {
+            } else {
                 setNextState(CellState.TREE);
             }
-        }
-        else {
+        } else {
             setNextState(FIREEMPTY);
         }
     }
@@ -43,7 +41,7 @@ public class FireCell extends Cell {
     private boolean isFireNearby() {
         System.out.println(getNeighbors().size());
         for (Cell neighbor : getNeighbors().values()) {
-            if (neighbor.getState()== CellState.BURNING) {
+            if (neighbor.getState() == CellState.BURNING) {
                 return true;
             }
         }

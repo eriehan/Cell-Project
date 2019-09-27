@@ -13,21 +13,21 @@ public class Point {
         return col;
     }
 
+    public void setCol(int c) {
+        this.col = c;
+    }
+
     public int getRow() {
         return row;
     }
 
-    public void setRow(int r){
+    public void setRow(int r) {
         this.row = r;
-    }
-
-    public void setCol(int c){
-        this.col = c;
     }
 
     @Override
     public boolean equals(Object other) {
-        return other.getClass().equals(getClass()) && ((Point) other).getRow()==row && ((Point) other).getCol()==col;
+        return other.getClass().equals(getClass()) && ((Point) other).getRow() == row && ((Point) other).getCol() == col;
     }
 
     @Override

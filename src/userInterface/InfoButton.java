@@ -2,24 +2,19 @@ package userInterface;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-
 
 
 public class InfoButton extends SimulationButton {
     private Alert alert;
 
 
-
     public InfoButton(String name, String title, String header, String content) {
         super(name);
-        this.setStyle( "-fx-background-radius: 5em; " +
+        this.setStyle("-fx-background-radius: 5em; " +
                 "-fx-min-width: 40px; " +
                 "-fx-min-height: 40px; " +
                 "-fx-max-width: 40px; " +
-                "-fx-max-height: 40px;"+
+                "-fx-max-height: 40px;" +
                 "-fx-background-color: MediumSeaGreen");
         this.setText(name);
         alert = new Alert(Alert.AlertType.INFORMATION);

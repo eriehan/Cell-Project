@@ -12,7 +12,7 @@ public class GameOfLifeCellGrid extends CellGrid {
 
     @Override
     public void initializeControlPanel() {
-        return ;
+        return;
     }
 
     @Override

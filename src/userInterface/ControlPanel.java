@@ -19,7 +19,7 @@ public class ControlPanel {
         sliderList = new ArrayList<>();
         myColPane = new VBox();
         myColPane.setSpacing(SPACING);
-        myColPane.setPadding(new Insets(PADDING_TOP,PADDING_OTHER,PADDING_OTHER,PADDING_OTHER));
+        myColPane.setPadding(new Insets(PADDING_TOP, PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
         this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
     }
 

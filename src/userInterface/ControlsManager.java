@@ -6,8 +6,8 @@ import javafx.scene.layout.VBox;
 
 public class ControlsManager {
     private static final int SPACING = 15;
-    private static final Insets PADDING = new Insets(70,50,50,50);
-//    private ArrayList<SimulationSlider> sliderList;
+    private static final Insets PADDING = new Insets(70, 50, 50, 50);
+    //    private ArrayList<SimulationSlider> sliderList;
     private HBox myPane;
     private VBox myConstantCol;
     private VBox mySimulationCol;
@@ -44,7 +44,7 @@ public class ControlsManager {
     }
 
 
-    public void addButton(SimulationButton button){
+    public void addButton(SimulationButton button) {
         myConstantCol.getChildren().add(button);
     }
 //

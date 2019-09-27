@@ -7,5 +7,5 @@ public enum CellAttribute {
     INITIAL_ENERGY,
     ENERGY,
     SURVIVEDTIME,
-    THRESHOLD;
+    THRESHOLD
 }

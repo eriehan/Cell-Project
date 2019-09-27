@@ -19,11 +19,11 @@ public class FireCellGrid extends GameOfLifeCellGrid {
         String[] controlsList = getControlPanel().getResourceBundle().getString("FireControls").split(",");
         for (String controlType : controlsList) {
             SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
-            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType,(double) Math.round(segregationSlider.getMySlider().getValue())));
+            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType, (double) Math.round(segregationSlider.getMySlider().getValue())));
         }
     }
 
-    private void sliderAction(String type, double inputPercentage){
+    private void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "PropCatch"
         System.out.println(type);

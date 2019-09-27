@@ -1,11 +1,9 @@
 package userInterface;
 
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import simulation.*;
+import simulation.CellState;
 import utils.Point;
-import xml.AbstractXml;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +18,7 @@ public abstract class AbstractGridView {
     private int numOfCols;
     private int gridWidth;
     private int gridHeight;
-//    private CellGrid myCellGrid;
+    //    private CellGrid myCellGrid;
     private GridManager gridManager;
     private Map<Point, CellState> initialConfigMap;
     private ResourceBundle resourceBundle;
@@ -46,7 +44,7 @@ public abstract class AbstractGridView {
     }
 
     public void updateGrid() {
-        if (gridManager == null || gridManager.getCellGrid()==null) {
+        if (gridManager == null || gridManager.getCellGrid() == null) {
             return;
         }
         gridManager.getCellGrid().checkAllCells();
@@ -260,18 +258,17 @@ public abstract class AbstractGridView {
         numOfRows = n;
     }
 
-    public void setNumOfCols(int n) {
-        numOfCols = n;
-    }
-
     public int getNumOfCols() {
         return numOfCols;
+    }
+
+    public void setNumOfCols(int n) {
+        numOfCols = n;
     }
 
 //    public CellGrid getMyCellGrid() {
 //        return myCellGrid;
 //    }
-
 
     public GridManager getGridManager() {
         return gridManager;

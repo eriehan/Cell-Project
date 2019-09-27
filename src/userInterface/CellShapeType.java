@@ -17,7 +17,7 @@ public enum CellShapeType {
         public List<Point> edgeNeighborDirections() {
             System.out.println("sdfs");
             return List.of(new Point(-1, 0), new Point(-1, 0),
-                   new Point(0, -1), new Point(0, 1));
+                    new Point(0, -1), new Point(0, 1));
         }
     },
     TRIANGLE {
@@ -44,6 +44,7 @@ public enum CellShapeType {
     };
 
     public abstract List<Point> neighborDirections();
+
     public abstract List<Point> edgeNeighborDirections();
 
 }

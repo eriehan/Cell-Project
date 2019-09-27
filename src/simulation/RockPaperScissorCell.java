@@ -20,7 +20,7 @@ public class RockPaperScissorCell extends Cell {
 
     @Override
     public void check() {
-        if(changeToWinner()) {
+        if (changeToWinner()) {
             setNextState(winningCellState());
         }
     }

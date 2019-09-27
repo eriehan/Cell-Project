@@ -18,7 +18,7 @@ public class SimulationSlider {
         mySlider = new Slider(min, max, defaultValue);
         mySlider.setShowTickLabels(true);
         mySlider.setShowTickMarks(true);
-        mySlider.setMajorTickUnit((max-min)/NUM_OF_TICKS);
+        mySlider.setMajorTickUnit((max - min) / NUM_OF_TICKS);
         mySlider.setPrefWidth(SLIDER_WIDTH);
         Label myLabel = new Label();
         myLabel.setText(label);

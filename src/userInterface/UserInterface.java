@@ -46,7 +46,7 @@ public class UserInterface {
         var root = new Group();
         titleAndGridCol = new VBox(SPACING);
         hBox = new HBox(SPACING);
-        hBox.setPadding(new Insets(PADDING_TOP , PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
+        hBox.setPadding(new Insets(PADDING_TOP, PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
         titleAndGridCol.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
         hBox.getChildren().add(titleAndGridCol);
         hBox.getChildren().add(myControlsManager.getMyPane());
@@ -64,7 +64,7 @@ public class UserInterface {
         }
     }
 
-    public void addSimulationControls(){
+    public void addSimulationControls() {
         this.getMyGridView().getGridManager().getCellGrid().initializeControlPanel();
         this.getMyControlsManager().getMySimulationCol().getChildren().clear();
         this.getMyControlsManager().getMySimulationCol().getChildren().add(this.getMyGridView().getGridManager().getCellGrid().getControlPanel().getMyColPane());

@@ -22,10 +22,11 @@ public class GameOfLifeCell extends Cell {
     public void check() {
         System.out.println(getNeighbors().size());
         int aliveNeighbors = countNeighborsWithState(ALIVE, true);
-        if(willLive(aliveNeighbors)) {
+        if (willLive(aliveNeighbors)) {
             setNextState(ALIVE);
+        } else {
+            setNextState(DEAD);
         }
-        else {setNextState(DEAD);}
     }
 
     @Override

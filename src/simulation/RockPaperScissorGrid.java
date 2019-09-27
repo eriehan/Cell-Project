@@ -10,11 +10,11 @@ import java.util.Map;
 public class RockPaperScissorGrid extends GameOfLifeCellGrid {
 
     private static final double HUNDRED = 100.0;
+    private final List<CellState> STATES_LIST = Arrays.asList(CellState.ROCK, CellState.PAPER, CellState.SCISSOR);
     //first index -> # of
     private List<Integer> possibilities;
     private int threshold;
     private List<Point> rockList = new ArrayList<>();
-    private final List<CellState> STATES_LIST = Arrays.asList(CellState.ROCK, CellState.PAPER, CellState.SCISSOR);
 
 
     //possibilities -> possibility of rock, paper, scissor
@@ -29,7 +29,7 @@ public class RockPaperScissorGrid extends GameOfLifeCellGrid {
     public void initializeGrids(Map<Point, CellState> configMap) {
         createRockMap();
         //If xml already has the whole configuration, grid will be filled accordingly
-        for(Map.Entry<Point, CellState> entry : configMap.entrySet()) {
+        for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
             Cell notRockCell = getGridOfCells().get(entry.getKey());
             notRockCell.setState(entry.getValue());
             rockList.remove(entry.getKey());
@@ -53,7 +53,7 @@ public class RockPaperScissorGrid extends GameOfLifeCellGrid {
 
     private void createRockMap() {
         getGridOfCells().clear();
-        for(int row = 0; row < getNumOfRows(); row++) {
+        for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
                 addEmptyStateToCell(row, col);
             }
@@ -62,13 +62,15 @@ public class RockPaperScissorGrid extends GameOfLifeCellGrid {
 
     private void fillUnfilledGrids() {
         int wholePossibility = sumOfList(possibilities);
-        for(Point point : rockList) {
+        for (Point point : rockList) {
             double ran = Math.random() * wholePossibility;
             int index = 0;
             int num = 0;
-            for(int i=0; i<possibilities.size(); i++) {
+            for (int i = 0; i < possibilities.size(); i++) {
                 num += possibilities.get(i);
-                if(ran < num) {break;}
+                if (ran < num) {
+                    break;
+                }
                 index++;
             }
             getGridOfCells().get(point).setState(STATES_LIST.get(index));
@@ -77,7 +79,7 @@ public class RockPaperScissorGrid extends GameOfLifeCellGrid {
 
     private int sumOfList(List<Integer> list) {
         int count = 0;
-        for(int num : list) {
+        for (int num : list) {
             count += num;
         }
         return count;

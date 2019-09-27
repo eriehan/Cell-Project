@@ -33,11 +33,11 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         String[] controlsList = getControlPanel().getResourceBundle().getString("WaTorControls").split(",");
         for (String controlType : controlsList) {
             SimulationSlider watorSlider = createSliderFromResourceFile(controlType);
-            watorSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType,(double) Math.round(watorSlider.getMySlider().getValue())));
+            watorSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType, (double) Math.round(watorSlider.getMySlider().getValue())));
         }
     }
 
-    private void sliderAction(String type, double inputPercentage){
+    private void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: SharkEnergy,FishEnergy,SharkMaturityDate,FishMaturityDate,WaterPercent,FishSharkRatio
         System.out.println(type);

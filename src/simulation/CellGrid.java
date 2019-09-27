@@ -1,7 +1,7 @@
 package simulation;
 
-import userInterface.ControlPanel;
 import userInterface.CellShapeType;
+import userInterface.ControlPanel;
 import userInterface.SimulationSlider;
 import utils.Point;
 
@@ -29,8 +29,6 @@ public abstract class CellGrid {
     public void initializeControlPanel() {
         this.controlPanel.getMyColPane().getChildren().clear();
     }
-
-    ;
 
     public SimulationSlider createSliderFromResourceFile(String controlType) {
         int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));

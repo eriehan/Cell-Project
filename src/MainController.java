@@ -44,6 +44,9 @@ public class MainController extends Application {
     private ResourceBundle resourceBundle;
     private boolean setState = false;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -66,7 +69,7 @@ public class MainController extends Application {
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         myAnimation = animation;
-        myUserInterface = new UserInterface( myTitle);
+        myUserInterface = new UserInterface(myTitle);
         myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
         myScene = initScene();
@@ -88,14 +91,14 @@ public class MainController extends Application {
         }
     }
 
-    private Scene initScene(){
+    private Scene initScene() {
         Group root = myUserInterface.setScene();
         var scene = new Scene(root, Integer.parseInt(resourceBundle.getString("WindowWidth")), Integer.parseInt(resourceBundle.getString("WindowHeight")), BACKGROUND_COLOR);
         return scene;
     }
 
     private void initButtons() {
-        this.myUserInterface.getMyControlsManager().addButton(new InfoButton(resourceBundle.getString("Help"),resourceBundle.getString("HelpWindowTitle"), resourceBundle.getString("HelpHeaderText"), resourceBundle.getString("HelpContentText")));
+        this.myUserInterface.getMyControlsManager().addButton(new InfoButton(resourceBundle.getString("Help"), resourceBundle.getString("HelpWindowTitle"), resourceBundle.getString("HelpHeaderText"), resourceBundle.getString("HelpContentText")));
 
         SimulationButton selectFileButton = new SimulationButton(resourceBundle.getString("SelectFile"));
         selectFileButton.setOnAction(value -> {
@@ -161,15 +164,15 @@ public class MainController extends Application {
         this.myUserInterface.getMyControlsManager().getMyConstantCol().getChildren().add(colInput.getMyVBox());
     }
 
-    private void changeNumberOfRow(String row){
+    private void changeNumberOfRow(String row) {
         int rowInput = Integer.parseInt(row);
-        System.out.println("row input: "+rowInput);
+        System.out.println("row input: " + rowInput);
         // TODO: change grid size (row)
     }
 
-    private void changeNumberOfCol(String col){
+    private void changeNumberOfCol(String col) {
         int colInput = Integer.parseInt(col);
-        System.out.println("col input: "+colInput);
+        System.out.println("col input: " + colInput);
         // TODO: change grid size (row)
     }
 
@@ -218,30 +221,26 @@ public class MainController extends Application {
         this.myAnimation.pause();
     }
 
-    private void whichXml(){
+    private void whichXml() {
         StringBuilder myFile = new StringBuilder(myConfigFile.toString());
         String s = "";
         for (int i = 0; i < myFile.length(); i++) {
             if (myFile.substring(i, i + 10).equals("/xml_files")) {
-                s = myFile.substring(i+11);
+                s = myFile.substring(i + 11);
                 System.out.println(s);
                 break;
             }
         }
 
-        if(s.charAt(0) == 'W'){
+        if (s.charAt(0) == 'W') {
             myXml = new WaTorXml(this.myUserInterface);
-        }
-        else if(s.charAt(0) == 'F'){
+        } else if (s.charAt(0) == 'F') {
             myXml = new FireXml((this.myUserInterface));
-        }
-        else if(s.charAt(0) == 'P'){
+        } else if (s.charAt(0) == 'P') {
             myXml = new PercolationXml(this.myUserInterface);
-        }
-        else if(s.charAt(0) == 'S'){
+        } else if (s.charAt(0) == 'S') {
             myXml = new SegregationXml(this.myUserInterface);
-        }
-        else if(s.charAt(0) == 'G'){
+        } else if (s.charAt(0) == 'G') {
             myXml = new GameOfLifeXml(this.myUserInterface);
         }
 
@@ -270,15 +269,10 @@ public class MainController extends Application {
     }
 
     private boolean checkFileSelected() {
-        if (myUserInterface.getMyGridView().getGridManager()== null) {
+        if (myUserInterface.getMyGridView().getGridManager() == null) {
             this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
         }
         return myUserInterface.getMyGridView().getGridManager() != null;
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }

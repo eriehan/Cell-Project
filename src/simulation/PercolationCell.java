@@ -2,7 +2,7 @@ package simulation;
 
 import java.util.List;
 
-public class PercolationCell extends Cell{
+public class PercolationCell extends Cell {
     private static final CellState PERCOLATED = CellState.PERCOLATED;
     private static final CellState OPEN = CellState.OPEN;
     private static final CellState BLOCKED = CellState.BLOCKED;
@@ -12,12 +12,12 @@ public class PercolationCell extends Cell{
         super(row, col, state);
         setPossibleStates(STATES_LIST);
     }
+
     @Override
     public void check() {
-        if(getState() == OPEN && percolatedCellNearby()) {
+        if (getState() == OPEN && percolatedCellNearby()) {
             setNextState(PERCOLATED);
-        }
-        else {
+        } else {
             setNextState(getState());
         }
     }

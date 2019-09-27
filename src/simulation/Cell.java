@@ -2,7 +2,10 @@ package simulation;
 
 import utils.Point;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class Cell {
 
@@ -27,12 +30,12 @@ public abstract class Cell {
         edgeNeighbors = new ArrayList<>();
     }
 
-    public void setNextState(CellState nextState) {
-        this.nextState = nextState;
-    }
-
     public CellState getNextState() {
         return nextState;
+    }
+
+    public void setNextState(CellState nextState) {
+        this.nextState = nextState;
     }
 
     public abstract void check();
@@ -73,13 +76,13 @@ public abstract class Cell {
     }
 
     private void removeNeighbor(Point direction) {
-        if(neighbors.containsKey(direction)) {
+        if (neighbors.containsKey(direction)) {
             neighbors.remove(neighbors.get(direction));
         }
     }
 
     protected void removeCornerNeighbors(List<Point> directions) {
-        for(Point direction : directions) {
+        for (Point direction : directions) {
             removeNeighbor(direction);
         }
     }
@@ -90,7 +93,9 @@ public abstract class Cell {
         other.setNextState(state);
     }
 
-    public Point getCoord() {return coord;}
+    public Point getCoord() {
+        return coord;
+    }
 
     public int getRow() {
         return coord.getRow();
@@ -141,15 +146,15 @@ public abstract class Cell {
 
     protected void setNextStateOnClick() {
         System.out.println(possibleStates.size());
-        if(!possibleStates.contains(state)) {
+        if (!possibleStates.contains(state)) {
             System.out.println("Fix code");
             return;
         }
         int index = possibleStates.indexOf(getState());
-        if (possibleStates.size()==index+1) {
+        if (possibleStates.size() == index + 1) {
             index = -1;
         }
-        setState(possibleStates.get(index+1));
+        setState(possibleStates.get(index + 1));
         //setNextState(getState());
     }
 

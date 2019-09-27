@@ -15,8 +15,8 @@ public class RectangleGridView extends AbstractGridView {
         double regHeight = this.getGridHeight() / getGridManager().getCellGrid().getNumOfRows();
         for (int r = 0; r < getGridManager().getCellGrid().getNumOfRows(); r++) {
             for (int c = 0; c < getGridManager().getCellGrid().getNumOfCols(); c++) {
-                Rectangle shape = new Rectangle(regWidth,regHeight);
-                shape.setFill(this.getGridManager().getColorOfCellAtPoint(r,c));
+                Rectangle shape = new Rectangle(regWidth, regHeight);
+                shape.setFill(this.getGridManager().getColorOfCellAtPoint(r, c));
                 getMyGridPane().add(shape, c, r);
                 final int row = r;
                 final int col = c;

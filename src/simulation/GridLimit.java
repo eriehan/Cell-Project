@@ -23,6 +23,7 @@ public enum GridLimit {
         public void assignNeighbors(Map<Point, Cell> gridOfCells, CellShapeType cellShapeType, int numOfRows, int numOfCols) {
             assignNeighborsToCell(gridOfCells, cellShapeType, numOfRows, numOfCols, true);
         }
+
         @Override
         public void assignEdgeNeighbors(Map<Point, Cell> gridOfCells, CellShapeType cellShapeType, int numOfRows, int numOfCols) {
             assignEdgeNeighborsToCell(gridOfCells, cellShapeType, numOfRows, numOfCols, true);
@@ -33,6 +34,7 @@ public enum GridLimit {
         public void assignNeighbors(Map<Point, Cell> gridOfCells, CellShapeType cellShapeType, int numOfRows, int numOfCols) {
             assignNeighborsToCell(gridOfCells, cellShapeType, numOfRows, numOfCols, false);
         }
+
         @Override
         public void assignEdgeNeighbors(Map<Point, Cell> gridOfCells, CellShapeType cellShapeType, int numOfRows, int numOfCols) {
             assignEdgeNeighborsToCell(gridOfCells, cellShapeType, numOfRows, numOfCols, false);
@@ -40,10 +42,11 @@ public enum GridLimit {
     };
 
     public abstract void assignNeighbors(Map<Point, Cell> gridOfCells, CellShapeType cellShapeType, int numOfRows, int numOfCols);
+
     public abstract void assignEdgeNeighbors(Map<Point, Cell> gridOfCells, CellShapeType cellShapeType, int numOfRows, int numOfCols);
 
     protected void assignNeighborsToCell(Map<Point, Cell> gridOfCells, CellShapeType cellShapeType, int numOfRows, int numOfCols, boolean toroidal) {
-        for(Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
+        for (Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
             Cell cell = cellEntry.getValue();
             cell.clearNeighbors();
             addAllNeighbors(cell, gridOfCells, numOfRows, numOfCols, cellShapeType.neighborDirections(), toroidal);
@@ -51,7 +54,7 @@ public enum GridLimit {
     }
 
     protected void assignEdgeNeighborsToCell(Map<Point, Cell> gridOfCells, CellShapeType cellShapeType, int numOfRows, int numOfCols, boolean toroidal) {
-        for(Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
+        for (Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
             Cell cell = cellEntry.getValue();
             cell.clearNeighbors();
             addAllNeighbors(cell, gridOfCells, numOfRows, numOfCols, cellShapeType.edgeNeighborDirections(), toroidal);
@@ -59,7 +62,7 @@ public enum GridLimit {
     }
 
     private void addAllNeighbors(Cell cell, Map<Point, Cell> gridOfCells, int numOfRows, int numOfCols, List<Point> directions, boolean toroidal) {
-        for(Point direction : directions) {
+        for (Point direction : directions) {
             int row = cell.getRow();
             int col = cell.getCol();
             row += direction.getRow();
@@ -77,15 +80,17 @@ public enum GridLimit {
     }
 
     private Cell cellFromPoint(Map<Point, Cell> gridOfCells, int row, int col, int numOfRows, int numOfCols) {
-        if(row<0) {
-            row = numOfRows-1;
-        }
-        else if(row>=numOfRows) {
+        if (row < 0) {
+            row = numOfRows - 1;
+        } else if (row >= numOfRows) {
             row = 0;
         }
 
-        if(col<0) {col = numOfCols-1;}
-        else if(col>=numOfCols) {col = 0;}
+        if (col < 0) {
+            col = numOfCols - 1;
+        } else if (col >= numOfCols) {
+            col = 0;
+        }
 
         return gridOfCells.get(new Point(row, col));
     }

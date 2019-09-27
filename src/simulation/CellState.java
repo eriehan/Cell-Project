@@ -28,7 +28,6 @@ public enum CellState {
     SCISSOR(Color.GREEN);
 
 
-
     private Color myColor;
 
     CellState(Color color) {

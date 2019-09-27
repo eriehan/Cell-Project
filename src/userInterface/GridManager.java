@@ -13,10 +13,10 @@ public class GridManager {
     private CellGrid cellGrid;
     private Map<Point, CellState> initialConfigMap;
 
-    public  GridManager(){
+    public GridManager() {
     }
 
-    public void initializeMyCellGrid(AbstractXml myXml){
+    public void initializeMyCellGrid(AbstractXml myXml) {
         this.myXml = myXml;
         Map configMap = new HashMap<Point, CellState>();
 
@@ -35,7 +35,7 @@ public class GridManager {
                     }
                 }
                 this.initialConfigMap = configMap;
-                cellGrid = new SegregationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), (int) myXml.getRate(), (int) myXml.getRate());
+                cellGrid = new SegregationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getRate());
                 break;
             case "Game Of Life":
                 for (int i = 0; i < myXml.getMyColArray().size(); i++) {
@@ -45,7 +45,7 @@ public class GridManager {
                     }
                 }
                 this.initialConfigMap = configMap;
-                cellGrid =  new GameOfLifeCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum());
+                cellGrid = new GameOfLifeCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum());
                 break;
             case "Wa-Tor":
 
@@ -106,16 +106,15 @@ public class GridManager {
     }
 
 
-
     public CellGrid getCellGrid() {
         return cellGrid;
     }
 
-    public Color getColorOfCellAtPoint(int r, int c){
-        return this.getCellGrid().stateOfCellAtPoint(r,c).getMyColor();
+    public Color getColorOfCellAtPoint(int r, int c) {
+        return this.getCellGrid().stateOfCellAtPoint(r, c).getMyColor();
     }
 
-    public void setStateOfCellAtPointOnClick(int r, int c){
+    public void setStateOfCellAtPointOnClick(int r, int c) {
         getCellGrid().setStateOfCellAtPointOnClick(r, c);
     }
 

@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
-import static userInterface.VisualizationConstants.BUTTON_FONT_SIZE;
 import static userInterface.VisualizationConstants.SLIDER_FONT_SIZE;
 
 public class SimulationChoice {
