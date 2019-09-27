@@ -14,8 +14,8 @@ public abstract class Cell {
     private Point coord; // x is row, y is col
 
 
-    private List<Cell> cornerNeighbors = new ArrayList<>();
-    private List<Cell> edgeNeighbors = new ArrayList<>();
+    private List<Cell> cornerNeighbors;
+    private List<Cell> edgeNeighbors;
     private Map<Point, Cell> neighbors = new HashMap<>();
     private Map<CellAttribute, Integer> attributes = new HashMap<>();
 
@@ -50,22 +50,6 @@ public abstract class Cell {
         this.state = state;
     }
 
-    public void addCornerNeighbor(Cell neighbor) {
-        cornerNeighbors.add(neighbor);
-    }
-
-    public void addEdgeNeighbor(Cell neighbor) {
-        edgeNeighbors.add(neighbor);
-    }
-
-    public List<Cell> getCornerNeighbor() {
-        return cornerNeighbors;
-    }
-
-    public List<Cell> getEdgeNeighbor() {
-        return edgeNeighbors;
-    }
-
     public void addNeighbor(Point direction, Cell cell) {
         neighbors.put(direction, cell);
     }
@@ -78,12 +62,6 @@ public abstract class Cell {
     private void removeNeighbor(Point direction) {
         if (neighbors.containsKey(direction)) {
             neighbors.remove(neighbors.get(direction));
-        }
-    }
-
-    protected void removeCornerNeighbors(List<Point> directions) {
-        for (Point direction : directions) {
-            removeNeighbor(direction);
         }
     }
 
@@ -165,10 +143,10 @@ public abstract class Cell {
 
     @Override
     public int hashCode() {
-        return coord.toString().hashCode() + "Cell".hashCode();
+        return (coord.toString() + "Cell").hashCode();
     }
 
-    protected int countNeighborsWithState(CellState state, boolean cornersInclude) {
+    protected int countNeighborsWithState(CellState state) {
         int count = 0;
         for (Cell cell : getNeighbors().values()) {
             if (cell.getState() == state) {

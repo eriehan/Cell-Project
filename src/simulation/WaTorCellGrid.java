@@ -73,6 +73,9 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     @Override
     public void assignNeighborsToEachCell() {
         getGridLimit().assignEdgeNeighbors(getGridOfCells(), getCellShapeType(), getNumOfRows(), getNumOfCols());
+        for(Cell cell : getGridOfCells().values()) {
+            System.out.println(cell.getNeighbors().size());
+        }
     }
 
     @Override

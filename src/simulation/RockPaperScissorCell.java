@@ -42,6 +42,6 @@ public class RockPaperScissorCell extends Cell {
     }
 
     private boolean changeToWinner() {
-        return countNeighborsWithState(winningCellState(), true) >= threshold;
+        return countNeighborsWithState(winningCellState()) >= threshold;
     }
 }

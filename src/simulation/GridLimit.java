@@ -49,7 +49,7 @@ public enum GridLimit {
         for (Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
             Cell cell = cellEntry.getValue();
             cell.clearNeighbors();
-            addAllNeighbors(cell, gridOfCells, numOfRows, numOfCols, cellShapeType.neighborDirections(), toroidal);
+            addAllNeighbors(cell, gridOfCells, numOfRows, numOfCols, cellShapeType.neighborDirections(cell.getRow(), cell.getCol()), toroidal);
         }
     }
 
@@ -57,7 +57,7 @@ public enum GridLimit {
         for (Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
             Cell cell = cellEntry.getValue();
             cell.clearNeighbors();
-            addAllNeighbors(cell, gridOfCells, numOfRows, numOfCols, cellShapeType.edgeNeighborDirections(), toroidal);
+            addAllNeighbors(cell, gridOfCells, numOfRows, numOfCols, cellShapeType.edgeNeighborDirections(cell.getRow(), cell.getCol()), toroidal);
         }
     }
 

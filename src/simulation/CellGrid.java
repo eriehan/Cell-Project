@@ -138,8 +138,16 @@ public abstract class CellGrid {
         assignNeighborsToEachCell();
     }
 
-    private Cell cellFromPoint(int row, int col) {
-        return getGridOfCells().get(new Point(row, col));
+    public void setGridLimit(String str) {
+        if(str.equals("toroidal")) {
+            setGridLimit(GridLimit.TOROIDAL);
+        }
+        else if(str.equals("infinite")) {
+            setGridLimit(GridLimit.INFINITE);
+        }
+        else {
+            setGridLimit(GridLimit.FINITE);
+        }
     }
 
     public int getNumOfRows() {
@@ -217,5 +225,9 @@ public abstract class CellGrid {
     private void addColOnRight() {
         numOfCols++;
         createEmptyCol(numOfCols - 1);
+    }
+
+    private Cell cellFromPoint(int row, int col) {
+        return getGridOfCells().get(new Point(row, col));
     }
 }
