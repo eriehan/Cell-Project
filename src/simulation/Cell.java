@@ -13,6 +13,7 @@ public abstract class Cell {
 
     private List<Cell> cornerNeighbors = new ArrayList<>();
     private List<Cell> edgeNeighbors = new ArrayList<>();
+    private Map<Point, Cell> neighbors = new HashMap<>();
     private Map<CellAttribute, Integer> attributes = new HashMap<>();
 
     private List<CellState> possibleStates = new ArrayList<>();
@@ -62,12 +63,25 @@ public abstract class Cell {
         return edgeNeighbors;
     }
 
-    public void addCornerNeighbors(Cell neighbor, int index) {
-        cornerNeighbors.add(index, neighbor);
+    public void addNeighbor(Point direction, Cell cell) {
+        neighbors.put(direction, cell);
     }
 
-    public void addEdgeNeighbors(Cell neighbor, int index) {
-        cornerNeighbors.add(index, neighbor);
+    public Map<Point, Cell> getNeighbors() {
+        Map<Point, Cell> copyOfNeighbors = new HashMap<>(neighbors);
+        return copyOfNeighbors;
+    }
+
+    private void removeNeighbor(Point direction) {
+        if(neighbors.containsKey(direction)) {
+            neighbors.remove(neighbors.get(direction));
+        }
+    }
+
+    protected void removeCornerNeighbors(List<Point> directions) {
+        for(Point direction : directions) {
+            removeNeighbor(direction);
+        }
     }
 
     //called when the cell needs to move. Changes state with the cell that the cell should move to.
@@ -97,6 +111,7 @@ public abstract class Cell {
     public void clearNeighbors() {
         clearEdgeNeighbors();
         clearCornerNeighbors();
+        neighbors.clear();
     }
 
     public void clearEdgeNeighbors() {
@@ -150,15 +165,7 @@ public abstract class Cell {
 
     protected int countNeighborsWithState(CellState state, boolean cornersInclude) {
         int count = 0;
-        for (Cell cell : getEdgeNeighbor()) {
-            if (cell.getState() == state) {
-                count++;
-            }
-        }
-        if(!cornersInclude) {
-            return count;
-        }
-        for (Cell cell : getCornerNeighbor()) {
+        for (Cell cell : getNeighbors().values()) {
             if (cell.getState() == state) {
                 count++;
             }

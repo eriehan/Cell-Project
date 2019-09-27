@@ -13,7 +13,7 @@ public abstract class CellGrid {
     private Map<Point, Cell> gridOfCells = new HashMap<>();
     //true when cellgrid is fully stabilized, and nothing will change indefinitely.
     private boolean finished = false;
-    private GridLimit gridLimit = GridLimit.TOROIDAL;
+    private GridLimit gridLimit = GridLimit.FINITE;
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
     private int numOfCols;
@@ -53,12 +53,7 @@ public abstract class CellGrid {
 
     //Must be called for initializing by gridView
     public void assignNeighborsToEachCell() {
-        if(cellShapeType==CellShapeType.RECTANGLE) {
-            gridLimit.assignEdgeNeighborsSquare(gridOfCells, numOfRows, numOfCols);
-            gridLimit.assignCornerNeighborsSquare(gridOfCells, numOfRows, numOfCols);
-        } else if(cellShapeType == CellShapeType.TRIANGLE) {
-            //gridLimit.assignNeighborsTriangular(gridOfCells, numOfRows, numOfCols);
-        }
+        gridLimit.assignNeighbors(getGridOfCells(), cellShapeType, numOfRows, numOfCols);
     }
 
     protected void cellGridExpand() {
@@ -158,7 +153,7 @@ public abstract class CellGrid {
         controlPanel = newControlPanel;
     }
 
-    protected boolean isRowEmpty(int rowNum) {
+    private boolean isRowEmpty(int rowNum) {
         for(int col=0; col<numOfCols; col++) {
             Cell cell = cellFromPoint(rowNum, col);
             if(cell.getState() != cell.getPossibleStates().get(0)) {
@@ -168,7 +163,7 @@ public abstract class CellGrid {
         return true;
     }
 
-    protected boolean isColEmpty(int colNum) {
+    private boolean isColEmpty(int colNum) {
         for(int row=0; row<numOfRows; row++) {
             Cell cell = cellFromPoint(row, colNum);
             if(cell.getState() != cell.getPossibleStates().get(0)) {

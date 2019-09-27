@@ -27,14 +27,8 @@ public class PercolationCell extends Cell{
         setState(getNextState());
     }
 
-    private List<Cell> allNeighbors() {
-        List<Cell> list = getCornerNeighbor();
-        list.addAll(getEdgeNeighbor());
-        return list;
-    }
-
     private boolean percolatedCellNearby() {
-        for (Cell neighbor : allNeighbors()) {
+        for (Cell neighbor : getNeighbors().values()) {
             if (neighbor.getState() == PERCOLATED) {
                 return true;
             }

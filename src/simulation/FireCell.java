@@ -41,7 +41,8 @@ public class FireCell extends Cell {
     }
 
     private boolean isFireNearby() {
-        for (Cell neighbor : getEdgeNeighbor()) {
+        System.out.println(getNeighbors().size());
+        for (Cell neighbor : getNeighbors().values()) {
             if (neighbor.getState()== CellState.BURNING) {
                 return true;
             }

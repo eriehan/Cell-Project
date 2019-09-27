@@ -51,7 +51,6 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void checkAllCells() {
-        cellGridExpand();
         for(Cell cell : getGridOfCells().values()) {
             cell.check();
             //if dissatisfied

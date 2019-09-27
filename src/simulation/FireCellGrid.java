@@ -31,6 +31,7 @@ public class FireCellGrid extends GameOfLifeCellGrid {
 
     private void updateProbCatch(double newProbCatch) {
         //TODO
+        this.probCatch = newProbCatch;
     }
 
     @Override
@@ -39,6 +40,11 @@ public class FireCellGrid extends GameOfLifeCellGrid {
         for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
             getGridOfCells().get(entry.getKey()).setState(entry.getValue());
         }
+    }
+
+    @Override
+    public void assignNeighborsToEachCell() {
+        getGridLimit().assignEdgeNeighbors(getGridOfCells(), getCellShapeType(), getNumOfRows(), getNumOfCols());
     }
 
     @Override

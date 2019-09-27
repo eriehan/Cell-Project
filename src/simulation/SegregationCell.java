@@ -32,7 +32,7 @@ public class SegregationCell extends Cell {
         }
         int cellsWithSameState = 0;
         int notEmptyNeighbors = 0;
-        for (Cell other : allNeighbors()) {
+        for (Cell other : getNeighbors().values()) {
             if(other.getState() != EMPTY) {
                 if (other.getState() == getState()) {
                     cellsWithSameState++;
@@ -53,10 +53,4 @@ public class SegregationCell extends Cell {
         setState(getNextState());
     }
 
-    private List<Cell> allNeighbors() {
-        List<Cell> list = new ArrayList<>();
-        list.addAll(getCornerNeighbor());
-        list.addAll(getEdgeNeighbor());
-        return list;
-    }
 }

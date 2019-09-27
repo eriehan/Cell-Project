@@ -61,7 +61,7 @@ public class WaTorCell extends Cell {
         //in order to move to random neighbor that has the required nextState
         // (need to use nextState because the neighbor cell may have already moved)
         List<Cell> possibleNeighbors = new ArrayList<>();
-        for(Cell cell : getEdgeNeighbor()) {
+        for(Cell cell : getNeighbors().values()) {
             if(cell.getNextState() == state) {
                 possibleNeighbors.add(cell);
             }
