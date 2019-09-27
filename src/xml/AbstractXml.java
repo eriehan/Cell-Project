@@ -33,6 +33,7 @@ public abstract class AbstractXml {
     protected ArrayList<Integer> agent0Row;
     protected ArrayList<Integer> agent1Col;
     protected ArrayList<Integer> agent1Row;
+    protected ArrayList<Integer> percentage;
     protected File xmlFile;
     protected String shape;
     protected int isSaved;
@@ -46,14 +47,13 @@ public abstract class AbstractXml {
     protected DocumentBuilder docBuilder;
     protected Document doc;
 
+
+
     public AbstractXml(UserInterface myUserInterface){
         this.myUserInterface = myUserInterface;
     }
 
-    public int getNumAgents(){
-        return this.numAgents;
-    }
-    public int getIsSaved(){return this.isSaved;}
+
     public int getCellGridColNum(){
         return this.cellGridColNum;
     }
@@ -75,6 +75,9 @@ public abstract class AbstractXml {
         return copy;
     }
 
+    public List<Integer> getPercentage(){
+        return this.percentage;
+    }
     public int getRate(){
         return this.rate;
     }

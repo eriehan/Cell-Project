@@ -101,7 +101,13 @@ public class GridManager {
 
                 cellGrid = new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate());
                 break;
+
+            case "Rock Paper Scissors":
+
+                cellGrid = new RockPaperScissorGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getPercentage());
+
         }
+
 
         cellGrid.initializeGrids(initialConfigMap);
         cellGrid.assignNeighborsToEachCell();
