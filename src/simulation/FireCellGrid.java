@@ -31,14 +31,12 @@ public class FireCellGrid extends GameOfLifeCellGrid {
     private void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "PropCatch"
-        //System.out.println(inputPercentage);
         this.probCatch = inputPercentage;
         System.out.println("probCatch in SliderAction: " + probCatch);
         createMapFullOfTrees();
         initializeGrids(myConfigMap);
         assignNeighborsToEachCell();
 
-       // System.out.println(type);
     }
 
     @Override
