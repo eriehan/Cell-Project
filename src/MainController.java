@@ -151,6 +151,26 @@ public class MainController extends Application {
         edgeTypeChoice.getChoiceBox().setValue(resourceBundle.getString("EdgeTypes").split(",")[0]);
         edgeTypeChoice.getChoiceBox().valueProperty().addListener(e -> setEdgeType((String) edgeTypeChoice.getChoiceBox().getValue()));
         this.myUserInterface.getMyControlsManager().addChoiceBox(edgeTypeChoice);
+
+        SimulationTextInput rowInput = new SimulationTextInput(resourceBundle.getString("RowInput.title"));
+        rowInput.getTextField().setOnAction(event -> changeNumberOfRow(rowInput.getTextField().getText()));
+        this.myUserInterface.getMyControlsManager().getMyConstantCol().getChildren().add(rowInput.getMyVBox());
+
+        SimulationTextInput colInput = new SimulationTextInput(resourceBundle.getString("ColInput.title"));
+        colInput.getTextField().setOnAction(event -> changeNumberOfCol(colInput.getTextField().getText()));
+        this.myUserInterface.getMyControlsManager().getMyConstantCol().getChildren().add(colInput.getMyVBox());
+    }
+
+    private void changeNumberOfRow(String row){
+        int rowInput = Integer.parseInt(row);
+        System.out.println("row input: "+rowInput);
+        // TODO: change grid size (row)
+    }
+
+    private void changeNumberOfCol(String col){
+        int colInput = Integer.parseInt(col);
+        System.out.println("col input: "+colInput);
+        // TODO: change grid size (row)
     }
 
     private void setEdgeType(String edgeType) {
