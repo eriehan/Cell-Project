@@ -22,18 +22,15 @@ public class RockPaperScissorGrid extends GameOfLifeCellGrid {
         super(numRows, numCols);
 
         this.threshold = threshold;
-        possibilities = new ArrayList<>(possibilities);
+        this.possibilities = new ArrayList<>();
+        this.possibilities.addAll(possibilities);
     }
 
     @Override
     public void initializeGrids(Map<Point, CellState> configMap) {
         createRockMap();
         //If xml already has the whole configuration, grid will be filled accordingly
-        for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
-            Cell notRockCell = getGridOfCells().get(entry.getKey());
-            notRockCell.setState(entry.getValue());
-            rockList.remove(entry.getKey());
-        }
+
         fillUnfilledGrids();
     }
 
