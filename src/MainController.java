@@ -136,9 +136,11 @@ public class MainController extends Application {
             try {
                 save();
             } catch (TransformerException e) {
-                e.printStackTrace();
+                this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
+                return;
             } catch (ParserConfigurationException e) {
-                e.printStackTrace();
+                this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
+                return;
             }
         });
         this.myUserInterface.getMyControlsManager().addButton(saveButton);
