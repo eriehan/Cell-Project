@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 public class AntForagingCellGrid extends CellGrid {
+    private final static int MAXANT = 10;
+
     private Map<Point, GridInfo> gridInfos;
-    private int maxAnt;
+    private int maxAnt = MAXANT;
     private double evaporation;
 
     public AntForagingCellGrid(int numRows, int numCols) {
@@ -27,19 +29,19 @@ public class AntForagingCellGrid extends CellGrid {
 
     @Override
     public void checkAllCells() {
-
+        maxAnt = 0;
     }
 
     @Override
     public void changeAllCells() {
-
+        maxAnt = 0;
     }
 
     @Override
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
         addToGridOfCells(point, new AntForagingCell(row, col, CellState.EMPTY));
-        gridInfos.put(point, new GridInfo(row, col, 10));
+        gridInfos.put(point, new GridInfo(row, col, maxAnt));
     }
 
     private void createEmptyMap() {

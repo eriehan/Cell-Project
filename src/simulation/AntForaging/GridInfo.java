@@ -9,7 +9,7 @@ public class GridInfo {
     private int maxAnt;
     private int row;
     private int col;
-    private List<Ant> ants;
+    //private List<Ant> ants;
 
     public GridInfo(int row, int col, int maxAnt) {
         this.row = row;
@@ -23,8 +23,6 @@ public class GridInfo {
     }
 
     public void addHomePheromone(double foodPheromone) {
-
+        this.homePheromone += homePheromone;
     }
-
-    public void add(){}
 }
