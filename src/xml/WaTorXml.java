@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class WaTorXml extends AbstractXml {
-    private ArrayList<Integer> EnergyArray = new ArrayList<>();
-    private ArrayList<Integer> MaturityArray = new ArrayList<>();
+
 
     public WaTorXml(UserInterface myUserInterFace) {
         super(myUserInterFace);
@@ -57,21 +56,4 @@ public class WaTorXml extends AbstractXml {
 
     }
 
-    private void addEnergyAndMaturityToXml(int Energy, int Maturity, Document document, int agentNum) {
-
-    }
-
-
-    public ArrayList<Integer> getEnergyArray() {
-        ArrayList<Integer> copy = new ArrayList<>();
-        copy.addAll(EnergyArray);
-        System.out.println(copy);
-        return copy;
-    }
-
-    public ArrayList<Integer> getMaturityArray() {
-        ArrayList<Integer> copy = new ArrayList<>();
-        copy.addAll(MaturityArray);
-        return copy;
-    }
 }

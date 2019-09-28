@@ -21,13 +21,5 @@ public class SegregationXml extends AbstractXml {
         super.saveCurrentSimulation(myGridView, CellState.FIRSTAGENT, CellState.SECONDAGENT, xmlFilePath);
     }
 
-    @Override
-    public List<Integer> getMaturityArray() {
-        return null;
-    }
 
-    @Override
-    public List<Integer> getEnergyArray() {
-        return null;
-    }
 }

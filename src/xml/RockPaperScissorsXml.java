@@ -32,8 +32,6 @@ public class RockPaperScissorsXml extends AbstractXml {
     public void setUpSimulationParameters() {
         super.setUpSimulationParameters();
 
-      //  System.out.println("entered wator");
-
         for (int i = 0; i < this.numAgents; i++) {
             NodeList agent = doc.getElementsByTagName("Agent" + i);
             Element n = (Element) agent.item(0);
@@ -44,15 +42,6 @@ public class RockPaperScissorsXml extends AbstractXml {
 
     }
 
-    @Override
-    public List<Integer> getMaturityArray() {
-        return null;
-    }
-
-    @Override
-    public List<Integer> getEnergyArray() {
-        return null;
-    }
 
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
         //super.saveCurrentSimulation(myGridView, xmlFilePath);

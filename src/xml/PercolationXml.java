@@ -20,13 +20,5 @@ public class PercolationXml extends AbstractXml {
         super.saveCurrentSimulation(myGridView, CellState.PERCOLATED, CellState.BLOCKED, xmlFilePath);
     }
 
-    @Override
-    public List<Integer> getMaturityArray() {
-        return null;
-    }
 
-    @Override
-    public List<Integer> getEnergyArray() {
-        return null;
-    }
 }

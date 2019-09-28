@@ -22,13 +22,5 @@ public class FireXml extends AbstractXml {
 
     }
 
-    @Override
-    public List<Integer> getMaturityArray() {
-        return null;
-    }
 
-    @Override
-    public List<Integer> getEnergyArray() {
-        return null;
-    }
 }

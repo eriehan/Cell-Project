@@ -46,6 +46,8 @@ public abstract class AbstractXml {
     protected DocumentBuilderFactory documentBuilderFactory;
     protected DocumentBuilder docBuilder;
     protected Document doc;
+    protected ArrayList<Integer> EnergyArray = new ArrayList<>();
+    protected ArrayList<Integer> MaturityArray = new ArrayList<>();
 
 
 
@@ -323,9 +325,18 @@ public abstract class AbstractXml {
         createXmlFilePath(document, xmlFilePath);
     }
 
-    public abstract List<Integer> getMaturityArray();
+    public ArrayList<Integer> getEnergyArray() {
+        ArrayList<Integer> copy = new ArrayList<>();
+        copy.addAll(EnergyArray);
+        System.out.println(copy);
+        return copy;
+    }
 
-    public abstract List<Integer> getEnergyArray();
+    public ArrayList<Integer> getMaturityArray() {
+        ArrayList<Integer> copy = new ArrayList<>();
+        copy.addAll(MaturityArray);
+        return copy;
+    }
 
     public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
 
