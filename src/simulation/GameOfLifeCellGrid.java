@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public class GameOfLifeCellGrid extends CellGrid {
-
-    private int initialAliveNum = 5;
-    private int HUNDRED = 100;
+    private final int INITIALALIVE = 5;
+    private int initialAliveNum = INITIALALIVE;
+    private final int HUNDRED = 100;
     private List<Cell> deadCells = new ArrayList<>();
 
     public GameOfLifeCellGrid(int numRows, int numCols) {

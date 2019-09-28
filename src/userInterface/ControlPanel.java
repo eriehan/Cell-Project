@@ -12,11 +12,9 @@ public class ControlPanel {
     private static final String RESOURCE_FILE_PATH = "resources/ControlResources";
     private static final int SPACING = 15;
     private ResourceBundle resourceBundle;
-    private ArrayList<SimulationSlider> sliderList;
     private VBox myColPane;
 
     public ControlPanel() {
-        sliderList = new ArrayList<>();
         myColPane = new VBox();
         myColPane.setSpacing(SPACING);
         myColPane.setPadding(new Insets(PADDING_TOP, PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));

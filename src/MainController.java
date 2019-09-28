@@ -16,10 +16,14 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static userInterface.VisualizationConstants.BACKGROUND_COLOR;
 
 public class MainController extends Application {
+    private  static Logger logger =
+            Logger.getLogger("MainController");
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
     private static final int MILLIS_IN_SEC = 1000;
     private static final double UNIT_SEC = 1.0;
@@ -107,6 +111,7 @@ public class MainController extends Application {
                 selectFilePrompt();
             } catch (IOException | ParserConfigurationException | SAXException e) {
                 this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
+                logger.log(Level.WARNING,"Error during select file",e);
                 return;
             }
         });
@@ -139,6 +144,7 @@ public class MainController extends Application {
                 save();
             } catch (TransformerException | ParserConfigurationException e) {
                 this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
+                logger.log(Level.WARNING,"Error during save file",e);
                 return;
             }
         });
