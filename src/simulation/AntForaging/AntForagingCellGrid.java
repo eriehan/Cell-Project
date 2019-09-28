@@ -29,12 +29,12 @@ public class AntForagingCellGrid extends CellGrid {
 
     @Override
     public void checkAllCells() {
-        maxAnt = 0;
+        //to be added. Have not figured out how to implement.
     }
 
     @Override
     public void changeAllCells() {
-        maxAnt = 0;
+        //to be added. Have not figured out how to implement.
     }
 
     @Override

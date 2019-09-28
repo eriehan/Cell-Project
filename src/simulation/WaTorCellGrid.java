@@ -40,7 +40,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         }
     }
 
-    private void sliderAction(String type, double inputPercentage) {
+    protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: SharkEnergy,FishEnergy,SharkMaturityDate,FishMaturityDate,WaterPercent,FishSharkRatio
         if(type.equals("SharkEnergy")) {

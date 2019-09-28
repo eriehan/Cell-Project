@@ -39,7 +39,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
         }
     }
 
-    private void sliderAction(String type, double inputPercentage) {
+    protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "AgentRatio", "Similarity", "EmptyPercent"
         if(type.equals(AGENTRATIO)) {

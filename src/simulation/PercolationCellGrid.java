@@ -27,7 +27,7 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
         }
     }
 
-    private void sliderAction(String type, double inputPercentage) {
+    protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "PercentBlocked", "NumberPercolated"
         if(type.equals("PercentBlocked")) {
