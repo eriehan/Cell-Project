@@ -72,7 +72,6 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     @Override
     public void initializeGrids(Map<Point, CellState> configMap) {
         createEmptyMap();
-        System.out.println(configMap.size());
         for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
             Cell cell = getGridOfCells().get(entry.getKey());
             CellState state = entry.getValue();
@@ -113,10 +112,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void assignNeighborsToEachCell() {
-        getGridLimit().assignEdgeNeighbors(getGridOfCells(), getCellShapeType(), getNumOfRows(), getNumOfCols());
-        for(Cell cell : getGridOfCells().values()) {
-            System.out.println(cell.getNeighbors().size());
-        }
+        getNeighborManager().assignEdgeNeighbors(getGridOfCells(), getNumOfRows(), getNumOfCols());
     }
 
     @Override
