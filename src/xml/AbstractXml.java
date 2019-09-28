@@ -11,7 +11,6 @@ import userInterface.AbstractGridView;
 import userInterface.CellShapeType;
 import userInterface.UserInterface;
 import utils.Point;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -220,9 +219,32 @@ public abstract class AbstractXml {
         colArray.add(agent1Col);
         rowArray.add(agent0Row);
         rowArray.add(agent1Row);
-
-
     }
+
+//    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, CellState state3, List<List<Integer>> colArray,
+//                                 List<List<Integer>> rowArray){
+//        agent0Col = new ArrayList<>();
+//        agent0Row = new ArrayList<>();
+//        agent1Col = new ArrayList<>();
+//        agent1Row = new ArrayList<>();
+//        for (Map.Entry<Point, Cell> entry: myMap.entrySet()
+//        ) {
+//            Cell c = entry.getValue();
+//            if(c.getState().equals(state1)){
+//                agent0Row.add(entry.getKey().getRow());
+//                agent0Col.add(entry.getKey().getCol());
+//            }
+//            else if(c.getState().equals(state2)){
+//                agent1Row.add(entry.getKey().getRow());
+//                agent1Col.add(entry.getKey().getCol());
+//            }
+//        }
+//
+//        colArray.add(agent0Col);
+//        colArray.add(agent1Col);
+//        rowArray.add(agent0Row);
+//        rowArray.add(agent1Row);
+//    }
 
     private String convertArrayToString(List<Integer> array){
         String s = "" + array.get(0);

@@ -1,25 +1,31 @@
 package xml;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import simulation.Cell;
+import simulation.CellState;
 import userInterface.AbstractGridView;
 import userInterface.UserInterface;
+import utils.Point;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 
 public class RockPaperScissorsXml extends AbstractXml {
+    private static final String RESOURCE_FILE_PATH = "resources/MainResources";
+    private ResourceBundle resourceBundle;
 
 
-    public RockPaperScissorsXml(UserInterface myUserInferface){
-        super(myUserInferface);
+    public RockPaperScissorsXml(UserInterface myUserInterface){
+        super(myUserInterface);
+        resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
         percentage = new ArrayList<>();
-
     }
-
 
 
     public void setUpSimulationParameters() {
@@ -36,7 +42,9 @@ public class RockPaperScissorsXml extends AbstractXml {
     }
 
 
-    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
+    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) {
+
+        this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
 
 
 
