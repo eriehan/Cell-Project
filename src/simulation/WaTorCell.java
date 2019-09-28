@@ -65,7 +65,6 @@ public class WaTorCell extends Cell {
                 possibleNeighbors.add(cell);
             }
         }
-
         if (possibleNeighbors.isEmpty()) {
             return;
         } else {
