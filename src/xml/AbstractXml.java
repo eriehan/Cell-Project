@@ -24,8 +24,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public abstract class AbstractXml {
+    private final String RESOURCE_FILE_PATH = "resources/MainResources";
     protected List<List<Integer>> myColArray = new ArrayList<>();
     protected List<List<Integer>> myRowArray = new ArrayList<>();
     protected List<Integer> agent0Col;
@@ -45,6 +47,7 @@ public abstract class AbstractXml {
     protected DocumentBuilderFactory documentBuilderFactory;
     protected DocumentBuilder docBuilder;
     protected Document doc;
+    private ResourceBundle resourceBundle;
     protected ArrayList<Integer> EnergyArray = new ArrayList<>();
     protected ArrayList<Integer> MaturityArray = new ArrayList<>();
 
@@ -52,6 +55,7 @@ public abstract class AbstractXml {
 
     public AbstractXml(UserInterface myUserInterface){
         this.myUserInterface = myUserInterface;
+        resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
     }
 
 
@@ -83,11 +87,19 @@ public abstract class AbstractXml {
         return this.rate;
     }
 
-    public void parse(String file) throws IOException, SAXException, ParserConfigurationException {
+    public void parse(String file) throws ParserConfigurationException {
         this.xmlFile = new File(String.valueOf(file));
         this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
         this.docBuilder = this.documentBuilderFactory.newDocumentBuilder();
-        this.doc = this.docBuilder.parse(this.xmlFile);
+
+        try {
+            this.doc = this.docBuilder.parse(this.xmlFile);
+        } catch (SAXException e) {
+            this.myUserInterface.displayErrorMsg("ErrorMsg_parseFile");
+        } catch (IOException e) {
+            this.myUserInterface.displayErrorMsg("ErrorMsg_parseFile");
+        }
+
         determineCellShape(this.doc);
         setUpSimulationParameters();
     }
@@ -221,30 +233,6 @@ public abstract class AbstractXml {
         rowArray.add(agent1Row);
     }
 
-//    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, CellState state3, List<List<Integer>> colArray,
-//                                 List<List<Integer>> rowArray){
-//        agent0Col = new ArrayList<>();
-//        agent0Row = new ArrayList<>();
-//        agent1Col = new ArrayList<>();
-//        agent1Row = new ArrayList<>();
-//        for (Map.Entry<Point, Cell> entry: myMap.entrySet()
-//        ) {
-//            Cell c = entry.getValue();
-//            if(c.getState().equals(state1)){
-//                agent0Row.add(entry.getKey().getRow());
-//                agent0Col.add(entry.getKey().getCol());
-//            }
-//            else if(c.getState().equals(state2)){
-//                agent1Row.add(entry.getKey().getRow());
-//                agent1Col.add(entry.getKey().getCol());
-//            }
-//        }
-//
-//        colArray.add(agent0Col);
-//        colArray.add(agent1Col);
-//        rowArray.add(agent0Row);
-//        rowArray.add(agent1Row);
-//    }
 
     private String convertArrayToString(List<Integer> array){
         String s = "" + array.get(0);
@@ -319,7 +307,7 @@ public abstract class AbstractXml {
 
 
     protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
-                                         CellState state2, File xmlFilePath) throws ParserConfigurationException, TransformerException {
+                                         CellState state2, File xmlFilePath) throws ParserConfigurationException {
         Document document = stageXml();
         Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
         List<List<Integer>> colArray = new ArrayList<>();
@@ -328,7 +316,11 @@ public abstract class AbstractXml {
         for(int i = 0; i < rowArray.size(); i++){
             addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
         }
-        createXmlFilePath(document, xmlFilePath);
+        try {
+            createXmlFilePath(document, xmlFilePath);
+        } catch (TransformerException e) {
+            myUserInterface.displayErrorMsg("ErrorMsg_filePath");
+        }
     }
 
     protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
