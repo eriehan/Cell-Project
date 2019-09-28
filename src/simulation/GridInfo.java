@@ -3,6 +3,7 @@ package simulation;
 import simulation.AntForaging.GridAttribute;
 import utils.Point;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +40,15 @@ public abstract class GridInfo {
         if (!gridAttributes.containsKey(gridAttribute)) {
             putNumberAttributes(gridAttribute, num);
         } else {
-            double temp = gridAttributes.get(gridAttribute);
-            gridAttributes.put(gridAttribute, num * temp);
+            gridAttributes.put(gridAttribute, num * gridAttributes.get(gridAttribute));
+        }
+    }
+
+    public void addToNumberAttributes(GridAttribute gridAttribute, double num) {
+        if (!gridAttributes.containsKey(gridAttribute)) {
+            putNumberAttributes(gridAttribute, num);
+        } else {
+            gridAttributes.put(gridAttribute, num + gridAttributes.get(gridAttribute));
         }
     }
 
@@ -64,7 +72,19 @@ public abstract class GridInfo {
         return neighborGrids.get(direction);
     }
 
+    public List<GridInfo> getNeighborGrids() {
+        List<GridInfo> grids = new ArrayList<>();
+        grids.addAll(neighborGrids.values());
+        return grids;
+    }
+
     public int numOfIndividuals() {return individuals.size();}
+
+    public List<Individual> getIndividuals() {
+        List<Individual> list = new ArrayList<>();
+        list.addAll(individuals);
+        return list;
+    }
 
     public void removeIndividual(Individual individual) {
         individuals.remove(individual);

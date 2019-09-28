@@ -27,14 +27,18 @@ public class AntForagingCell extends CellWithInfo {
         myGridInfo.putNumberAttributes(GridAttribute.EVAPORATION, evaporation);
         myGridInfo.putNumberAttributes(GridAttribute.DIFFUSION, diffusion);
         myGridInfo.putNumberAttributes(GridAttribute.MAXANT, maxAnt);
+        assignBooleanValues();
     }
 
     @Override
     public void check() {
         //to be added. Have not figured out how to implement.
        myGridInfo.moveIndividuals();
-       if(getState() == CellState.HOME) {
-           createAnts();
+       if(getState() == CellState.HOME || getState() == CellState.FOOD) {
+           if(getState() == CellState.HOME) {
+               myGridInfo.putBooleanAttributes(GridAttribute.ISHOME, true);
+               createAnts();
+           }
        }
     }
 
@@ -42,6 +46,7 @@ public class AntForagingCell extends CellWithInfo {
     public void changeState() {
         //to be added. Have not figured out how to implement.
         setState(getNextState());
+
         myGridInfo.update();
     }
 
@@ -53,5 +58,24 @@ public class AntForagingCell extends CellWithInfo {
         for(int i=0; i<birthrate; i++) {
             getMyGridInfo().createIndividual();
         }
+    }
+
+    private void assignBooleanValues() {
+        if(getState()==CellState.OBSTACLE) {
+            putBooleanValues(true, false, false, false);
+        } else if(getState() == CellState.HOME) {
+            putBooleanValues(false, true, false, false);
+        } else if(getState() == CellState.FOOD) {
+            putBooleanValues(false, false, true, false);
+        } else {
+            putBooleanValues(false, false, false, false);
+        }
+    }
+
+    private void putBooleanValues(boolean obstacle, boolean home, boolean food, boolean packed) {
+        myGridInfo.putBooleanAttributes(GridAttribute.ISOBSTACLE, obstacle);
+        myGridInfo.putBooleanAttributes(GridAttribute.ISHOME, home);
+        myGridInfo.putBooleanAttributes(GridAttribute.ISFOOD, food);
+        myGridInfo.putBooleanAttributes(GridAttribute.ISPACKED, packed);
     }
 }

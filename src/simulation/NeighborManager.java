@@ -29,11 +29,11 @@ public class NeighborManager {
     private static final List<Point> squareAllNeighbors = List.of(NW, N, NE, E, SE, S, SW, W);
     private static final List<Point> squareEdgeNeighbors = List.of(N, E, S, W);
     private static final List<Point> downwardTriangleNeighbors = List.of(NWW, NW, N, NE, NEE, EE, E, SE, S, SW, W, WW);
-    private static final List<Point> upwardTriangleNeighbors = List.of(W, E, S, N, SW, SE, NW, NE, WW, EE, SWW, SEE);
-    private static final List<Point> downwardTriangleEdgeNeighbors = List.of(W, E, S);
-    private static final List<Point> upwardTriangleEdgeNeighbors = List.of(W, E, N);
-    private static final List<Point> leftSidedRowHexagonNeighbors = List.of(S, SE, N, NE, NN, SS);
-    private static final List<Point> rightSidedRowHexagonNeighbors = List.of(S, SW, N, NW, NN, SS);
+    private static final List<Point> upwardTriangleNeighbors = List.of(NW, N, NE, EE, E, SEE, SE, S, SW, SWW, W, WW);
+    private static final List<Point> downwardTriangleEdgeNeighbors = List.of(E, S, W);
+    private static final List<Point> upwardTriangleEdgeNeighbors = List.of(N, E, W);
+    private static final List<Point> leftSidedRowHexagonNeighbors = List.of(NW, NN, N, S, SS, SW);
+    private static final List<Point> rightSidedRowHexagonNeighbors = List.of(N, NN, NE, SE, SS, S);
 
     private static final String defaultConfig = "11111111";
 
@@ -67,7 +67,14 @@ public class NeighborManager {
         }
     }
 
-    private void addNeighborsToCell(Cell cell, Map<Point, Cell> gridOfCells, int numOfRows, int numOfCols, List<Point> directions) {
+    public List<Point> getAllowedNeighbor() {
+        List<Point> list = new ArrayList<>();
+        list.addAll(allowedNeighbor);
+        return list;
+    }
+
+    private List<Point> getAcutalNeighborDirections(Cell cell, int numOfRows, int numOfCols, List<Point> directions) {
+        List<Point> actualNeighbors = new ArrayList<>();
         for (Point direction : directions) {
             int row = cell.getRow();
             int col = cell.getCol();
@@ -81,9 +88,17 @@ public class NeighborManager {
                     continue;
                 }
             }
-            cell.addNeighbor(direction, cellFromPoint(gridOfCells, row, col, numOfRows, numOfCols));
+            actualNeighbors.add(direction);
         }
-        System.out.println(cell.getNeighbors().size());
+        return actualNeighbors;
+    }
+
+    private void addNeighborsToCell(Cell cell, Map<Point, Cell> gridOfCells, int numOfRows, int numOfCols, List<Point> directions) {
+        for (Point direction : getAcutalNeighborDirections(cell, numOfRows, numOfCols, directions)) {
+            cell.addNeighbor(direction, cellFromPoint(gridOfCells, cell.getRow() + direction.getRow(),
+                    cell.getCol() + direction.getCol(), numOfRows, numOfCols));
+        }
+        System.out.println(cell.getRow() +", " +  cell.getCol() + ", "+ cell.getNeighbors().size());
     }
 
     private Cell cellFromPoint(Map<Point, Cell> gridOfCells, int row, int col, int numOfRows, int numOfCols) {

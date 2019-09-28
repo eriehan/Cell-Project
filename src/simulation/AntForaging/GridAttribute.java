@@ -6,5 +6,8 @@ public enum GridAttribute {
     FOODPHEROMONE,
     EVAPORATION,
     DIFFUSION,
-
+    ISFOOD,
+    ISHOME,
+    ISPACKED,
+    ISOBSTACLE;
 }
