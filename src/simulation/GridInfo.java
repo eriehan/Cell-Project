@@ -11,7 +11,7 @@ import java.util.Map;
 public abstract class GridInfo {
     private int row;
     private int col;
-    private Map<Point, GridInfo> neighborGrids;
+    private Map<Point, GridInfo> neighborGrids = new HashMap<>();
     private Map<GridAttribute, Double> gridAttributes = new HashMap<>();
     private Map<GridAttribute, Boolean> gridBooleans = new HashMap<>();
     private List<Individual> individuals = new ArrayList<>();
