@@ -27,7 +27,6 @@ public enum CellState {
     PAPER(Color.RED),
     SCISSOR(Color.GREEN);
 
-
     private Color myColor;
 
     CellState(Color color) {

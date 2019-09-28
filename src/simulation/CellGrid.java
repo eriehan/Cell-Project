@@ -101,6 +101,10 @@ public abstract class CellGrid {
         return gridOfCells;
     }
 
+    public void clearMap() {
+        gridOfCells.clear();
+    }
+
     public void addToGridOfCells(Point point, Cell cell) {
         gridOfCells.put(point, cell);
     }

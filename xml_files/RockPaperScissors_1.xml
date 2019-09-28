@@ -5,23 +5,23 @@
     <Shape name = "rectangle">1</Shape>
     <Type name = "Rock Paper Scissors">3</Type>
     <Saved>0</Saved>
-    <Row>70</Row>
-    <Col>70</Col>
-    <Rate>4</Rate>
+    <Row>100</Row>
+    <Col>100</Col>
+    <Rate>3</Rate>
     <Agent0>
-        <Percent>50</Percent>
+        <Percent>33</Percent>
         <Row>1</Row>
         <Column>1</Column>
     </Agent0>
 
     <Agent1>
-        <Percent>30</Percent>
+        <Percent>33</Percent>
         <Row>1</Row>
         <Column>1</Column>
     </Agent1>
 
     <Agent2>
-        <Percent>20</Percent>
+        <Percent>34</Percent>
         <Row>1</Row>
         <Column>1</Column>
     </Agent2>

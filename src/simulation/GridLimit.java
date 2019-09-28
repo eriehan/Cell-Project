@@ -81,15 +81,15 @@ public enum GridLimit {
 
     private Cell cellFromPoint(Map<Point, Cell> gridOfCells, int row, int col, int numOfRows, int numOfCols) {
         if (row < 0) {
-            row = numOfRows - 1;
+            row += numOfRows;
         } else if (row >= numOfRows) {
-            row = 0;
+            row -= numOfRows;
         }
 
         if (col < 0) {
-            col = numOfCols - 1;
+            col += numOfCols;
         } else if (col >= numOfCols) {
-            col = 0;
+            col -= numOfCols;
         }
 
         return gridOfCells.get(new Point(row, col));

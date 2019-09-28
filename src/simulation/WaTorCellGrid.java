@@ -59,6 +59,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
         } else {
             fishRatio = inputPercentage;
         }
+        System.out.println(fishRatio);
         waterCells.clear();
         createEmptyMap();
         System.out.println(waterCells.size());
