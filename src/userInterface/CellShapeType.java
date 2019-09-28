@@ -62,12 +62,19 @@ public enum CellShapeType {
     HEXAGON {
         @Override
         public List<Point> neighborDirections(int row, int col) {
-            return null;
+            if(row % 2 == 0) {
+                return List.of(new Point(-1, 1), new Point(-1, 0), new Point(1, 0),
+                        new Point(1, 1), new Point(2, 0), new Point(-2, 0));
+            }
+            else {
+                return List.of(new Point(-1, -1), new Point(-1, 0), new Point(1, -1),
+                        new Point(1, 0), new Point(2, 0), new Point(-2, 0));
+            }
         }
 
         @Override
         public List<Point> edgeNeighborDirections(int row, int col) {
-            return null;
+            return neighborDirections(row, col);
         }
     };
 

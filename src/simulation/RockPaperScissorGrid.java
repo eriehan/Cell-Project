@@ -81,5 +81,4 @@ public class RockPaperScissorGrid extends GameOfLifeCellGrid {
         }
         return count;
     }
-
 }

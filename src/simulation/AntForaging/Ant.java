@@ -8,5 +8,4 @@ public class Ant {
     private Cell cellLocation;
     private Point direction;
 
-
 }

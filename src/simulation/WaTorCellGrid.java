@@ -18,6 +18,9 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     private List<Integer> reproductions;
     private List<Integer> energies;
     private List<Cell> fishesAndSharks = new ArrayList<>();
+    private List<Cell> waterCells = new ArrayList<>();
+    private double fishRatio = 50;
+    private int waterCellNum = 40;
 
     //reproductions is a list of time needed for fish and shark to reproduce
     //energies.get(0) = energy that shark gets by eating fish, energies.get(1) = shark's initial energy
@@ -40,6 +43,27 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     private void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: SharkEnergy,FishEnergy,SharkMaturityDate,FishMaturityDate,WaterPercent,FishSharkRatio
+        if(type.equals("SharkEnergy")) {
+            energies.set(1, (int) inputPercentage);
+        }
+        else if(type.equals("FishEnergy")) {
+            energies.set(0, (int) inputPercentage);
+        }
+        else if(type.equals("SharkMaturityDate")) {
+            reproductions.set(1, (int) inputPercentage);
+        }
+        else if(type.equals("FishMaturityDate")) {
+            reproductions.set(0, (int) inputPercentage);
+        } else if(type.equals("WaterPercent")) {
+            waterCellNum = (int) (getNumOfCols() * getNumOfRows() * 100 / inputPercentage);
+        } else {
+            fishRatio = inputPercentage;
+        }
+        waterCells.clear();
+        createEmptyMap();
+        System.out.println(waterCells.size());
+        initializeGrids();
+        assignNeighborsToEachCell();
         System.out.println(type);
     }
 
@@ -52,6 +76,20 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
             CellState state = entry.getValue();
             changeOneCell(cell, state);
         }
+    }
+
+    private void initializeGrids() {
+        System.out.println(waterCells.size());
+        while (waterCells.size() > waterCellNum) {
+            int index = (int) (waterCells.size() * Math.random());
+            Cell tempCell = waterCells.get(index);
+            waterCells.remove(tempCell);
+
+            //Will be changed later to be more flexible. Right now, 50% for state1, 50% for state2.
+            //tempCell.setState((int) (1.5 + Math.random()));
+            tempCell.setState((Math.random() * 100 > fishRatio) ? CellState.FISH : CellState.SHARK);
+        }
+        System.out.println(waterCells.size());
     }
 
     @Override
@@ -89,14 +127,14 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
         addToGridOfCells(point, new WaTorCell(row, col, CellState.WATER, 0, 0));
+        waterCells.add(getGridOfCells().get(point));
     }
 
     private void createEmptyMap() {
         getGridOfCells().clear();
         for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
-                Point point = new Point(row, col);
-                addToGridOfCells(point, new WaTorCell(row, col, CellState.WATER, 0, 0));
+                addEmptyStateToCell(row, col);
             }
         }
     }

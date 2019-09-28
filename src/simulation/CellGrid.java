@@ -127,6 +127,7 @@ public abstract class CellGrid {
 
     public void setCellShapeType(CellShapeType cellShapeType) {
         this.cellShapeType = cellShapeType;
+        assignNeighborsToEachCell();
     }
 
     public GridLimit getGridLimit() {

@@ -28,7 +28,7 @@ public class FireCellGrid extends GameOfLifeCellGrid {
         }
     }
 
-    private void sliderAction(String type, double inputPercentage) {
+        private void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "PropCatch"
         this.probCatch = inputPercentage;

@@ -60,6 +60,7 @@ public class TriangleGridView extends AbstractGridView {
             }
             rowFlag = !rowFlag;
         }
+        getGridManager().getCellGrid().setCellShapeType(CellShapeType.TRIANGLE);
     }
 
     @Override

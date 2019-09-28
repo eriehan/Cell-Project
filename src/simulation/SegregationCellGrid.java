@@ -10,7 +10,11 @@ import java.util.Map;
 public class SegregationCellGrid extends GameOfLifeCellGrid {
 
     private static final double HUNDRED = 100.0;
-    private static final double HALF = 0.5;
+    private static final double HALF = 50;
+    private static final String AGENTRATIO = "AgentRatio";
+    private static final String AGENTPERCENT = "Similarity";
+    private static final String EMPTYPERCENT = "EmptyPercent";
+
 
     private int agentPercent;
     private double prob = HALF;
@@ -39,6 +43,18 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     private void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "AgentRatio", "Similarity", "EmptyPercent"
+        if(type.equals(AGENTRATIO)) {
+            prob = inputPercentage;
+        }
+        else if(type.equals(EMPTYPERCENT)) {
+            emptyCellNumber = (int) (getNumOfRows() * getNumOfCols() * inputPercentage / HUNDRED);
+        } else {
+            agentPercent = (int) inputPercentage;
+        }
+        emptyCells.clear();
+        createEmptyMap();
+        initializeGrids();
+        assignNeighborsToEachCell();
         System.out.println(type);
     }
 
@@ -55,6 +71,10 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
 
         //If xml does not have the configuration so that all configuration will be randomly(while loop will be in an if statement),
         //according to the percentage of empty cells(parameter of constructor), randomly fills grid.
+        initializeGrids();
+    }
+
+    public void initializeGrids() {
         while (emptyCells.size() > emptyCellNumber) {
             int index = (int) (emptyCells.size() * Math.random());
             Cell tempCell = emptyCells.get(index);
@@ -62,7 +82,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
 
             //Will be changed later to be more flexible. Right now, 50% for state1, 50% for state2.
             //tempCell.setState((int) (1.5 + Math.random()));
-            tempCell.setState((Math.random() > this.prob) ? CellState.FIRSTAGENT : CellState.SECONDAGENT);
+            tempCell.setState((Math.random() * 100 > this.prob) ? CellState.FIRSTAGENT : CellState.SECONDAGENT);
         }
     }
 
