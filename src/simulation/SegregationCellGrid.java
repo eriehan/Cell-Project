@@ -31,12 +31,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void initializeControlPanel() {
-        this.getControlPanel().getMyColPane().getChildren().clear();
-        String[] controlsList = getControlPanel().getResourceBundle().getString("SegregationControls").split(",");
-        for (String controlType : controlsList) {
-            SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
-            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType, (double) Math.round(segregationSlider.getMySlider().getValue())));
-        }
+        initializeControlPanel("SegregationControls");
     }
 
     protected void sliderAction(String type, double inputPercentage) {

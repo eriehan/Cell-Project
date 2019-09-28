@@ -19,14 +19,10 @@ public class GameOfLifeCellGrid extends CellGrid {
 
     @Override
     public void initializeControlPanel() {
-        this.getControlPanel().getMyColPane().getChildren().clear();
-        String[] controlsList = getControlPanel().getResourceBundle().getString("GameofLifeControls").split(",");
-        for (String controlType : controlsList) {
-            SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
-            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType, (double) Math.round(segregationSlider.getMySlider().getValue())));
-        }
+        initializeControlPanel("GameofLifeControls");
     }
 
+    @Override
     protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         this.initialAliveNum = (int) (getGridOfCells().size() * inputPercentage / 100);

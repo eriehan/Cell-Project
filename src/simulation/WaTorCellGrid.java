@@ -32,12 +32,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void initializeControlPanel() {
-        this.getControlPanel().getMyColPane().getChildren().clear();
-        String[] controlsList = getControlPanel().getResourceBundle().getString("WaTorControls").split(",");
-        for (String controlType : controlsList) {
-            SimulationSlider watorSlider = createSliderFromResourceFile(controlType);
-            watorSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType, (double) Math.round(watorSlider.getMySlider().getValue())));
-        }
+        initializeControlPanel("WaTorControls");
     }
 
     protected void sliderAction(String type, double inputPercentage) {

@@ -20,6 +20,11 @@ public class AntForagingCellGrid extends CellGrid {
     }
 
     @Override
+    protected void sliderAction(String type, double inputPercentage) {
+        //to be implemented
+    }
+
+    @Override
     public void initializeGrids(Map<Point, CellState> configMap) {
         createEmptyMap();
         for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {

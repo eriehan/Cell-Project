@@ -19,12 +19,7 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void initializeControlPanel() {
-        this.getControlPanel().getMyColPane().getChildren().clear();
-        String[] controlsList = getControlPanel().getResourceBundle().getString("PercolationControls").split(",");
-        for (String controlType : controlsList) {
-            SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
-            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType, (double) Math.round(segregationSlider.getMySlider().getValue())));
-        }
+        initializeControlPanel("PercolationControls");
     }
 
     protected void sliderAction(String type, double inputPercentage) {

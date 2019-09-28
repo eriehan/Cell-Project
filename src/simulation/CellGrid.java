@@ -34,6 +34,17 @@ public abstract class CellGrid {
         this.controlPanel.getMyColPane().getChildren().clear();
     }
 
+    protected void initializeControlPanel(String controlsType) {
+        this.getControlPanel().getMyColPane().getChildren().clear();
+        String[] controlsList = getControlPanel().getResourceBundle().getString(controlsType).split(",");
+        for (String controlType : controlsList) {
+            SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
+            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType, (double) Math.round(segregationSlider.getMySlider().getValue())));
+        }
+    }
+
+    protected abstract void sliderAction(String type, double inputPercentage);
+
     public SimulationSlider createSliderFromResourceFile(String controlType) {
         int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));
         int maxVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "max"));
