@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PercolationCellGrid extends GameOfLifeCellGrid {
+    private static final int HUNDRED = 100;
 
     private List<Cell> openCells = new ArrayList<>();
     private int initPercolated = 0;
@@ -26,7 +27,7 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
         //TODO: added slider actions @Eric
         // type: "PercentBlocked", "NumberPercolated"
         if(type.equals("PercentBlocked")) {
-           this.initBlocked = (int) (inputPercentage * getGridOfCells().size() / 100);
+           this.initBlocked = (int) (inputPercentage * getGridOfCells().size() / HUNDRED);
         }
         else {
             this.initPercolated = (int)inputPercentage;

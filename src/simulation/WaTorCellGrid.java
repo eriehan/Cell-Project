@@ -14,13 +14,16 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     private final static CellAttribute INI_ENERGY = CellAttribute.INITIAL_ENERGY;
     private final static CellAttribute SURVIVE = CellAttribute.SURVIVEDTIME;
     private final static CellAttribute REPRODUCE = CellAttribute.REPRODUCTION;
+    private final static double INI_FISH_RATIO = 80;
+    private final static int INI_WATER_CELL = 40;
+    private final static int HUNDRED = 100;
 
     private List<Integer> reproductions;
     private List<Integer> energies;
     private List<Cell> fishesAndSharks = new ArrayList<>();
     private List<Cell> waterCells = new ArrayList<>();
-    private double fishRatio = 80;
-    private int waterCellNum = 40;
+    private double fishRatio = INI_FISH_RATIO;
+    private int waterCellNum = INI_WATER_CELL;
 
     //reproductions is a list of time needed for fish and shark to reproduce
     //energies.get(0) = energy that shark gets by eating fish, energies.get(1) = shark's initial energy
@@ -51,7 +54,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
             reproductions.set(0, (int) inputPercentage);
         }
         else if(type.equals("WaterPercent")) {
-            waterCellNum = (int) (getGridOfCells().size() * inputPercentage / 100);
+            waterCellNum = (int) (getGridOfCells().size() * inputPercentage / HUNDRED);
         } else {
             fishRatio = inputPercentage;
         }
@@ -83,7 +86,7 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
 
             //Will be changed later to be more flexible. Right now, 50% for state1, 50% for state2.
             //tempCell.setState((int) (1.5 + Math.random()));
-            CellState state = (Math.random() * 100 > fishRatio) ? CellState.SHARK : CellState.FISH;
+            CellState state = (Math.random() * HUNDRED > fishRatio) ? CellState.SHARK : CellState.FISH;
             changeOneCell(tempCell, state);
         }
         System.out.println(waterCells.size());

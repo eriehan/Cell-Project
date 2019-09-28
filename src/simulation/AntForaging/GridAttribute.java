@@ -1,5 +1,10 @@
 package simulation.AntForaging;
 
 public enum GridAttribute {
-    MAXANT;
+    MAXANT,
+    HOMEPHEROMONE,
+    FOODPHEROMONE,
+    EVAPORATION,
+    DIFFUSION,
+
 }

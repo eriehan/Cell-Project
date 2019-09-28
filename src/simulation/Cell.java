@@ -59,12 +59,6 @@ public abstract class Cell {
         return copyOfNeighbors;
     }
 
-    private void removeNeighbor(Point direction) {
-        if (neighbors.containsKey(direction)) {
-            neighbors.remove(neighbors.get(direction));
-        }
-    }
-
     //called when the cell needs to move. Changes state with the cell that the cell should move to.
     public void moveToDifferentCell(Cell other) {
         nextState = other.getState();

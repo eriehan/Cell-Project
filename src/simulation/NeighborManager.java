@@ -28,7 +28,7 @@ public class NeighborManager {
 
     private static final List<Point> squareAllNeighbors = List.of(NW, N, NE, E, SE, S, SW, W);
     private static final List<Point> squareEdgeNeighbors = List.of(N, E, S, W);
-    private static final List<Point> downwardTriangleNeighbors = List.of(W, E, S, N, SW, SE, NW, NE, WW, EE, NWW, NEE);
+    private static final List<Point> downwardTriangleNeighbors = List.of(NWW, NW, N, NE, NEE, EE, E, SE, S, SW, W, WW);
     private static final List<Point> upwardTriangleNeighbors = List.of(W, E, S, N, SW, SE, NW, NE, WW, EE, SWW, SEE);
     private static final List<Point> downwardTriangleEdgeNeighbors = List.of(W, E, S);
     private static final List<Point> upwardTriangleEdgeNeighbors = List.of(W, E, N);

@@ -2,21 +2,22 @@ package simulation.AntForaging;
 
 import simulation.CellGrid;
 import simulation.CellState;
-import simulation.GameOfLifeCell;
 import utils.Point;
 
-import java.util.List;
 import java.util.Map;
 
 public class AntForagingCellGrid extends CellGrid {
-    private final static int MAXANT = 10;
 
-    private Map<Point, GridInfo> gridInfos;
-    private int maxAnt = MAXANT;
+    private int maxAnt;
+    private double evaporation;
+    private double diffusion;
     //private double evaporation;
 
-    public AntForagingCellGrid(int numRows, int numCols) {
+    public AntForagingCellGrid(int numRows, int numCols, int maxAnt, double evaporation, double diffusion) {
         super(numRows, numCols);
+        this.maxAnt = maxAnt;
+        this.evaporation = evaporation;
+        this.diffusion = diffusion;
     }
 
     @Override
@@ -45,13 +46,11 @@ public class AntForagingCellGrid extends CellGrid {
     @Override
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
-        addToGridOfCells(point, new AntForagingCell(row, col, CellState.EMPTY));
-        gridInfos.put(point, new GridInfo(row, col, maxAnt));
+        //addToGridOfCells(point, new AntForagingCell(row, col, CellState.EMPTY, maxAnt, evaporation, diffusion));
     }
 
     private void createEmptyMap() {
         getGridOfCells().clear();
-        gridInfos.clear();
         for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
                 addEmptyStateToCell(row, col);

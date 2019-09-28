@@ -39,7 +39,8 @@ public abstract class CellGrid {
         String[] controlsList = getControlPanel().getResourceBundle().getString(controlsType).split(",");
         for (String controlType : controlsList) {
             SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
-            segregationSlider.getMySlider().valueProperty().addListener(e -> sliderAction(controlType, (double) Math.round(segregationSlider.getMySlider().getValue())));
+            segregationSlider.getMySlider().valueProperty().addListener(e ->
+                    sliderAction(controlType, (double) Math.round(segregationSlider.getMySlider().getValue())));
         }
     }
 
