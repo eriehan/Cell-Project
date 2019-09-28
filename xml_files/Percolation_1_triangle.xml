@@ -2,8 +2,8 @@
 
 <Simulation>
     <Author>Diane Lin</Author>
-    <Shape name = "triangle">1</Shape>
-    <Type name = "Percolation">2</Type>
+    <Shape name="triangle">1</Shape>
+    <Type name="Percolation">2</Type>
     <Saved>0</Saved>
 
     <Row>10</Row>

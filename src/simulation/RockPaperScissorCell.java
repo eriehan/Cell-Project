@@ -22,8 +22,7 @@ public class RockPaperScissorCell extends Cell {
     public void check() {
         if (changeToWinner()) {
             setNextState(winningCellState());
-        }
-        else {
+        } else {
             setNextState(getState());
         }
     }

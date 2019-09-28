@@ -13,9 +13,6 @@ public class GridManager {
     private CellGrid cellGrid;
     private Map<Point, CellState> initialConfigMap;
 
-    public GridManager() {
-    }
-
     public void initializeMyCellGrid(AbstractXml myXml) {
         this.myXml = myXml;
         Map configMap = new HashMap<Point, CellState>();

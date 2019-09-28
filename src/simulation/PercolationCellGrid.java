@@ -1,6 +1,5 @@
 package simulation;
 
-import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.ArrayList;
@@ -26,11 +25,10 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
     protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "PercentBlocked", "NumberPercolated"
-        if(type.equals("PercentBlocked")) {
-           this.initBlocked = (int) (inputPercentage * getGridOfCells().size() / HUNDRED);
-        }
-        else {
-            this.initPercolated = (int)inputPercentage;
+        if (type.equals("PercentBlocked")) {
+            this.initBlocked = (int) (inputPercentage * getGridOfCells().size() / HUNDRED);
+        } else {
+            this.initPercolated = (int) inputPercentage;
         }
         openCells.clear();
         createEmptyMap();
@@ -56,10 +54,10 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
 
     private void randomlyInitializeGrids() {
         createEmptyMap();
-        for(int i=0; i<initBlocked; i++) {
+        for (int i = 0; i < initBlocked; i++) {
             addToRandomCell(CellState.BLOCKED);
         }
-        for(int i=0; i<initPercolated; i++) {
+        for (int i = 0; i < initPercolated; i++) {
             addToRandomCell(CellState.PERCOLATED);
         }
     }

@@ -3,7 +3,6 @@ package simulation;
 import simulation.AntForaging.GridAttribute;
 import utils.Point;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +77,9 @@ public abstract class GridInfo {
         return grids;
     }
 
-    public int numOfIndividuals() {return individuals.size();}
+    public int numOfIndividuals() {
+        return individuals.size();
+    }
 
     public List<Individual> getIndividuals() {
         List<Individual> list = new ArrayList<>();

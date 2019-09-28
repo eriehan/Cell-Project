@@ -250,8 +250,6 @@ public class MainController extends Application {
 
     private void startSimulation() {
         if (!checkFileSelected()) return;
-
-
         //todo see if file needs to be reinitialized
 
         // this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);

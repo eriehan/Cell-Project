@@ -33,12 +33,12 @@ public class RockPaperScissorGrid extends CellGrid {
 
     @Override
     protected void sliderAction(String type, double inputPercentage) {
-        if(type.equals("RockPercent")) {
-            possibilities.set(0, (int)inputPercentage);
-        } else if(type.equals("PaperPercent")) {
-            possibilities.set(1, (int)inputPercentage);
-        } else if(type.equals("ScissorPercent")) {
-            possibilities.set(2, (int)inputPercentage);
+        if (type.equals("RockPercent")) {
+            possibilities.set(0, (int) inputPercentage);
+        } else if (type.equals("PaperPercent")) {
+            possibilities.set(1, (int) inputPercentage);
+        } else if (type.equals("ScissorPercent")) {
+            possibilities.set(2, (int) inputPercentage);
         } else {
             threshold = (int) inputPercentage;
         }

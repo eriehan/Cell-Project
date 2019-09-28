@@ -1,6 +1,5 @@
 package simulation;
 
-import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.ArrayList;
@@ -37,10 +36,9 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: "AgentRatio", "Similarity", "EmptyPercent"
-        if(type.equals(AGENTRATIO)) {
+        if (type.equals(AGENTRATIO)) {
             prob = inputPercentage;
-        }
-        else if(type.equals(EMPTYPERCENT)) {
+        } else if (type.equals(EMPTYPERCENT)) {
             emptyCellNumber = (int) (getNumOfRows() * getNumOfCols() * inputPercentage / HUNDRED);
         } else {
             agentPercent = (int) inputPercentage;

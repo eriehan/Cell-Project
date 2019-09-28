@@ -1,6 +1,5 @@
 package simulation;
 
-import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.ArrayList;
@@ -41,19 +40,15 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         // type: SharkEnergy,FishEnergy,SharkMaturityDate,FishMaturityDate,WaterPercent,FishSharkRatio
-        if(type.equals("SharkEnergy")) {
+        if (type.equals("SharkEnergy")) {
             energies.set(1, (int) inputPercentage);
-        }
-        else if(type.equals("FishEnergy")) {
+        } else if (type.equals("FishEnergy")) {
             energies.set(0, (int) inputPercentage);
-        }
-        else if(type.equals("SharkMaturityDate")) {
+        } else if (type.equals("SharkMaturityDate")) {
             reproductions.set(1, (int) inputPercentage);
-        }
-        else if(type.equals("FishMaturityDate")) {
+        } else if (type.equals("FishMaturityDate")) {
             reproductions.set(0, (int) inputPercentage);
-        }
-        else if(type.equals("WaterPercent")) {
+        } else if (type.equals("WaterPercent")) {
             waterCellNum = (int) (getGridOfCells().size() * inputPercentage / HUNDRED);
         } else {
             fishRatio = inputPercentage;

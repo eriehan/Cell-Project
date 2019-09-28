@@ -21,8 +21,8 @@ public class NeighborManager {
     private static final Point EE = new Point(0, 2);
     private static final Point SWW = new Point(1, -2);
     private static final Point SEE = new Point(1, 2);
-    private static final Point NWW= new Point(-1, -2);
-    private static final Point NEE= new Point(-1, 2);
+    private static final Point NWW = new Point(-1, -2);
+    private static final Point NEE = new Point(-1, 2);
     private static final Point NN = new Point(-2, 0);
     private static final Point SS = new Point(2, 0);
 
@@ -98,7 +98,7 @@ public class NeighborManager {
             cell.addNeighbor(direction, cellFromPoint(gridOfCells, cell.getRow() + direction.getRow(),
                     cell.getCol() + direction.getCol(), numOfRows, numOfCols));
         }
-        System.out.println(cell.getRow() +", " +  cell.getCol() + ", "+ cell.getNeighbors().size());
+        System.out.println(cell.getRow() + ", " + cell.getCol() + ", " + cell.getNeighbors().size());
     }
 
     private Cell cellFromPoint(Map<Point, Cell> gridOfCells, int row, int col, int numOfRows, int numOfCols) {
@@ -118,37 +118,32 @@ public class NeighborManager {
     }
 
     private List<Point> shapeNeighbor() {
-        if(cellShapeType == CellShapeType.RECTANGLE) {
+        if (cellShapeType == CellShapeType.RECTANGLE) {
             return squareAllNeighbors;
-        }
-        else if(cellShapeType == CellShapeType.TRIANGLE) {
+        } else if (cellShapeType == CellShapeType.TRIANGLE) {
             return upwardTriangleNeighbors;
-        }
-        else {
+        } else {
             return rightSidedRowHexagonNeighbors;
         }
     }
 
     private List<Point> shapeEdgeNeighbor() {
-        if(cellShapeType == CellShapeType.RECTANGLE) {
+        if (cellShapeType == CellShapeType.RECTANGLE) {
             return squareEdgeNeighbors;
-        }
-        else if(cellShapeType == CellShapeType.TRIANGLE) {
+        } else if (cellShapeType == CellShapeType.TRIANGLE) {
             return upwardTriangleEdgeNeighbors;
-        }
-        else {
+        } else {
             return rightSidedRowHexagonNeighbors;
         }
     }
 
     private List<Point> calcAllowedAllNeighbors(String str) {
-        if(str.equals(defaultConfig)) {
+        if (str.equals(defaultConfig)) {
             return shapeNeighbor();
-        }
-        else {
+        } else {
             List<Point> list = new ArrayList<>();
-            for(int i=0; i<str.length(); i++) {
-                if(str.charAt(i) == '1' && shapeNeighbor().contains(squareEdgeNeighbors.get(i))) {
+            for (int i = 0; i < str.length(); i++) {
+                if (str.charAt(i) == '1' && shapeNeighbor().contains(squareEdgeNeighbors.get(i))) {
                     list.add(squareAllNeighbors.get(i));
                 }
             }
@@ -157,13 +152,12 @@ public class NeighborManager {
     }
 
     private List<Point> calcAllowedEdgeNeighbors(String str) {
-        if(str.equals(defaultConfig)) {
+        if (str.equals(defaultConfig)) {
             return shapeEdgeNeighbor();
-        }
-        else {
+        } else {
             List<Point> list = new ArrayList<>();
-            for(int i=1; i<str.length(); i+=2) {
-                if(str.charAt(i) == '1' && shapeEdgeNeighbor().contains(squareEdgeNeighbors.get(i))) {
+            for (int i = 1; i < str.length(); i += 2) {
+                if (str.charAt(i) == '1' && shapeEdgeNeighbor().contains(squareEdgeNeighbors.get(i))) {
                     list.add(squareAllNeighbors.get(i));
                 }
             }
@@ -172,35 +166,33 @@ public class NeighborManager {
     }
 
     private List<Point> calcActualNeighbors(int row, int col) {
-        if(downWardTriangle(row, col)) {
+        if (downWardTriangle(row, col)) {
             return downwardTriangleNeighbors;
-        }
-        else if(leftSidedRowHexagon(row)) {
+        } else if (leftSidedRowHexagon(row)) {
             return leftSidedRowHexagonNeighbors;
         }
         return allowedNeighbor;
     }
 
     private List<Point> calcActualEdgeNeighbors(int row, int col) {
-        if(downWardTriangle(row, col)) {
+        if (downWardTriangle(row, col)) {
             return downwardTriangleEdgeNeighbors;
-        }
-        else if(leftSidedRowHexagon(row)) {
+        } else if (leftSidedRowHexagon(row)) {
             return leftSidedRowHexagonNeighbors;
         }
         return edgeNeighbors;
     }
 
     private boolean downWardTriangle(int row, int col) {
-        boolean case1 = upRowExtended && (row + col)%2 != 0;
-        boolean case2 = !upRowExtended && (row + col)%2 == 0;
+        boolean case1 = upRowExtended && (row + col) % 2 != 0;
+        boolean case2 = !upRowExtended && (row + col) % 2 == 0;
         return cellShapeType == CellShapeType.TRIANGLE && (case1 || case2);
     }
 
 
     private boolean leftSidedRowHexagon(int row) {
-        boolean case1 = upRowExtended && row%2==0;
-        boolean case2 = !upRowExtended && row%2 != 0;
+        boolean case1 = upRowExtended && row % 2 == 0;
+        boolean case2 = !upRowExtended && row % 2 != 0;
         return cellShapeType == CellShapeType.HEXAGON && (case1 || case2);
     }
 }

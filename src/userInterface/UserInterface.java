@@ -9,13 +9,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.util.ResourceBundle;
-
 import static userInterface.VisualizationConstants.ERROR_MSG_FONT_SIZE;
 import static userInterface.VisualizationConstants.FILE_PATH_FONT_SIZE;
 
 public class UserInterface {
-    private static final String RESOURCE_FILE_PATH = "resources/MainResources";
     private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 30);
     private static final int ERROR_MSG_TIME_LIMIT = 5;
     private static final int SPACING = 20;
@@ -31,13 +28,11 @@ public class UserInterface {
     private int errorMsgTimer = -1;
     private Text errorMsg;
     private Text simulationFilePath;
-    private ResourceBundle resourceBundle;
     private PauseButton pauseButton;
 
 
     public UserInterface(String simulationName) {
         this.simulationTitle = new Text(simulationName);
-        this.resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
         simulationTitle.setFont(TITLE_FONT);
         myGridView = new RectangleGridView(numOfCols, numOfRows);
         myControlsManager = new ControlsManager();
@@ -113,9 +108,15 @@ public class UserInterface {
     }
 
     public void setCellShape(CellShapeType type) {
-        if (type == CellShapeType.RECTANGLE) myGridView = new RectangleGridView(numOfRows, numOfCols);
-        if (type == CellShapeType.TRIANGLE) myGridView = new TriangleGridView(numOfRows, numOfCols);
-        if (type == CellShapeType.HEXAGON) myGridView = new HexagonGridView(numOfRows, numOfCols);
+        if (type == CellShapeType.RECTANGLE) {
+            myGridView = new RectangleGridView(numOfRows, numOfCols);
+        }
+        if (type == CellShapeType.TRIANGLE) {
+            myGridView = new TriangleGridView(numOfRows, numOfCols);
+        }
+        if (type == CellShapeType.HEXAGON) {
+            myGridView = new HexagonGridView(numOfRows, numOfCols);
+        }
         myGridView.generateBlankGrid();
         titleAndGridCol.getChildren().clear();
         titleAndGridCol.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
@@ -125,7 +126,7 @@ public class UserInterface {
         return pauseButton;
     }
 
-    public void setPauseButton(PauseButton button){
+    public void setPauseButton(PauseButton button) {
         pauseButton = button;
     }
 }

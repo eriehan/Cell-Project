@@ -2,11 +2,7 @@ package userInterface;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
-import simulation.CellState;
-import utils.Point;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import static userInterface.VisualizationConstants.BLANK_GRID_COLOR;
@@ -18,11 +14,8 @@ public abstract class AbstractGridView {
     private int numOfCols;
     private int gridWidth;
     private int gridHeight;
-    //    private CellGrid myCellGrid;
     private GridManager gridManager;
-    private Map<Point, CellState> initialConfigMap;
     private ResourceBundle resourceBundle;
-    private Map configMap = new HashMap<Point, CellState>();
 
 
     public AbstractGridView(int numOfRows, int numOfCols) {
@@ -52,192 +45,6 @@ public abstract class AbstractGridView {
         displayGrid();
     }
 
-//<<<<<<< HEAD
-//    public void initializeMyCellGrid(AbstractXml myXml){
-//
-//
-//        switch (myXml.getMyTitle()) {
-//            case "Segregation":
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    if (i == 0) {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FIRSTAGENT);
-//                        }
-//                    } else {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.SECONDAGENT);
-//                        }
-//                    }
-//                }
-//
-//                setMyCellGrid(new SegregationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), (int) myXml.getRate(), (int) myXml.getRate()));
-//                break;
-//            case "Game Of Life":
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    for (int j = 0; j < size; j++) {
-//                        configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.ALIVE);
-//                    }
-//                }
-//                setMyCellGrid(new GameOfLifeCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum()));
-//                break;
-//            case "Wa-Tor":
-//
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    if (i == 0) {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.SHARK);
-//                        }
-//                    } else {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FISH);
-//                        }
-//                    }
-//                }
-//
-//                setMyCellGrid(new WaTorCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getMaturityArray(), myXml.getEnergyArray()));
-//                break;
-//
-//            case "Percolation":
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    if (i == 0) {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.PERCOLATED);
-//                        }
-//                    } else {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.BLOCKED);
-//                        }
-//                    }
-//
-//                }
-//                setMyCellGrid(new PercolationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum()));
-//                break;
-//
-//            case "Fire":
-//
-//
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    if (i == 0) {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.BURNING);
-//                        }
-//                    } else {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FIREEMPTY);
-//                        }
-//                    }
-//
-//                }
-//
-//                setMyCellGrid(new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate()));
-//                break;
-//
-//        }
-//
-//        this.initialConfigMap = configMap;
-//        getMyCellGrid().initializeGrids(configMap);
-//        getMyCellGrid().assignNeighborsToEachCell();
-//        displayGrid();
-//    }
-//=======
-//    public void initializeMyCellGrid(AbstractXml myXml){
-//
-//
-//        switch (myXml.getMyTitle()) {
-//            case "Segregation":
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    if (i == 0) {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FIRSTAGENT);
-//                        }
-//                    } else {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.SECONDAGENT);
-//                        }
-//                    }
-//                }
-//
-//                setMyCellGrid(new SegregationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), (int) myXml.getRate(), (int) myXml.getRate()));
-//                break;
-//            case "Game Of Life":
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    for (int j = 0; j < size; j++) {
-//                        configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.ALIVE);
-//                    }
-//                }
-//                setMyCellGrid(new GameOfLifeCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum()));
-//                break;
-//            case "Wa-Tor":
-//
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    if (i == 0) {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.SHARK);
-//                        }
-//                    } else {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FISH);
-//                        }
-//                    }
-//                }
-//                System.out.println(myXml.getMyColArray());
-//                setMyCellGrid(new WaTorCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getMaturityArray(), myXml.getEnergyArray()));
-//                break;
-//
-//            case "Percolation":
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    if (i == 0) {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.PERCOLATED);
-//                        }
-//                    } else {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.BLOCKED);
-//                        }
-//                    }
-//
-//                }
-//                setMyCellGrid(new PercolationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum()));
-//                break;
-//
-//            case "Fire":
-//
-//
-//                for (int i = 0; i < myXml.getMyColArray().size(); i++) {
-//                    int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
-//                    if (i == 0) {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.BURNING);
-//                        }
-//                    } else {
-//                        for (int j = 0; j < size; j++) {
-//                            configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FIREEMPTY);
-//                        }
-//                    }
-//
-//                }
-//
-//                setMyCellGrid(new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate()));
-//                break;
-//
-//        }
-//
-//        this.initialConfigMap = configMap;
-//        getMyCellGrid().initializeGrids(configMap);
-//        getMyCellGrid().assignNeighborsToEachCell();
-//        displayGrid();
-//    }
-//>>>>>>> 1d4c5951e03982b0381bba12339d0a412c8009e6
-
 
     public abstract void displayGrid();
 
@@ -266,17 +73,9 @@ public abstract class AbstractGridView {
         numOfCols = n;
     }
 
-//    public CellGrid getMyCellGrid() {
-//        return myCellGrid;
-//    }
-
     public GridManager getGridManager() {
         return gridManager;
     }
-
-//    public void setMyCellGrid(CellGrid myCellGrid) {
-//        gridManager.getCellGrid() = myCellGrid;
-//    }
 
     public int getGridWidth() {
         return this.gridWidth;

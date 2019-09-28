@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Simulation>
     <Author>Diane Lin</Author>
-    <Shape name = "rectangle">1</Shape>
+    <Shape name="rectangle">1</Shape>
     <Saved>0</Saved>
-    <Type name = "Fire">2</Type>
+    <Type name="Fire">2</Type>
     <Row>30</Row>
     <Col>30</Col>
     <Rate>45</Rate>

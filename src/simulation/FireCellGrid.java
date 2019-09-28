@@ -1,6 +1,5 @@
 package simulation;
 
-import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.HashMap;
@@ -25,13 +24,13 @@ public class FireCellGrid extends GameOfLifeCellGrid {
 
     @Override
     protected void sliderAction(String type, double inputPercentage) {
-    //TODO: added slider actions @Eric
-    // type: "PropCatch"
-    this.probCatch = inputPercentage;
-    System.out.println("probCatch in SliderAction: " + probCatch);
-    createMapFullOfTrees();
-    initializeGrids(myConfigMap);
-    assignNeighborsToEachCell();
+        //TODO: added slider actions @Eric
+        // type: "PropCatch"
+        this.probCatch = inputPercentage;
+        System.out.println("probCatch in SliderAction: " + probCatch);
+        createMapFullOfTrees();
+        initializeGrids(myConfigMap);
+        assignNeighborsToEachCell();
 
     }
 

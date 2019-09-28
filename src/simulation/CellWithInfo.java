@@ -1,11 +1,10 @@
 package simulation;
 
-import simulation.AntForaging.GridAttribute;
 import utils.Point;
 
 import java.util.Map;
 
-public abstract class CellWithInfo extends Cell{
+public abstract class CellWithInfo extends Cell {
     private GridInfo myGridInfo;
 
     public CellWithInfo(int row, int col, CellState state) {
@@ -14,7 +13,7 @@ public abstract class CellWithInfo extends Cell{
 
     @Override
     public void check() {
-        if(!myGridInfo.neighborAssigned()) {
+        if (!myGridInfo.neighborAssigned()) {
             addNeighborsToMyGridInfo();
         }
     }
@@ -25,18 +24,22 @@ public abstract class CellWithInfo extends Cell{
         myGridInfo.update();
     }
 
-    public GridInfo getMyGridInfo() {return myGridInfo;}
+    public GridInfo getMyGridInfo() {
+        return myGridInfo;
+    }
 
-    public void setMyGridInfo(GridInfo gridInfo) {myGridInfo = gridInfo;}
+    public void setMyGridInfo(GridInfo gridInfo) {
+        myGridInfo = gridInfo;
+    }
 
     protected void addNeighborsToMyGridInfo() {
         Map<Point, Cell> myNeighbors = getNeighbors();
 
-        for(Point direction : myNeighbors.keySet()) {
+        for (Point direction : myNeighbors.keySet()) {
             Cell cell = myNeighbors.get(direction);
 
             //will remove this casting part later.
-            if(!(cell instanceof CellWithInfo)) {
+            if (!(cell instanceof CellWithInfo)) {
                 return;
             }
             CellWithInfo cellWithInfo = (CellWithInfo) cell;

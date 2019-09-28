@@ -2,9 +2,9 @@
 
 <Simulation>
     <Author>Diane Lin</Author>
-    <Shape name = "triangle">1</Shape>
+    <Shape name="triangle">1</Shape>
     <Saved>0</Saved>
-    <Type name = "Fire">2</Type>
+    <Type name="Fire">2</Type>
     <Row>10</Row>
     <Col>10</Col>
     <Rate>25</Rate>

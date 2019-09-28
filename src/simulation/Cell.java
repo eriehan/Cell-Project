@@ -2,7 +2,10 @@ package simulation;
 
 import utils.Point;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class Cell {
 
@@ -53,7 +56,7 @@ public abstract class Cell {
 
     public Map<Point, Cell> getNeighbors() {
         Map<Point, Cell> copyOfNeighbors = new HashMap<>();
-        for(Point point : neighbors.keySet()) {
+        for (Point point : neighbors.keySet()) {
             copyOfNeighbors.put(point, neighbors.get(point));
         }
         return copyOfNeighbors;

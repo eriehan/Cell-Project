@@ -1,6 +1,5 @@
 package simulation;
 
-import userInterface.SimulationSlider;
 import utils.Point;
 
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class GameOfLifeCellGrid extends CellGrid {
 
     private void randomlyInitialize() {
         createEmptyMap();
-        for(int i=0; i<initialAliveNum; i++) {
+        for (int i = 0; i < initialAliveNum; i++) {
             Cell cell = deadCells.get((int) (Math.random() * deadCells.size()));
             deadCells.remove(cell);
             cell.setState(CellState.ALIVE);

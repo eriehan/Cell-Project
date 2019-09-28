@@ -2,8 +2,8 @@
 
 <Simulation>
     <Author>Diane Lin</Author>
-    <Shape name = "rectangle">1</Shape>
-    <Type name = "Rock Paper Scissors">3</Type>
+    <Shape name="rectangle">1</Shape>
+    <Type name="Rock Paper Scissors">3</Type>
     <Saved>0</Saved>
     <Row>100</Row>
     <Col>100</Col>

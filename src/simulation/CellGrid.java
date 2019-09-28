@@ -172,13 +172,11 @@ public abstract class CellGrid {
     }
 
     public void setGridLimit(String str) {
-        if(str.equals("toroidal")) {
+        if (str.equals("toroidal")) {
             setGridLimit(GridLimit.TOROIDAL);
-        }
-        else if(str.equals("infinite")) {
+        } else if (str.equals("infinite")) {
             setGridLimit(GridLimit.INFINITE);
-        }
-        else {
+        } else {
             setGridLimit(GridLimit.FINITE);
         }
     }
@@ -256,7 +254,11 @@ public abstract class CellGrid {
         return getGridOfCells().get(new Point(row, col));
     }
 
-    private boolean isToroidal() {return gridLimit==GridLimit.TOROIDAL;}
+    private boolean isToroidal() {
+        return gridLimit == GridLimit.TOROIDAL;
+    }
 
-    private void createNeighborManager() {neighborManager = new NeighborManager(neighborConfig, cellShapeType, isToroidal());}
+    private void createNeighborManager() {
+        neighborManager = new NeighborManager(neighborConfig, cellShapeType, isToroidal());
+    }
 }
