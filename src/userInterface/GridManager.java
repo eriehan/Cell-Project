@@ -33,18 +33,12 @@ public class GridManager {
             case "Percolation":
                 setPercolation(configMap);
                 break;
-
             case "Fire":
                 setFire(configMap);
                 break;
-
             case "Rock Paper Scissors":
-
                 cellGrid = new RockPaperScissorGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getPercentage());
-
         }
-
-
         cellGrid.initializeGrids(initialConfigMap);
         cellGrid.assignNeighborsToEachCell();
     }

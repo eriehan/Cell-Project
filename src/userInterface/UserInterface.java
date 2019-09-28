@@ -32,6 +32,7 @@ public class UserInterface {
     private Text errorMsg;
     private Text simulationFilePath;
     private ResourceBundle resourceBundle;
+    private PauseButton pauseButton;
 
 
     public UserInterface(String simulationName) {
@@ -120,4 +121,11 @@ public class UserInterface {
         titleAndGridCol.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
     }
 
+    public PauseButton getPauseButton() {
+        return pauseButton;
+    }
+
+    public void setPauseButton(PauseButton button){
+        pauseButton = button;
+    }
 }

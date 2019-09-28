@@ -26,4 +26,9 @@ public class PauseButton extends SimulationButton {
             this.setText(pauseName);
         }
     }
+
+    public void resetPauseButton(){
+        paused = false;
+        this.setText(pauseName);
+    }
 }
