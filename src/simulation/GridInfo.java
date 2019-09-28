@@ -16,6 +16,7 @@ public abstract class GridInfo {
     private Map<GridAttribute, Double> gridAttributes = new HashMap<>();
     private Map<GridAttribute, Boolean> gridBooleans = new HashMap<>();
     private List<Individual> individuals = new ArrayList<>();
+    private List<Individual> removedIndividuals = new ArrayList<>();
 
     public GridInfo(int row, int col) {
         this.row = row;
@@ -37,9 +38,7 @@ public abstract class GridInfo {
     }
 
     public void multiplyNumberAttributes(GridAttribute gridAttribute, double num) {
-        if (!gridAttributes.containsKey(gridAttribute)) {
-            putNumberAttributes(gridAttribute, num);
-        } else {
+        if (gridAttributes.containsKey(gridAttribute)) {
             gridAttributes.put(gridAttribute, num * gridAttributes.get(gridAttribute));
         }
     }
@@ -86,8 +85,13 @@ public abstract class GridInfo {
         return list;
     }
 
-    public void removeIndividual(Individual individual) {
-        individuals.remove(individual);
+    public void removeAllRemovedIndividuals() {
+        individuals.removeAll(removedIndividuals);
+        removedIndividuals.clear();
+    }
+
+    public void addRemovedIndividual(Individual individual) {
+        removedIndividuals.add(individual);
     }
 
     public void addIndividual(Individual individual) {
@@ -112,5 +116,15 @@ public abstract class GridInfo {
 
     public void setCol(int col) {
         this.col = col;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return getClass().equals(other.getClass()) && hashCode() == other.hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return (new Point(row, col).toString() + "gridInfo").hashCode();
     }
 }

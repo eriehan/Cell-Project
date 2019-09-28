@@ -17,7 +17,6 @@ public class AntGridInfo extends GridInfo {
 
 
     private List<Point> possibleDirections = new ArrayList<>();
-    private List<Individual> removedIndividuals = new ArrayList<>();
 
 
     public AntGridInfo(int row, int col,  List<Point> orderedDirections) {
@@ -38,13 +37,10 @@ public class AntGridInfo extends GridInfo {
                 ant.setMoved(true);
             }
             if(ant.isDead()) {
-                removedIndividuals.add(ant);
+               addRemovedIndividual(ant);
             }
         }
-        for(Individual removedAnt : removedIndividuals) {
-            removeIndividual(removedAnt);
-        }
-        removedIndividuals.clear();
+        removeAllRemovedIndividuals();
         //If initially full but ant moved, ISPACKED will be false
         checkIfGridFull();
     }

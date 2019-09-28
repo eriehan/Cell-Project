@@ -10,16 +10,18 @@ import java.util.List;
 public class Ant extends Individual{
 
     private static final int LIFETIME = 500;
+    private static final double K = 0.001;
+    private static final double N = 3;
 
     private int curDirection = -1;
-    private List<Point> directions = new ArrayList<>();
+    private List<Point> myDirections = new ArrayList<>();
     private int lifeTime = LIFETIME;
     private int survivedTime = 0;
     private boolean hasFoodItem;
 
     public Ant(GridInfo gridInfo, List<Point> orderedDirections) {
         super(gridInfo);
-        directions.addAll(orderedDirections);
+        myDirections.addAll(orderedDirections);
         //if this is initialized as false, it will change this state to true inside
         //its home.
         hasFoodItem = false;
@@ -27,9 +29,23 @@ public class Ant extends Individual{
 
     @Override
     public void move() {
-        //to be added.
-
-        //algorithm for moving
+        dropPheromone();  //drops pheromone.
+        List<Point> directions;
+        // cannot move if all around are obstacles.
+        if(possibleDirectionsToMove(getAllNeighbors()).isEmpty()) {
+            setMoved(false);
+        }
+        else {
+            if (curDirection == -1) {
+                directions = possibleDirectionsToMove(getAllNeighbors());
+            } else {
+                if (possibleDirectionsToMove(getInitialThree()).isEmpty()) {
+                    directions = possibleDirectionsToMove(getRestOfDirections());
+                } else {
+                    directions = possibleDirectionsToMove(getInitialThree());
+                }
+            } changeGridInfo(destinationDirection(directions));
+        }
         dropFood();
         survivedTime++;
         if(lifeTime < survivedTime) {
@@ -37,31 +53,43 @@ public class Ant extends Individual{
         }
     }
 
-    private GridInfo getGridInfo(int index) {
-        if(index < 0) {
-            index += directions.size();
-        } else if(index >= directions.size()) {
-            index -= directions.size();
+    private void changeGridInfo(Point direction) {
+        curDirection = myDirections.indexOf(direction);
+        setMoved(true);
+        GridInfo destinationGridInfo = getMyGridInfo().getOneNeighborGrid(direction);
+        getMyGridInfo().addRemovedIndividual(this);
+
+        setMyGridInfo(destinationGridInfo);
+        getMyGridInfo().addIndividual(this);
+    }
+
+    private void dropPheromone() {
+        double maxPheromone = maxPheromone();
+        if(hasFoodItem) {
+            getMyGridInfo().putNumberAttributes(GridAttribute.FOODPHEROMONE,
+                    Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(GridAttribute.FOODPHEROMONE)));
+        } else {
+            getMyGridInfo().putNumberAttributes(GridAttribute.HOMEPHEROMONE,
+                    Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(GridAttribute.HOMEPHEROMONE)));
         }
-        return getMyGridInfo().getOneNeighborGrid(directions.get(index));
     }
 
-    private List<GridInfo> getInitialThree() {
-        return getNeighborGridInfos(curDirection-1, curDirection+2);
+    private List<Point> getInitialThree() {
+        return getNeighborDirections(curDirection-1, curDirection+2);
     }
 
-    private List<GridInfo> getRestOfDirections() {
-        return getNeighborGridInfos(curDirection+2, curDirection + directions.size()-1);
+    private List<Point> getRestOfDirections() {
+        return getNeighborDirections(curDirection+2, curDirection + myDirections.size()-1);
     }
 
-    private List<GridInfo> getAllNeighbors() {
-        return getNeighborGridInfos(0, directions.size());
+    private List<Point> getAllNeighbors() {
+        return getNeighborDirections(0, myDirections.size());
     }
 
-    private List<GridInfo> getNeighborGridInfos(int startIndex, int lastIndex) {
-        List<GridInfo> list = new ArrayList<>();
+    private List<Point> getNeighborDirections(int startIndex, int lastIndex) {
+        List<Point> list = new ArrayList<>();
         for(int i=startIndex; i<lastIndex; i++) {
-            list.add(getGridInfo(i));
+            list.add(myDirections.get((i + myDirections.size()) % myDirections.size()));
         }
         return list;
     }
@@ -74,25 +102,61 @@ public class Ant extends Individual{
         }
     }
 
-    private List<GridInfo> possibleGridsToMove(List<GridInfo> gridInfos) {
-        List<GridInfo> list = new ArrayList<>();
-        for(GridInfo gridInfo : gridInfos) {
+    private List<Point> possibleDirectionsToMove(List<Point> directions) {
+        List<Point> list = new ArrayList<>();
+        for(Point direction : directions) {
+            GridInfo gridInfo = getMyGridInfo().getOneNeighborGrid(direction);
+            //cannot move if packed or obstacle
             if(!(gridInfo.getBooleanAttribute(GridAttribute.ISPACKED) || gridInfo.getBooleanAttribute(GridAttribute.ISOBSTACLE))) {
-                list.add(gridInfo);
+                list.add(direction);
             }
         }
         return list;
     }
 
-    private boolean isPacked(GridInfo gridInfo) {
-        return gridInfo.getBooleanAttribute(GridAttribute.ISPACKED);
+    private Point destinationDirection(List<Point> directions) {
+        double[] possibilities = new double[directions.size()];
+        for(int i=0; i<possibilities.length; i++) {
+            double pheromone = getPheromoneOfNeighbor(directions.get(i));
+            possibilities[i] = Math.pow(K + pheromone, N);
+        }
+        int index = pickOneRandomly(possibilities);
+        return directions.get(index);
     }
 
-    private double maxPheromone(GridAttribute gridAttribute) {
+    private double maxPheromone() {
         double max = 0;
-        for(GridInfo gridInfo : getAllNeighbors()) {
-            max = Math.max(max, gridInfo.getNumberAttribute(gridAttribute));
+        for(GridInfo neighborGridInfo : getMyGridInfo().getNeighborGrids()) {
+            if(hasFoodItem) {
+                max = Math.max(max, neighborGridInfo.getNumberAttribute(GridAttribute.FOODPHEROMONE));
+            } else {
+                max = Math.max(max, neighborGridInfo.getNumberAttribute(GridAttribute.HOMEPHEROMONE));
+            }
         }
         return max;
+    }
+
+    private int pickOneRandomly(double[] possibilities) {
+        double sum = 0;
+        for(double temp : possibilities) {
+            sum += temp;
+        }
+        double ran = Math.random() * sum;
+
+        double temp = 0;
+        for(int i=0; i<possibilities.length; i++) {
+            temp += possibilities[i];
+            if(ran <= temp) {
+                return i;
+            }
+        }
+        return possibilities.length-1;
+    }
+
+    private double getPheromoneOfNeighbor(Point direction) {
+        if(hasFoodItem) {
+            return getMyGridInfo().getOneNeighborGrid(direction).getNumberAttribute(GridAttribute.HOMEPHEROMONE);
+        }
+        return getMyGridInfo().getOneNeighborGrid(direction).getNumberAttribute(GridAttribute.FOODPHEROMONE);
     }
 }

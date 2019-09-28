@@ -3,6 +3,7 @@ package simulation;
 import simulation.AntForaging.GridAttribute;
 import utils.Point;
 
+import java.util.List;
 import java.util.Map;
 
 public abstract class CellWithInfo extends Cell{
@@ -24,6 +25,8 @@ public abstract class CellWithInfo extends Cell{
         setState(getNextState());
         myGridInfo.update();
     }
+
+    public abstract void createMyGridInfo(List<Point> neighbors);
 
     public GridInfo getMyGridInfo() {return myGridInfo;}
 
