@@ -1,14 +1,10 @@
 package simulation.AntForaging;
 
-import simulation.Cell;
 import simulation.CellState;
 import simulation.CellWithInfo;
 import simulation.GridInfo;
 import utils.Point;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class AntForagingCell extends CellWithInfo {
 
