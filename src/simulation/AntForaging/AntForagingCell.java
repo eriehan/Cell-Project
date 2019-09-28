@@ -13,11 +13,13 @@ public class AntForagingCell extends Cell {
 
     @Override
     public void check() {
-
+        maxAnt = 0;
+        numOfAnts = 0;
     }
 
     @Override
     public void changeState() {
-
+        maxAnt = 0;
+        numOfAnts = 0;
     }
 }
