@@ -3,7 +3,6 @@ package xml;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 import simulation.Cell;
 import simulation.CellState;
 import userInterface.AbstractGridView;
@@ -13,26 +12,24 @@ import utils.Point;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.ResourceBundle;
+
 
 public class RockPaperScissorsXml extends AbstractXml {
+    private static final String RESOURCE_FILE_PATH = "resources/MainResources";
+    private ResourceBundle resourceBundle;
 
 
-    public RockPaperScissorsXml(UserInterface myUserInferface){
-        super(myUserInferface);
-        percentage = new ArrayList<Integer>();
-
+    public RockPaperScissorsXml(UserInterface myUserInterface){
+        super(myUserInterface);
+        resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
+        percentage = new ArrayList<>();
     }
-
 
 
     public void setUpSimulationParameters() {
         super.setUpSimulationParameters();
-
-      //  System.out.println("entered wator");
 
         for (int i = 0; i < this.numAgents; i++) {
             NodeList agent = doc.getElementsByTagName("Agent" + i);
@@ -44,18 +41,11 @@ public class RockPaperScissorsXml extends AbstractXml {
 
     }
 
-    @Override
-    public List<Integer> getMaturityArray() {
-        return null;
-    }
 
-    @Override
-    public List<Integer> getEnergyArray() {
-        return null;
-    }
+    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) {
 
-    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
-        //super.saveCurrentSimulation(myGridView, xmlFilePath);
+        this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
+
 
 
     }

@@ -8,7 +8,6 @@ import userInterface.UserInterface;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.util.List;
 
 
 public class GameOfLifeXml extends AbstractXml {
@@ -21,13 +20,4 @@ public class GameOfLifeXml extends AbstractXml {
         super.saveCurrentSimulation(myGridView, CellState.ALIVE, xmlFilePath);
     }
 
-    @Override
-    public List<Integer> getMaturityArray() {
-        return null;
-    }
-
-    @Override
-    public List<Integer> getEnergyArray() {
-        return null;
-    }
 }

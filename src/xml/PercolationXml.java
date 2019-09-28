@@ -8,7 +8,7 @@ import userInterface.UserInterface;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.util.List;
+
 
 public class PercolationXml extends AbstractXml {
     public PercolationXml(UserInterface myUserInterface) {
@@ -20,13 +20,5 @@ public class PercolationXml extends AbstractXml {
         super.saveCurrentSimulation(myGridView, CellState.PERCOLATED, CellState.BLOCKED, xmlFilePath);
     }
 
-    @Override
-    public List<Integer> getMaturityArray() {
-        return null;
-    }
 
-    @Override
-    public List<Integer> getEnergyArray() {
-        return null;
-    }
 }

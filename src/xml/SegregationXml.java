@@ -4,12 +4,9 @@ package xml;
 import simulation.CellState;
 import userInterface.AbstractGridView;
 import userInterface.UserInterface;
-
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.util.List;
 
 public class SegregationXml extends AbstractXml {
     public SegregationXml(UserInterface myUserInterface) {
@@ -21,13 +18,5 @@ public class SegregationXml extends AbstractXml {
         super.saveCurrentSimulation(myGridView, CellState.FIRSTAGENT, CellState.SECONDAGENT, xmlFilePath);
     }
 
-    @Override
-    public List<Integer> getMaturityArray() {
-        return null;
-    }
 
-    @Override
-    public List<Integer> getEnergyArray() {
-        return null;
-    }
 }
