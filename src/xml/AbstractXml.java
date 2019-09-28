@@ -95,9 +95,9 @@ public abstract class AbstractXml {
         try {
             this.doc = this.docBuilder.parse(this.xmlFile);
         } catch (SAXException e) {
-            this.myUserInterface.displayErrorMsg("ErrorMsg_parseFile");
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
         } catch (IOException e) {
-            this.myUserInterface.displayErrorMsg("ErrorMsg_parseFile");
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
         }
 
         determineCellShape(this.doc);
@@ -298,7 +298,8 @@ public abstract class AbstractXml {
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSource = new DOMSource(document);
         StringBuilder file = new StringBuilder(String.valueOf(xmlFilePath));
-        String filePath = file.substring(0, file.length() - 4);
+        int sizeOfXmlString = 4;
+        String filePath = file.substring(0, file.length() - sizeOfXmlString);
         filePath = filePath + "Saved.xml";
         StreamResult streamResult = new StreamResult(new File(filePath));
         transformer.transform(domSource, streamResult);
@@ -319,7 +320,7 @@ public abstract class AbstractXml {
         try {
             createXmlFilePath(document, xmlFilePath);
         } catch (TransformerException e) {
-            myUserInterface.displayErrorMsg("ErrorMsg_filePath");
+            myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
         }
     }
 
