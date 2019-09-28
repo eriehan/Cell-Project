@@ -21,9 +21,8 @@ public class AntForagingCell extends CellWithInfo {
     private double diffusion;
     private int maxAnt;
 
-    public AntForagingCell(int row, int col, CellState state, int maxAnt, double evaporation, double diffusion, List<Point> directions) {
+    public AntForagingCell(int row, int col, CellState state, int maxAnt, double evaporation, double diffusion) {
         super(row, col, state);
-        createMyGridInfo(directions);
         myGridInfo.putNumberAttributes(GridAttribute.EVAPORATION, evaporation);
         myGridInfo.putNumberAttributes(GridAttribute.DIFFUSION, diffusion);
         myGridInfo.putNumberAttributes(GridAttribute.MAXANT, maxAnt);
@@ -50,7 +49,8 @@ public class AntForagingCell extends CellWithInfo {
         myGridInfo.update();
     }
 
-    private void createMyGridInfo(List<Point> directions) {
+    @Override
+    public void createMyGridInfo(List<Point> directions) {
         myGridInfo = new AntGridInfo(getRow(), getCol(), directions);
     }
 

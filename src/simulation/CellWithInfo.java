@@ -2,6 +2,7 @@ package simulation;
 
 import utils.Point;
 
+import java.util.List;
 import java.util.Map;
 
 public abstract class CellWithInfo extends Cell {
@@ -24,9 +25,9 @@ public abstract class CellWithInfo extends Cell {
         myGridInfo.update();
     }
 
-    public GridInfo getMyGridInfo() {
-        return myGridInfo;
-    }
+    public abstract void createMyGridInfo(List<Point> neighbors);
+
+    public GridInfo getMyGridInfo() {return myGridInfo;}
 
     public void setMyGridInfo(GridInfo gridInfo) {
         myGridInfo = gridInfo;

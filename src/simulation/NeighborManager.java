@@ -67,9 +67,9 @@ public class NeighborManager {
         }
     }
 
-    public List<Point> getAllowedNeighbor() {
+    public List<Point> getOrderedNeighborDirections(Cell cell, int numOfRows, int numOfCols) {
         List<Point> list = new ArrayList<>();
-        list.addAll(allowedNeighbor);
+        list.addAll(getAcutalNeighborDirections(cell, numOfRows, numOfCols, calcActualNeighbors(cell.getRow(), cell.getCol())));
         return list;
     }
 
