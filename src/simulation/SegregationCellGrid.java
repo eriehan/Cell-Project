@@ -12,7 +12,6 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     private static final double HUNDRED = 100.0;
     private static final double HALF = 50;
     private static final String AGENTRATIO = "AgentRatio";
-    private static final String AGENTPERCENT = "Similarity";
     private static final String EMPTYPERCENT = "EmptyPercent";
 
 
@@ -80,7 +79,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
             emptyCells.remove(tempCell);
 
             //Will be changed later to be more flexible. Right now, 50% for state1, 50% for state2.
-            tempCell.setState((Math.random() * 100 > this.prob) ? CellState.FIRSTAGENT : CellState.SECONDAGENT);
+            tempCell.setState((Math.random() * HUNDRED > this.prob) ? CellState.FIRSTAGENT : CellState.SECONDAGENT);
         }
     }
 
@@ -133,7 +132,6 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     }
 
     private void createEmptyMap() {
-        System.out.println("sdf");
         clearMap();
         for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
