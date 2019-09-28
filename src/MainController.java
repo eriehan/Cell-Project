@@ -72,6 +72,7 @@ public class MainController extends Application {
         myUserInterface = new UserInterface(myTitle);
         myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
+        initializeControls();
         myScene = initScene();
         stage.setScene(myScene);
         stage.setTitle(myTitle);
@@ -104,7 +105,7 @@ public class MainController extends Application {
         selectFileButton.setOnAction(value -> {
             try {
                 selectFilePrompt();
-            } catch (IOException | ParserConfigurationException| SAXException e) {
+            } catch (IOException | ParserConfigurationException | SAXException e) {
                 this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_selectFile"));
                 return;
             }
@@ -114,9 +115,10 @@ public class MainController extends Application {
         SimulationButton startButton = new SimulationButton(resourceBundle.getString("Start"));
         startButton.setOnAction(value -> startSimulation());
 
-
         this.myUserInterface.getMyControlsManager().addButton(startButton);
-        this.myUserInterface.getMyControlsManager().addButton(new PauseButton(myAnimation, resourceBundle.getString("Pause"), resourceBundle.getString("Resume")));
+        this.myUserInterface.setPauseButton(new PauseButton(myAnimation, resourceBundle.getString("Pause"), resourceBundle.getString("Resume")));
+        this.myUserInterface.getMyControlsManager().addButton(this.myUserInterface.getPauseButton());
+
 
         SimulationButton resetButton = new SimulationButton(resourceBundle.getString("Reset"));
         resetButton.setOnAction(value -> resetGrid());
@@ -135,16 +137,15 @@ public class MainController extends Application {
         saveButton.setOnAction(value -> {
             try {
                 save();
-            } catch (TransformerException e) {
-                this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
-                return;
-            } catch (ParserConfigurationException e) {
+            } catch (TransformerException | ParserConfigurationException e) {
                 this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
                 return;
             }
         });
         this.myUserInterface.getMyControlsManager().addButton(saveButton);
+    }
 
+    private void initializeControls() {
         SimulationSlider speedSlider = new SimulationSlider(Double.parseDouble(resourceBundle.getString("Speed.min")), Double.parseDouble(resourceBundle.getString("Speed.max")), Double.parseDouble(resourceBundle.getString("Speed.default")), resourceBundle.getString("Speed"));
         speedSlider.getMySlider().valueProperty().addListener(e -> updateSpeed((double) Math.round(speedSlider.getMySlider().getValue())));
         this.myUserInterface.getMyControlsManager().addSlider(speedSlider);
@@ -241,8 +242,7 @@ public class MainController extends Application {
             myXml = new SegregationXml(this.myUserInterface);
         } else if (s.charAt(0) == 'G') {
             myXml = new GameOfLifeXml(this.myUserInterface);
-        }
-        else if(s.charAt(0) == 'R'){
+        } else if (s.charAt(0) == 'R') {
             myXml = new RockPaperScissorsXml(this.myUserInterface);
         }
 
@@ -254,7 +254,7 @@ public class MainController extends Application {
 
         //todo see if file needs to be reinitialized
 
-       // this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+        // this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
         this.myAnimation.play();
     }
 
@@ -272,6 +272,7 @@ public class MainController extends Application {
     private void resetGrid() {
         this.myUserInterface.getMyGridView().resetGridView();
         this.setState = false;
+        this.myUserInterface.getPauseButton().resetPauseButton();
         myAnimation.pause();
     }
 
