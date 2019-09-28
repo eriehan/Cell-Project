@@ -26,7 +26,6 @@ public class WaTorXml extends AbstractXml {
     public void setUpSimulationParameters() {
         super.setUpSimulationParameters();
 
-        System.out.println("entered wator");
 
         for (int i = 0; i < this.numAgents; i++) {
             NodeList agent = doc.getElementsByTagName("Agent" + i);
@@ -34,8 +33,7 @@ public class WaTorXml extends AbstractXml {
             this.EnergyArray.add(Integer.parseInt(n.getElementsByTagName("Energy").item(0).getTextContent()));
             this.MaturityArray.add(Integer.parseInt(n.getElementsByTagName("Mature").item(0).getTextContent()));
         }
-        System.out.println(EnergyArray);
-        System.out.println(MaturityArray);
+
 
     }
 
@@ -45,8 +43,8 @@ public class WaTorXml extends AbstractXml {
         Document document = stageXml();
 
         Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
-        List<ArrayList<Integer>> colArray = new ArrayList<>();
-        List<ArrayList<Integer>> rowArray = new ArrayList<>();
+        List<List<Integer>> colArray = new ArrayList<>();
+        List<List<Integer>> rowArray = new ArrayList<>();
         saveCellState(myMap, CellState.SHARK, CellState.FISH, colArray, rowArray);
         addAgents(document, "0", rowArray.get(0), colArray.get(0),
                 getMaturityArray().get(0), getEnergyArray().get(0));

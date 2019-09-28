@@ -8,7 +8,7 @@ import userInterface.UserInterface;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.util.List;
+
 
 public class PercolationXml extends AbstractXml {
     public PercolationXml(UserInterface myUserInterface) {

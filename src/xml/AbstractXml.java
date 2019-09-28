@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractXml {
-    protected ArrayList<ArrayList<Integer>> myColArray = new ArrayList<>();
-    protected ArrayList<ArrayList<Integer>> myRowArray = new ArrayList<>();
-    protected ArrayList<Integer> agent0Col;
-    protected ArrayList<Integer> agent0Row;
-    protected ArrayList<Integer> agent1Col;
-    protected ArrayList<Integer> agent1Row;
-    protected ArrayList<Integer> percentage;
+    protected List<List<Integer>> myColArray = new ArrayList<>();
+    protected List<List<Integer>> myRowArray = new ArrayList<>();
+    protected List<Integer> agent0Col;
+    protected List<Integer> agent0Row;
+    protected List<Integer> agent1Col;
+    protected List<Integer> agent1Row;
+    protected List<Integer> percentage;
     protected File xmlFile;
     protected String shape;
     protected int isSaved;
@@ -65,14 +65,14 @@ public abstract class AbstractXml {
     public String getMyTitle(){
         return this.myTitle;
     }
-    public ArrayList<ArrayList<Integer>> getMyColArray(){
-        ArrayList<ArrayList<Integer>> copy = new ArrayList<>();
+    public List<List<Integer>> getMyColArray(){
+        List<List<Integer>> copy = new ArrayList<>();
         copy.addAll(myColArray);
         return copy;
     }
 
-    public ArrayList<ArrayList<Integer>> getMyRowArray(){
-        ArrayList<ArrayList<Integer>> copy = new ArrayList<>();
+    public List<List<Integer>> getMyRowArray(){
+        List<List<Integer>> copy = new ArrayList<>();
         copy.addAll(myRowArray);
         return copy;
     }
@@ -178,12 +178,12 @@ public abstract class AbstractXml {
         return document;
     }
 
-    protected ArrayList<Integer> stringToIntArray(String s) {
+    protected List<Integer> stringToIntArray(String s) {
         StringBuilder myStringBuilder = new StringBuilder(s);
         int startIndex = 0;
         int endIndex = 1;
 
-        ArrayList<Integer> myInts = new ArrayList<>();
+        List<Integer> myInts = new ArrayList<>();
         while (endIndex < myStringBuilder.length()) {
             if (myStringBuilder.charAt(endIndex) == ' ') {
                 myInts.add(Integer.parseInt(myStringBuilder.substring(startIndex, endIndex)));
@@ -197,8 +197,8 @@ public abstract class AbstractXml {
         return myInts;
     }
 
-    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, List<ArrayList<Integer>> colArray,
-                                 List<ArrayList<Integer>> rowArray){
+    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, List<List<Integer>> colArray,
+                                 List<List<Integer>> rowArray){
         agent0Col = new ArrayList<>();
         agent0Row = new ArrayList<>();
         agent1Col = new ArrayList<>();
@@ -224,7 +224,7 @@ public abstract class AbstractXml {
 
     }
 
-    private String convertArrayToString(ArrayList<Integer> array){
+    private String convertArrayToString(List<Integer> array){
         String s = "" + array.get(0);
         for(int i = 1; i < array.size(); i++){
             s = s + " " + array.get(i);
@@ -233,7 +233,7 @@ public abstract class AbstractXml {
     }
 
 
-    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, List<ArrayList<Integer>> colArray, List<ArrayList<Integer>> rowArray){
+    protected void saveCellState(Map<Point, Cell> myMap, CellState state1, List<List<Integer>> colArray, List<List<Integer>> rowArray){
         agent0Col = new ArrayList<>();
         agent0Row = new ArrayList<>();
         for (Map.Entry<Point, Cell> entry: myMap.entrySet()
@@ -250,7 +250,7 @@ public abstract class AbstractXml {
     }
 
     protected void addAgents(Document document, String agentIdentifier,
-                             ArrayList<Integer> rowArray, ArrayList<Integer> colArray){
+                             List<Integer> rowArray, List<Integer> colArray){
         String agent = "Agent" + agentIdentifier;
         Element agentElement = document.createElement(agent);
         Element row = document.createElement("Row");
@@ -263,7 +263,7 @@ public abstract class AbstractXml {
     }
 
     protected void addAgents(Document document, String agentIdentifier,
-                             ArrayList<Integer> rowArray, ArrayList<Integer> colArray,
+                             List<Integer> rowArray, List<Integer> colArray,
                              int maturity, int energy){
         String agent = "Agent" + agentIdentifier;
         Element agentElement = document.createElement(agent);
@@ -290,20 +290,18 @@ public abstract class AbstractXml {
         StringBuilder file = new StringBuilder(String.valueOf(xmlFilePath));
         String filePath = file.substring(0, file.length() - 4);
         filePath = filePath + "Saved.xml";
-        System.out.println(filePath);
         StreamResult streamResult = new StreamResult(new File(filePath));
-        System.out.println(streamResult);
         transformer.transform(domSource, streamResult);
 
     }
-//wat
+
 
     protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
                                          CellState state2, File xmlFilePath) throws ParserConfigurationException, TransformerException {
         Document document = stageXml();
         Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
-        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
+        List<List<Integer>> colArray = new ArrayList<>();
+        List<List<Integer>> rowArray = new ArrayList<>();
         saveCellState(myMap, state1, state2, colArray, rowArray);
         for(int i = 0; i < rowArray.size(); i++){
             addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
@@ -315,8 +313,8 @@ public abstract class AbstractXml {
                                          File xmlFilePath) throws TransformerException, ParserConfigurationException {
         Document document = stageXml();
         Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
-        ArrayList<ArrayList<Integer>> colArray = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> rowArray = new ArrayList<>();
+        List<List<Integer>> colArray = new ArrayList<>();
+        List<List<Integer>> rowArray = new ArrayList<>();
         saveCellState(myMap, state1, colArray, rowArray);
         for(int i = 0; i < rowArray.size(); i++){
             addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
@@ -325,15 +323,14 @@ public abstract class AbstractXml {
         createXmlFilePath(document, xmlFilePath);
     }
 
-    public ArrayList<Integer> getEnergyArray() {
-        ArrayList<Integer> copy = new ArrayList<>();
+    public List<Integer> getEnergyArray() {
+        List<Integer> copy = new ArrayList<>();
         copy.addAll(EnergyArray);
-        System.out.println(copy);
         return copy;
     }
 
-    public ArrayList<Integer> getMaturityArray() {
-        ArrayList<Integer> copy = new ArrayList<>();
+    public List<Integer> getMaturityArray() {
+        List<Integer> copy = new ArrayList<>();
         copy.addAll(MaturityArray);
         return copy;
     }
