@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class RockPaperScissorGrid extends GameOfLifeCellGrid {
+public class RockPaperScissorGrid extends CellGrid {
 
     private static final double HUNDRED = 100.0;
     private final List<CellState> STATES_LIST = Arrays.asList(CellState.ROCK, CellState.PAPER, CellState.SCISSOR);
@@ -27,11 +27,41 @@ public class RockPaperScissorGrid extends GameOfLifeCellGrid {
     }
 
     @Override
+    public void initializeControlPanel() {
+        initializeControlPanel("RockPaperScissorControls");
+    }
+
+    @Override
+    protected void sliderAction(String type, double inputPercentage) {
+        if(type.equals("RockPercent")) {
+            possibilities.set(0, (int)inputPercentage);
+        } else if(type.equals("PaperPercent")) {
+            possibilities.set(1, (int)inputPercentage);
+        } else if(type.equals("ScissorPercent")) {
+            possibilities.set(2, (int)inputPercentage);
+        } else {
+            threshold = (int) inputPercentage;
+        }
+        rockList.clear();
+        createRockMap();
+        fillUnfilledGrids();
+        assignNeighborsToEachCell();
+        System.out.println(type);
+    }
+
+    @Override
     public void initializeGrids(Map<Point, CellState> configMap) {
         createRockMap();
         //If xml already has the whole configuration, grid will be filled accordingly
 
         fillUnfilledGrids();
+    }
+
+    @Override
+    public void checkAllCells() {
+        for (Cell cell : getGridOfCells().values()) {
+            cell.check();
+        }
     }
 
     @Override
@@ -58,7 +88,7 @@ public class RockPaperScissorGrid extends GameOfLifeCellGrid {
     }
 
     private void fillUnfilledGrids() {
-        int wholePossibility = sumOfList(possibilities);
+        double wholePossibility = sumOfList(possibilities);
         for (Point point : rockList) {
             double ran = Math.random() * wholePossibility;
             int index = 0;

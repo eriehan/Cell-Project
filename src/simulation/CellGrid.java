@@ -186,16 +186,8 @@ public abstract class CellGrid {
         return numOfRows;
     }
 
-    public void setNumOfRows(int numOfRows) {
-        this.numOfRows = numOfRows;
-    }
-
     public int getNumOfCols() {
         return numOfCols;
-    }
-
-    public void setNumOfCols(int numOfCols) {
-        this.numOfCols = numOfCols;
     }
 
     public ControlPanel getControlPanel() {

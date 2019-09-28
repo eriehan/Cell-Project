@@ -25,7 +25,7 @@ public class GameOfLifeCellGrid extends CellGrid {
     @Override
     protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
-        this.initialAliveNum = (int) (getGridOfCells().size() * inputPercentage / 100);
+        this.initialAliveNum = (int) (getGridOfCells().size() * inputPercentage / HUNDRED);
         deadCells.clear();
         createEmptyMap();
         randomlyInitialize();

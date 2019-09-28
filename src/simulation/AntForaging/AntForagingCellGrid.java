@@ -13,7 +13,7 @@ public class AntForagingCellGrid extends CellGrid {
 
     private Map<Point, GridInfo> gridInfos;
     private int maxAnt = MAXANT;
-    private double evaporation;
+    //private double evaporation;
 
     public AntForagingCellGrid(int numRows, int numCols) {
         super(numRows, numCols);
