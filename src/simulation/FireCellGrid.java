@@ -51,7 +51,8 @@ public class FireCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void assignNeighborsToEachCell() {
-        getGridLimit().assignEdgeNeighbors(getGridOfCells(), getCellShapeType(), getNumOfRows(), getNumOfCols());
+        //getGridLimit().assignEdgeNeighbors(getGridOfCells(), getCellShapeType(), getNumOfRows(), getNumOfCols());
+        getNeighborManager().assignEdgeNeighbors(getGridOfCells(), getNumOfRows(), getNumOfCols());
     }
 
     @Override

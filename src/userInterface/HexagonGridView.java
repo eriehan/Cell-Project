@@ -55,6 +55,7 @@ public class HexagonGridView extends AbstractGridView {
             }
             rowFlag = !rowFlag;
         }
+        getGridManager().getCellGrid().setCellShapeType(CellShapeType.HEXAGON);
     }
 
     @Override

@@ -23,6 +23,9 @@ public class RockPaperScissorCell extends Cell {
         if (changeToWinner()) {
             setNextState(winningCellState());
         }
+        else {
+            setNextState(getState());
+        }
     }
 
     @Override
@@ -38,7 +41,6 @@ public class RockPaperScissorCell extends Cell {
     }
 
     private boolean changeToWinner() {
-        System.out.println(getNeighbors().size());
         return countNeighborsWithState(winningCellState()) >= threshold;
     }
 }

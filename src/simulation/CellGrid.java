@@ -20,13 +20,15 @@ public abstract class CellGrid {
     private int numOfCols;
     private ControlPanel controlPanel;
 
+    private NeighborManager neighborManager;
+    private String neighborConfig = "11111111";
+
     public CellGrid(int numRows, int numCols) {
         this.numOfRows = numRows;
         this.numOfCols = numCols;
         this.controlPanel = new ControlPanel();
+        createNeighborManager();
     }
-
-
 
     public void initializeControlPanel() {
         this.controlPanel.getMyColPane().getChildren().clear();
@@ -66,7 +68,16 @@ public abstract class CellGrid {
 
     //Must be called for initializing by gridView
     public void assignNeighborsToEachCell() {
-        gridLimit.assignNeighbors(getGridOfCells(), cellShapeType, numOfRows, numOfCols);
+        //gridLimit.assignNeighbors(getGridOfCells(), cellShapeType, numOfRows, numOfCols);
+        createNeighborManager();
+        neighborManager.assignAllNeighbors(gridOfCells, numOfRows, numOfCols);
+    }
+
+    //This can be used to set different types of neighbor configuration.
+    public void setNeighborConfig(String neighborConfig) {
+        this.neighborConfig = neighborConfig;
+        createNeighborManager();
+        neighborManager.assignAllNeighbors(gridOfCells, numOfRows, numOfCols);
     }
 
     protected void cellGridExpand() {
@@ -101,6 +112,10 @@ public abstract class CellGrid {
         return gridOfCells;
     }
 
+    public void clearMap() {
+        gridOfCells.clear();
+    }
+
     public void addToGridOfCells(Point point, Cell cell) {
         gridOfCells.put(point, cell);
     }
@@ -111,6 +126,10 @@ public abstract class CellGrid {
 
     public void setStateOfCellAtPointOnClick(int row, int col) {
         gridOfCells.get(new Point(row, col)).setNextStateOnClick();
+    }
+
+    public NeighborManager getNeighborManager() {
+        return neighborManager;
     }
 
     public boolean isFinished() {
@@ -127,6 +146,7 @@ public abstract class CellGrid {
 
     public void setCellShapeType(CellShapeType cellShapeType) {
         this.cellShapeType = cellShapeType;
+        createNeighborManager();
         assignNeighborsToEachCell();
     }
 
@@ -231,4 +251,8 @@ public abstract class CellGrid {
     private Cell cellFromPoint(int row, int col) {
         return getGridOfCells().get(new Point(row, col));
     }
+
+    private boolean isToroidal() {return gridLimit==GridLimit.TOROIDAL;}
+
+    private void createNeighborManager() {neighborManager = new NeighborManager(neighborConfig, cellShapeType, isToroidal());}
 }

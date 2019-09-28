@@ -12,7 +12,6 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     private static final double HUNDRED = 100.0;
     private static final double HALF = 50;
     private static final String AGENTRATIO = "AgentRatio";
-    private static final String AGENTPERCENT = "Similarity";
     private static final String EMPTYPERCENT = "EmptyPercent";
 
 
@@ -63,7 +62,6 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
         createEmptyMap();
         //If xml already has the whole configuration, grid will be filled accordingly
         for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
-            System.out.println(entry.getKey());
             Cell notEmptyCell = getGridOfCells().get(entry.getKey());
             emptyCells.remove(notEmptyCell);
             notEmptyCell.setState(entry.getValue());
@@ -81,8 +79,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
             emptyCells.remove(tempCell);
 
             //Will be changed later to be more flexible. Right now, 50% for state1, 50% for state2.
-            //tempCell.setState((int) (1.5 + Math.random()));
-            tempCell.setState((Math.random() * 100 > this.prob) ? CellState.FIRSTAGENT : CellState.SECONDAGENT);
+            tempCell.setState((Math.random() * HUNDRED > this.prob) ? CellState.FIRSTAGENT : CellState.SECONDAGENT);
         }
     }
 
@@ -92,7 +89,6 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
             cell.check();
             //if dissatisfied
             if (cell.getNextState() == CellState.DISATISFIED) {
-                System.out.println(cell.getRow() + ", " + cell.getCol());
                 dissatisfiedCells.add(cell);
             }
         }
@@ -115,6 +111,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
             } else {
                 newEmptyCells.remove(emptyCell);
             }
+            emptyCell.setNextState(dissatisfiedCell.getState());
             dissatisfiedCells.remove(dissatisfiedCell);
             newEmptyCells.add(dissatisfiedCell);
             dissatisfiedCell.moveToDifferentCell(emptyCell);
@@ -135,7 +132,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     }
 
     private void createEmptyMap() {
-        getGridOfCells().clear();
+        clearMap();
         for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
                 addEmptyStateToCell(row, col);
