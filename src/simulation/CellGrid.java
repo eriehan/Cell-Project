@@ -185,10 +185,6 @@ public abstract class CellGrid {
         return neighborManager;
     }
 
-    public boolean isFinished() {
-        return finished;
-    }
-
     protected void setFinished(boolean finished) {
         this.finished = finished;
     }
@@ -201,10 +197,6 @@ public abstract class CellGrid {
         this.cellShapeType = cellShapeType;
         createNeighborManager();
         assignNeighborsToEachCell();
-    }
-
-    public GridLimit getGridLimit() {
-        return gridLimit;
     }
 
     public void setGridLimit(GridLimit gridLimit) {

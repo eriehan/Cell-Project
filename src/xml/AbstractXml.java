@@ -27,25 +27,26 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public abstract class AbstractXml {
-    private final String RESOURCE_FILE_PATH = "resources/MainResources";
-    protected List<List<Integer>> myColArray = new ArrayList<>();
-    protected List<List<Integer>> myRowArray = new ArrayList<>();
-    protected List<Integer> agent0Col;
-    protected List<Integer> agent0Row;
-    protected List<Integer> agent1Col;
-    protected List<Integer> agent1Row;
+    private final String RESOURCE_FILE_PATH = "resources/XmlResources";
+    private final String defaultTitle = "Simulation";
+    private List<List<Integer>> myColArray = new ArrayList<>();
+    private List<List<Integer>> myRowArray = new ArrayList<>();
+    private List<Integer> agent0Col;
+    private List<Integer> agent0Row;
+    private List<Integer> agent1Col;
+    private List<Integer> agent1Row;
     protected List<Integer> percentage;
-    protected File xmlFile;
-    protected String shape;
+    private File xmlFile;
+    private String shape;
     protected int isSaved;
     protected int numAgents;
-    protected int cellGridColNum;
-    protected int cellGridRowNum;
-    protected int rate;
-    protected String myTitle;
+    private int cellGridColNum;
+    private int cellGridRowNum;
+    private int rate;
+    private String myTitle;
     protected UserInterface myUserInterface;
-    protected DocumentBuilderFactory documentBuilderFactory;
-    protected DocumentBuilder docBuilder;
+    private DocumentBuilderFactory documentBuilderFactory;
+    private DocumentBuilder docBuilder;
     protected Document doc;
     private ResourceBundle resourceBundle;
     protected ArrayList<Integer> EnergyArray = new ArrayList<>();
@@ -119,8 +120,15 @@ public abstract class AbstractXml {
                 //gets the i-th simulation type and casts it as a node
                 Node currentSimulationType = typeOfSimulation.item(i);
                 Element currentSimulationElement = (Element) currentSimulationType;
-                this.myTitle = currentSimulationElement.getAttribute("name");
-                this.myUserInterface.changeTitle(this.myTitle);
+                try{
+                    this.myTitle = currentSimulationElement.getAttribute("name");
+                    this.myUserInterface.changeTitle(this.myTitle);
+                }
+                catch (NullPointerException ex){
+                    this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_invalidSim"));
+                    this.myUserInterface.changeTitle(this.defaultTitle);
+
+                }
                 this.numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
             }
             for (int i = 0; i < this.numAgents; i++) {
@@ -197,7 +205,13 @@ public abstract class AbstractXml {
         List<Integer> myInts = new ArrayList<>();
         while (endIndex < myStringBuilder.length()) {
             if (myStringBuilder.charAt(endIndex) == ' ') {
-                myInts.add(Integer.parseInt(myStringBuilder.substring(startIndex, endIndex)));
+                if(Integer.parseInt((myStringBuilder.substring(startIndex, endIndex))) >= this.cellGridColNum){
+                    this.myUserInterface.displayErrorMsg("ErrorMsg_invalidLocation");
+                    myInts.add(this.cellGridColNum - 1);
+                }
+                else{
+                    myInts.add(Integer.parseInt(myStringBuilder.substring(startIndex, endIndex)));
+                }
                 startIndex = endIndex + 1;
                 endIndex = startIndex + 1;
             } else {

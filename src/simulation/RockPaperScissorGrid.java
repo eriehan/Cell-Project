@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class RockPaperScissorGrid extends CellGrid {
 
-    private static final double HUNDRED = 100.0;
     private final List<CellState> STATES_LIST = Arrays.asList(CellState.ROCK, CellState.PAPER, CellState.SCISSOR);
     //first index -> # of
     private List<Integer> possibilities;
