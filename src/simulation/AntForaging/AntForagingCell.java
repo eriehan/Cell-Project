@@ -13,9 +13,6 @@ public class AntForagingCell extends CellWithInfo {
     //also a parameter
     private int birthrate = BIRTHRATE;
     private GridInfo myGridInfo;
-    private double evaporation;
-    private double diffusion;
-    private int maxAnt;
 
     public AntForagingCell(int row, int col, CellState state, int maxAnt, double evaporation, double diffusion) {
         super(row, col, state);

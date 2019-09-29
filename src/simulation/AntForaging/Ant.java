@@ -44,7 +44,8 @@ public class Ant extends Individual{
                 } else {
                     directions = possibleDirectionsToMove(getInitialThree());
                 }
-            } changeGridInfo(destinationDirection(directions));
+            }
+            changeGridInfo(destinationDirection(directions));
         }
         dropFood();
         survivedTime++;
