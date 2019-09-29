@@ -1,7 +1,11 @@
 package simulation;
 
-import userInterface.*;
+import userInterface.CellShapeType;
+import userInterface.ControlPanel;
+import userInterface.NeighborButton;
+import userInterface.SimulationSlider;
 import utils.Point;
+import userInterface.NeighborButtonGrid;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +80,6 @@ public abstract class CellGrid {
     private String makeNeighborString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < NUM_COL; i++) {
-            System.out.println(neighbor[i]);
             sb.append(neighbor[i]);
         }
         sb.append(neighbor[(NUM_ROW - 1) * NUM_COL - 1]);

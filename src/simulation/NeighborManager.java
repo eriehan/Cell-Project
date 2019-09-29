@@ -48,6 +48,7 @@ public class NeighborManager {
         this.cellShapeType = cellShapeType;
         allowedNeighbor = calcAllowedAllNeighbors(eightBit);
         edgeNeighbors = calcAllowedEdgeNeighbors(eightBit);
+        this.upRowExtended = upRowExtended;
         this.toroidal = toroidal;
     }
 
@@ -160,6 +161,7 @@ public class NeighborManager {
                     list.add(squareAllNeighbors.get(i));
                 }
             }
+            System.out.println(list.size());
             return list;
         }
     }
