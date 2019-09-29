@@ -13,9 +13,9 @@ public abstract class CellGrid {
 
     //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private Map<Point, Cell> gridOfCells = new HashMap<>();
-    //true when cellgrid is fully stabilized, and nothing will change indefinitely.
+
     private int[] neighbor = new int[NUM_COL*NUM_ROW];
-    private boolean finished = false;
+
     private GridLimit gridLimit = GridLimit.FINITE;
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
@@ -58,6 +58,7 @@ public abstract class CellGrid {
     }
 
     private void changeNeighbor(NeighborButton button){
+        System.out.println(button.getIdx());
         if (button.getIdx() != NeighborButton.CENTER){
             button.flipChosen();
             if (button.isChosen()){
@@ -69,16 +70,18 @@ public abstract class CellGrid {
                 neighbor[button.getIdx()] = 0;
             }
             setNeighborConfig(makeNeighborString());
+            System.out.println(neighborConfig);
         }
     }
 
     private String makeNeighborString(){
         StringBuilder sb = new StringBuilder();
         for (int i=0;i<NUM_COL;i++){
+            System.out.println(neighbor[i]);
             sb.append(neighbor[i]);
         }
         sb.append(neighbor[5]);
-        for (int i=NUM_COL*NUM_ROW -1;i>NUM_COL*NUM_ROW -NUM_COL;i++){
+        for (int i=NUM_COL*NUM_ROW -1;i>NUM_COL*(NUM_ROW-1)-1;i--){
             sb.append(neighbor[i]);
         }
         sb.append(neighbor[3]);
@@ -185,14 +188,6 @@ public abstract class CellGrid {
         return neighborManager;
     }
 
-    protected void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    public CellShapeType getCellShapeType() {
-        return cellShapeType;
-    }
-
     public void setCellShapeType(CellShapeType cellShapeType) {
         this.cellShapeType = cellShapeType;
         createNeighborManager();
@@ -202,16 +197,6 @@ public abstract class CellGrid {
     public void setGridLimit(GridLimit gridLimit) {
         this.gridLimit = gridLimit;
         assignNeighborsToEachCell();
-    }
-
-    public void setGridLimit(String str) {
-        if (str.equals("toroidal")) {
-            setGridLimit(GridLimit.TOROIDAL);
-        } else if (str.equals("infinite")) {
-            setGridLimit(GridLimit.INFINITE);
-        } else {
-            setGridLimit(GridLimit.FINITE);
-        }
     }
 
     public int getNumOfRows() {
@@ -224,10 +209,6 @@ public abstract class CellGrid {
 
     public ControlPanel getControlPanel() {
         return controlPanel;
-    }
-
-    public void setControlPanel(ControlPanel newControlPanel) {
-        controlPanel = newControlPanel;
     }
 
     private boolean isRowEmpty(int rowNum) {
