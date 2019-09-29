@@ -111,12 +111,14 @@ public abstract class Cell {
     }
 
     public List<CellState> getPossibleStates() {
-        List<CellState> states = possibleStates;
+        List<CellState> states = new ArrayList<>();
+        states.addAll(possibleStates);
         return states;
     }
 
     protected void setPossibleStates(List<CellState> possibleStates) {
-        this.possibleStates = possibleStates;
+        this.possibleStates = new ArrayList<>();
+        this.possibleStates.addAll(possibleStates);
     }
 
     protected void setNextStateOnClick() {
