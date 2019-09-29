@@ -68,8 +68,8 @@ public abstract class CellGrid {
                 button.setStyle("-fx-background-color: White");
                 neighbor[button.getIdx()] = 0;
             }
+            setNeighborConfig(makeNeighborString());
         }
-        setNeighborConfig(makeNeighborString());
     }
 
     private String makeNeighborString(){
