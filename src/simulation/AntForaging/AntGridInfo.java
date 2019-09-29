@@ -2,6 +2,7 @@ package simulation.AntForaging;
 
 import simulation.GridInfo;
 import simulation.Individual;
+import utils.Point;
 
 public class AntGridInfo extends GridInfo {
 
@@ -75,7 +76,10 @@ public class AntGridInfo extends GridInfo {
 
     private void manageDiffusion() {
         double diffusionRate = getNumberAttribute(GridAttribute.DIFFUSION);
-        if(getBooleanAttribute(GridAttribute.ISFOOD)) {System.out.println(diffusionRate * getNumberAttribute(FOODPHEROMONE) / getNeighborGrids().size() + "sdfsfsdf");}
+        if(getBooleanAttribute(GridAttribute.ISFOOD)) {
+            System.out.println(diffusionRate * getNumberAttribute(FOODPHEROMONE) / getNeighborGrids().size() + "sdfsfsdf");
+            System.out.println(getOneNeighborGrid(new Point(1, 1)).getNumberAttribute(FOODPHEROMONE));
+        }
         int neighborNum = getNeighborGrids().size();
         for(GridInfo neighbor : getNeighborGrids()) {
             neighbor.addToNumberAttributes(HOMEPHEROMONE, diffusionRate * getNumberAttribute(HOMEPHEROMONE) / neighborNum);

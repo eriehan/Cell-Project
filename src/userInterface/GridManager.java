@@ -48,7 +48,6 @@ public class GridManager {
                 cellGrid = new RockPaperScissorGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getPercentage());
                 this.stateList = RockPaperScissorCell.STATES_LIST;
         }
-        System.out.println(initialConfigMap.size());
         cellGrid.initializeGrids(initialConfigMap);
         cellGrid.assignNeighborsToEachCell();
         System.out.println(myXml.getCellGridColNum());

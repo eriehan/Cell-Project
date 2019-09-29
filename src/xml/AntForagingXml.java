@@ -19,14 +19,10 @@ public class AntForagingXml extends AbstractXml {
 
     protected void setUpSimulationParameters(){
         super.setUpSimulationParameters();
-        double tempDiff = Double.parseDouble(doc.getElementsByTagName("Diffusion").item(0).getTextContent());
-        double tempEvap = Double.parseDouble(doc.getElementsByTagName("Evaporation").item(0).getTextContent());
-        this.diffusion = tempDiff/INT_TO_PERCENT;
-        this.evaporation = tempEvap/INT_TO_PERCENT;
-        NodeList agent = doc.getElementsByTagName("Agent0");
-        Element n = (Element)agent.item(0);
-        this.maxAnts = Integer.parseInt(n.getElementsByTagName("MaxAnts").item(0).getTextContent());
-        this.birthRate = Integer.parseInt(n.getElementsByTagName("Birthrate").item(0).getTextContent());
+        this.diffusion = Double.parseDouble(doc.getElementsByTagName("Diffusion").item(0).getTextContent());
+        this.evaporation = Double.parseDouble(doc.getElementsByTagName("Evaporation").item(0).getTextContent());
+        this.maxAnts = Integer.parseInt(doc.getElementsByTagName("MaxAnts").item(0).getTextContent());
+        this.birthRate = Integer.parseInt(doc.getElementsByTagName("Birthrate").item(0).getTextContent());
     }
 
     @Override
@@ -34,6 +30,4 @@ public class AntForagingXml extends AbstractXml {
         this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
 
     }
-
-
 }

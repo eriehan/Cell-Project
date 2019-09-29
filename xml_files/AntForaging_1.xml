@@ -23,14 +23,14 @@ initial location of home
     <Rate>10</Rate>
     <Evaporation>0.1</Evaporation>
     <Diffusion>0.1</Diffusion>
+    <MaxAnts>10</MaxAnts>
+    <Birthrate>2</Birthrate>
 
     <!-- ants -->
     <Agent0>
         <!-- location of home -->
         <Row>5</Row>
         <Column>10</Column>
-        <MaxAnts>10</MaxAnts>
-        <Birthrate>2</Birthrate>
     </Agent0>
 
     <!-- food -->

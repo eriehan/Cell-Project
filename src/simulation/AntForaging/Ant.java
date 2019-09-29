@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Ant extends Individual{
 
+    private static final GridAttribute HOMEPHEROMONE = GridAttribute.HOMEPHEROMONE;
+    private static final GridAttribute FOODPHEROMONE = GridAttribute.FOODPHEROMONE;
     private static final int LIFETIME = 500;
     private static final double K = 0.001;
     private static final double N = 3;
@@ -71,11 +73,11 @@ public class Ant extends Individual{
     private void dropPheromone() {
         double maxPheromone = maxPheromone();
         if(hasFoodItem) {
-            getMyGridInfo().putNumberAttributes(GridAttribute.FOODPHEROMONE,
-                    Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(GridAttribute.FOODPHEROMONE)));
+            getMyGridInfo().putNumberAttributes(FOODPHEROMONE,
+                    Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(FOODPHEROMONE)));
         } else {
-            getMyGridInfo().putNumberAttributes(GridAttribute.HOMEPHEROMONE,
-                    Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(GridAttribute.HOMEPHEROMONE)));
+            getMyGridInfo().putNumberAttributes(HOMEPHEROMONE,
+                    Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(HOMEPHEROMONE)));
         }
     }
 
@@ -133,9 +135,9 @@ public class Ant extends Individual{
         double max = 0;
         for(GridInfo neighborGridInfo : getMyGridInfo().getNeighborGrids()) {
             if(hasFoodItem) {
-                max = Math.max(max, neighborGridInfo.getNumberAttribute(GridAttribute.FOODPHEROMONE));
+                max = Math.max(max, neighborGridInfo.getNumberAttribute(FOODPHEROMONE));
             } else {
-                max = Math.max(max, neighborGridInfo.getNumberAttribute(GridAttribute.HOMEPHEROMONE));
+                max = Math.max(max, neighborGridInfo.getNumberAttribute(HOMEPHEROMONE));
             }
         }
         System.out.println(max);
@@ -161,8 +163,9 @@ public class Ant extends Individual{
 
     private double getPheromoneOfNeighbor(Point direction) {
         if(hasFoodItem) {
-            return getMyGridInfo().getOneNeighborGrid(direction).getNumberAttribute(GridAttribute.HOMEPHEROMONE);
+            return getMyGridInfo().getOneNeighborGrid(direction).getNumberAttribute(HOMEPHEROMONE);
+        }  else {
+            return getMyGridInfo().getOneNeighborGrid(direction).getNumberAttribute(FOODPHEROMONE);
         }
-        return getMyGridInfo().getOneNeighborGrid(direction).getNumberAttribute(GridAttribute.FOODPHEROMONE);
     }
 }
