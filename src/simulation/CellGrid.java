@@ -25,6 +25,7 @@ public abstract class CellGrid {
     private int numOfRows;
     private int numOfCols;
     private ControlPanel controlPanel;
+    private boolean upRowExtended = false;
 
     private NeighborManager neighborManager;
     private String neighborConfig = "11111111";
@@ -43,7 +44,7 @@ public abstract class CellGrid {
     protected void initializeControlPanel(String controlsType) {
         this.getControlPanel().getMyColPane().getChildren().clear();
         if (this.cellShapeType ==CellShapeType.RECTANGLE){
-            addNeighorButton();
+            addNeighborButton();
         }
         String[] controlsList = getControlPanel().getResourceBundle().getString(controlsType).split(",");
         for (String controlType : controlsList) {
@@ -53,28 +54,19 @@ public abstract class CellGrid {
         }
     }
 
-    private void addNeighorButton(){
+    private void addNeighborButton(){
         NeighborButtonGrid neighborButtonGrid = new NeighborButtonGrid();
         this.getControlPanel().getMyColPane().getChildren().add(neighborButtonGrid.getMyView());
         for (NeighborButton button : neighborButtonGrid.getButtonList()){
-            button.setOnAction(e -> changeNeighbor(button));
-        }
-    }
-
-    private void changeNeighbor(NeighborButton button){
-        System.out.println(button.getIdx());
-        if (button.getIdx() != NeighborButton.CENTER){
-            button.flipChosen();
-            if (button.isChosen()){
-                button.setStyle("-fx-background-color: LightBlue");
-                neighbor[button.getIdx()] = 1;
-            }
-            else {
-                button.setStyle("-fx-background-color: White");
-                neighbor[button.getIdx()] = 0;
-            }
-            setNeighborConfig(makeNeighborString());
-            System.out.println(neighborConfig);
+            button.setOnAction(e ->  {
+                button.flipChosen();
+                if(button.isChosen()) {
+                    neighbor[button.getIdx()] = 1;
+                } else {
+                    neighbor[button.getIdx()] = 0;
+                }
+                setNeighborConfig(makeNeighborString());
+            });
         }
     }
 
@@ -156,6 +148,7 @@ public abstract class CellGrid {
         }
         if (!isRowEmpty(0)) {
             expand = true;
+            upRowExtended = !upRowExtended;
             addRowOnTop();
         }
         if (!isRowEmpty(getNumOfRows() - 1)) {
@@ -164,6 +157,7 @@ public abstract class CellGrid {
         }
 
         if (expand) {
+            createNeighborManager();
             assignNeighborsToEachCell();
         }
     }
@@ -271,12 +265,8 @@ public abstract class CellGrid {
     private Cell cellFromPoint(int row, int col) {
         return getGridOfCells().get(new Point(row, col));
     }
-
-    private boolean isToroidal() {
-        return gridLimit == GridLimit.TOROIDAL;
-    }
-
+    
     private void createNeighborManager() {
-        neighborManager = new NeighborManager(neighborConfig, cellShapeType, isToroidal());
+        neighborManager = new NeighborManager(neighborConfig, cellShapeType, gridLimit==GridLimit.TOROIDAL, upRowExtended);
     }
 }

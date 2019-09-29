@@ -7,6 +7,8 @@ import javafx.scene.layout.*;
 
 public class NeighborButton extends SimulationButton {
     public static final int CENTER = 4;
+    private static final String EMPTYSTYLE = "-fx-border-color: black;"+"-fx-background-color: White";
+    private static final String CLICKEDSTYLE = "-fx-border-color: black;"+"-fx-background-color: LightBlue";
     private int idx;
     private boolean chosen = false;
 
@@ -31,5 +33,10 @@ public class NeighborButton extends SimulationButton {
 
     public void flipChosen(){
         chosen = !chosen;
+        if(chosen) {
+            this.setStyle(CLICKEDSTYLE);
+        } else {
+            this.setStyle(EMPTYSTYLE);
+        }
     }
 }

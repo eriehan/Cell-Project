@@ -40,11 +40,11 @@ public class NeighborManager {
     private List<Point> allowedNeighbor;
     private List<Point> edgeNeighbors;
     private boolean toroidal;
-    private boolean upRowExtended = false;
+    private boolean upRowExtended;
     private CellShapeType cellShapeType;
 
     //default -> put "11111111" for eightBit.
-    public NeighborManager(String eightBit, CellShapeType cellShapeType, boolean toroidal) {
+    public NeighborManager(String eightBit, CellShapeType cellShapeType, boolean toroidal, boolean upRowExtended) {
         this.cellShapeType = cellShapeType;
         allowedNeighbor = calcAllowedAllNeighbors(eightBit);
         edgeNeighbors = calcAllowedEdgeNeighbors(eightBit);
