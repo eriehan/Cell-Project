@@ -172,14 +172,17 @@ public class MainController extends Application {
 
     private void changeNumberOfRow(String row) {
         int rowInput = Integer.parseInt(row);
-        System.out.println("row input: " + rowInput);
-        // TODO: change grid size (row)
+
+        myXml.changeRowNum(rowInput);
+        this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+
     }
 
     private void changeNumberOfCol(String col) {
         int colInput = Integer.parseInt(col);
         System.out.println("col input: " + colInput);
-        // TODO: change grid size (row)
+        myXml.changeColNum(colInput);
+        this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
     }
 
     private void setEdgeType(String edgeType) {
@@ -256,9 +259,6 @@ public class MainController extends Application {
 
     private void startSimulation() {
         if (!checkFileSelected()) return;
-        //todo see if file needs to be reinitialized
-
-        // this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
         this.myAnimation.play();
     }
 

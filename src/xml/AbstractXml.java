@@ -59,6 +59,14 @@ public abstract class AbstractXml {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
     }
 
+    public void changeRowNum(int n){
+        this.cellGridRowNum = n;
+    }
+
+    public void changeColNum(int n){
+        this.cellGridColNum = n;
+    }
+
 
     public int getCellGridColNum(){
         return this.cellGridColNum;

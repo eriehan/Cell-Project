@@ -38,6 +38,7 @@ public class GridManager {
         }
         cellGrid.initializeGrids(initialConfigMap);
         cellGrid.assignNeighborsToEachCell();
+        System.out.println(myXml.getCellGridColNum());
     }
 
     private void setSegregation(Map configMap) {
@@ -55,6 +56,7 @@ public class GridManager {
         }
         this.initialConfigMap = configMap;
         cellGrid = new SegregationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getRate());
+
     }
 
     private void setGameOfLife(Map configMap) {
@@ -118,7 +120,6 @@ public class GridManager {
             }
         }
         this.initialConfigMap = configMap;
-        //check if rate was changed
         cellGrid = new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate());
 
     }
