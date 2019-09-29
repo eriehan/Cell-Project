@@ -108,14 +108,9 @@ public abstract class AbstractXml {
 
         try {
             this.doc = docBuilder.parse(xmlFile);
-        } catch (SAXException e) {
-            logger.log(Level.SEVERE, "an exception was thrown", e);
-           // this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
-        } catch (IOException e) {
-           // this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
+        } catch (SAXException | IOException e) {
             logger.log(Level.SEVERE, "an exception was thrown", e);
         }
-
         determineCellShape(this.doc);
         setUpSimulationParameters();
     }

@@ -4,7 +4,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import userInterface.AbstractGridView;
 import userInterface.UserInterface;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 
 public class AntForagingXml extends AbstractXml {
@@ -31,7 +30,8 @@ public class AntForagingXml extends AbstractXml {
     }
 
     @Override
-    public void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException {
+    public void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile)  {
+        this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
 
     }
 
