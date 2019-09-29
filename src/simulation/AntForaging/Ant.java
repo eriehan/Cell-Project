@@ -22,6 +22,7 @@ public class Ant extends Individual{
     public Ant(GridInfo gridInfo, List<Point> orderedDirections) {
         super(gridInfo);
         myDirections.addAll(orderedDirections);
+        System.out.println(myDirections.size() + "sdfs");
         //if this is initialized as false, it will change this state to true inside
         //its home.
         hasFoodItem = false;
@@ -62,6 +63,9 @@ public class Ant extends Individual{
 
         setMyGridInfo(destinationGridInfo);
         getMyGridInfo().addIndividual(this);
+
+        myDirections.clear();
+        myDirections.addAll(getMyGridInfo().getPossibleOrderedDirections());
     }
 
     private void dropPheromone() {

@@ -2,30 +2,37 @@ package simulation.AntForaging;
 
 import simulation.CellState;
 import simulation.CellWithInfo;
-import simulation.GridInfo;
 import utils.Point;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class AntForagingCell extends CellWithInfo {
 
+    public static final List<CellState> STATES_LIST = Arrays.asList(CellState.EMPTY, CellState.HOME, CellState.FOOD,
+            CellState.ANT, CellState.ANTFULL);
     private static final int BIRTHRATE = 2;
 
     //also a parameter
     private int birthrate = BIRTHRATE;
-    private GridInfo myGridInfo;
 
     public AntForagingCell(int row, int col, CellState state, int maxAnt, double evaporation, double diffusion) {
         super(row, col, state);
-        myGridInfo.putNumberAttributes(GridAttribute.EVAPORATION, evaporation);
-        myGridInfo.putNumberAttributes(GridAttribute.DIFFUSION, diffusion);
-        myGridInfo.putNumberAttributes(GridAttribute.MAXANT, maxAnt);
+        setMyGridInfo(new AntGridInfo(row, col));
+        getMyGridInfo().putNumberAttributes(GridAttribute.EVAPORATION, evaporation);
+        getMyGridInfo().putNumberAttributes(GridAttribute.DIFFUSION, diffusion);
+        getMyGridInfo().putNumberAttributes(GridAttribute.MAXANT, maxAnt);
         assignBooleanValues();
     }
 
     @Override
     public void check() {
+        if(getMyGridInfo().getNeighborGrids().isEmpty()) {
+            System.out.println("sdf");
+            addNeighborsToMyGridInfo();
+        }
         //to be added. Have not figured out how to implement.
-       myGridInfo.moveIndividuals();
+       getMyGridInfo().moveIndividuals();
        if(getState() == CellState.HOME) {
            createAnts();
        }
@@ -34,14 +41,24 @@ public class AntForagingCell extends CellWithInfo {
     @Override
     public void changeState() {
         //to be added. Have not figured out how to implement.
-        setState(getNextState());
 
-        myGridInfo.update();
+        if(getState() == CellState.HOME || getState() == CellState.FOOD) {
+            setNextState(getState());
+        }
+        else if(getMyGridInfo().numOfIndividuals() <= 0) {
+            setNextState(CellState.EMPTY);
+        }
+        else if(getMyGridInfo().numOfIndividuals() >= getMyGridInfo().getNumberAttribute(GridAttribute.MAXANT)) {
+            setNextState(CellState.ANTFULL);
+        } else {
+            setNextState(CellState.ANT);
+        }
+        super.changeState();
     }
 
     @Override
-    public void createMyGridInfo(List<Point> directions) {
-        myGridInfo = new AntGridInfo(getRow(), getCol(), directions);
+    public void addOrderedNeighborDirections(List<Point> directions) {
+        getMyGridInfo().setPossibleOrderedDirections(directions);
     }
 
     private void createAnts() {
@@ -57,9 +74,9 @@ public class AntForagingCell extends CellWithInfo {
     }
 
     private void putBooleanValues(boolean obstacle, boolean home, boolean food, boolean packed) {
-        myGridInfo.putBooleanAttributes(GridAttribute.ISOBSTACLE, obstacle);
-        myGridInfo.putBooleanAttributes(GridAttribute.ISHOME, home);
-        myGridInfo.putBooleanAttributes(GridAttribute.ISFOOD, food);
-        myGridInfo.putBooleanAttributes(GridAttribute.ISPACKED, packed);
+        getMyGridInfo().putBooleanAttributes(GridAttribute.ISOBSTACLE, obstacle);
+        getMyGridInfo().putBooleanAttributes(GridAttribute.ISHOME, home);
+        getMyGridInfo().putBooleanAttributes(GridAttribute.ISFOOD, food);
+        getMyGridInfo().putBooleanAttributes(GridAttribute.ISPACKED, packed);
     }
 }

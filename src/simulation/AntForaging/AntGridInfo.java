@@ -16,18 +16,14 @@ public class AntGridInfo extends GridInfo {
     private static final GridAttribute EVAPORATION = GridAttribute.EVAPORATION;
     private static final GridAttribute MAXANT = GridAttribute.MAXANT;
 
-
-    private List<Point> possibleDirections = new ArrayList<>();
-
-
-    public AntGridInfo(int row, int col,  List<Point> orderedDirections) {
+    public AntGridInfo(int row, int col) {
         super(row, col);
-        possibleDirections.addAll(orderedDirections);
+
     }
 
     @Override
     public void createIndividual() {
-        addIndividual(new Ant(this, possibleDirections));
+        addIndividual(new Ant(this, getPossibleOrderedDirections()));
     }
 
     @Override
@@ -70,6 +66,7 @@ public class AntGridInfo extends GridInfo {
         checkIfGridFull();
     }
 
+
     private void manageEvaporation() {
         multiplyNumberAttributes(HOMEPHEROMONE, (HUNDRED - getNumberAttribute(EVAPORATION) / HUNDRED));
         multiplyNumberAttributes(FOODPHEROMONE, (HUNDRED - getNumberAttribute(EVAPORATION) / HUNDRED));
@@ -87,4 +84,5 @@ public class AntGridInfo extends GridInfo {
             neighbor.addToNumberAttributes(FOODPHEROMONE, diffusionRate * getNumberAttribute(FOODPHEROMONE) / neighborNum);
         }
     }
+
 }

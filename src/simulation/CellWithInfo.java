@@ -25,7 +25,7 @@ public abstract class CellWithInfo extends Cell {
         myGridInfo.update();
     }
 
-    public abstract void createMyGridInfo(List<Point> neighbors);
+    public abstract void addOrderedNeighborDirections(List<Point> neighbors);
 
     public GridInfo getMyGridInfo() {return myGridInfo;}
 
@@ -34,6 +34,7 @@ public abstract class CellWithInfo extends Cell {
     }
 
     protected void addNeighborsToMyGridInfo() {
+        System.out.println(getNeighbors().size());
         Map<Point, Cell> myNeighbors = getNeighbors();
 
         for (Point direction : myNeighbors.keySet()) {
@@ -44,7 +45,7 @@ public abstract class CellWithInfo extends Cell {
                 return;
             }
             CellWithInfo cellWithInfo = (CellWithInfo) cell;
-            myGridInfo.addNeigbor(direction, cellWithInfo.getMyGridInfo());
+            myGridInfo.addNeighbor(direction, cellWithInfo.getMyGridInfo());
         }
     }
 }

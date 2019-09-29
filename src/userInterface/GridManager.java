@@ -2,6 +2,7 @@ package userInterface;
 
 import javafx.scene.paint.Color;
 import simulation.*;
+import simulation.AntForaging.AntForagingCell;
 import simulation.AntForaging.AntForagingCellGrid;
 import utils.Point;
 import xml.AbstractXml;
@@ -38,8 +39,7 @@ public class GridManager {
                 setFire(configMap);
                 break;
             case "Ant Foraging":
-                cellGrid = new AntForagingCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(),
-                        myXml.getMaxAnts(), myXml.getEvaporation(), myXml.getDiffusion());
+                setAnt(configMap);
                 System.out.println(myXml.getMaxAnts());
                 System.out.println(myXml.getEvaporation());
                 System.out.println(myXml.getDiffusion());
@@ -48,6 +48,7 @@ public class GridManager {
                 cellGrid = new RockPaperScissorGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getPercentage());
                 this.stateList = RockPaperScissorCell.STATES_LIST;
         }
+        System.out.println(initialConfigMap.size());
         cellGrid.initializeGrids(initialConfigMap);
         cellGrid.assignNeighborsToEachCell();
         System.out.println(myXml.getCellGridColNum());
@@ -138,6 +139,26 @@ public class GridManager {
         this.initialConfigMap = configMap;
         this.stateList = FireCell.STATES_LIST;
         cellGrid = new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate());
+
+    }
+
+    private void setAnt(Map configMap) {
+        for (int i = 0; i < myXml.getMyColArray().size(); i++) {
+            int size = Math.min(myXml.getMyColArray().get(i).size(), myXml.getMyRowArray().get(i).size());
+            if (i == 0) {
+                for (int j = 0; j < size; j++) {
+                    configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.HOME);
+                }
+            } else {
+                for (int j = 0; j < size; j++) {
+                    configMap.put(new Point(myXml.getMyRowArray().get(i).get(j), myXml.getMyColArray().get(i).get(j)), CellState.FOOD);
+                }
+            }
+        }
+        this.initialConfigMap = configMap;
+        this.stateList = AntForagingCell.STATES_LIST;
+        cellGrid = new AntForagingCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getMaxAnts(), myXml.getEvaporation(),
+                myXml.getDiffusion());
 
     }
 

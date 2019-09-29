@@ -16,6 +16,7 @@ public abstract class GridInfo {
     private Map<GridAttribute, Boolean> gridBooleans = new HashMap<>();
     private List<Individual> individuals = new ArrayList<>();
     private List<Individual> removedIndividuals = new ArrayList<>();
+    private List<Point> possibleOrderedDirections = new ArrayList<>();
 
     public GridInfo(int row, int col) {
         this.row = row;
@@ -27,6 +28,18 @@ public abstract class GridInfo {
     public abstract void moveIndividuals();
 
     public abstract void update();
+
+    //to know its neighbors
+    public void setPossibleOrderedDirections(List<Point> orderedDirections) {
+        possibleOrderedDirections.clear();
+        possibleOrderedDirections.addAll(orderedDirections);
+    }
+
+    public List<Point> getPossibleOrderedDirections() {
+        List<Point> list = new ArrayList<>();
+        list.addAll(possibleOrderedDirections);
+        return list;
+    }
 
     public void putNumberAttributes(GridAttribute gridAttribute, double num) {
         gridAttributes.put(gridAttribute, num);
@@ -51,6 +64,9 @@ public abstract class GridInfo {
     }
 
     public double getNumberAttribute(GridAttribute gridAttribute) {
+        if(!gridAttributes.containsKey(gridAttribute)) {
+            return 0;
+        }
         return gridAttributes.get(gridAttribute);
     }
 
@@ -58,7 +74,7 @@ public abstract class GridInfo {
         return gridBooleans.get(gridAttribute);
     }
 
-    public void addNeigbor(Point dir, GridInfo gridInfo) {
+    public void addNeighbor(Point dir, GridInfo gridInfo) {
         neighborGrids.put(dir, gridInfo);
     }
 

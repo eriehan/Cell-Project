@@ -98,7 +98,6 @@ public class NeighborManager {
             cell.addNeighbor(direction, cellFromPoint(gridOfCells, cell.getRow() + direction.getRow(),
                     cell.getCol() + direction.getCol(), numOfRows, numOfCols));
         }
-        System.out.println(cell.getRow() + ", " + cell.getCol() + ", " + cell.getNeighbors().size());
     }
 
     private Cell cellFromPoint(Map<Point, Cell> gridOfCells, int row, int col, int numOfRows, int numOfCols) {
