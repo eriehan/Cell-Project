@@ -13,9 +13,6 @@ public class AntForagingCell extends CellWithInfo {
     //also a parameter
     private int birthrate = BIRTHRATE;
     private GridInfo myGridInfo;
-    private double evaporation;
-    private double diffusion;
-    private int maxAnt;
 
     public AntForagingCell(int row, int col, CellState state, int maxAnt, double evaporation, double diffusion) {
         super(row, col, state);
@@ -29,11 +26,8 @@ public class AntForagingCell extends CellWithInfo {
     public void check() {
         //to be added. Have not figured out how to implement.
        myGridInfo.moveIndividuals();
-       if(getState() == CellState.HOME || getState() == CellState.FOOD) {
-           if(getState() == CellState.HOME) {
-               myGridInfo.putBooleanAttributes(GridAttribute.ISHOME, true);
-               createAnts();
-           }
+       if(getState() == CellState.HOME) {
+           createAnts();
        }
     }
 
@@ -59,11 +53,14 @@ public class AntForagingCell extends CellWithInfo {
     private void assignBooleanValues() {
         if(getState()==CellState.OBSTACLE) {
             putBooleanValues(true, false, false, false);
-        } else if(getState() == CellState.HOME) {
+        }
+        if(getState() == CellState.HOME) {
             putBooleanValues(false, true, false, false);
-        } else if(getState() == CellState.FOOD) {
+        }
+        if(getState() == CellState.FOOD) {
             putBooleanValues(false, false, true, false);
-        } else {
+        }
+        else {
             putBooleanValues(false, false, false, false);
         }
     }
