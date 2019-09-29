@@ -38,6 +38,8 @@ public class NeighborButtonGrid {
     }
 
     public List<NeighborButton> getButtonList() {
-        return buttonList;
+        List<NeighborButton> list = new ArrayList<>();
+        list.addAll(buttonList);
+        return list;
     }
 }
