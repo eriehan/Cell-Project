@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class WaTorXml extends AbstractXml {
 
@@ -53,7 +54,7 @@ public class WaTorXml extends AbstractXml {
             createXmlFilePath(document, xmlFilePath);
         }
         catch (TransformerException e){
-            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
+            logger.log(Level.SEVERE, "an exception was thrown", e);
         }
 
 

@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 
 public abstract class AbstractXml {
 
-    Logger logger = Logger.getAnonymousLogger();
+    protected static final Logger logger = Logger.getAnonymousLogger();
 
     private static final String RESOURCE_FILE_PATH = "resources/XmlResources";
     private static final String defaultTitle = "Simulation";

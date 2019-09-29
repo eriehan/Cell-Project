@@ -30,7 +30,6 @@ public class RockPaperScissorsXml extends AbstractXml {
             int percent = Integer.parseInt(n.getElementsByTagName("Percent").item(0).getTextContent());
             percentage.add(percent);
         }
-        System.out.println(percentage);
 
     }
 
