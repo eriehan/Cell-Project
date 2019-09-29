@@ -3,6 +3,7 @@ package userInterface;
 import javafx.scene.paint.Color;
 
 import simulation.*;
+
 import utils.Point;
 import xml.AbstractXml;
 
@@ -144,5 +145,15 @@ public class GridManager {
         }
         getCellGrid().initializeGrids(initialConfigMap);
         getCellGrid().assignNeighborsToEachCell();
+    }
+
+    public void changeEdgeTypeOfGrid(String type) {
+        if(type.equals("toroidal")) {
+            getCellGrid().setGridLimit(GridLimit.TOROIDAL);
+        } else if(type.equals("finite")) {
+            getCellGrid().setGridLimit(GridLimit.FINITE);
+        } else if(type.equals("infinite")) {
+            getCellGrid().setGridLimit(GridLimit.INFINITE);
+        }
     }
 }

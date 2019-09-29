@@ -87,7 +87,9 @@ public class MainController extends Application {
     }
 
     private void step(double elapsedTime) {
-        if (setState) return;
+        if (setState) {
+            return;
+        }
         else if (updateTimer > updateFreq) {
             updateTimer = 0;
             myUserInterface.update();
@@ -187,6 +189,7 @@ public class MainController extends Application {
 
     private void setEdgeType(String edgeType) {
         System.out.println("for debug: " + edgeType);
+        myUserInterface.getMyGridView().getGridManager().changeEdgeTypeOfGrid(edgeType);
         //TODO: set edge type @Eric
     }
 
