@@ -85,9 +85,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
                 dissatisfiedCells.add(cell);
             }
         }
-        if (dissatisfiedCells.isEmpty()) {
-            setFinished(true);
-        }
+
         System.out.println(dissatisfiedCells.size());
     }
 

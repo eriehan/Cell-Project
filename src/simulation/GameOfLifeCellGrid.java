@@ -27,11 +27,11 @@ public class GameOfLifeCellGrid extends CellGrid {
     protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric
         this.initialAliveNum = (int) (getGridOfCells().size() * inputPercentage / HUNDRED);
-        deadCells.clear();
+
+        System.out.println(type);
         createEmptyMap();
         randomlyInitialize();
         assignNeighborsToEachCell();
-        System.out.println(type);
     }
 
     @Override
@@ -52,6 +52,7 @@ public class GameOfLifeCellGrid extends CellGrid {
     @Override
     public void changeAllCells() {
         for (Cell cell : getGridOfCells().values()) {
+            System.out.println(cell.getState() + ", " + cell.getRow() + ", " + cell.getCol());
             cell.changeState();
         }
         cellGridExpand();
@@ -67,6 +68,7 @@ public class GameOfLifeCellGrid extends CellGrid {
     //creates a map of cells with state==dead
     private void createEmptyMap() {
         clearMap();
+        deadCells.clear();
         for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {
                 addEmptyStateToCell(row, col);
@@ -79,6 +81,7 @@ public class GameOfLifeCellGrid extends CellGrid {
         for (int i = 0; i < initialAliveNum; i++) {
             Cell cell = deadCells.get((int) (Math.random() * deadCells.size()));
             deadCells.remove(cell);
+            System.out.println(deadCells.size());
             cell.setState(CellState.ALIVE);
         }
     }

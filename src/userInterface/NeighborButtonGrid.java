@@ -1,15 +1,12 @@
 package userInterface;
 
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import static userInterface.VisualizationConstants.SLIDER_FONT_SIZE;
-import static userInterface.VisualizationConstants.SLIDER_WIDTH;
 
 public class NeighborButtonGrid {
     private static final int SPACING = 5;
@@ -18,7 +15,7 @@ public class NeighborButtonGrid {
     public static final int NUM_COL = 3;
     private GridPane buttonGrid;
     private VBox myView;
-    private ArrayList<NeighborButton> buttonList;
+    private List<NeighborButton> buttonList;
 
     public NeighborButtonGrid() {
         buttonGrid = new GridPane();
@@ -40,7 +37,9 @@ public class NeighborButtonGrid {
         return myView;
     }
 
-    public ArrayList<NeighborButton> getButtonList() {
-        return buttonList;
+    public List<NeighborButton> getButtonList() {
+        List<NeighborButton> list = new ArrayList<>();
+        list.addAll(buttonList);
+        return list;
     }
 }

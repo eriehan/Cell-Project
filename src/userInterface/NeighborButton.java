@@ -1,23 +1,24 @@
 package userInterface;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.layout.*;
-
+import static userInterface.VisualizationConstants.CENTER_COLOR;
+import static userInterface.VisualizationConstants.NEIGHBOR_STYLE;
 
 public class NeighborButton extends SimulationButton {
     public static final int CENTER = 4;
+
+
+    private static final String EMPTYSTYLE = "-fx-border-color: black;" + "-fx-background-color: White";
+    private static final String CLICKEDSTYLE = "-fx-border-color: black;" + "-fx-background-color: LightBlue";
     private int idx;
     private boolean chosen = false;
 
     public NeighborButton(int idx) {
         super("");
         this.idx = idx;
-        this.setPrefSize(40,40);
-        this.setStyle("-fx-border-color: black;"+"-fx-background-color: White");
-        if (idx==CENTER){
-            this.setText("*");
-            this.setStyle("-fx-background-color: Yellow");
+        this.setPrefSize(40, 40);
+        this.setStyle(NEIGHBOR_STYLE);
+        if (idx == CENTER) {
+            this.setStyle(CENTER_COLOR);
         }
     }
 
@@ -29,7 +30,15 @@ public class NeighborButton extends SimulationButton {
         return chosen;
     }
 
-    public void flipChosen(){
+    public void flipChosen() {
+        if (idx == CENTER) {
+            return;
+        }
         chosen = !chosen;
+        if (chosen) {
+            this.setStyle(CLICKEDSTYLE);
+        } else {
+            this.setStyle(EMPTYSTYLE);
+        }
     }
 }

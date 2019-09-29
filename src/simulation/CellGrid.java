@@ -8,19 +8,22 @@ import java.util.Map;
 
 import static userInterface.NeighborButtonGrid.NUM_COL;
 import static userInterface.NeighborButtonGrid.NUM_ROW;
+import static userInterface.VisualizationConstants.NEIGHBOR_CHOSEN;
+import static userInterface.VisualizationConstants.NEIGHBOR_STYLE;
 
 public abstract class CellGrid {
 
     //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private Map<Point, Cell> gridOfCells = new HashMap<>();
-    //true when cellgrid is fully stabilized, and nothing will change indefinitely.
-    private int[] neighbor = new int[NUM_COL*NUM_ROW];
-    private boolean finished = false;
+
+    private int[] neighbor = new int[NUM_COL * NUM_ROW];
+
     private GridLimit gridLimit = GridLimit.FINITE;
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
     private int numOfCols;
     private ControlPanel controlPanel;
+    private boolean upRowExtended = false;
 
     private NeighborManager neighborManager;
     private String neighborConfig = "11111111";
@@ -38,8 +41,8 @@ public abstract class CellGrid {
 
     protected void initializeControlPanel(String controlsType) {
         this.getControlPanel().getMyColPane().getChildren().clear();
-        if (this.cellShapeType ==CellShapeType.RECTANGLE){
-            addNeighorButton();
+        if (this.cellShapeType == CellShapeType.RECTANGLE) {
+            addNeighborButton();
         }
         String[] controlsList = getControlPanel().getResourceBundle().getString(controlsType).split(",");
         for (String controlType : controlsList) {
@@ -49,39 +52,38 @@ public abstract class CellGrid {
         }
     }
 
-    private void addNeighorButton(){
+    private void addNeighborButton() {
         NeighborButtonGrid neighborButtonGrid = new NeighborButtonGrid();
         this.getControlPanel().getMyColPane().getChildren().add(neighborButtonGrid.getMyView());
-        for (NeighborButton button : neighborButtonGrid.getButtonList()){
-            button.setOnAction(e -> changeNeighbor(button));
+        for (NeighborButton button : neighborButtonGrid.getButtonList()) {
+            button.setOnAction(e -> {
+                if (button.getIdx() != NeighborButton.CENTER) {
+                    button.flipChosen();
+                    if (button.isChosen()) {
+                        button.setStyle(NEIGHBOR_CHOSEN);
+                        neighbor[button.getIdx()] = 1;
+                    } else {
+                        button.setStyle(NEIGHBOR_STYLE);
+                        neighbor[button.getIdx()] = 0;
+                    }
+                    setNeighborConfig(makeNeighborString());
+                    System.out.println(neighborConfig);
+                }
+            });
         }
     }
 
-    private void changeNeighbor(NeighborButton button){
-        if (button.getIdx() != NeighborButton.CENTER){
-            button.flipChosen();
-            if (button.isChosen()){
-                button.setStyle("-fx-background-color: LightBlue");
-                neighbor[button.getIdx()] = 1;
-            }
-            else {
-                button.setStyle("-fx-background-color: White");
-                neighbor[button.getIdx()] = 0;
-            }
-            setNeighborConfig(makeNeighborString());
-        }
-    }
-
-    private String makeNeighborString(){
+    private String makeNeighborString() {
         StringBuilder sb = new StringBuilder();
-        for (int i=0;i<NUM_COL;i++){
+        for (int i = 0; i < NUM_COL; i++) {
+            System.out.println(neighbor[i]);
             sb.append(neighbor[i]);
         }
-        sb.append(neighbor[5]);
-        for (int i=NUM_COL*NUM_ROW -1;i>NUM_COL*NUM_ROW -NUM_COL;i++){
+        sb.append(neighbor[(NUM_ROW - 1) * NUM_COL - 1]);
+        for (int i = NUM_COL * NUM_ROW - 1; i > NUM_COL * (NUM_ROW - 1) - 1; i--) {
             sb.append(neighbor[i]);
         }
-        sb.append(neighbor[3]);
+        sb.append(neighbor[NUM_COL]);
         return sb.toString();
     }
 
@@ -149,6 +151,7 @@ public abstract class CellGrid {
         }
         if (!isRowEmpty(0)) {
             expand = true;
+            upRowExtended = !upRowExtended;
             addRowOnTop();
         }
         if (!isRowEmpty(getNumOfRows() - 1)) {
@@ -157,6 +160,7 @@ public abstract class CellGrid {
         }
 
         if (expand) {
+            createNeighborManager();
             assignNeighborsToEachCell();
         }
     }
@@ -185,14 +189,6 @@ public abstract class CellGrid {
         return neighborManager;
     }
 
-    protected void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    public CellShapeType getCellShapeType() {
-        return cellShapeType;
-    }
-
     public void setCellShapeType(CellShapeType cellShapeType) {
         this.cellShapeType = cellShapeType;
         createNeighborManager();
@@ -202,16 +198,6 @@ public abstract class CellGrid {
     public void setGridLimit(GridLimit gridLimit) {
         this.gridLimit = gridLimit;
         assignNeighborsToEachCell();
-    }
-
-    public void setGridLimit(String str) {
-        if (str.equals("toroidal")) {
-            setGridLimit(GridLimit.TOROIDAL);
-        } else if (str.equals("infinite")) {
-            setGridLimit(GridLimit.INFINITE);
-        } else {
-            setGridLimit(GridLimit.FINITE);
-        }
     }
 
     public int getNumOfRows() {
@@ -224,10 +210,6 @@ public abstract class CellGrid {
 
     public ControlPanel getControlPanel() {
         return controlPanel;
-    }
-
-    public void setControlPanel(ControlPanel newControlPanel) {
-        controlPanel = newControlPanel;
     }
 
     private boolean isRowEmpty(int rowNum) {
@@ -287,11 +269,7 @@ public abstract class CellGrid {
         return getGridOfCells().get(new Point(row, col));
     }
 
-    private boolean isToroidal() {
-        return gridLimit == GridLimit.TOROIDAL;
-    }
-
     private void createNeighborManager() {
-        neighborManager = new NeighborManager(neighborConfig, cellShapeType, isToroidal());
+        neighborManager = new NeighborManager(neighborConfig, cellShapeType, gridLimit == GridLimit.TOROIDAL, upRowExtended);
     }
 }

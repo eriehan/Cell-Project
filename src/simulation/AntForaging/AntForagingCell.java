@@ -51,18 +51,9 @@ public class AntForagingCell extends CellWithInfo {
     }
 
     private void assignBooleanValues() {
-        if(getState()==CellState.OBSTACLE) {
-            putBooleanValues(true, false, false, false);
-        }
-        if(getState() == CellState.HOME) {
-            putBooleanValues(false, true, false, false);
-        }
-        if(getState() == CellState.FOOD) {
-            putBooleanValues(false, false, true, false);
-        }
-        else {
-            putBooleanValues(false, false, false, false);
-        }
+        CellState state = getState();
+        putBooleanValues(state==CellState.OBSTACLE, state == CellState.HOME,
+                state == CellState.FOOD, false);
     }
 
     private void putBooleanValues(boolean obstacle, boolean home, boolean food, boolean packed) {

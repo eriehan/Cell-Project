@@ -40,11 +40,11 @@ public class NeighborManager {
     private List<Point> allowedNeighbor;
     private List<Point> edgeNeighbors;
     private boolean toroidal;
-    private boolean upRowExtended = false;
+    private boolean upRowExtended;
     private CellShapeType cellShapeType;
 
     //default -> put "11111111" for eightBit.
-    public NeighborManager(String eightBit, CellShapeType cellShapeType, boolean toroidal) {
+    public NeighborManager(String eightBit, CellShapeType cellShapeType, boolean toroidal, boolean upRowExtended) {
         this.cellShapeType = cellShapeType;
         allowedNeighbor = calcAllowedAllNeighbors(eightBit);
         edgeNeighbors = calcAllowedEdgeNeighbors(eightBit);
@@ -142,7 +142,7 @@ public class NeighborManager {
         } else {
             List<Point> list = new ArrayList<>();
             for (int i = 0; i < str.length(); i++) {
-                if (str.charAt(i) == '1' && shapeNeighbor().contains(squareEdgeNeighbors.get(i))) {
+                if (str.charAt(i) == '1' && shapeNeighbor().contains(squareAllNeighbors.get(i))) {
                     list.add(squareAllNeighbors.get(i));
                 }
             }
@@ -156,7 +156,7 @@ public class NeighborManager {
         } else {
             List<Point> list = new ArrayList<>();
             for (int i = 1; i < str.length(); i += 2) {
-                if (str.charAt(i) == '1' && shapeEdgeNeighbor().contains(squareEdgeNeighbors.get(i))) {
+                if (str.charAt(i) == '1' && shapeEdgeNeighbor().contains(squareAllNeighbors.get(i))) {
                     list.add(squareAllNeighbors.get(i));
                 }
             }
@@ -166,20 +166,26 @@ public class NeighborManager {
 
     private List<Point> calcActualNeighbors(int row, int col) {
         if (downWardTriangle(row, col)) {
-            return downwardTriangleNeighbors;
+            return copyOfList(downwardTriangleNeighbors);
         } else if (leftSidedRowHexagon(row)) {
-            return leftSidedRowHexagonNeighbors;
+            return copyOfList(leftSidedRowHexagonNeighbors);
         }
-        return allowedNeighbor;
+        return copyOfList(allowedNeighbor);
     }
 
     private List<Point> calcActualEdgeNeighbors(int row, int col) {
         if (downWardTriangle(row, col)) {
-            return downwardTriangleEdgeNeighbors;
+            return copyOfList(downwardTriangleEdgeNeighbors);
         } else if (leftSidedRowHexagon(row)) {
-            return leftSidedRowHexagonNeighbors;
+            return copyOfList(leftSidedRowHexagonNeighbors);
         }
-        return edgeNeighbors;
+        return copyOfList(edgeNeighbors);
+    }
+
+    private List<Point> copyOfList(List<Point> lists) {
+        ArrayList<Point> temp = new ArrayList<>();
+        temp.addAll(lists);
+        return temp;
     }
 
     private boolean downWardTriangle(int row, int col) {
