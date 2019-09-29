@@ -1,9 +1,8 @@
 package userInterface;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.layout.*;
 
+import static userInterface.VisualizationConstants.CENTER_COLOR;
+import static userInterface.VisualizationConstants.NEIGHBOR_STYLE;
 
 public class NeighborButton extends SimulationButton {
     public static final int CENTER = 4;
@@ -14,10 +13,9 @@ public class NeighborButton extends SimulationButton {
         super("");
         this.idx = idx;
         this.setPrefSize(40,40);
-        this.setStyle("-fx-border-color: black;"+"-fx-background-color: White");
+        this.setStyle(NEIGHBOR_STYLE);
         if (idx==CENTER){
-            this.setText("*");
-            this.setStyle("-fx-background-color: Yellow");
+            this.setStyle(CENTER_COLOR);
         }
     }
 

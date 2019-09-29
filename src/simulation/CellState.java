@@ -2,42 +2,46 @@ package simulation;
 
 import javafx.scene.paint.Color;
 
+import java.util.ResourceBundle;
+
 public enum CellState {
-    ALIVE(Color.BLACK),
-    DEAD(Color.WHITE),
-    EMPTY(Color.WHITE),
+    ALIVE,
+    DEAD,
+    EMPTY,
 
-    DISATISFIED(Color.RED),
-    FIRSTAGENT(Color.RED),
-    SECONDAGENT(Color.BLUE),
+    DISATISFIED,
+    FIRSTAGENT,
+    SECONDAGENT,
 
-    FIREEMPTY(Color.YELLOW),
-    BURNING(Color.DARKRED),
-    TREE(Color.GREEN),
+    FIREEMPTY,
+    BURNING,
+    TREE,
 
-    OPEN(Color.WHITE),
-    PERCOLATED(Color.BLUE),
-    BLOCKED(Color.BLACK),
+    OPEN,
+    PERCOLATED,
+    BLOCKED,
 
-    WATER(Color.BLUE),
-    FISH(Color.CYAN),
-    SHARK(Color.GOLD),
+    WATER,
+    FISH,
+    SHARK,
 
-    ROCK(Color.BLUE),
-    PAPER(Color.RED),
-    SCISSOR(Color.GREEN),
+    ROCK,
+    PAPER,
+    SCISSOR,
 
-    OBSTACLE(Color.BROWN),
-    FOOD(Color.LIGHTGREEN),
-    HOME(Color.RED),
-    ANT(Color.GREY),
-    ANTFULL(Color.BLACK);
+    OBSTACLE,
+    FOOD,
+    HOME,
+    ANT,
+    ANTFULL;
 
 
     private Color myColor;
 
-    CellState(Color color) {
-        this.myColor = color;
+    public static final String PATH = "resources/StateColorResources";
+
+    CellState() {
+        this.myColor = Color.web(ResourceBundle.getBundle(PATH).getString(this.toString()));
     }
 
     public Color getMyColor() {

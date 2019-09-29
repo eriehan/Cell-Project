@@ -8,6 +8,8 @@ import java.util.Map;
 
 import static userInterface.NeighborButtonGrid.NUM_COL;
 import static userInterface.NeighborButtonGrid.NUM_ROW;
+import static userInterface.VisualizationConstants.NEIGHBOR_CHOSEN;
+import static userInterface.VisualizationConstants.NEIGHBOR_STYLE;
 
 public abstract class CellGrid {
 
@@ -62,11 +64,11 @@ public abstract class CellGrid {
         if (button.getIdx() != NeighborButton.CENTER){
             button.flipChosen();
             if (button.isChosen()){
-                button.setStyle("-fx-background-color: LightBlue");
+                button.setStyle(NEIGHBOR_CHOSEN);
                 neighbor[button.getIdx()] = 1;
             }
             else {
-                button.setStyle("-fx-background-color: White");
+                button.setStyle(NEIGHBOR_STYLE);
                 neighbor[button.getIdx()] = 0;
             }
             setNeighborConfig(makeNeighborString());
