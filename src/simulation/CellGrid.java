@@ -1,6 +1,10 @@
 package simulation;
 
-import userInterface.*;
+import userInterface.CellShapeType;
+import userInterface.ControlPanel;
+import userInterface.NeighborButtonGrid;
+import userInterface.SimulationSlider;
+import userInterface.NeighborButton;
 import utils.Point;
 
 import java.util.HashMap;
