@@ -25,10 +25,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 public abstract class AbstractXml {
-    private final String RESOURCE_FILE_PATH = "resources/XmlResources";
-    private final String defaultTitle = "Simulation";
+
+    Logger logger = Logger.getAnonymousLogger();
+
+    private static final String RESOURCE_FILE_PATH = "resources/XmlResources";
+    private static final String defaultTitle = "Simulation";
     private List<List<Integer>> myColArray = new ArrayList<>();
     private List<List<Integer>> myRowArray = new ArrayList<>();
     private List<Integer> agent0Col;
@@ -110,9 +116,11 @@ public abstract class AbstractXml {
         try {
             this.doc = this.docBuilder.parse(this.xmlFile);
         } catch (SAXException e) {
-            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
+            logger.log(Level.SEVERE, "an exception was thrown", e);
+           // this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
         } catch (IOException e) {
-            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
+           // this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
+            logger.log(Level.SEVERE, "an exception was thrown", e);
         }
 
         determineCellShape(this.doc);
@@ -139,7 +147,8 @@ public abstract class AbstractXml {
                     this.myUserInterface.changeTitle(this.myTitle);
                 }
                 catch (NullPointerException ex){
-                    this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_invalidSim"));
+                  //  this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_invalidSim"));
+                    logger.log(Level.SEVERE, "an exception was thrown", ex);
                     this.myUserInterface.changeTitle(this.defaultTitle);
 
                 }
@@ -351,7 +360,8 @@ public abstract class AbstractXml {
         try {
             createXmlFilePath(document, xmlFilePath);
         } catch (TransformerException e) {
-            myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
+            //myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
+            logger.log(Level.SEVERE, "an exception was thrown", e);
         }
     }
 
@@ -368,7 +378,8 @@ public abstract class AbstractXml {
         try {
             createXmlFilePath(document, xmlFilePath);
         } catch (TransformerException e) {
-            myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
+            //myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
+            logger.log(Level.SEVERE, "an exception was thrown", e);
         }
     }
 
