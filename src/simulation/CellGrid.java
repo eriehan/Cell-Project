@@ -1,18 +1,20 @@
 package simulation;
 
-import userInterface.CellShapeType;
-import userInterface.ControlPanel;
-import userInterface.SimulationSlider;
+import userInterface.*;
 import utils.Point;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static userInterface.NeighborButtonGrid.NUM_COL;
+import static userInterface.NeighborButtonGrid.NUM_ROW;
 
 public abstract class CellGrid {
 
     //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private Map<Point, Cell> gridOfCells = new HashMap<>();
     //true when cellgrid is fully stabilized, and nothing will change indefinitely.
+    private int[] neighbor = new int[NUM_COL*NUM_ROW];
     private boolean finished = false;
     private GridLimit gridLimit = GridLimit.FINITE;
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
@@ -36,12 +38,51 @@ public abstract class CellGrid {
 
     protected void initializeControlPanel(String controlsType) {
         this.getControlPanel().getMyColPane().getChildren().clear();
+        if (this.cellShapeType ==CellShapeType.RECTANGLE){
+            addNeighorButton();
+        }
         String[] controlsList = getControlPanel().getResourceBundle().getString(controlsType).split(",");
         for (String controlType : controlsList) {
             SimulationSlider segregationSlider = createSliderFromResourceFile(controlType);
             segregationSlider.getMySlider().valueProperty().addListener(e ->
                     sliderAction(controlType, (double) Math.round(segregationSlider.getMySlider().getValue())));
         }
+    }
+
+    private void addNeighorButton(){
+        NeighborButtonGrid neighborButtonGrid = new NeighborButtonGrid();
+        this.getControlPanel().getMyColPane().getChildren().add(neighborButtonGrid.getMyView());
+        for (NeighborButton button : neighborButtonGrid.getButtonList()){
+            button.setOnAction(e -> changeNeighbor(button));
+        }
+    }
+
+    private void changeNeighbor(NeighborButton button){
+        if (button.getIdx() != NeighborButton.CENTER){
+            button.flipChosen();
+            if (button.isChosen()){
+                button.setStyle("-fx-background-color: LightBlue");
+                neighbor[button.getIdx()] = 1;
+            }
+            else {
+                button.setStyle("-fx-background-color: White");
+                neighbor[button.getIdx()] = 0;
+            }
+        }
+        setNeighborConfig(makeNeighborString());
+    }
+
+    private String makeNeighborString(){
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<NUM_COL;i++){
+            sb.append(neighbor[i]);
+        }
+        sb.append(neighbor[5]);
+        for (int i=NUM_COL*NUM_ROW -1;i>NUM_COL*NUM_ROW -NUM_COL;i++){
+            sb.append(neighbor[i]);
+        }
+        sb.append(neighbor[3]);
+        return sb.toString();
     }
 
     protected abstract void sliderAction(String type, double inputPercentage);
