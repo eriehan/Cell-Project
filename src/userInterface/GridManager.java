@@ -1,6 +1,7 @@
 package userInterface;
 
 import javafx.scene.paint.Color;
+
 import simulation.*;
 import utils.Point;
 import xml.AbstractXml;

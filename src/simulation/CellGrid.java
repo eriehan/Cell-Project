@@ -265,7 +265,7 @@ public abstract class CellGrid {
     private Cell cellFromPoint(int row, int col) {
         return getGridOfCells().get(new Point(row, col));
     }
-    
+
     private void createNeighborManager() {
         neighborManager = new NeighborManager(neighborConfig, cellShapeType, gridLimit==GridLimit.TOROIDAL, upRowExtended);
     }

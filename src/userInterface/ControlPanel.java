@@ -3,7 +3,6 @@ package userInterface;
 import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ControlPanel {

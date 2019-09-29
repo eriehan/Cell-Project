@@ -1,12 +1,9 @@
 package userInterface;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.layout.*;
-
-
 public class NeighborButton extends SimulationButton {
     public static final int CENTER = 4;
+
+
     private static final String EMPTYSTYLE = "-fx-border-color: black;"+"-fx-background-color: White";
     private static final String CLICKEDSTYLE = "-fx-border-color: black;"+"-fx-background-color: LightBlue";
     private int idx;
@@ -32,6 +29,9 @@ public class NeighborButton extends SimulationButton {
     }
 
     public void flipChosen(){
+        if(idx==CENTER) {
+            return;
+        }
         chosen = !chosen;
         if(chosen) {
             this.setStyle(CLICKEDSTYLE);
