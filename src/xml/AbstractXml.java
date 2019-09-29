@@ -37,12 +37,7 @@ public abstract class AbstractXml {
     private static final int SIZE_OF_XML_STRING = 4;
     private List<List<Integer>> myColArray = new ArrayList<>();
     private List<List<Integer>> myRowArray = new ArrayList<>();
-    private List<Integer> agent0Col;
-    private List<Integer> agent0Row;
-    private List<Integer> agent1Col;
-    private List<Integer> agent1Row;
     protected List<Integer> percentage;
-    private File xmlFile;
     private String shape;
     protected int isSaved;
     protected int numAgents;
@@ -51,8 +46,6 @@ public abstract class AbstractXml {
     private int rate;
     private String myTitle;
     protected UserInterface myUserInterface;
-    private DocumentBuilderFactory documentBuilderFactory;
-    private DocumentBuilder docBuilder;
     protected Document doc;
     protected ResourceBundle resourceBundle;
     protected ArrayList<Integer> EnergyArray = new ArrayList<>();
@@ -109,12 +102,12 @@ public abstract class AbstractXml {
     }
 
     public void parse(String file) throws ParserConfigurationException {
-        this.xmlFile = new File(String.valueOf(file));
-        this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        this.docBuilder = this.documentBuilderFactory.newDocumentBuilder();
+        File xmlFile = new File(String.valueOf(file));
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
 
         try {
-            this.doc = this.docBuilder.parse(this.xmlFile);
+            this.doc = docBuilder.parse(xmlFile);
         } catch (SAXException e) {
             logger.log(Level.SEVERE, "an exception was thrown", e);
            // this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_parseFile"));
@@ -247,10 +240,10 @@ public abstract class AbstractXml {
 
     protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, List<List<Integer>> colArray,
                                  List<List<Integer>> rowArray){
-        agent0Col = new ArrayList<>();
-        agent0Row = new ArrayList<>();
-        agent1Col = new ArrayList<>();
-        agent1Row = new ArrayList<>();
+        List<Integer> agent0Col = new ArrayList<>();
+        List<Integer> agent0Row = new ArrayList<>();
+        List<Integer> agent1Col = new ArrayList<>();
+        List<Integer> agent1Row = new ArrayList<>();
         for (Map.Entry<Point, Cell> entry: myMap.entrySet()
         ) {
             Cell c = entry.getValue();
@@ -281,8 +274,8 @@ public abstract class AbstractXml {
 
 
     protected void saveCellState(Map<Point, Cell> myMap, CellState state1, List<List<Integer>> colArray, List<List<Integer>> rowArray){
-        agent0Col = new ArrayList<>();
-        agent0Row = new ArrayList<>();
+        List<Integer> agent0Col = new ArrayList<>();
+        List<Integer> agent0Row = new ArrayList<>();
         for (Map.Entry<Point, Cell> entry: myMap.entrySet()
         ) {
             Cell c = entry.getValue();
