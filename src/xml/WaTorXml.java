@@ -38,8 +38,7 @@ public class WaTorXml extends AbstractXml {
     }
 
 
-    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
-        //super.saveCurrentSimulation(myGridView, xmlFilePath);
+    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException {
         Document document = stageXml();
 
         Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
@@ -50,7 +49,13 @@ public class WaTorXml extends AbstractXml {
                 getMaturityArray().get(0), getEnergyArray().get(0));
         addAgents(document, "1", rowArray.get(1), colArray.get(1),
                 getMaturityArray().get(1), getEnergyArray().get(1));
-        createXmlFilePath(document, xmlFilePath);
+        try{
+            createXmlFilePath(document, xmlFilePath);
+        }
+        catch (TransformerException e){
+            this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
+        }
+
 
     }
 

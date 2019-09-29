@@ -6,7 +6,6 @@ import userInterface.UserInterface;
 
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.File;
 
 
@@ -16,7 +15,7 @@ public class GameOfLifeXml extends AbstractXml {
     }
 
 
-    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException, TransformerException {
+    public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException {
         super.saveCurrentSimulation(myGridView, CellState.ALIVE, xmlFilePath);
     }
 

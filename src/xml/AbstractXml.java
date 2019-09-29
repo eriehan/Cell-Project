@@ -48,7 +48,7 @@ public abstract class AbstractXml {
     private DocumentBuilderFactory documentBuilderFactory;
     private DocumentBuilder docBuilder;
     protected Document doc;
-    private ResourceBundle resourceBundle;
+    protected ResourceBundle resourceBundle;
     protected ArrayList<Integer> EnergyArray = new ArrayList<>();
     protected ArrayList<Integer> MaturityArray = new ArrayList<>();
     protected double evaporation;
@@ -287,8 +287,7 @@ public abstract class AbstractXml {
 
     }
 
-    protected void addAgents(Document document, String agentIdentifier,
-                             List<Integer> rowArray, List<Integer> colArray){
+    private Element createAgentElement(String agentIdentifier, Document document,List<Integer> rowArray, List<Integer> colArray){
         String agent = "Agent" + agentIdentifier;
         Element agentElement = document.createElement(agent);
         Element row = document.createElement("Row");
@@ -297,20 +296,24 @@ public abstract class AbstractXml {
         col.appendChild(document.createTextNode(convertArrayToString(colArray)));
         agentElement.appendChild(row);
         agentElement.appendChild(col);
+        return agentElement;
+
+    }
+
+    protected void addAgents(Document document, String agentIdentifier,
+                             List<Integer> rowArray, List<Integer> colArray){
+        Element agentElement = createAgentElement(agentIdentifier, document, rowArray, colArray);
+        addChildToDocument(document, agentElement);
+    }
+
+    protected void addChildToDocument(Document document, Element agentElement){
         document.getFirstChild().appendChild(agentElement);
     }
 
     protected void addAgents(Document document, String agentIdentifier,
                              List<Integer> rowArray, List<Integer> colArray,
                              int maturity, int energy){
-        String agent = "Agent" + agentIdentifier;
-        Element agentElement = document.createElement(agent);
-        Element row = document.createElement("Row");
-        row.appendChild(document.createTextNode(convertArrayToString(rowArray)));
-        Element col = document.createElement("Column");
-        col.appendChild(document.createTextNode(convertArrayToString(colArray)));
-        agentElement.appendChild(row);
-        agentElement.appendChild(col);
+        Element agentElement = createAgentElement(agentIdentifier, document, rowArray, colArray);
 
         Element ma = document.createElement("Mature");
         Element en = document.createElement("Energy");
@@ -353,7 +356,7 @@ public abstract class AbstractXml {
     }
 
     protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
-                                         File xmlFilePath) throws TransformerException, ParserConfigurationException {
+                                         File xmlFilePath) throws ParserConfigurationException {
         Document document = stageXml();
         Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
         List<List<Integer>> colArray = new ArrayList<>();
@@ -362,8 +365,11 @@ public abstract class AbstractXml {
         for(int i = 0; i < rowArray.size(); i++){
             addAgents(document, Integer.toString(i), rowArray.get(i), colArray.get(i));
         }
-
-        createXmlFilePath(document, xmlFilePath);
+        try {
+            createXmlFilePath(document, xmlFilePath);
+        } catch (TransformerException e) {
+            myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
+        }
     }
 
     public List<Integer> getEnergyArray() {
@@ -378,7 +384,7 @@ public abstract class AbstractXml {
         return copy;
     }
 
-    public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
+    public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException;
 
     public double getEvaporation(){
         return this.evaporation;
