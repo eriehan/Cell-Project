@@ -87,7 +87,9 @@ public class MainController extends Application {
     }
 
     private void step(double elapsedTime) {
-        if (setState) return;
+        if (setState) {
+            return;
+        }
         else if (updateTimer > updateFreq) {
             updateTimer = 0;
             myUserInterface.update();
@@ -175,6 +177,7 @@ public class MainController extends Application {
 
         myXml.changeRowNum(rowInput);
         this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+        this.myUserInterface.getMyGridView().addSeriesToChart();
 
     }
 
@@ -183,10 +186,12 @@ public class MainController extends Application {
         System.out.println("col input: " + colInput);
         myXml.changeColNum(colInput);
         this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+        this.myUserInterface.getMyGridView().addSeriesToChart();
     }
 
     private void setEdgeType(String edgeType) {
         System.out.println("for debug: " + edgeType);
+        myUserInterface.getMyGridView().getGridManager().changeEdgeTypeOfGrid(edgeType);
         //TODO: set edge type @Eric
     }
 
@@ -225,6 +230,7 @@ public class MainController extends Application {
 
         //System.out.println("In Main: " +myXml.getMaturityArray());
         myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+        this.myUserInterface.getMyGridView().addSeriesToChart();
         this.myUserInterface.addSimulationControls();
         this.myUserInterface.getMyGridView().displayGrid();
         this.myAnimation.pause();

@@ -13,13 +13,13 @@ import static userInterface.VisualizationConstants.ERROR_MSG_FONT_SIZE;
 import static userInterface.VisualizationConstants.FILE_PATH_FONT_SIZE;
 
 public class UserInterface {
-    private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 30);
+    private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 20);
     private static final int ERROR_MSG_TIME_LIMIT = 5;
-    private static final int SPACING = 20;
+    private static final int SPACING = 15;
     private static final double PADDING_TOP = 20;
     private static final double PADDING_OTHER = 50;
     private AbstractGridView myGridView;
-    private VBox titleAndGridCol;
+    private VBox firstColumn;
     private HBox hBox;
     private ControlsManager myControlsManager;
     private int numOfCols;
@@ -40,13 +40,12 @@ public class UserInterface {
 
     public Group setScene() {
         var root = new Group();
-        titleAndGridCol = new VBox(SPACING);
+        firstColumn = new VBox(SPACING);
         hBox = new HBox(SPACING);
         hBox.setPadding(new Insets(PADDING_TOP, PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
-        titleAndGridCol.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
-        hBox.getChildren().add(titleAndGridCol);
+        firstColumn.getChildren().addAll(simulationTitle, myGridView.getMyView());
+        hBox.getChildren().add(firstColumn);
         hBox.getChildren().add(myControlsManager.getMyPane());
-
         root.getChildren().add(hBox);
         return root;
     }
@@ -104,7 +103,7 @@ public class UserInterface {
         this.simulationFilePath = new Text(filePath);
         this.simulationFilePath.setFont(Font.font("Arial", FontWeight.BOLD, FILE_PATH_FONT_SIZE));
         this.simulationFilePath.setFill(Color.CORNFLOWERBLUE);
-        this.titleAndGridCol.getChildren().add(this.simulationFilePath);
+        this.firstColumn.getChildren().add(this.simulationFilePath);
     }
 
     public void setCellShape(CellShapeType type) {
@@ -119,8 +118,8 @@ public class UserInterface {
             myGridView = new HexagonGridView(numOfRows, numOfCols);
         }
         myGridView.generateBlankGrid();
-        titleAndGridCol.getChildren().clear();
-        titleAndGridCol.getChildren().addAll(simulationTitle, myGridView.getMyGridPane());
+        firstColumn.getChildren().clear();
+        firstColumn.getChildren().addAll(simulationTitle, myGridView.getMyView());
     }
 
     public PauseButton getPauseButton() {

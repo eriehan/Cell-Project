@@ -1,7 +1,6 @@
 package userInterface;
 
 import javafx.scene.paint.Color;
-
 import simulation.*;
 import simulation.AntForaging.AntForagingCellGrid;
 import utils.Point;
@@ -9,12 +8,14 @@ import xml.AbstractXml;
 import xml.AntForagingXml;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GridManager {
     private AbstractXml myXml;
     private CellGrid cellGrid;
     private Map<Point, CellState> initialConfigMap;
+    private List<CellState> stateList;
 
     public void initializeMyCellGrid(AbstractXml myXml) {
         this.myXml = myXml;
@@ -44,8 +45,8 @@ public class GridManager {
                 System.out.println(myXml.getDiffusion());
                 break;
             case "Rock Paper Scissors":
-                cellGrid = new RockPaperScissorGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(),
-                        myXml.getPercentage());
+                cellGrid = new RockPaperScissorGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getPercentage());
+                this.stateList = RockPaperScissorCell.STATES_LIST;
         }
         cellGrid.initializeGrids(initialConfigMap);
         cellGrid.assignNeighborsToEachCell();
@@ -66,6 +67,7 @@ public class GridManager {
             }
         }
         this.initialConfigMap = configMap;
+        this.stateList = SegregationCell.STATES_LIST;
         cellGrid = new SegregationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getRate());
 
     }
@@ -78,6 +80,7 @@ public class GridManager {
             }
         }
         this.initialConfigMap = configMap;
+        this.stateList = GameOfLifeCell.STATES_LIST;
         cellGrid = new GameOfLifeCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum());
     }
 
@@ -95,6 +98,7 @@ public class GridManager {
             }
         }
         this.initialConfigMap = configMap;
+        this.stateList = WaTorCell.STATES_LIST;
         cellGrid = new WaTorCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getMaturityArray(), myXml.getEnergyArray());
     }
 
@@ -113,6 +117,7 @@ public class GridManager {
 
         }
         this.initialConfigMap = configMap;
+        this.stateList = PercolationCell.STATES_LIST;
         cellGrid = new PercolationCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum());
 
     }
@@ -131,6 +136,7 @@ public class GridManager {
             }
         }
         this.initialConfigMap = configMap;
+        this.stateList = FireCell.STATES_LIST;
         cellGrid = new FireCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate());
 
     }
@@ -155,4 +161,20 @@ public class GridManager {
         getCellGrid().initializeGrids(initialConfigMap);
         getCellGrid().assignNeighborsToEachCell();
     }
+
+    public void changeEdgeTypeOfGrid(String type) {
+        if(type.equals("toroidal")) {
+            getCellGrid().setGridLimit(GridLimit.TOROIDAL);
+        } else if(type.equals("finite")) {
+            getCellGrid().setGridLimit(GridLimit.FINITE);
+        } else if(type.equals("infinite")) {
+            getCellGrid().setGridLimit(GridLimit.INFINITE);
+        }
+    }
+
+    public List<CellState> getStateList() {
+        return stateList;
+    }
+
+
 }

@@ -9,7 +9,7 @@ public class RockPaperScissorCell extends Cell {
     private static final CellState SCISSOR = CellState.SCISSOR;
     private static final CellAttribute THRESHOLD = CellAttribute.THRESHOLD;
 
-    private static final List<CellState> STATES_LIST = Arrays.asList(ROCK, PAPER, SCISSOR);
+    public static final List<CellState> STATES_LIST = Arrays.asList(ROCK, PAPER, SCISSOR);
     private int threshold;
 
     public RockPaperScissorCell(int row, int col, CellState state, int threshold) {
