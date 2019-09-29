@@ -109,6 +109,7 @@ public class UserInterface {
 
     public void setCellShape(CellShapeType type) {
         if (type == CellShapeType.RECTANGLE) {
+
             myGridView = new RectangleGridView(numOfRows, numOfCols);
         }
         if (type == CellShapeType.TRIANGLE) {

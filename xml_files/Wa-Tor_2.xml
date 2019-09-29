@@ -3,8 +3,8 @@
 
 <Simulation>
     <Author>Diane Lin</Author>
-    <Shape name="rectangle">1</Shape>
-    <Type name="Wa-Tor">2</Type>
+    <Shape name = "rectangle">1</Shape>
+    <Type name = "Wa-Tor">2</Type>
     <Saved>0</Saved>
 
     <Row>15</Row>
