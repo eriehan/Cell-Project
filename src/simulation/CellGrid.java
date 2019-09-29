@@ -110,6 +110,23 @@ public abstract class CellGrid {
     //Iterates through all cells and change state.
     public abstract void changeAllCells();
 
+    public Map<CellState,Integer> countStates(){
+        Map<CellState,Integer> stateCounts = new HashMap<>();
+        for (int row = 0; row < getNumOfRows(); row++) {
+            for (int col = 0; col < getNumOfCols(); col++) {
+                if (!stateCounts.containsKey(this.stateOfCellAtPoint(row,col))){
+                    stateCounts.put(this.stateOfCellAtPoint(row,col),1);
+                }
+                else{
+                    stateCounts.replace(this.stateOfCellAtPoint(row,col),stateCounts.get(this.stateOfCellAtPoint(row,col))+1);
+                }
+            }
+        }
+        System.out.println(stateCounts);
+        return stateCounts;
+    }
+
+
     protected void createEmptyRow(int row) {
         for (int col = 0; col < getNumOfCols(); col++) {
             addEmptyStateToCell(row, col);

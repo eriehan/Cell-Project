@@ -6,7 +6,7 @@ public class PercolationCell extends Cell {
     private static final CellState PERCOLATED = CellState.PERCOLATED;
     private static final CellState OPEN = CellState.OPEN;
     private static final CellState BLOCKED = CellState.BLOCKED;
-    private static final List<CellState> STATES_LIST = List.of(OPEN, BLOCKED, PERCOLATED);
+    public static final List<CellState> STATES_LIST = List.of(OPEN, BLOCKED, PERCOLATED);
 
     public PercolationCell(int row, int col, CellState state) {
         super(row, col, state);

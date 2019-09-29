@@ -177,6 +177,7 @@ public class MainController extends Application {
 
         myXml.changeRowNum(rowInput);
         this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+        this.myUserInterface.getMyGridView().addSeriesToChart();
 
     }
 
@@ -185,6 +186,7 @@ public class MainController extends Application {
         System.out.println("col input: " + colInput);
         myXml.changeColNum(colInput);
         this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+        this.myUserInterface.getMyGridView().addSeriesToChart();
     }
 
     private void setEdgeType(String edgeType) {
@@ -228,6 +230,7 @@ public class MainController extends Application {
 
         //System.out.println("In Main: " +myXml.getMaturityArray());
         myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+        this.myUserInterface.getMyGridView().addSeriesToChart();
         this.myUserInterface.addSimulationControls();
         this.myUserInterface.getMyGridView().displayGrid();
         this.myAnimation.pause();
