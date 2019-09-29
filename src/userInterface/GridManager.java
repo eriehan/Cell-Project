@@ -3,8 +3,10 @@ package userInterface;
 import javafx.scene.paint.Color;
 
 import simulation.*;
+import simulation.AntForaging.AntForagingCellGrid;
 import utils.Point;
 import xml.AbstractXml;
+import xml.AntForagingXml;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,8 +36,16 @@ public class GridManager {
             case "Fire":
                 setFire(configMap);
                 break;
+            case "Ant Foraging":
+                cellGrid = new AntForagingCellGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(),
+                        myXml.getMaxAnts(), myXml.getEvaporation(), myXml.getDiffusion());
+                System.out.println(myXml.getMaxAnts());
+                System.out.println(myXml.getEvaporation());
+                System.out.println(myXml.getDiffusion());
+                break;
             case "Rock Paper Scissors":
-                cellGrid = new RockPaperScissorGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(), myXml.getPercentage());
+                cellGrid = new RockPaperScissorGrid(myXml.getCellGridRowNum(), myXml.getCellGridColNum(), myXml.getRate(),
+                        myXml.getPercentage());
         }
         cellGrid.initializeGrids(initialConfigMap);
         cellGrid.assignNeighborsToEachCell();

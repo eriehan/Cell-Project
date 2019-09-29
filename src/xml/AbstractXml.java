@@ -51,6 +51,12 @@ public abstract class AbstractXml {
     private ResourceBundle resourceBundle;
     protected ArrayList<Integer> EnergyArray = new ArrayList<>();
     protected ArrayList<Integer> MaturityArray = new ArrayList<>();
+    protected double evaporation;
+    protected double diffusion;
+    protected int maxAnts;
+    protected int birthRate;
+
+
 
 
 
@@ -226,7 +232,7 @@ public abstract class AbstractXml {
                 endIndex++;
             }
         }
-        myInts.add(Integer.parseInt("" + myStringBuilder.charAt(myStringBuilder.length()-1)));
+        myInts.add(Integer.parseInt("" + myStringBuilder.charAt(myStringBuilder.length() - 1)));
         return myInts;
     }
 
@@ -374,4 +380,20 @@ public abstract class AbstractXml {
 
     public abstract void saveCurrentSimulation(AbstractGridView myGridView, File myConfigFile) throws ParserConfigurationException, TransformerException;
 
+    public double getEvaporation(){
+        return this.evaporation;
+
+    }
+
+    public double getDiffusion(){
+        return this.diffusion;
+    }
+
+    public int getMaxAnts(){
+        return this.maxAnts;
+    }
+
+    public int getBirthRate(){
+        return this.birthRate;
+    }
 }

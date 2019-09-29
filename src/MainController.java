@@ -254,6 +254,9 @@ public class MainController extends Application {
         } else if (s.charAt(0) == 'R') {
             myXml = new RockPaperScissorsXml(this.myUserInterface);
         }
+        else if(s.charAt(0) == 'A'){
+            myXml = new AntForagingXml(this.myUserInterface);
+        }
 
     }
 
