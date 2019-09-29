@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public abstract class AbstractXml {
@@ -35,6 +34,7 @@ public abstract class AbstractXml {
 
     private static final String RESOURCE_FILE_PATH = "resources/XmlResources";
     private static final String defaultTitle = "Simulation";
+    private static final int SIZE_OF_XML_STRING = 4;
     private List<List<Integer>> myColArray = new ArrayList<>();
     private List<List<Integer>> myRowArray = new ArrayList<>();
     private List<Integer> agent0Col;
@@ -149,7 +149,7 @@ public abstract class AbstractXml {
                 catch (NullPointerException ex){
                   //  this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_invalidSim"));
                     logger.log(Level.SEVERE, "an exception was thrown", ex);
-                    this.myUserInterface.changeTitle(this.defaultTitle);
+                    this.myUserInterface.changeTitle(defaultTitle);
 
                 }
                 this.numAgents = Integer.parseInt(currentSimulationElement.getTextContent());
@@ -338,8 +338,7 @@ public abstract class AbstractXml {
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSource = new DOMSource(document);
         StringBuilder file = new StringBuilder(String.valueOf(xmlFilePath));
-        int sizeOfXmlString = 4;
-        String filePath = file.substring(0, file.length() - sizeOfXmlString);
+        String filePath = file.substring(0, file.length() - SIZE_OF_XML_STRING);
         filePath = filePath + "Saved.xml";
         StreamResult streamResult = new StreamResult(new File(filePath));
         transformer.transform(domSource, streamResult);
