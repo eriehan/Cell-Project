@@ -80,11 +80,11 @@ public abstract class CellGrid {
             System.out.println(neighbor[i]);
             sb.append(neighbor[i]);
         }
-        sb.append(neighbor[5]);
+        sb.append(neighbor[(NUM_ROW-1)*NUM_COL-1]);
         for (int i=NUM_COL*NUM_ROW -1;i>NUM_COL*(NUM_ROW-1)-1;i--){
             sb.append(neighbor[i]);
         }
-        sb.append(neighbor[3]);
+        sb.append(neighbor[NUM_COL]);
         return sb.toString();
     }
 

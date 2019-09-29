@@ -156,7 +156,7 @@ public class NeighborManager {
         } else {
             List<Point> list = new ArrayList<>();
             for (int i = 1; i < str.length(); i += 2) {
-                if (str.charAt(i) == '1' && shapeEdgeNeighbor().contains(squareEdgeNeighbors.get(i))) {
+                if (str.charAt(i) == '1' && shapeEdgeNeighbor().contains(squareAllNeighbors.get(i))) {
                     list.add(squareAllNeighbors.get(i));
                 }
             }
