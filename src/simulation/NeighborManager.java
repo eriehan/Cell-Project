@@ -81,10 +81,9 @@ public class NeighborManager {
             row += direction.getRow();
             col += direction.getCol();
             if (!toroidal) {
-                if (row < 0 || row >= numOfRows) {
-                    continue;
-                }
-                if (col < 0 || col >= numOfCols) {
+                boolean rowOutOfBounds = row<0 || row >= numOfRows;
+                boolean colOutOfBounds = col<0 || col >= numOfCols;
+                if (rowOutOfBounds || colOutOfBounds) {
                     continue;
                 }
             }
