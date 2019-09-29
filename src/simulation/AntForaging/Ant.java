@@ -22,7 +22,6 @@ public class Ant extends Individual{
     public Ant(GridInfo gridInfo, List<Point> orderedDirections) {
         super(gridInfo);
         myDirections.addAll(orderedDirections);
-        System.out.println(myDirections.size() + "sdfs");
         //if this is initialized as false, it will change this state to true inside
         //its home.
         hasFoodItem = false;
@@ -49,6 +48,7 @@ public class Ant extends Individual{
             changeGridInfo(destinationDirection(directions));
         }
         dropFood();
+        System.out.println(hasFoodItem);
         survivedTime++;
         if(lifeTime < survivedTime) {
             setDead(true);
@@ -138,6 +138,7 @@ public class Ant extends Individual{
                 max = Math.max(max, neighborGridInfo.getNumberAttribute(GridAttribute.HOMEPHEROMONE));
             }
         }
+        System.out.println(max);
         return max;
     }
 

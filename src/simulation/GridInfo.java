@@ -31,8 +31,9 @@ public abstract class GridInfo {
 
     //to know its neighbors
     public void setPossibleOrderedDirections(List<Point> orderedDirections) {
-        possibleOrderedDirections.clear();
-        possibleOrderedDirections.addAll(orderedDirections);
+        List<Point> list = new ArrayList<>();
+        list.addAll(orderedDirections);
+        possibleOrderedDirections = list;
     }
 
     public List<Point> getPossibleOrderedDirections() {
@@ -51,7 +52,7 @@ public abstract class GridInfo {
 
     public void multiplyNumberAttributes(GridAttribute gridAttribute, double num) {
         if (gridAttributes.containsKey(gridAttribute)) {
-            gridAttributes.put(gridAttribute, num * gridAttributes.get(gridAttribute));
+            gridAttributes.put(gridAttribute, num * getNumberAttribute(gridAttribute));
         }
     }
 
@@ -59,7 +60,7 @@ public abstract class GridInfo {
         if (!gridAttributes.containsKey(gridAttribute)) {
             putNumberAttributes(gridAttribute, num);
         } else {
-            gridAttributes.put(gridAttribute, num + gridAttributes.get(gridAttribute));
+            gridAttributes.put(gridAttribute, num + getNumberAttribute(gridAttribute));
         }
     }
 

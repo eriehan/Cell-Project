@@ -19,8 +19,8 @@ public class AntForagingXml extends AbstractXml {
 
     protected void setUpSimulationParameters(){
         super.setUpSimulationParameters();
-        int tempDiff = Integer.parseInt(doc.getElementsByTagName("Diffusion").item(0).getTextContent());
-        int tempEvap = Integer.parseInt(doc.getElementsByTagName("Evaporation").item(0).getTextContent());
+        double tempDiff = Double.parseDouble(doc.getElementsByTagName("Diffusion").item(0).getTextContent());
+        double tempEvap = Double.parseDouble(doc.getElementsByTagName("Evaporation").item(0).getTextContent());
         this.diffusion = tempDiff/INT_TO_PERCENT;
         this.evaporation = tempEvap/INT_TO_PERCENT;
         NodeList agent = doc.getElementsByTagName("Agent0");

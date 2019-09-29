@@ -2,10 +2,6 @@ package simulation.AntForaging;
 
 import simulation.GridInfo;
 import simulation.Individual;
-import utils.Point;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AntGridInfo extends GridInfo {
 
@@ -23,6 +19,7 @@ public class AntGridInfo extends GridInfo {
 
     @Override
     public void createIndividual() {
+        System.out.println(getPossibleOrderedDirections().toString());
         addIndividual(new Ant(this, getPossibleOrderedDirections()));
     }
 
@@ -47,8 +44,8 @@ public class AntGridInfo extends GridInfo {
         for(Individual ant : getIndividuals()) {
             ant.setMoved(false);
         }
-        manageEvaporation();
         manageDiffusion();
+        manageEvaporation();
 
         if(!getIndividuals().isEmpty()) {
             if(getBooleanAttribute(GridAttribute.ISFOOD)) {
@@ -68,8 +65,8 @@ public class AntGridInfo extends GridInfo {
 
 
     private void manageEvaporation() {
-        multiplyNumberAttributes(HOMEPHEROMONE, (HUNDRED - getNumberAttribute(EVAPORATION) / HUNDRED));
-        multiplyNumberAttributes(FOODPHEROMONE, (HUNDRED - getNumberAttribute(EVAPORATION) / HUNDRED));
+        multiplyNumberAttributes(HOMEPHEROMONE, (HUNDRED - getNumberAttribute(EVAPORATION)) / HUNDRED);
+        multiplyNumberAttributes(FOODPHEROMONE, (HUNDRED - getNumberAttribute(EVAPORATION)) / HUNDRED);
     }
 
     private void checkIfGridFull() {
@@ -78,6 +75,7 @@ public class AntGridInfo extends GridInfo {
 
     private void manageDiffusion() {
         double diffusionRate = getNumberAttribute(GridAttribute.DIFFUSION);
+        if(getBooleanAttribute(GridAttribute.ISFOOD)) {System.out.println(diffusionRate * getNumberAttribute(FOODPHEROMONE) / getNeighborGrids().size() + "sdfsfsdf");}
         int neighborNum = getNeighborGrids().size();
         for(GridInfo neighbor : getNeighborGrids()) {
             neighbor.addToNumberAttributes(HOMEPHEROMONE, diffusionRate * getNumberAttribute(HOMEPHEROMONE) / neighborNum);

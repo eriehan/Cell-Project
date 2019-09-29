@@ -55,8 +55,8 @@ public class AntForagingCellGrid extends CellGrid {
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
         AntForagingCell cell = new AntForagingCell(row, col, CellState.EMPTY, maxAnt, evaporation, diffusion);
-        cell.addOrderedNeighborDirections(getNeighborManager().getOrderedNeighborDirections(cell, getNumOfRows(), getNumOfCols()));
         addToGridOfCells(point, cell);
+        cell.addOrderedNeighborDirections(getNeighborManager().getOrderedNeighborDirections(cell, getNumOfRows(), getNumOfCols()));
     }
 
     private void createEmptyMap() {

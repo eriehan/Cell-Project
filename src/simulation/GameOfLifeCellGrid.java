@@ -52,7 +52,6 @@ public class GameOfLifeCellGrid extends CellGrid {
     @Override
     public void changeAllCells() {
         for (Cell cell : getGridOfCells().values()) {
-            System.out.println(cell.getState() + ", " + cell.getRow() + ", " + cell.getCol());
             cell.changeState();
         }
         cellGridExpand();

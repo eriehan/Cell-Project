@@ -7,8 +7,10 @@ import utils.Point;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class AntForagingCell extends CellWithInfo {
 
+    private static final double MAXPHEROMONE = 1000;
     public static final List<CellState> STATES_LIST = Arrays.asList(CellState.EMPTY, CellState.HOME, CellState.FOOD,
             CellState.ANT, CellState.ANTFULL);
     private static final int BIRTHRATE = 2;
@@ -23,12 +25,12 @@ public class AntForagingCell extends CellWithInfo {
         getMyGridInfo().putNumberAttributes(GridAttribute.DIFFUSION, diffusion);
         getMyGridInfo().putNumberAttributes(GridAttribute.MAXANT, maxAnt);
         assignBooleanValues();
+        assignPheromones();
     }
 
     @Override
     public void check() {
         if(getMyGridInfo().getNeighborGrids().isEmpty()) {
-            System.out.println("sdf");
             addNeighborsToMyGridInfo();
         }
         //to be added. Have not figured out how to implement.
@@ -61,6 +63,17 @@ public class AntForagingCell extends CellWithInfo {
         getMyGridInfo().setPossibleOrderedDirections(directions);
     }
 
+    @Override
+    public void setState(CellState state) {
+        CellState curState = getState();
+        super.setState(state);
+
+        if(curState != getState() && (getState()==CellState.FOOD || getState()==CellState.HOME)) {
+            assignPheromones();
+            assignBooleanValues();
+        }
+    }
+
     private void createAnts() {
         for(int i=0; i<birthrate; i++) {
             getMyGridInfo().createIndividual();
@@ -78,5 +91,13 @@ public class AntForagingCell extends CellWithInfo {
         getMyGridInfo().putBooleanAttributes(GridAttribute.ISHOME, home);
         getMyGridInfo().putBooleanAttributes(GridAttribute.ISFOOD, food);
         getMyGridInfo().putBooleanAttributes(GridAttribute.ISPACKED, packed);
+    }
+
+    private void assignPheromones() {
+        if(getState()==CellState.HOME) {
+            getMyGridInfo().putNumberAttributes(GridAttribute.HOMEPHEROMONE, MAXPHEROMONE);
+        } else if(getState()==CellState.FOOD) {
+            getMyGridInfo().putNumberAttributes(GridAttribute.FOODPHEROMONE, MAXPHEROMONE);
+        }
     }
 }
