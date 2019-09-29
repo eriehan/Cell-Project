@@ -12,8 +12,7 @@ public abstract class CellGrid {
 
     //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private Map<Point, Cell> gridOfCells = new HashMap<>();
-    //true when cellgrid is fully stabilized, and nothing will change indefinitely.
-    private boolean finished = false;
+
     private GridLimit gridLimit = GridLimit.FINITE;
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
@@ -144,10 +143,6 @@ public abstract class CellGrid {
         return neighborManager;
     }
 
-    protected void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
     public CellShapeType getCellShapeType() {
         return cellShapeType;
     }
@@ -163,16 +158,6 @@ public abstract class CellGrid {
         assignNeighborsToEachCell();
     }
 
-    public void setGridLimit(String str) {
-        if (str.equals("toroidal")) {
-            setGridLimit(GridLimit.TOROIDAL);
-        } else if (str.equals("infinite")) {
-            setGridLimit(GridLimit.INFINITE);
-        } else {
-            setGridLimit(GridLimit.FINITE);
-        }
-    }
-
     public int getNumOfRows() {
         return numOfRows;
     }
@@ -185,9 +170,9 @@ public abstract class CellGrid {
         return controlPanel;
     }
 
-    public void setControlPanel(ControlPanel newControlPanel) {
+    /*public void setControlPanel(ControlPanel newControlPanel) {
         controlPanel = newControlPanel;
-    }
+    }*/
 
     private boolean isRowEmpty(int rowNum) {
         for (int col = 0; col < numOfCols; col++) {
@@ -246,11 +231,7 @@ public abstract class CellGrid {
         return getGridOfCells().get(new Point(row, col));
     }
 
-    private boolean isToroidal() {
-        return gridLimit == GridLimit.TOROIDAL;
-    }
-
     private void createNeighborManager() {
-        neighborManager = new NeighborManager(neighborConfig, cellShapeType, isToroidal());
+        neighborManager = new NeighborManager(neighborConfig, cellShapeType, gridLimit == GridLimit.TOROIDAL);
     }
 }

@@ -166,20 +166,26 @@ public class NeighborManager {
 
     private List<Point> calcActualNeighbors(int row, int col) {
         if (downWardTriangle(row, col)) {
-            return downwardTriangleNeighbors;
+            return copyOfList(downwardTriangleNeighbors);
         } else if (leftSidedRowHexagon(row)) {
-            return leftSidedRowHexagonNeighbors;
+            return copyOfList(leftSidedRowHexagonNeighbors);
         }
-        return allowedNeighbor;
+        return copyOfList(allowedNeighbor);
     }
 
     private List<Point> calcActualEdgeNeighbors(int row, int col) {
         if (downWardTriangle(row, col)) {
-            return downwardTriangleEdgeNeighbors;
+            return copyOfList(downwardTriangleEdgeNeighbors);
         } else if (leftSidedRowHexagon(row)) {
-            return leftSidedRowHexagonNeighbors;
+            return copyOfList(leftSidedRowHexagonNeighbors);
         }
-        return edgeNeighbors;
+        return copyOfList(edgeNeighbors);
+    }
+
+    private List<Point> copyOfList(List<Point> lists) {
+        ArrayList<Point> temp = new ArrayList<>();
+        temp.addAll(lists);
+        return temp;
     }
 
     private boolean downWardTriangle(int row, int col) {
