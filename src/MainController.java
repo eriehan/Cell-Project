@@ -174,12 +174,17 @@ public class MainController extends Application {
         int rowInput = Integer.parseInt(row);
         System.out.println("row input: " + rowInput);
         // TODO: change grid size (row)
+        myXml.changeRowNum(rowInput);
+        this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
+
     }
 
     private void changeNumberOfCol(String col) {
         int colInput = Integer.parseInt(col);
         System.out.println("col input: " + colInput);
         // TODO: change grid size (row)
+        myXml.changeColNum(colInput);
+        this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
     }
 
     private void setEdgeType(String edgeType) {
