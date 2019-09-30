@@ -15,6 +15,7 @@ public class GameOfLifeXml extends AbstractXml {
     }
 
 
+
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException {
         super.saveCurrentSimulation(myGridView, CellState.ALIVE, xmlFilePath);
     }

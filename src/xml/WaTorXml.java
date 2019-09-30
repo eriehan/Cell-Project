@@ -8,7 +8,6 @@ import simulation.CellState;
 import userInterface.AbstractGridView;
 import userInterface.UserInterface;
 import utils.Point;
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
@@ -41,7 +40,6 @@ public class WaTorXml extends AbstractXml {
 
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException {
         Document document = stageXml();
-
         Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();
         List<List<Integer>> colArray = new ArrayList<>();
         List<List<Integer>> rowArray = new ArrayList<>();

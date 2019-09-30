@@ -109,4 +109,7 @@ When the size(# of rows, cols) of the 2D grid of cells gets very big, the simula
     * note: for hexagon cells, the grid height is shrinked to keep the hexagon shape
 * there is a grid of buttons of the side of rectangular cell grid, the user can select the cells that counts as neighbor, thus changing the game rules dynamically
 * Edge types...
-* 
+* Save the current simulation to a new xml file that can be loaded into the program
+* Error checking and handling for 
+    * invalid/no simulation type given
+    * invalid cell location values given
