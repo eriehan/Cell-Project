@@ -7,8 +7,8 @@
     <Type name="Wa-Tor">2</Type>
     <Saved>0</Saved>
 
-    <Row>10</Row>
-    <Col>10</Col>
+    <Row>50</Row>
+    <Col>50</Col>
     <Rate>0</Rate>
     <Agent0>
         <Energy>4</Energy>
