@@ -40,15 +40,13 @@ public class NeighborManager {
     private List<Point> allowedNeighbor;
     private List<Point> edgeNeighbors;
     private boolean toroidal;
-    private boolean upRowExtended;
     private CellShapeType cellShapeType;
 
     //default -> put "11111111" for eightBit.
-    public NeighborManager(String eightBit, CellShapeType cellShapeType, boolean toroidal, boolean upRowExtended) {
+    public NeighborManager(String eightBit, CellShapeType cellShapeType, boolean toroidal) {
         this.cellShapeType = cellShapeType;
         allowedNeighbor = calcAllowedAllNeighbors(eightBit);
         edgeNeighbors = calcAllowedEdgeNeighbors(eightBit);
-        this.upRowExtended = upRowExtended;
         this.toroidal = toroidal;
     }
 
@@ -170,7 +168,11 @@ public class NeighborManager {
     private List<Point> calcActualNeighbors(int row, int col) {
         if (downWardTriangle(row, col)) {
             return copyOfList(downwardTriangleNeighbors);
-        } else if (leftSidedRowHexagon(row)) {
+        } else if (upwardTriangle(row, col)) {
+            return copyOfList(upwardTriangleNeighbors);
+        } else if(rightSidedRowHexagon(row)) {
+            return copyOfList(rightSidedRowHexagonNeighbors);
+        } else if(leftSidedRowHexagon(row)) {
             return copyOfList(leftSidedRowHexagonNeighbors);
         }
         return copyOfList(allowedNeighbor);
@@ -181,8 +183,10 @@ public class NeighborManager {
             return copyOfList(downwardTriangleEdgeNeighbors);
         } else if (leftSidedRowHexagon(row)) {
             return copyOfList(leftSidedRowHexagonNeighbors);
+        } else if(cellShapeType == CellShapeType.RECTANGLE) {
+            return copyOfList(edgeNeighbors);
         }
-        return copyOfList(edgeNeighbors);
+        return calcActualNeighbors(row, col);
     }
 
     private List<Point> copyOfList(List<Point> lists) {
@@ -192,22 +196,18 @@ public class NeighborManager {
     }
 
     private boolean downWardTriangle(int row, int col) {
-        boolean case1 = upRowExtended && (row + col) % 2 != 0;
-        boolean case2 = !upRowExtended && (row + col) % 2 == 0;
-        return cellShapeType == CellShapeType.TRIANGLE && (case1 || case2);
+        return cellShapeType == CellShapeType.TRIANGLE && (row+col) % 2 == 0;
     }
 
     private boolean upwardTriangle(int row, int col) {
-        return !downWardTriangle(row, col) && cellShapeType == CellShapeType.TRIANGLE;
+        return (row+col) % 2 != 0 && cellShapeType == CellShapeType.TRIANGLE;
     }
 
     private boolean leftSidedRowHexagon(int row) {
-        boolean case1 = upRowExtended && row % 2 == 0;
-        boolean case2 = !upRowExtended && row % 2 != 0;
-        return cellShapeType == CellShapeType.HEXAGON && (case1 || case2);
+        return cellShapeType == CellShapeType.HEXAGON && row%2 != 0;
     }
 
     private boolean rightSidedRowHexagon(int row) {
-        return !leftSidedRowHexagon(row) && cellShapeType == CellShapeType.HEXAGON;
+        return row%2 == 0 && cellShapeType == CellShapeType.HEXAGON;
     }
 }

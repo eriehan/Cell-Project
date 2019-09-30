@@ -16,8 +16,8 @@ initial location of home
     <Shape name="rectangle">1</Shape>
     <Saved>0</Saved>
     <Type name="Ant Foraging">2</Type>
-    <Row>20</Row>
-    <Col>20</Col>
+    <Row>60</Row>
+    <Col>60</Col>
 
 
     <Rate>10</Rate>
@@ -35,7 +35,7 @@ initial location of home
 
     <!-- food -->
     <Agent1>
-        <Row>10</Row>
-        <Column>10</Column>
+        <Row>50</Row>
+        <Column>40</Column>
     </Agent1>
 </Simulation>

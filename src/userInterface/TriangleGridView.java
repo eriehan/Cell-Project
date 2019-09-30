@@ -29,10 +29,10 @@ public class TriangleGridView extends AbstractGridView {
     @Override
     public void createGrid() {
         boolean rowFlag = true;
-        double width = this.getGridWidth() / (WIDTH_PADDING_RATIO + getNumOfCols() / WIDTH_RATIO);
-        double height = this.getGridHeight() / getNumOfRows();
-        for (int r = 0; r < getNumOfRows(); r++) {
-            for (int c = 0; c < getNumOfCols() / WIDTH_RATIO; c++) {
+        double width = this.getGridWidth() / (WIDTH_PADDING_RATIO + getGridManager().getCellGrid().getNumOfCols() / WIDTH_RATIO);
+        double height = this.getGridHeight() / getGridManager().getCellGrid().getNumOfRows();
+        for (int r = 0; r < getGridManager().getCellGrid().getNumOfRows(); r++) {
+            for (int c = 0; c < getGridManager().getCellGrid().getNumOfCols() / WIDTH_RATIO; c++) {
                 Polygon upTriangle = new Polygon();
                 upTriangle.getPoints().addAll(
                         START_POINT, START_POINT,

@@ -13,6 +13,8 @@ import static userInterface.VisualizationConstants.NEIGHBOR_STYLE;
 
 public abstract class CellGrid {
 
+    private static final String INITIAL_CONFIG = "11111111";
+
     //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private Map<Point, Cell> gridOfCells = new HashMap<>();
 
@@ -23,10 +25,9 @@ public abstract class CellGrid {
     private int numOfRows;
     private int numOfCols;
     private ControlPanel controlPanel;
-    private boolean upRowExtended = false;
 
     private NeighborManager neighborManager;
-    private String neighborConfig = "11111111";
+    private String neighborConfig = INITIAL_CONFIG;
 
     public CellGrid(int numRows, int numCols) {
         this.numOfRows = numRows;
@@ -165,7 +166,6 @@ public abstract class CellGrid {
         }
         if (!isRowEmpty(0)) {
             expand = true;
-            upRowExtended = !upRowExtended;
             addRowOnTop();
         }
         if (!isRowEmpty(getNumOfRows() - 1)) {
@@ -282,6 +282,6 @@ public abstract class CellGrid {
     }
 
     protected void createNeighborManager() {
-        neighborManager = new NeighborManager(neighborConfig, cellShapeType, gridLimit == GridLimit.TOROIDAL, upRowExtended);
+        neighborManager = new NeighborManager(neighborConfig, cellShapeType, gridLimit == GridLimit.TOROIDAL);
     }
 }

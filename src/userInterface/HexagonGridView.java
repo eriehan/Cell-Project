@@ -33,10 +33,10 @@ public class HexagonGridView extends AbstractGridView {
     @Override
     public void createGrid() {
         boolean rowFlag = true;
-        double width = this.getGridWidth() / (getNumOfCols() * WIDTH_EACH_HEX_RATIO + WIDTH_PADDING_RATIO);
-        double height = this.getGridHeight() / (getNumOfRows() * HEIGHT_EACH_HEX_RATIO + HEIGHT_EACH_HEX_RATIO);
-        for (int r = 0; r < getNumOfRows(); r++) {
-            for (int c = 0; c < getNumOfCols(); c++) {
+        double width = this.getGridWidth() / (getGridManager().getCellGrid().getNumOfCols() * WIDTH_EACH_HEX_RATIO + WIDTH_PADDING_RATIO);
+        double height = this.getGridHeight() / (getGridManager().getCellGrid().getNumOfRows() * HEIGHT_EACH_HEX_RATIO + HEIGHT_EACH_HEX_RATIO);
+        for (int r = 0; r < getGridManager().getCellGrid().getNumOfRows(); r++) {
+            for (int c = 0; c < getGridManager().getCellGrid().getNumOfCols(); c++) {
                 Polygon hexagon = new Polygon();
                 hexagon.getPoints().addAll(
                         START_POINT, height * HEIGHT_EACH_HEX_RATIO,

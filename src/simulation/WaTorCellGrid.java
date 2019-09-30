@@ -105,9 +105,9 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
 
     @Override
     public void assignNeighborsToEachCell() {
+        createNeighborManager();
         getNeighborManager().assignEdgeNeighbors(getGridOfCells(), getNumOfRows(), getNumOfCols());
     }
-
     @Override
     public void setStateOfCellAtPointOnClick(int row, int col) {
         Cell cell = getGridOfCells().get(new Point(row, col));
@@ -143,7 +143,6 @@ public class WaTorCellGrid extends GameOfLifeCellGrid {
     }
 
     private void assignAttributes(Cell cell, int index) {
-        System.out.println(cell.getRow() + ", " + cell.getCol() + ", " + cell.getState());
         cell.putAttribute(SURVIVE, 0);
         cell.putAttribute(REPRODUCE, reproductions.get(index));
         cell.putAttribute(INI_ENERGY, energies.get(index));
