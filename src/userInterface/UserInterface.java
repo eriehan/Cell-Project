@@ -20,7 +20,6 @@ public class UserInterface {
     private static final double PADDING_OTHER = 50;
     private AbstractGridView myGridView;
     private VBox firstColumn;
-    private HBox hBox;
     private ControlsManager myControlsManager;
     private int numOfCols;
     private int numOfRows;
@@ -41,7 +40,7 @@ public class UserInterface {
     public Group setScene() {
         var root = new Group();
         firstColumn = new VBox(SPACING);
-        hBox = new HBox(SPACING);
+        HBox hBox = new HBox(SPACING);
         hBox.setPadding(new Insets(PADDING_TOP, PADDING_OTHER, PADDING_OTHER, PADDING_OTHER));
         firstColumn.getChildren().addAll(simulationTitle, myGridView.getMyView());
         hBox.getChildren().add(firstColumn);
@@ -102,10 +101,11 @@ public class UserInterface {
     }
 
     public void displaySimulationFilePath(String filePath) {
+        this.myControlsManager.getMyPane().getChildren().remove(this.simulationFilePath);
         this.simulationFilePath = new Text(filePath);
         this.simulationFilePath.setFont(Font.font("Arial", FontWeight.BOLD, FILE_PATH_FONT_SIZE));
         this.simulationFilePath.setFill(Color.CORNFLOWERBLUE);
-        this.firstColumn.getChildren().add(this.simulationFilePath);
+        this.myControlsManager.getMyPane().getChildren().add(this.simulationFilePath);
     }
 
     public void setCellShape(CellShapeType type) {
