@@ -75,10 +75,12 @@ public class AntGridInfo extends GridInfo {
         double diffusionRate = getNumberAttribute(GridAttribute.DIFFUSION);
         int neighborNum = getNeighborGrids().size();
         for(GridInfo neighbor : getNeighborGrids()) {
+            System.out.println(neighbor.getNumberAttribute(HOMEPHEROMONE));
             neighbor.addToNumberAttributes(HOMEPHEROMONE,
                     diffusionRate * getNumberAttribute(HOMEPHEROMONE) / (HUNDRED * neighborNum));
             neighbor.addToNumberAttributes(FOODPHEROMONE,
                     diffusionRate * getNumberAttribute(FOODPHEROMONE) / (HUNDRED * neighborNum));
+            System.out.println(neighbor.getNumberAttribute(HOMEPHEROMONE));
         }
         addToNumberAttributes(HOMEPHEROMONE, -diffusionRate * getNumberAttribute(HOMEPHEROMONE) / HUNDRED);
         addToNumberAttributes(HOMEPHEROMONE, -diffusionRate * getNumberAttribute(FOODPHEROMONE) / HUNDRED);

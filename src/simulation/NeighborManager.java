@@ -30,8 +30,8 @@ public class NeighborManager {
     private static final List<Point> squareEdgeNeighbors = List.of(N, E, S, W);
     private static final List<Point> downwardTriangleNeighbors = List.of(NWW, NW, N, NE, NEE, EE, E, SE, S, SW, W, WW);
     private static final List<Point> upwardTriangleNeighbors = List.of(NW, N, NE, EE, E, SEE, SE, S, SW, SWW, W, WW);
-    private static final List<Point> downwardTriangleEdgeNeighbors = List.of(E, S, W);
-    private static final List<Point> upwardTriangleEdgeNeighbors = List.of(N, E, W);
+    private static final List<Point> downwardTriangleEdgeNeighbors = List.of(N, E, W);
+    private static final List<Point> upwardTriangleEdgeNeighbors = List.of(E, S, W);
     private static final List<Point> leftSidedRowHexagonNeighbors = List.of(NW, NN, N, S, SS, SW);
     private static final List<Point> rightSidedRowHexagonNeighbors = List.of(N, NN, NE, SE, SS, S);
 
@@ -181,8 +181,8 @@ public class NeighborManager {
     private List<Point> calcActualEdgeNeighbors(int row, int col) {
         if (downWardTriangle(row, col)) {
             return copyOfList(downwardTriangleEdgeNeighbors);
-        } else if (leftSidedRowHexagon(row)) {
-            return copyOfList(leftSidedRowHexagonNeighbors);
+        } else if (upwardTriangle(row, col)) {
+            return copyOfList(upwardTriangleEdgeNeighbors);
         } else if(cellShapeType == CellShapeType.RECTANGLE) {
             return copyOfList(edgeNeighbors);
         }
