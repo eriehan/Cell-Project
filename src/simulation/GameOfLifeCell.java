@@ -8,8 +8,7 @@ public class GameOfLifeCell extends Cell {
 
     private static final CellState ALIVE = CellState.ALIVE;
     private static final CellState DEAD = CellState.DEAD;
-    public static final List<CellState> STATES_LIST =
-            Collections.unmodifiableList(Arrays.asList(DEAD, ALIVE));
+    public static final List<CellState> STATES_LIST = List.of(DEAD, ALIVE);
     private static final int ADEQUATEPOPULATION = 2;
     private static final int PERFECTPOPULATION = 3;
 

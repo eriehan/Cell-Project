@@ -15,17 +15,13 @@ public abstract class CellGrid {
 
     private static final String INITIAL_CONFIG = "11111111";
 
-    //Can change to hashmap later. using 2D arrayList here just to show the idea.
     private Map<Point, Cell> gridOfCells = new HashMap<>();
-
     private int[] neighbor = new int[NUM_COL * NUM_ROW];
-
     private GridLimit gridLimit = GridLimit.FINITE;
     private CellShapeType cellShapeType = CellShapeType.RECTANGLE;
     private int numOfRows;
     private int numOfCols;
     private ControlPanel controlPanel;
-
     private NeighborManager neighborManager;
     private String neighborConfig = INITIAL_CONFIG;
 
@@ -122,19 +118,6 @@ public abstract class CellGrid {
         return stateCounts;
     }
 
-
-    protected void createEmptyRow(int row) {
-        for (int col = 0; col < getNumOfCols(); col++) {
-            addEmptyStateToCell(row, col);
-        }
-    }
-
-    protected void createEmptyCol(int col) {
-        for (int row = 0; row < getNumOfRows(); row++) {
-            addEmptyStateToCell(row, col);
-        }
-    }
-
     public abstract void addEmptyStateToCell(int row, int col);
 
     //Must be called for initializing by gridView
@@ -158,21 +141,20 @@ public abstract class CellGrid {
         boolean expand = false;
         if (!isColEmpty(0)) {
             expand = true;
-            addColOnLeft();
+            addCol(true);
         }
         if (!isColEmpty(getNumOfCols() - 1)) {
             expand = true;
-            addColOnRight();
+            addCol(false);
         }
         if (!isRowEmpty(0)) {
             expand = true;
-            addRowOnTop();
+            addRow(true);
         }
         if (!isRowEmpty(getNumOfRows() - 1)) {
             expand = true;
-            addRowOnBottom();
+            addRow(false);
         }
-
         if (expand) {
             assignNeighborsToEachCell();
         }
@@ -244,37 +226,42 @@ public abstract class CellGrid {
         return true;
     }
 
-    private void addRowOnTop() {
+    private void createEmptyRow(int row) {
+        for (int col = 0; col < getNumOfCols(); col++) {
+            addEmptyStateToCell(row, col);
+        }
+    }
+
+    private void createEmptyCol(int col) {
+        for (int row = 0; row < getNumOfRows(); row++) {
+            addEmptyStateToCell(row, col);
+        }
+    }
+
+    private void addRow(boolean top) {
         numOfRows++;
         createEmptyRow(numOfRows - 1);
-        for (int i = numOfRows - 1; i >= 1; i--) {
-            for (int j = 0; j < numOfCols; j++) {
-                gridOfCells.put(new Point(i, j), cellFromPoint(i - 1, j));
+        if(top) {
+            for (int i = numOfRows - 1; i >= 1; i--) {
+                for (int j = 0; j < numOfCols; j++) {
+                    gridOfCells.put(new Point(i, j), cellFromPoint(i - 1, j));
+                }
             }
+            createEmptyRow(0);
         }
-        createEmptyRow(0);
     }
 
-    private void addRowOnBottom() {
-        numOfRows++;
-        createEmptyRow(numOfRows - 1);
-    }
-
-    private void addColOnLeft() {
+    private void addCol(boolean left) {
         numOfCols++;
         createEmptyCol(numOfCols - 1);
-        System.out.println(getGridOfCells().size());
-        for (int col = numOfCols - 1; col >= 1; col--) {
-            for (int row = 0; row < numOfRows; row++) {
-                gridOfCells.put(new Point(row, col), cellFromPoint(row, col - 1));
+        if(left) {
+            for (int col = numOfCols - 1; col >= 1; col--) {
+                for (int row = 0; row < numOfRows; row++) {
+                    gridOfCells.put(new Point(row, col), cellFromPoint(row, col - 1));
+                }
             }
+            createEmptyCol(0);
         }
-        createEmptyCol(0);
-    }
-
-    private void addColOnRight() {
-        numOfCols++;
-        createEmptyCol(numOfCols - 1);
     }
 
     private Cell cellFromPoint(int row, int col) {
