@@ -5,9 +5,10 @@ import simulation.*;
 import simulation.AntForaging.AntForagingCell;
 import simulation.AntForaging.AntForagingCellGrid;
 import utils.Point;
-import xml.AbstractXml;
-import xml.AntForagingXml;
 
+import xml.AbstractXml;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -193,7 +194,9 @@ public class GridManager {
     }
 
     public List<CellState> getStateList() {
-        return stateList;
+        List<CellState> list = new ArrayList<>();
+        list.addAll(stateList);
+        return list;
     }
 
 
