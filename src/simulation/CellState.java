@@ -33,9 +33,6 @@ public enum CellState {
     FOOD,
     HOME,
     ANT,
-    ANTQUARTER,
-    ANTHALF,
-    ANTTHREEQUARTER,
     ANTFULL;
 
 

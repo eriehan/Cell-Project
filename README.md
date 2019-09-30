@@ -84,6 +84,7 @@ conflict from simultaneous movements. And as the cells move at a random order, t
 
 **Known Bugs:**
 When the size(# of rows, cols) of the 2D grid of cells gets very big, the simulations sometimes do not work well.
+For ant foraging, some cells end up getting larger pheromone values than home/food sources, leading to unwanted results.
 
 **Extra credit:**
 * triangular grid cells
@@ -108,8 +109,14 @@ When the size(# of rows, cols) of the 2D grid of cells gets very big, the simula
 * Enabled hexagon, triangle, and rectangle cells. 
     * note: for hexagon cells, the grid height is shrinked to keep the hexagon shape
 * there is a grid of buttons of the side of rectangular cell grid, the user can select the cells that counts as neighbor, thus changing the game rules dynamically
-* Edge types...
+* Edge types => toroidal, infinite, finite
 * Save the current simulation to a new xml file that can be loaded into the program
 * Error checking and handling for 
     * invalid/no simulation type given
     * invalid cell location values given
+* Implemented Rock paper scissor, and ant-foraging
+    * Logic for ant-foraging is completed, but the possible states of the cell is very limited, and there is a bug
+    related to storing correct pheromone values. Thus, the ant-foraging looks different from what it should be.
+* User can choose the type of neighbor that he/she wants. However, this only works for rectangular grid.
+* For each simulation, when the user changes simulation parameters, the configuration is set randomly according to the parameters.
+Ant foraging does not have this feature yet.
