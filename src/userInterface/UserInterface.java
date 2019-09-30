@@ -14,6 +14,8 @@ import static userInterface.VisualizationConstants.FILE_PATH_FONT_SIZE;
 
 public class UserInterface {
     private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 20);
+    private static final Font ERROR_FONT = Font.font("Arial", FontWeight.BOLD, ERROR_MSG_FONT_SIZE);
+    private static final Font FILE_FONT = Font.font("Arial", FontWeight.BOLD, FILE_PATH_FONT_SIZE);
     private static final int ERROR_MSG_TIME_LIMIT = 5;
     private static final int SPACING = 15;
     private static final double PADDING_TOP = 20;
@@ -94,7 +96,7 @@ public class UserInterface {
             this.getMyControlsManager().getMyConstantCol().getChildren().remove(this.errorMsg);
         }
         this.errorMsg = new Text(errorMessage);
-        this.errorMsg.setFont(Font.font("Arial", FontWeight.BOLD, ERROR_MSG_FONT_SIZE));
+        this.errorMsg.setFont(ERROR_FONT);
         this.errorMsg.setFill(Color.ORANGE);
         this.getMyControlsManager().getMyConstantCol().getChildren().add(this.errorMsg);
         this.errorMsgTimer = 0;
@@ -103,7 +105,7 @@ public class UserInterface {
     public void displaySimulationFilePath(String filePath) {
         this.myControlsManager.getMyPane().getChildren().remove(this.simulationFilePath);
         this.simulationFilePath = new Text(filePath);
-        this.simulationFilePath.setFont(Font.font("Arial", FontWeight.BOLD, FILE_PATH_FONT_SIZE));
+        this.simulationFilePath.setFont(FILE_FONT);
         this.simulationFilePath.setFill(Color.CORNFLOWERBLUE);
         this.myControlsManager.getMyPane().getChildren().add(this.simulationFilePath);
     }
