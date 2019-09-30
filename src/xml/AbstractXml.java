@@ -150,6 +150,8 @@ public abstract class AbstractXml {
                 myRowArray.add(stringToIntArray(row));
                 myColArray.add(stringToIntArray(col));
             }
+            System.out.println(myRowArray);
+            System.out.println(myColArray);
     }
 
     private void determineCellShape(Document doc) {
@@ -209,27 +211,21 @@ public abstract class AbstractXml {
     }
 
     protected List<Integer> stringToIntArray(String s) {
+        String[] sArray = s.split(" ");
         StringBuilder myStringBuilder = new StringBuilder(s);
         int startIndex = 0;
-        int endIndex = 1;
+        int endIndex = startIndex;
 
         List<Integer> myInts = new ArrayList<>();
-        while (endIndex < myStringBuilder.length()) {
-            if (myStringBuilder.charAt(endIndex) == ' ') {
-                if(Integer.parseInt((myStringBuilder.substring(startIndex, endIndex))) >= this.cellGridColNum){
-                    this.myUserInterface.displayErrorMsg("ErrorMsg_invalidLocation");
-                    myInts.add(this.cellGridColNum - 1);
-                }
-                else{
-                    myInts.add(Integer.parseInt(myStringBuilder.substring(startIndex, endIndex)));
-                }
-                startIndex = endIndex + 1;
-                endIndex = startIndex + 1;
-            } else {
-                endIndex++;
+        for(int i = 0; i < sArray.length; i++){
+            if(Integer.parseInt(sArray[i]) > this.cellGridColNum){
+                this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_invalidLocation"));
+                myInts.add(this.cellGridColNum -1);
+            }
+            else {
+                myInts.add(Integer.parseInt(sArray[i]));
             }
         }
-        myInts.add(Integer.parseInt("" + myStringBuilder.charAt(myStringBuilder.length() - 1)));
         return myInts;
     }
 
