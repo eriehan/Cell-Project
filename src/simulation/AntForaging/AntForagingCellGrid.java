@@ -35,23 +35,6 @@ public class AntForagingCellGrid extends CellGrid {
     }
 
     @Override
-    public void checkAllCells() {
-        //to be added. Have not figured out how to implement.
-        for (Cell cell : getGridOfCells().values()) {
-            cell.check();
-        }
-    }
-
-    @Override
-    public void changeAllCells() {
-        //to be added. Have not figured out how to implement.
-        for (Cell cell : getGridOfCells().values()) {
-            cell.changeState();
-        }
-        cellGridExpand();
-    }
-
-    @Override
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
         AntForagingCell cell = new AntForagingCell(row, col, CellState.EMPTY, maxAnt, evaporation, diffusion);

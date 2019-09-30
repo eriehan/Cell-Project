@@ -98,10 +98,19 @@ public abstract class CellGrid {
     public abstract void initializeGrids(Map<Point, CellState> configMap);
 
     //Iterates through all cells and change nextState
-    public abstract void checkAllCells();
+    public void checkAllCells() {
+        for(Cell cell : gridOfCells.values()) {
+            cell.check();
+        }
+    }
 
     //Iterates through all cells and change state.
-    public abstract void changeAllCells();
+    public void changeAllCells() {
+        for(Cell cell : gridOfCells.values()) {
+            cell.changeState();
+        }
+        cellGridExpand();
+    }
 
     public Map<CellState,Integer> countStates(){
         Map<CellState,Integer> stateCounts = new HashMap<>();

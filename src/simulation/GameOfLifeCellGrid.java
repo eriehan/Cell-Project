@@ -43,21 +43,6 @@ public class GameOfLifeCellGrid extends CellGrid {
     }
 
     @Override
-    public void checkAllCells() {
-        for (Cell cell : getGridOfCells().values()) {
-            cell.check();
-        }
-    }
-
-    @Override
-    public void changeAllCells() {
-        for (Cell cell : getGridOfCells().values()) {
-            cell.changeState();
-        }
-        cellGridExpand();
-    }
-
-    @Override
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
         addToGridOfCells(point, new GameOfLifeCell(row, col, CellState.DEAD));
