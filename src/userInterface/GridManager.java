@@ -1,11 +1,10 @@
 package userInterface;
 
 import javafx.scene.paint.Color;
-import simulation.*;
 import simulation.AntForaging.AntForagingCell;
 import simulation.AntForaging.AntForagingCellGrid;
+import simulation.*;
 import utils.Point;
-
 import xml.AbstractXml;
 
 import java.util.ArrayList;

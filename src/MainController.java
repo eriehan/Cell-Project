@@ -26,14 +26,11 @@ public class MainController extends Application {
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
     private static final int MILLIS_IN_SEC = 1000;
     private static final double UNIT_SEC = 1.0;
-
-    private int framesPerSecond;
     private int millisecondDelay;
     private double secondDelay;
 
     private AbstractXml myXml;
     private UserInterface myUserInterface;
-    private Scene myScene;
     private Stage myStage;
     private Animation myAnimation;
     private String myTitle;
@@ -41,7 +38,6 @@ public class MainController extends Application {
     private int updateTimer;
     private int updateFreq;
     private int normalUpdateFreq;
-    private boolean isStep = false;
     private String userFile;
 
     private ResourceBundle resourceBundle;
@@ -59,7 +55,7 @@ public class MainController extends Application {
 
     private void initializeResources() {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
-        framesPerSecond = Integer.parseInt(resourceBundle.getString("FPS"));
+        int framesPerSecond = Integer.parseInt(resourceBundle.getString("FPS"));
         millisecondDelay = MILLIS_IN_SEC / framesPerSecond;
         secondDelay = UNIT_SEC / framesPerSecond;
         normalUpdateFreq = Integer.parseInt(resourceBundle.getString("InitialUpdateFreq"));
@@ -76,7 +72,7 @@ public class MainController extends Application {
         myUserInterface.getMyGridView().generateBlankGrid();
         initButtons();
         initializeControls();
-        myScene = initScene();
+        Scene myScene = initScene();
         stage.setScene(myScene);
         stage.setTitle(myTitle);
         stage.show();
@@ -99,8 +95,7 @@ public class MainController extends Application {
 
     private Scene initScene() {
         Group root = myUserInterface.setScene();
-        var scene = new Scene(root, Integer.parseInt(resourceBundle.getString("WindowWidth")), Integer.parseInt(resourceBundle.getString("WindowHeight")), BACKGROUND_COLOR);
-        return scene;
+        return new Scene(root, Integer.parseInt(resourceBundle.getString("WindowWidth")), Integer.parseInt(resourceBundle.getString("WindowHeight")), BACKGROUND_COLOR);
     }
 
     private void initButtons() {
@@ -282,7 +277,6 @@ public class MainController extends Application {
         if (!checkFileSelected()) {
             return;
         }
-        isStep = true;
         this.myAnimation.pause();
         this.myUserInterface.update();
     }
