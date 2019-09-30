@@ -141,8 +141,7 @@ public abstract class CellGrid {
     //This can be used to set different types of neighbor configuration.
     public void setNeighborConfig(String neighborConfig) {
         this.neighborConfig = neighborConfig;
-        createNeighborManager();
-        neighborManager.assignAllNeighbors(gridOfCells, numOfRows, numOfCols);
+        assignNeighborsToEachCell();
     }
 
     protected void cellGridExpand() {
@@ -210,8 +209,21 @@ public abstract class CellGrid {
         return numOfRows;
     }
 
+    public void userSetNumOfRows(int numOfRows) {
+        this.numOfRows = numOfRows;
+        createEmptyMap();
+        assignNeighborsToEachCell();
+    }
+
     public int getNumOfCols() {
         return numOfCols;
+    }
+
+    public void userSetNumOfCols(int numOfCols) {
+        this.numOfCols = numOfCols;
+        createEmptyMap();
+        assignNeighborsToEachCell();
+
     }
 
     public ControlPanel getControlPanel() {
@@ -226,6 +238,15 @@ public abstract class CellGrid {
             }
         }
         return true;
+    }
+
+    protected void createEmptyMap() {
+        getGridOfCells().clear();
+        for (int row = 0; row < getNumOfRows(); row++) {
+            for (int col = 0; col < getNumOfCols(); col++) {
+                addEmptyStateToCell(row, col);
+            }
+        }
     }
 
     private boolean isColEmpty(int colNum) {

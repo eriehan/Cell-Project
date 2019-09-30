@@ -50,7 +50,8 @@ public class GameOfLifeCellGrid extends CellGrid {
     }
 
     //creates a map of cells with state==dead
-    private void createEmptyMap() {
+    @Override
+    protected void createEmptyMap() {
         clearMap();
         deadCells.clear();
         for (int row = 0; row < getNumOfRows(); row++) {

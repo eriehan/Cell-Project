@@ -165,18 +165,12 @@ public class MainController extends Application {
 
     private void changeNumberOfRow(String row) {
         int rowInput = Integer.parseInt(row);
-
-        myXml.changeRowNum(rowInput);
-        this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
-        this.myUserInterface.getMyGridView().addSeriesToChart();
-
+        this.myUserInterface.getMyGridView().getGridManager().setGridNumOfRows(rowInput);
     }
 
     private void changeNumberOfCol(String col) {
         int colInput = Integer.parseInt(col);
-        myXml.changeColNum(colInput);
-        this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
-        this.myUserInterface.getMyGridView().addSeriesToChart();
+        this.myUserInterface.getMyGridView().getGridManager().setGridNumOfCols(colInput);
     }
 
     private void setEdgeType(String edgeType) {

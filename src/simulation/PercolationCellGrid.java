@@ -68,7 +68,7 @@ public class PercolationCellGrid extends GameOfLifeCellGrid {
         openCells.remove(openCell);
     }
 
-    private void createEmptyMap() {
+    protected void createEmptyMap() {
         clearMap();
         openCells.clear();
         for (int row = 0; row < getNumOfRows(); row++) {

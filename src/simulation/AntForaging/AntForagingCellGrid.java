@@ -41,7 +41,8 @@ public class AntForagingCellGrid extends CellGrid {
         cell.addOrderedNeighborDirections(getNeighborManager().getOrderedNeighborDirections(cell, getNumOfRows(), getNumOfCols()));
     }
 
-    private void createEmptyMap() {
+    @Override
+    protected void createEmptyMap() {
         getGridOfCells().clear();
         for (int row = 0; row < getNumOfRows(); row++) {
             for (int col = 0; col < getNumOfCols(); col++) {

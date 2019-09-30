@@ -16,7 +16,6 @@ public class FireCellGrid extends GameOfLifeCellGrid {
 
     }
 
-
     @Override
     public void initializeControlPanel() {
         initializeControlPanel("FireControls");
@@ -27,14 +26,14 @@ public class FireCellGrid extends GameOfLifeCellGrid {
         //TODO: added slider actions @Eric
         // type: "PropCatch"
         this.probCatch = inputPercentage;
-        createMapFullOfTrees();
+        createEmptyMap();
         initializeGrids(myConfigMap);
         assignNeighborsToEachCell();
     }
 
     @Override
     public void initializeGrids(Map<Point, CellState> configMap) {
-        createMapFullOfTrees();
+        createEmptyMap();
         for (Map.Entry<Point, CellState> entry : configMap.entrySet()) {
             getGridOfCells().get(entry.getKey()).setState(entry.getValue());
             myConfigMap.put(entry.getKey(), entry.getValue());
@@ -51,14 +50,5 @@ public class FireCellGrid extends GameOfLifeCellGrid {
     public void addEmptyStateToCell(int row, int col) {
         Point point = new Point(row, col);
         addToGridOfCells(point, new FireCell(row, col, CellState.TREE, probCatch));
-    }
-
-    private void createMapFullOfTrees() {
-        getGridOfCells().clear();
-        for (int row = 0; row < getNumOfRows(); row++) {
-            for (int col = 0; col < getNumOfCols(); col++) {
-                addEmptyStateToCell(row, col);
-            }
-        }
     }
 }

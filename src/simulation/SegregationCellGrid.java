@@ -118,13 +118,4 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
         addToGridOfCells(point, segregationCell);
         emptyCells.add(segregationCell);
     }
-
-    private void createEmptyMap() {
-        clearMap();
-        for (int row = 0; row < getNumOfRows(); row++) {
-            for (int col = 0; col < getNumOfCols(); col++) {
-                addEmptyStateToCell(row, col);
-            }
-        }
-    }
 }

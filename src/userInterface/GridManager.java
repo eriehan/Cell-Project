@@ -192,6 +192,14 @@ public class GridManager {
         }
     }
 
+    public void setGridNumOfRows(int numOfRows) {
+        getCellGrid().userSetNumOfRows(numOfRows);
+    }
+
+    public void setGridNumOfCols(int numOfCols) {
+        getCellGrid().userSetNumOfCols(numOfCols);
+    }
+
     public List<CellState> getStateList() {
         List<CellState> list = new ArrayList<>();
         list.addAll(stateList);
