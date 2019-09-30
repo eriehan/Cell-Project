@@ -1,6 +1,5 @@
 package simulation.AntForaging;
 
-import simulation.Cell;
 import simulation.CellGrid;
 import simulation.CellState;
 import utils.Point;
