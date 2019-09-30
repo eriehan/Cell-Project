@@ -118,7 +118,6 @@ public abstract class CellGrid {
                 }
             }
         }
-        //System.out.println(stateCounts);
         return stateCounts;
     }
 

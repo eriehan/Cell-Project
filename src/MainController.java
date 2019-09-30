@@ -27,9 +27,6 @@ public class MainController extends Application {
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
     private static final int MILLIS_IN_SEC = 1000;
     private static final double UNIT_SEC = 1.0;
-    private int millisecondDelay;
-    private double secondDelay;
-
     private AbstractXml myXml;
     private UserInterface myUserInterface;
     private Stage myStage;
@@ -56,9 +53,6 @@ public class MainController extends Application {
 
     private void initializeResources() {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
-        int framesPerSecond = Integer.parseInt(resourceBundle.getString("FPS"));
-        millisecondDelay = MILLIS_IN_SEC / framesPerSecond;
-        secondDelay = UNIT_SEC / framesPerSecond;
         normalUpdateFreq = Integer.parseInt(resourceBundle.getString("InitialUpdateFreq"));
         updateFreq = normalUpdateFreq;
         myTitle = resourceBundle.getString("InitialTitle");
@@ -78,6 +72,9 @@ public class MainController extends Application {
         stage.setTitle(myTitle);
         stage.show();
         myStage = stage;
+        int framesPerSecond = Integer.parseInt(resourceBundle.getString("FPS"));
+        double millisecondDelay = MILLIS_IN_SEC / framesPerSecond;
+        double secondDelay = UNIT_SEC / framesPerSecond;
         var frame = new KeyFrame(Duration.millis(millisecondDelay), e -> step(secondDelay));
         animation.getKeyFrames().add(frame);
     }
