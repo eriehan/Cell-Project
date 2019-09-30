@@ -53,6 +53,8 @@ public abstract class GridInfo {
     public void multiplyNumberAttributes(GridAttribute gridAttribute, double num) {
         if (gridAttributes.containsKey(gridAttribute)) {
             gridAttributes.put(gridAttribute, num * getNumberAttribute(gridAttribute));
+        } else {
+            gridAttributes.put(gridAttribute, 0.0);
         }
     }
 
@@ -72,6 +74,9 @@ public abstract class GridInfo {
     }
 
     public boolean getBooleanAttribute(GridAttribute gridAttribute) {
+        if(!gridBooleans.containsKey(gridAttribute)) {
+            return false;
+        }
         return gridBooleans.get(gridAttribute);
     }
 

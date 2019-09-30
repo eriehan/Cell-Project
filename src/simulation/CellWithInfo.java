@@ -34,7 +34,6 @@ public abstract class CellWithInfo extends Cell {
     }
 
     protected void addNeighborsToMyGridInfo() {
-        System.out.println(getNeighbors().size());
         Map<Point, Cell> myNeighbors = getNeighbors();
 
         for (Point direction : myNeighbors.keySet()) {

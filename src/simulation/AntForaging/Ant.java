@@ -75,9 +75,11 @@ public class Ant extends Individual{
         if(hasFoodItem) {
             getMyGridInfo().putNumberAttributes(FOODPHEROMONE,
                     Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(FOODPHEROMONE)));
+            System.out.println(Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(FOODPHEROMONE)));
         } else {
             getMyGridInfo().putNumberAttributes(HOMEPHEROMONE,
                     Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(HOMEPHEROMONE)));
+            System.out.println(Math.max(maxPheromone-2, getMyGridInfo().getNumberAttribute(HOMEPHEROMONE)));
         }
     }
 

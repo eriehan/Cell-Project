@@ -122,7 +122,7 @@ public abstract class CellGrid {
                 }
             }
         }
-        System.out.println(stateCounts);
+        //System.out.println(stateCounts);
         return stateCounts;
     }
 
@@ -143,7 +143,6 @@ public abstract class CellGrid {
 
     //Must be called for initializing by gridView
     public void assignNeighborsToEachCell() {
-        //gridLimit.assignNeighbors(getGridOfCells(), cellShapeType, numOfRows, numOfCols);
         createNeighborManager();
         neighborManager.assignAllNeighbors(gridOfCells, numOfRows, numOfCols);
     }
@@ -180,7 +179,6 @@ public abstract class CellGrid {
         }
 
         if (expand) {
-            createNeighborManager();
             assignNeighborsToEachCell();
         }
     }
@@ -211,7 +209,6 @@ public abstract class CellGrid {
 
     public void setCellShapeType(CellShapeType cellShapeType) {
         this.cellShapeType = cellShapeType;
-        createNeighborManager();
         assignNeighborsToEachCell();
     }
 
@@ -289,7 +286,7 @@ public abstract class CellGrid {
         return getGridOfCells().get(new Point(row, col));
     }
 
-    private void createNeighborManager() {
+    protected void createNeighborManager() {
         neighborManager = new NeighborManager(neighborConfig, cellShapeType, gridLimit == GridLimit.TOROIDAL, upRowExtended);
     }
 }

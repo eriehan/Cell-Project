@@ -33,9 +33,8 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
         initializeControlPanel("SegregationControls");
     }
 
+    @Override
     protected void sliderAction(String type, double inputPercentage) {
-        //TODO: added slider actions @Eric
-        // type: "AgentRatio", "Similarity", "EmptyPercent"
         if (type.equals(AGENTRATIO)) {
             prob = inputPercentage;
         } else if (type.equals(EMPTYPERCENT)) {
@@ -80,13 +79,10 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
     public void checkAllCells() {
         for (Cell cell : getGridOfCells().values()) {
             cell.check();
-            //if dissatisfied
             if (cell.getNextState() == CellState.DISATISFIED) {
                 dissatisfiedCells.add(cell);
             }
         }
-
-        System.out.println(dissatisfiedCells.size());
     }
 
     @Override
@@ -106,6 +102,7 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
             dissatisfiedCells.remove(dissatisfiedCell);
             newEmptyCells.add(dissatisfiedCell);
             dissatisfiedCell.moveToDifferentCell(emptyCell);
+            dissatisfiedCell.setState(CellState.EMPTY);
         }
         super.changeAllCells();
         dissatisfiedCells.clear();
