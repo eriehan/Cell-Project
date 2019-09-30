@@ -15,6 +15,7 @@ import static userInterface.VisualizationConstants.BLANK_GRID_COLOR;
 
 public abstract class AbstractGridView {
     private static final int SPACING = 10;
+    private static final int HUNDRED = 100;
     private static final String RESOURCE_FILE_PATH = "resources/MainResources";
     private GridPane myGridPane;
     private SimulationGraph simulationGraph;
@@ -76,7 +77,9 @@ public abstract class AbstractGridView {
     }
 
     public void addSeriesToChart() {
-        if (this.getGridManager().getCellGrid() == null) return;
+        if (this.getGridManager().getCellGrid() == null) {
+            return;
+        }
         List<CellState> stateList = this.gridManager.getStateList();
         for (int i = 0; i < stateList.size(); i++) {
             XYChart.Series line = new XYChart.Series();
@@ -92,7 +95,7 @@ public abstract class AbstractGridView {
         if (statesCount.get(state) == null) {
             statesCount.put(state, 0);
         }
-        double percent = ((double) statesCount.get(state) / (getNumOfCols() * getNumOfRows())) * 100;
+        double percent = ((double) statesCount.get(state) / (getNumOfCols() * getNumOfRows())) * HUNDRED;
         line.getData().add(new XYChart.Data<>(round, percent));
     }
 

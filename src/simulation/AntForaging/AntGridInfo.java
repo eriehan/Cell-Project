@@ -2,7 +2,6 @@ package simulation.AntForaging;
 
 import simulation.GridInfo;
 import simulation.Individual;
-import utils.Point;
 
 public class AntGridInfo extends GridInfo {
 
@@ -15,12 +14,10 @@ public class AntGridInfo extends GridInfo {
 
     public AntGridInfo(int row, int col) {
         super(row, col);
-
     }
 
     @Override
     public void createIndividual() {
-        System.out.println(getPossibleOrderedDirections().toString());
         addIndividual(new Ant(this, getPossibleOrderedDirections()));
     }
 
@@ -45,8 +42,8 @@ public class AntGridInfo extends GridInfo {
         for(Individual ant : getIndividuals()) {
             ant.setMoved(false);
         }
-        manageDiffusion();
         manageEvaporation();
+        manageDiffusion();
 
         if(!getIndividuals().isEmpty()) {
             if(getBooleanAttribute(GridAttribute.ISFOOD)) {
@@ -76,15 +73,15 @@ public class AntGridInfo extends GridInfo {
 
     private void manageDiffusion() {
         double diffusionRate = getNumberAttribute(GridAttribute.DIFFUSION);
-        if(getBooleanAttribute(GridAttribute.ISFOOD)) {
-            System.out.println(diffusionRate * getNumberAttribute(FOODPHEROMONE) / getNeighborGrids().size() + "sdfsfsdf");
-            System.out.println(getOneNeighborGrid(new Point(1, 1)).getNumberAttribute(FOODPHEROMONE));
-        }
         int neighborNum = getNeighborGrids().size();
         for(GridInfo neighbor : getNeighborGrids()) {
-            neighbor.addToNumberAttributes(HOMEPHEROMONE, diffusionRate * getNumberAttribute(HOMEPHEROMONE) / neighborNum);
-            neighbor.addToNumberAttributes(FOODPHEROMONE, diffusionRate * getNumberAttribute(FOODPHEROMONE) / neighborNum);
+            neighbor.addToNumberAttributes(HOMEPHEROMONE,
+                    diffusionRate * getNumberAttribute(HOMEPHEROMONE) / (HUNDRED * neighborNum));
+            neighbor.addToNumberAttributes(FOODPHEROMONE,
+                    diffusionRate * getNumberAttribute(FOODPHEROMONE) / (HUNDRED * neighborNum));
         }
+        addToNumberAttributes(HOMEPHEROMONE, -diffusionRate * getNumberAttribute(HOMEPHEROMONE) / HUNDRED);
+        addToNumberAttributes(HOMEPHEROMONE, -diffusionRate * getNumberAttribute(FOODPHEROMONE) / HUNDRED);
     }
 
 }

@@ -192,20 +192,27 @@ public class MainController extends Application {
     private void setEdgeType(String edgeType) {
         System.out.println("for debug: " + edgeType);
         myUserInterface.getMyGridView().getGridManager().changeEdgeTypeOfGrid(edgeType);
-        //TODO: set edge type @Eric
     }
 
     private void save() throws TransformerException, ParserConfigurationException {
-        if (!checkFileSelected()) return;
+        if (!checkFileSelected()) {
+            return;
+        }
         myXml.saveCurrentSimulation(this.myUserInterface.getMyGridView(), myConfigFile);
         System.out.println("configFile: " + myConfigFile);
     }
 
     private void setState(SimulationButton simulationButton) {
-        if (!checkFileSelected()) return;
+        if (!checkFileSelected()) {
+            return;
+        }
         this.setState = !setState;
-        if (setState) simulationButton.setText(resourceBundle.getString("Resume"));
-        else simulationButton.setText(resourceBundle.getString("SetState"));
+        if (setState) {
+            simulationButton.setText(resourceBundle.getString("Resume"));
+        }
+        else {
+            simulationButton.setText(resourceBundle.getString("SetState"));
+        }
     }
 
     private void selectFilePrompt() throws IOException, ParserConfigurationException, SAXException {
@@ -259,15 +266,16 @@ public class MainController extends Application {
             myXml = new GameOfLifeXml(this.myUserInterface);
         } else if (s.charAt(0) == 'R') {
             myXml = new RockPaperScissorsXml(this.myUserInterface);
-        }
-        else if(s.charAt(0) == 'A'){
+        } else if(s.charAt(0) == 'A'){
             myXml = new AntForagingXml(this.myUserInterface);
         }
 
     }
 
     private void startSimulation() {
-        if (!checkFileSelected()) return;
+        if (!checkFileSelected()) {
+            return;
+        }
         this.myAnimation.play();
     }
 
@@ -276,8 +284,10 @@ public class MainController extends Application {
     }
 
     private void stepProcess() {
-        if (!checkFileSelected()) return;
-        this.isStep = true;
+        if (!checkFileSelected()) {
+            return;
+        }
+        isStep = true;
         this.myAnimation.pause();
         this.myUserInterface.update();
     }

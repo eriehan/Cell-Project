@@ -57,6 +57,7 @@ public class NeighborManager {
             Cell cell = cellEntry.getValue();
             cell.clearNeighbors();
             addNeighborsToCell(cell, gridOfCells, numOfRows, numOfCols, calcActualNeighbors(cell.getRow(), cell.getCol()));
+            System.out.println(cell.getNeighbors().size());
         }
     }
 
@@ -65,6 +66,7 @@ public class NeighborManager {
             Cell cell = cellEntry.getValue();
             cell.clearNeighbors();
             addNeighborsToCell(cell, gridOfCells, numOfRows, numOfCols, calcActualEdgeNeighbors(cell.getRow(), cell.getCol()));
+            System.out.println(cell.getNeighbors().size());
         }
     }
 
@@ -160,7 +162,7 @@ public class NeighborManager {
                     list.add(squareAllNeighbors.get(i));
                 }
             }
-            System.out.println(list.size());
+            System.out.println(list.toString());
             return list;
         }
     }
@@ -195,10 +197,17 @@ public class NeighborManager {
         return cellShapeType == CellShapeType.TRIANGLE && (case1 || case2);
     }
 
+    private boolean upwardTriangle(int row, int col) {
+        return !downWardTriangle(row, col) && cellShapeType == CellShapeType.TRIANGLE;
+    }
 
     private boolean leftSidedRowHexagon(int row) {
         boolean case1 = upRowExtended && row % 2 == 0;
         boolean case2 = !upRowExtended && row % 2 != 0;
         return cellShapeType == CellShapeType.HEXAGON && (case1 || case2);
+    }
+
+    private boolean rightSidedRowHexagon(int row) {
+        return !leftSidedRowHexagon(row) && cellShapeType == CellShapeType.HEXAGON;
     }
 }

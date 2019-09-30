@@ -52,7 +52,9 @@ public class UserInterface {
 
     public void update() {
         myGridView.updateGrid();
-        if (this.errorMsgTimer != -1) errorMsgTimer++;
+        if (this.errorMsgTimer != -1) {
+            errorMsgTimer++;
+        }
         if (this.errorMsgTimer > ERROR_MSG_TIME_LIMIT) {
             this.getMyControlsManager().getMyConstantCol().getChildren().remove(this.errorMsg);
             this.errorMsgTimer = -1;
