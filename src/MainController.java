@@ -12,7 +12,6 @@ import userInterface.*;
 import xml.*;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -136,7 +135,7 @@ public class MainController extends Application {
         saveButton.setOnAction(value -> {
             try {
                 save();
-            } catch (TransformerException | ParserConfigurationException e) {
+            } catch (ParserConfigurationException e) {
                 this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_savingFile"));
                 logger.log(Level.WARNING,"Error during save file",e);
                 return;
@@ -175,23 +174,21 @@ public class MainController extends Application {
 
     private void changeNumberOfCol(String col) {
         int colInput = Integer.parseInt(col);
-        System.out.println("col input: " + colInput);
         myXml.changeColNum(colInput);
         this.myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
         this.myUserInterface.getMyGridView().addSeriesToChart();
     }
 
     private void setEdgeType(String edgeType) {
-        System.out.println("for debug: " + edgeType);
         myUserInterface.getMyGridView().getGridManager().changeEdgeTypeOfGrid(edgeType);
     }
 
-    private void save() throws TransformerException, ParserConfigurationException {
+    //is called when the save button is pressed
+    private void save() throws ParserConfigurationException {
         if (!checkFileSelected()) {
             return;
         }
         myXml.saveCurrentSimulation(this.myUserInterface.getMyGridView(), myConfigFile);
-        System.out.println("configFile: " + myConfigFile);
     }
 
     private void setState(SimulationButton simulationButton) {
@@ -227,7 +224,6 @@ public class MainController extends Application {
         whichXml();
         myXml.parse(this.userFile);
 
-        //System.out.println("In Main: " +myXml.getMaturityArray());
         myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
         this.myUserInterface.getMyGridView().addSeriesToChart();
         this.myUserInterface.addSimulationControls();
@@ -241,7 +237,6 @@ public class MainController extends Application {
         for (int i = 0; i < myFile.length(); i++) {
             if (myFile.substring(i, i + 10).equals("/xml_files")) {
                 s = myFile.substring(i + 11);
-                System.out.println(s);
                 break;
             }
         }

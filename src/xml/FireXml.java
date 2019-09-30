@@ -15,6 +15,7 @@ public class FireXml extends AbstractXml {
     }
 
 
+
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException {
         super.saveCurrentSimulation(myGridView, CellState.BURNING, CellState.FIREEMPTY, xmlFilePath);
 

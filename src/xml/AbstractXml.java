@@ -28,10 +28,10 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//general class that deals with parsing and saving xml files
 public abstract class AbstractXml {
 
     protected static final Logger logger = Logger.getAnonymousLogger();
-
     private static final String RESOURCE_FILE_PATH = "resources/XmlResources";
     private static final String defaultTitle = "Simulation";
     private static final int SIZE_OF_XML_STRING = 4;
@@ -94,6 +94,7 @@ public abstract class AbstractXml {
         return copy;
     }
 
+
     public List<Integer> getPercentage(){
         return this.percentage;
     }
@@ -101,6 +102,7 @@ public abstract class AbstractXml {
         return this.rate;
     }
 
+    //method that parses the xml file
     public void parse(String file) throws ParserConfigurationException {
         File xmlFile = new File(String.valueOf(file));
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -117,6 +119,7 @@ public abstract class AbstractXml {
 
 
 
+    //gets the information from the xml file and passes it to the correct variables
     protected void setUpSimulationParameters(){
             this.cellGridColNum = Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
             this.myUserInterface.setNumOfCols(this.cellGridColNum);
@@ -135,7 +138,6 @@ public abstract class AbstractXml {
                     this.myUserInterface.changeTitle(this.myTitle);
                 }
                 catch (NullPointerException ex){
-                  //  this.myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_invalidSim"));
                     logger.log(Level.SEVERE, "an exception was thrown", ex);
                     this.myUserInterface.changeTitle(defaultTitle);
 
@@ -150,10 +152,9 @@ public abstract class AbstractXml {
                 myRowArray.add(stringToIntArray(row));
                 myColArray.add(stringToIntArray(col));
             }
-            System.out.println(myRowArray);
-            System.out.println(myColArray);
     }
 
+    //determines the shell shape for the simulation
     private void determineCellShape(Document doc) {
         Node shapeNode = doc.getElementsByTagName("Shape").item(0);
         Element shapeElement = (Element) shapeNode;
@@ -171,6 +172,7 @@ public abstract class AbstractXml {
         }
     }
 
+    //creates the elements for the new xml file to be configured and saved
     protected Document stageXml() throws ParserConfigurationException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -210,6 +212,7 @@ public abstract class AbstractXml {
         return document;
     }
 
+    //converts the string retrieved from the xml file to an array of ints to be used as coordinates
     protected List<Integer> stringToIntArray(String s) {
         String[] sArray = s.split(" ");
         StringBuilder myStringBuilder = new StringBuilder(s);
@@ -229,6 +232,7 @@ public abstract class AbstractXml {
         return myInts;
     }
 
+    //saves the current cell states for the simulation to be saved
     protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, List<List<Integer>> colArray,
                                  List<List<Integer>> rowArray){
         List<Integer> agent0Col = new ArrayList<>();
@@ -255,15 +259,20 @@ public abstract class AbstractXml {
     }
 
 
+
+    //changes the integer array into a string to be saved for the xml file
     private String convertArrayToString(List<Integer> array){
-        String s = "" + array.get(0);
+        StringBuilder s = new StringBuilder();
+        s.append(array.get(0));
         for(int i = 1; i < array.size(); i++){
-            s = s + " " + array.get(i);
+            s.append(" ");
+            s.append(array.get(i));
         }
-        return s;
+        return s.toString();
     }
 
 
+    //saves the current cell state for a simulation that requires 2 agents
     protected void saveCellState(Map<Point, Cell> myMap, CellState state1, List<List<Integer>> colArray, List<List<Integer>> rowArray){
         List<Integer> agent0Col = new ArrayList<>();
         List<Integer> agent0Row = new ArrayList<>();
@@ -280,6 +289,7 @@ public abstract class AbstractXml {
 
     }
 
+    //creates the agent element for the new xml file to be saved
     private Element createAgentElement(String agentIdentifier, Document document,List<Integer> rowArray, List<Integer> colArray){
         String agent = "Agent" + agentIdentifier;
         Element agentElement = document.createElement(agent);
@@ -290,9 +300,9 @@ public abstract class AbstractXml {
         agentElement.appendChild(row);
         agentElement.appendChild(col);
         return agentElement;
-
     }
 
+    //adds the agents to the new xml file
     protected void addAgents(Document document, String agentIdentifier,
                              List<Integer> rowArray, List<Integer> colArray){
         Element agentElement = createAgentElement(agentIdentifier, document, rowArray, colArray);
@@ -317,6 +327,7 @@ public abstract class AbstractXml {
         document.getFirstChild().appendChild(agentElement);
     }
 
+    //creates the xml path for the file to be saved
     protected void createXmlFilePath(Document document, File xmlFilePath) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
@@ -330,6 +341,7 @@ public abstract class AbstractXml {
     }
 
 
+    //the method called when the save button is clicked
     protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
                                          CellState state2, File xmlFilePath) throws ParserConfigurationException {
         Document document = stageXml();
@@ -361,7 +373,6 @@ public abstract class AbstractXml {
         try {
             createXmlFilePath(document, xmlFilePath);
         } catch (TransformerException e) {
-            //myUserInterface.displayErrorMsg(resourceBundle.getString("ErrorMsg_filePath"));
             logger.log(Level.SEVERE, "an exception was thrown", e);
         }
     }

@@ -21,9 +21,9 @@ public class RockPaperScissorsXml extends AbstractXml {
     }
 
 
+    //sets up simulation parameters
     public void setUpSimulationParameters() {
         super.setUpSimulationParameters();
-
         for (int i = 0; i < this.numAgents; i++) {
             NodeList agent = doc.getElementsByTagName("Agent" + i);
             Element n = (Element) agent.item(0);
