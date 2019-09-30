@@ -101,5 +101,12 @@ When the size(# of rows, cols) of the 2D grid of cells gets very big, the simula
 ### Impressions
 * For this project, our team has a clear delegation of work. This helped to increase efficiency, since everyone is clear about what they need to work on. Also, it reduces many pontential merge conflicts in GIT. 
 
-Design decision:
-1. hexagon grid cell -> shrink grid height overall 
+### Extra Features Added 
+* Display a line chart of the populations of all of the "kinds" of cells over the time of the simulation (updated dynamically, similar to the example in predator-prey)
+* Each simulation would render a customized panel of controls to allow users to dynamically change simulation parameters
+* Users can click on any cell during the simulation to change its state
+* Enabled hexagon, triangle, and rectangle cells. 
+    * note: for hexagon cells, the grid height is shrinked to keep the hexagon shape
+* there is a grid of buttons of the side of rectangular cell grid, the user can select the cells that counts as neighbor, thus changing the game rules dynamically
+* Edge types...
+* 
