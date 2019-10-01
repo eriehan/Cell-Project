@@ -6,11 +6,13 @@ import javafx.scene.text.Font;
 import static userInterface.VisualizationConstants.BUTTON_FONT_SIZE;
 
 /**
- *
+ * Simulation button class
  */
 public class SimulationButton extends Button {
     /**
-     * @param name
+     * Constructor for simulation button, sets the font and name
+     *
+     * @param name name of the button
      */
     public SimulationButton(String name) {
         super();

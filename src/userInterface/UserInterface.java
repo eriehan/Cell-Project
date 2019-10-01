@@ -12,6 +12,9 @@ import javafx.scene.text.Text;
 import static userInterface.VisualizationConstants.ERROR_MSG_FONT_SIZE;
 import static userInterface.VisualizationConstants.FILE_PATH_FONT_SIZE;
 
+/**
+ * UserInterface class that manages all the visualization and user interactions of the program.
+ */
 public class UserInterface {
     private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 20);
     private static final Font ERROR_FONT = Font.font("Arial", FontWeight.BOLD, ERROR_MSG_FONT_SIZE);
@@ -32,6 +35,11 @@ public class UserInterface {
     private PauseButton pauseButton;
 
 
+    /**
+     * Constructor
+     *
+     * @param simulationName Name of the simulation
+     */
     public UserInterface(String simulationName) {
         this.simulationTitle = new Text(simulationName);
         simulationTitle.setFont(TITLE_FONT);
@@ -39,6 +47,11 @@ public class UserInterface {
         myControlsManager = new ControlsManager();
     }
 
+    /**
+     * Initialize the scene of the simulation
+     *
+     * @return scene of simulation
+     */
     public Group setScene() {
         var root = new Group();
         firstColumn = new VBox(SPACING);
@@ -51,6 +64,9 @@ public class UserInterface {
         return root;
     }
 
+    /**
+     * update the view of the simulation at each simulation step
+     */
     public void update() {
         myGridView.updateGrid();
         if (this.errorMsgTimer != -1) {
@@ -62,35 +78,68 @@ public class UserInterface {
         }
     }
 
+    /**
+     * initialize and visualization simulation control
+     */
     public void addSimulationControls() {
         this.getMyGridView().getGridManager().getCellGrid().initializeControlPanel();
         this.getMyControlsManager().getMySimulationCol().getChildren().clear();
         this.getMyControlsManager().getMySimulationCol().getChildren().add(this.getMyGridView().getGridManager().getCellGrid().getControlPanel().getMyColPane());
     }
 
+    /**
+     * get grid view for this simulation
+     *
+     * @return grid view for this simulation
+     */
     public AbstractGridView getMyGridView() {
         return myGridView;
     }
 
 
+    /**
+     * get controls manager
+     *
+     * @return controls manager
+     */
     public ControlsManager getMyControlsManager() {
         return myControlsManager;
     }
 
-    public void changeTitle(String s) {
-        simulationTitle.setText(s);
+    /**
+     * change the title of the simulation
+     *
+     * @param simulationTitle new simulation title
+     */
+    public void changeTitle(String simulationTitle) {
+        this.simulationTitle.setText(simulationTitle);
     }
 
+    /**
+     * set number of rows of the grid
+     *
+     * @param n number of rows to set
+     */
     public void setNumOfRows(int n) {
         numOfRows = n;
         this.getMyGridView().setNumOfRows(n);
     }
 
+    /**
+     * set number of cols of the grid
+     *
+     * @param n number of cols to set
+     */
     public void setNumOfCols(int n) {
         numOfCols = n;
         this.getMyGridView().setNumOfCols(n);
     }
 
+    /**
+     * Display the specified error message
+     *
+     * @param errorMessage error message to display
+     */
     public void displayErrorMsg(String errorMessage) {
         if (errorMsgTimer != -1) {
             this.getMyControlsManager().getMyConstantCol().getChildren().remove(this.errorMsg);
@@ -102,6 +151,11 @@ public class UserInterface {
         this.errorMsgTimer = 0;
     }
 
+    /**
+     * Display simulation file path for the users
+     *
+     * @param filePath simulation file path to display
+     */
     public void displaySimulationFilePath(String filePath) {
         this.myControlsManager.getMyPane().getChildren().remove(this.simulationFilePath);
         this.simulationFilePath = new Text(filePath);
@@ -110,6 +164,11 @@ public class UserInterface {
         this.myControlsManager.getMyPane().getChildren().add(this.simulationFilePath);
     }
 
+    /**
+     * Change the shape of the cellls in the grid
+     *
+     * @param type cell shape to change to
+     */
     public void setCellShape(CellShapeType type) {
         if (type == CellShapeType.RECTANGLE) {
 
@@ -126,10 +185,20 @@ public class UserInterface {
         firstColumn.getChildren().addAll(simulationTitle, myGridView.getMyView());
     }
 
+    /**
+     * get the pause button for the simulation
+     *
+     * @return  pause button for the simulation
+     */
     public PauseButton getPauseButton() {
         return pauseButton;
     }
 
+    /**
+     * set the pause button for the simulation
+     *
+     * @param button pause button for the simulation
+     */
     public void setPauseButton(PauseButton button) {
         pauseButton = button;
     }

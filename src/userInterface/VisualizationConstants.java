@@ -4,6 +4,9 @@ package userInterface;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+/**
+ * Constants shared in visualization classes
+ */
 public class VisualizationConstants {
 
     public static final Paint BACKGROUND_COLOR = Color.AZURE;

@@ -6,6 +6,9 @@ import javafx.scene.chart.XYChart;
 
 import java.util.ArrayList;
 
+/**
+ * Class for the simulation line chart graph for state percentages.
+ */
 public class SimulationGraph extends LineChart {
     private static final String X_LABEL = "Time";
     private static final String Y_LABEL = "Percentage";
@@ -16,7 +19,7 @@ public class SimulationGraph extends LineChart {
     protected ArrayList<XYChart.Series> seriesList = new ArrayList<>();
 
 
-    public SimulationGraph(NumberAxis xAxis, NumberAxis yAxis) {
+    protected SimulationGraph(NumberAxis xAxis, NumberAxis yAxis) {
         super(xAxis, yAxis);
         myX = xAxis;
         myY = yAxis;
@@ -26,7 +29,7 @@ public class SimulationGraph extends LineChart {
         this.setCreateSymbols(false);
     }
 
-    public void addLine(Series line){
+    protected void addLine(Series line){
         this.getData().add(line);
         this.seriesList.add(line);
     }
