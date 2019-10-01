@@ -26,4 +26,9 @@ public class SimulationGraph extends LineChart {
         this.setCreateSymbols(false);
     }
 
+    public void addLine(Series line){
+        this.getData().add(line);
+        this.seriesList.add(line);
+    }
+
 }

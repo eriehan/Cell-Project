@@ -20,12 +20,12 @@ public class HexagonGridView extends AbstractGridView {
         super(numOfRows, numOfCols);
         this.setGridHeight(this.getGridHeight() / HEIGHT_OF_GRID_RATIO);
         myHexagonGroup = new Group();
-        getMyGridPane().getChildren().add(myHexagonGroup);
+        getGridPane().getChildren().add(myHexagonGroup);
     }
 
     @Override
     public void generateBlankGrid() {
-        Rectangle rectangle = new Rectangle(this.getGridWidth(), this.getGridHeight());
+        Rectangle rectangle = new Rectangle(GRID_WIDTH, this.getGridHeight());
         rectangle.setFill(Color.LIGHTBLUE);
         myHexagonGroup.getChildren().add(rectangle);
     }
@@ -33,7 +33,7 @@ public class HexagonGridView extends AbstractGridView {
     @Override
     public void createGrid() {
         boolean rowFlag = true;
-        double width = this.getGridWidth() / (getGridManager().getCellGrid().getNumOfCols() * WIDTH_EACH_HEX_RATIO + WIDTH_PADDING_RATIO);
+        double width = GRID_WIDTH / (getGridManager().getCellGrid().getNumOfCols() * WIDTH_EACH_HEX_RATIO + WIDTH_PADDING_RATIO);
         double height = this.getGridHeight() / (getGridManager().getCellGrid().getNumOfRows() * HEIGHT_EACH_HEX_RATIO + HEIGHT_EACH_HEX_RATIO);
         for (int r = 0; r < getGridManager().getCellGrid().getNumOfRows(); r++) {
             for (int c = 0; c < getGridManager().getCellGrid().getNumOfCols(); c++) {

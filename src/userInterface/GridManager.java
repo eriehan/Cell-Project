@@ -166,6 +166,11 @@ public class GridManager {
         return cellGrid;
     }
 
+    public void updateCellGrid(){
+        this.getCellGrid().checkAllCells();
+        this.getCellGrid().changeAllCells();
+    }
+
     public Color getColorOfCellAtPoint(int r, int c) {
         return this.getCellGrid().stateOfCellAtPoint(r, c).getMyColor();
     }

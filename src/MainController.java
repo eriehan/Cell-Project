@@ -219,7 +219,7 @@ public class MainController extends Application {
         myXml.parse(this.userFile);
 
         myUserInterface.getMyGridView().getGridManager().initializeMyCellGrid(myXml);
-        this.myUserInterface.getMyGridView().addSeriesToChart();
+        this.myUserInterface.getMyGridView().initializeSimulationGraph();
         this.myUserInterface.addSimulationControls();
         this.myUserInterface.getMyGridView().displayGrid();
         this.myAnimation.pause();
