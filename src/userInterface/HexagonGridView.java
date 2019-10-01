@@ -7,6 +7,9 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
 
+/**
+ * Grid view class for hexagon cells
+ */
 public class HexagonGridView extends AbstractGridView {
     private static final double WIDTH_PADDING_RATIO = 0.25;
     private static final double WIDTH_PADDING_RATIO_LONG = 0.75;
@@ -16,7 +19,8 @@ public class HexagonGridView extends AbstractGridView {
     private static final double START_POINT = 0.0;
     private Group myHexagonGroup;
 
-    public HexagonGridView(int numOfRows, int numOfCols) {
+
+    protected HexagonGridView(int numOfRows, int numOfCols) {
         super(numOfRows, numOfCols);
         this.setGridHeight(this.getGridHeight() / HEIGHT_OF_GRID_RATIO);
         myHexagonGroup = new Group();

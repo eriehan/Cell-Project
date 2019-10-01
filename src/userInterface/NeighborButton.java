@@ -3,6 +3,9 @@ package userInterface;
 import static userInterface.VisualizationConstants.CENTER_COLOR;
 import static userInterface.VisualizationConstants.NEIGHBOR_STYLE;
 
+/**
+ * individual neighbor selector button class.
+ */
 public class NeighborButton extends SimulationButton {
     public static final int CENTER = 4;
     private static final int BUTTON_WIDTH = 40;
@@ -12,7 +15,7 @@ public class NeighborButton extends SimulationButton {
     private int idx;
     private boolean chosen = false;
 
-    public NeighborButton(int idx) {
+    protected NeighborButton(int idx) {
         super("");
         this.idx = idx;
         this.setPrefSize(BUTTON_WIDTH, BUTTON_WIDTH);
@@ -22,14 +25,27 @@ public class NeighborButton extends SimulationButton {
         }
     }
 
+    /**
+     * Get the idx of this neighbor button
+     *
+     * @return idx of this neighbor button
+     */
     public int getIdx() {
         return idx;
     }
 
+    /**
+     * Get whether this neighbor is chosen
+     *
+     * @return whether this neighbor is chosen
+     */
     public boolean isChosen() {
         return chosen;
     }
 
+    /**
+     * Flip the chosen bit for this neighbor button.
+     */
     public void flipChosen() {
         if (idx == CENTER) {
             return;

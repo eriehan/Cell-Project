@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Neighbor button grid that contains a grid of individual neighbor buttons
+ */
 public class NeighborButtonGrid {
     private static final int SPACING = 5;
     private static final Label LABEL = new Label("Select cell neighbors");
@@ -17,6 +20,9 @@ public class NeighborButtonGrid {
     private VBox myView;
     private List<NeighborButton> buttonList;
 
+    /**
+     * Constructor for neighbor button grid
+     */
     public NeighborButtonGrid() {
         buttonGrid = new GridPane();
         myView = new VBox(SPACING);
@@ -33,10 +39,20 @@ public class NeighborButtonGrid {
         }
     }
 
+    /**
+     * Get the view of the button grid
+     *
+     * @return view of the button grid
+     */
     public VBox getMyView() {
         return myView;
     }
 
+    /**
+     * get list of neighborButton objects in order
+     *
+     * @return list of neighborButton objects in order
+     */
     public List<NeighborButton> getButtonList() {
         List<NeighborButton> list = new ArrayList<>();
         list.addAll(buttonList);

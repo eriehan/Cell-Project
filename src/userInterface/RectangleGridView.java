@@ -4,15 +4,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
 
+/**
+ * Grid view class for rectangle cells
+ */
 public class RectangleGridView extends AbstractGridView {
 
-    /**
-     * Constructor for class.
-     *
-     * @param numOfRows number of rows in grid
-     * @param numOfCols number of cols in grid
-     */
-    public RectangleGridView(int numOfRows, int numOfCols) {
+    protected RectangleGridView(int numOfRows, int numOfCols) {
         super(numOfRows, numOfCols);
     }
 

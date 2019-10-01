@@ -6,14 +6,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
-
+/**
+ * Grid view class for triangle cells
+ */
 public class TriangleGridView extends AbstractGridView {
     private static final double START_POINT = 0.0;
     private static final double WIDTH_PADDING_RATIO = 0.5;
     private static final int WIDTH_RATIO = 2;
     private Group myTriangleGroup;
 
-    public TriangleGridView(int numOfRows, int numOfCols) {
+
+    protected TriangleGridView(int numOfRows, int numOfCols) {
         super(numOfRows, numOfCols);
         myTriangleGroup = new Group();
         getGridPane().getChildren().add(myTriangleGroup);

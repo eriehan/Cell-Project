@@ -5,6 +5,9 @@ import javafx.scene.layout.VBox;
 
 import java.util.ResourceBundle;
 
+/**
+ * Control panel that wraps a column of controls.
+ */
 public class ControlPanel {
     private static final double PADDING_TOP = 100;
     private static final double PADDING_OTHER = 0;
@@ -13,6 +16,9 @@ public class ControlPanel {
     private ResourceBundle resourceBundle;
     private VBox myColPane;
 
+    /**
+     * Constructor, initializes the view.
+     */
     public ControlPanel() {
         myColPane = new VBox();
         myColPane.setSpacing(SPACING);
@@ -21,10 +27,20 @@ public class ControlPanel {
     }
 
 
+    /**
+     * Get the column panel node
+     *
+     * @return col pane view node
+     */
     public VBox getMyColPane() {
         return myColPane;
     }
 
+    /**
+     * Get resource bundle for controls
+     *
+     * @return resource bundle for controls
+     */
     public ResourceBundle getResourceBundle() {
         return resourceBundle;
     }
