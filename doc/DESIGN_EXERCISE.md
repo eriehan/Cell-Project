@@ -18,7 +18,7 @@ option 1: Each individual cell class that extends the abstract Cell class are go
 option 2: There's going to be an abstract cellGrid class and the individual grid class that extends it is going to store the rules.
 
 
-**2. How are we going to see the state of a cell's neighbors?
+**2. How are we going to see the state of a cell's neighbors?**
 
 option 1: Each cell object will have xLoc and yLoc values. Using that value, we'll determine the state of its neighbors by making a method that looks like (getState(xLoc, yLoc))
 option 2: The cellGrid is going to have a field that is a 2D array of cells. Using that, the cellGrid class will see the neighbors of each cell in the 2D array of cells.
