@@ -34,11 +34,17 @@ public abstract class CellGrid {
         this.controlPanel = new ControlPanel();
         createNeighborManager();
     }
-
+    /**
+     * Initializes the control panel. This method is called by GridManager when cellGrid object is formed,
+     * to put the right sliders on the screen.
+     */
     public void initializeControlPanel() {
         this.controlPanel.getMyColPane().getChildren().clear();
     }
 
+    /**
+     * Called internally by individual cellGrid inside the individual implementation of initializeControlPanel.
+     */
     protected void initializeControlPanel(String controlsType) {
         this.getControlPanel().getMyColPane().getChildren().clear();
         if (this.cellShapeType == CellShapeType.RECTANGLE) {
@@ -52,6 +58,9 @@ public abstract class CellGrid {
         }
     }
 
+    /**
+     * Adds a grid of nine rectangular cells to enable user to pick neighbors for rectangular cells.
+     */
     private void addNeighborButton() {
         NeighborButtonGrid neighborButtonGrid = new NeighborButtonGrid();
         this.getControlPanel().getMyColPane().getChildren().add(neighborButtonGrid.getMyView());
@@ -86,8 +95,15 @@ public abstract class CellGrid {
         return sb.toString();
     }
 
+    /**
+     * Must be overrided by all individual cellGrid objects. Type is the slider that the user moved,
+     * and inputPercentage is the value chosen by the user.
+     */
     protected abstract void sliderAction(String type, double inputPercentage);
 
+    /**
+     * Creates the right types of sliders for each simulation
+     */
     public SimulationSlider createSliderFromResourceFile(String controlType) {
         int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));
         int maxVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "max"));
@@ -98,8 +114,16 @@ public abstract class CellGrid {
         return slider;
     }
 
+    /**
+     * Must be overrided by all individual cellGrid objects. Called by gridManager object to initialize the grid
+     * according to configuration written in the xml file.
+     */
     public abstract void initializeGrids(Map<Point, CellState> configMap);
 
+    /**
+     * Must be called at each cycle. Cellgrid makes the cell check its neighbors, and the cell will decide
+     * its next state according to its hidden internal implementations.
+     */
     //Iterates through all cells and change nextState
     public void checkAllCells() {
         for(Cell cell : gridOfCells.values()) {
@@ -107,7 +131,9 @@ public abstract class CellGrid {
         }
     }
 
-    //Iterates through all cells and change state.
+    /**
+     * Must be called after checkAllCells(). The states of cells are updated.
+     */
     public void changeAllCells() {
         for(Cell cell : gridOfCells.values()) {
             cell.changeState();
@@ -115,6 +141,9 @@ public abstract class CellGrid {
         cellGridExpand();
     }
 
+    /**
+     * Method for graph implementation. Returns a map that holds the population of each state.
+     */
     public Map<CellState,Integer> countStates(){
         Map<CellState,Integer> stateCounts = new HashMap<>();
         for (int row = 0; row < getNumOfRows(); row++) {
@@ -130,20 +159,32 @@ public abstract class CellGrid {
         return stateCounts;
     }
 
+    /**
+     * If there is a cell at this point, it will now be 'empty', which is the default state. If there is no cell
+     * at the point, there will now be an empty cell at the point.
+     */
     public abstract void addEmptyStateToCell(int row, int col);
 
-    //Must be called for initializing by gridView
+    /**
+     * Must be called for initializing by gridView.
+     */
     public void assignNeighborsToEachCell() {
         createNeighborManager();
         neighborManager.assignAllNeighbors(gridOfCells, numOfRows, numOfCols);
     }
 
-    //This can be used to set different types of neighbor configuration.
+    /**
+     * Method for setting different types of neighbor configuration;
+     */
     public void setNeighborConfig(String neighborConfig) {
         this.neighborConfig = neighborConfig;
         assignNeighborsToEachCell();
     }
 
+    /**
+     * Method for infinite grids. If the user chose the grid to be infinite, the grid will expand
+     * when there is a nonEmpty cell at the edge.
+     */
     protected void cellGridExpand() {
         //only executed when gridLimit is Infinite
         if (gridLimit != GridLimit.INFINITE) {
@@ -175,10 +216,16 @@ public abstract class CellGrid {
         return gridOfCells;
     }
 
+    /**
+     * Clears the map. Used for re-initializing cellGrid.
+     */
     public void clearMap() {
         gridOfCells.clear();
     }
 
+    /**
+     * Called externally to put a specific cell to a point.
+     */
     public void addToGridOfCells(Point point, Cell cell) {
         gridOfCells.put(point, cell);
     }
@@ -187,6 +234,9 @@ public abstract class CellGrid {
         return gridOfCells.get(new Point(row, col)).getState();
     }
 
+    /**
+     * Changes the state of the cell when the user clicks the cell.
+     */
     public void setStateOfCellAtPointOnClick(int row, int col) {
         gridOfCells.get(new Point(row, col)).setNextStateOnClick();
     }
@@ -195,11 +245,16 @@ public abstract class CellGrid {
         return neighborManager;
     }
 
+    /**
+     * Called when the shape of the cell changes. Neighbors are re-assigned.
+     */
     public void setCellShapeType(CellShapeType cellShapeType) {
         this.cellShapeType = cellShapeType;
         assignNeighborsToEachCell();
     }
-
+    /**
+        * Called when the edge type of the cell changes. Neighbors are re-assigned.
+     */
     public void setGridLimit(GridLimit gridLimit) {
         this.gridLimit = gridLimit;
         assignNeighborsToEachCell();
@@ -209,6 +264,9 @@ public abstract class CellGrid {
         return numOfRows;
     }
 
+    /**
+     * Called when user changes the number of rows. Map is formed again and neighbors are re-assigned.
+     */
     public void userSetNumOfRows(int numOfRows) {
         this.numOfRows = numOfRows;
         createEmptyMap();
@@ -219,6 +277,9 @@ public abstract class CellGrid {
         return numOfCols;
     }
 
+    /**
+     * Called when user changes the number of rows. Map is formed again and neighbors are re-assigned.
+     */
     public void userSetNumOfCols(int numOfCols) {
         this.numOfCols = numOfCols;
         createEmptyMap();
@@ -240,6 +301,9 @@ public abstract class CellGrid {
         return true;
     }
 
+    /**
+     * Fills the grid with empty cells. Must be called at the start of initializeGrid().
+     */
     protected void createEmptyMap() {
         getGridOfCells().clear();
         for (int row = 0; row < getNumOfRows(); row++) {
@@ -301,6 +365,10 @@ public abstract class CellGrid {
         return getGridOfCells().get(new Point(row, col));
     }
 
+    /**
+     * Creates a new NeighborManger object according to the configuration of neighbors, cell shape, and edge type.
+     * This object will be used for assigning neighbors correctly.
+     */
     protected void createNeighborManager() {
         neighborManager = new NeighborManager(neighborConfig, cellShapeType, gridLimit == GridLimit.TOROIDAL);
     }

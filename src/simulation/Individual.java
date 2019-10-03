@@ -1,5 +1,9 @@
 package simulation;
 
+/**
+ * Needed for ant foraging and other types of simulation in which each grid has more than one individual/elements that
+ * acts separately
+ */
 public abstract class Individual {
     private GridInfo myGridInfo;
     private boolean moved = false;

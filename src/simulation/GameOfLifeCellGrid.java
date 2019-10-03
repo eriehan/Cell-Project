@@ -49,7 +49,6 @@ public class GameOfLifeCellGrid extends CellGrid {
         deadCells.add(getGridOfCells().get(point));
     }
 
-    //creates a map of cells with state==dead
     @Override
     protected void createEmptyMap() {
         clearMap();

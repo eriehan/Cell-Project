@@ -70,11 +70,13 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
             Cell tempCell = emptyCells.get(index);
             emptyCells.remove(tempCell);
 
-            //Will be changed later to be more flexible. Right now, 50% for state1, 50% for state2.
             tempCell.setState((Math.random() * HUNDRED > this.prob) ? CellState.FIRSTAGENT : CellState.SECONDAGENT);
         }
     }
 
+    /**
+     * Checks all cells. If the next state is dissatisfied, put that cell into a list.
+     */
     @Override
     public void checkAllCells() {
         for (Cell cell : getGridOfCells().values()) {
@@ -85,6 +87,9 @@ public class SegregationCellGrid extends GameOfLifeCellGrid {
         }
     }
 
+    /**
+     * Swap dissatisfied cell with empty cell and change state to nextstate
+     */
     @Override
     public void changeAllCells() {
         //swapping dissatisfied ones with a random empty one
