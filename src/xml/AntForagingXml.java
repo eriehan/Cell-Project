@@ -4,9 +4,19 @@ import userInterface.AbstractGridView;
 import userInterface.UserInterface;
 import java.io.File;
 
+
+/**
+ * @author  diane lin
+ * parses and saves the xml files related to the AntForaging simulation
+ */
 public class AntForagingXml extends AbstractXml {
 
 
+    /**
+     * constructor
+     * passes in the myUserInterface in order to modify the variables in the cell grid
+     * @param myUserInterface
+     */
     public AntForagingXml(UserInterface myUserInterface) {
         super(myUserInterface);
 
@@ -14,7 +24,11 @@ public class AntForagingXml extends AbstractXml {
     }
 
 
-    //sets up the simulation for ant foraging
+
+
+    /**
+     * sets up the ant foraging simulation
+     */
     protected void setUpSimulationParameters(){
         super.setUpSimulationParameters();
         this.diffusion = Double.parseDouble(doc.getElementsByTagName("Diffusion").item(0).getTextContent());

@@ -16,13 +16,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+/**
+ * @author  diane lin
+ * parses and saves the Wa-Tor xml files
+ */
 public class WaTorXml extends AbstractXml {
 
 
+    /**
+     * constructor
+     * @param myUserInterFace is passed in to change the variables of the cell grid
+     */
     public WaTorXml(UserInterface myUserInterFace) {
         super(myUserInterFace);
     }
 
+    /**
+     * sets up the simulation
+     */
     public void setUpSimulationParameters() {
         super.setUpSimulationParameters();
 
@@ -38,6 +49,12 @@ public class WaTorXml extends AbstractXml {
     }
 
 
+    /**
+     * saves the current simulation
+     * @param myGridView holds the current cell states
+     * @param xmlFilePath file path where all the xml files are saved
+     * @throws ParserConfigurationException is thrown if the simulation cannot be saved
+     */
     public void saveCurrentSimulation(AbstractGridView myGridView, File xmlFilePath) throws ParserConfigurationException {
         Document document = stageXml();
         Map<Point, Cell> myMap = myGridView.getGridManager().getCellGrid().getGridOfCells();

@@ -29,6 +29,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 //general class that deals with parsing and saving xml files
+
+/**
+ * Contains all the general methods that each simulation requires to be
+ * parsed/saved
+ * @author  Diane Lin
+ */
 public abstract class AbstractXml {
 
     protected static final Logger logger = Logger.getAnonymousLogger();
@@ -56,43 +62,77 @@ public abstract class AbstractXml {
     protected int birthRate;
 
 
-
-
-
+    /**
+     * Constructor of the AbstractXml class
+     * @param myUserInterface is the object that contains all the parameters that need to be set for the user interface
+     */
     public AbstractXml(UserInterface myUserInterface){
         this.myUserInterface = myUserInterface;
         resourceBundle = ResourceBundle.getBundle(RESOURCE_FILE_PATH);
     }
 
+    /**
+     * changes the number of rows in the cell grid
+     * @param n the number to change the grid row to
+     */
     public void changeRowNum(int n){
         this.cellGridRowNum = n;
     }
 
+    /**
+     * changes the number of columns in the cell grid
+     * @param n the new number of columns in the cell grid
+     */
     public void changeColNum(int n){
         this.cellGridColNum = n;
     }
 
 
+    /**
+     * gets the number of columns in the cell grid
+     * @return the number of columns in the cell grid
+     */
     public int getCellGridColNum(){
         return this.cellGridColNum;
     }
+
+    /**
+     * gets the number of rows in the cell grid
+     * @return the number of rows in the cell grid
+     */
     public int getCellGridRowNum(){
         return this.cellGridRowNum;
     }
+
+    /**
+     * gets the name of the current simulation
+     * @return the name of the current simulation
+     */
     public String getMyTitle(){
         return this.myTitle;
     }
+
+    /**
+     * gets the List that contains the column numbers of each respective agent
+     * @return List that contains the column numbers of each respective agent
+     */
     public List<List<Integer>> getMyColArray(){
         List<List<Integer>> copy = new ArrayList<>();
         copy.addAll(myColArray);
         return copy;
     }
 
+
+    /**
+     * gets the List that contains the row numbers of each respective agent
+     * @return List that contains the row numbers of each respective agent
+     */
     public List<List<Integer>> getMyRowArray(){
         List<List<Integer>> copy = new ArrayList<>();
         copy.addAll(myRowArray);
         return copy;
     }
+
 
 
     public List<Integer> getPercentage(){
@@ -102,7 +142,12 @@ public abstract class AbstractXml {
         return this.rate;
     }
 
-    //method that parses the xml file
+
+    /**
+     * parses the xml file
+     * @param file the file to be parsed
+     * @throws ParserConfigurationException the xml file is not configured correctly for the parser
+     */
     public void parse(String file) throws ParserConfigurationException {
         File xmlFile = new File(String.valueOf(file));
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -119,7 +164,10 @@ public abstract class AbstractXml {
 
 
 
-    //gets the information from the xml file and passes it to the correct variables
+
+    /**
+     * takes all the information from the xml file and passes the data to the correct variables within myUserInterface
+     */
     protected void setUpSimulationParameters(){
             this.cellGridColNum = Integer.parseInt(doc.getElementsByTagName("Col").item(0).getTextContent());
             this.myUserInterface.setNumOfCols(this.cellGridColNum);
@@ -155,6 +203,11 @@ public abstract class AbstractXml {
     }
 
     //determines the shell shape for the simulation
+
+    /**
+     * determins the shape of each cell
+     * @param doc the Document that contains the shape information
+     */
     private void determineCellShape(Document doc) {
         Node shapeNode = doc.getElementsByTagName("Shape").item(0);
         Element shapeElement = (Element) shapeNode;
@@ -173,6 +226,13 @@ public abstract class AbstractXml {
     }
 
     //creates the elements for the new xml file to be configured and saved
+
+    /**
+     * stages a new XML that will contain the information of the simulation that was saved
+     * @return Document that was staged with the elements and tags needed for the new xml file
+     * @throws ParserConfigurationException is thrown when the elements/tags cannot be created because there is no text element
+     * that can be added
+     */
     protected Document stageXml() throws ParserConfigurationException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -212,7 +272,13 @@ public abstract class AbstractXml {
         return document;
     }
 
-    //converts the string retrieved from the xml file to an array of ints to be used as coordinates
+
+
+    /**
+     * convers the string retrieved from the xml file to an array of ints to be used as coordinates within the cell grid
+     * @param s the string to be converted
+     * @return a list of ints
+     */
     protected List<Integer> stringToIntArray(String s) {
         String[] sArray = s.split(" ");
         StringBuilder myStringBuilder = new StringBuilder(s);
@@ -232,7 +298,16 @@ public abstract class AbstractXml {
         return myInts;
     }
 
-    //saves the current cell states for the simulation to be saved
+
+
+    /**
+     * saves the current cell states for the simulation to be saved
+     * @param myMap contains all the current cell states for each respective point within the cell grid
+     * @param state1 the first state to be saved
+     * @param state2 the second state to be saved
+     * @param colArray the array that holds the current column positions for each respective agent
+     * @param rowArray the array that holds the current row positions for each respective agent
+     */
     protected void saveCellState(Map<Point, Cell> myMap, CellState state1, CellState state2, List<List<Integer>> colArray,
                                  List<List<Integer>> rowArray){
         List<Integer> agent0Col = new ArrayList<>();
@@ -260,7 +335,12 @@ public abstract class AbstractXml {
 
 
 
-    //changes the integer array into a string to be saved for the xml file
+
+    /**
+     * changes the integer list that is passed in as a parameter to a string
+     * @param array List of ints that is to be converted to a string
+     * @return a string of all the elements within the list array separated by a space
+     */
     private String convertArrayToString(List<Integer> array){
         StringBuilder s = new StringBuilder();
         s.append(array.get(0));
@@ -272,7 +352,14 @@ public abstract class AbstractXml {
     }
 
 
-    //saves the current cell state for a simulation that requires 2 agents
+
+    /**
+     * saves the current cell state for a simulation that requires 2 agents
+     * @param myMap map that contains all the current positions of each cell as points and contains the state of each point
+     * @param state1 the first state to be saved
+     * @param colArray the array that holds the new column position for each agent to be saved
+     * @param rowArray the array that holds the new row position for each agent to be saved
+     */
     protected void saveCellState(Map<Point, Cell> myMap, CellState state1, List<List<Integer>> colArray, List<List<Integer>> rowArray){
         List<Integer> agent0Col = new ArrayList<>();
         List<Integer> agent0Row = new ArrayList<>();
@@ -290,6 +377,15 @@ public abstract class AbstractXml {
     }
 
     //creates the agent element for the new xml file to be saved
+
+    /**
+     * creates the agent element for the new xml file to be saved
+     * @param agentIdentifier which agent number it is
+     * @param document the document that will hold the agent elements
+     * @param rowArray the list that holds all the row positions for each agent
+     * @param colArray the list that holds all the column positions for each agent
+     * @return the agent element that is to be added to the xml file
+     */
     private Element createAgentElement(String agentIdentifier, Document document,List<Integer> rowArray, List<Integer> colArray){
         String agent = "Agent" + agentIdentifier;
         Element agentElement = document.createElement(agent);
@@ -303,16 +399,38 @@ public abstract class AbstractXml {
     }
 
     //adds the agents to the new xml file
+
+    /**
+     * adds the agents to the new xml file
+     * @param document the document that the agent element is added to
+     * @param agentIdentifier identifies which agent was created
+     * @param rowArray the list that holds all the current row position for the agent to be added
+     * @param colArray the list that holds all the current column positions for the agent to be added
+     */
     protected void addAgents(Document document, String agentIdentifier,
                              List<Integer> rowArray, List<Integer> colArray){
         Element agentElement = createAgentElement(agentIdentifier, document, rowArray, colArray);
         addChildToDocument(document, agentElement);
     }
 
+    /**
+     * adds the agent element to the document
+     * @param document document that the agent element is added to
+     * @param agentElement the element to be added to the document
+     */
     protected void addChildToDocument(Document document, Element agentElement){
         document.getFirstChild().appendChild(agentElement);
     }
 
+    /**
+     * calls the other methods to create the agent elements and adds the agents to the document
+     * @param document document that the agent element is added to
+     * @param agentIdentifier the agent number to be created
+     * @param rowArray the list that holds the row positions of the agent
+     * @param colArray the list that holds the column positions of the agent
+     * @param maturity the int that determines how many life cycles is needed for an agent to reproduce
+     * @param energy the int that determines how many life cycles an agent can go without eating
+     */
     protected void addAgents(Document document, String agentIdentifier,
                              List<Integer> rowArray, List<Integer> colArray,
                              int maturity, int energy){
@@ -327,7 +445,13 @@ public abstract class AbstractXml {
         document.getFirstChild().appendChild(agentElement);
     }
 
-    //creates the xml path for the file to be saved
+
+    /**
+     * creates the xml path for the file to be saved
+     * @param document the document that needs to be converted to an xml file
+     * @param xmlFilePath the current filePath where the xml files are stored
+     * @throws TransformerException is thrown if a new instance cannot be created
+     */
     protected void createXmlFilePath(Document document, File xmlFilePath) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
@@ -341,7 +465,17 @@ public abstract class AbstractXml {
     }
 
 
-    //the method called when the save button is clicked
+
+
+    /**
+     * called when the save button is clicked
+     * starts the saving process for the new xml file of a simulation that has 3 agents
+     * @param myGridView the variable that holds the map that contains all the cells and states of the current cells
+     * @param state1 the first state to be saved
+     * @param state2 the second state to be saved
+     * @param xmlFilePath the current filepath where the xml file that was initially parsed is located
+     * @throws ParserConfigurationException is thrown when the file cannot be parsed
+     */
     protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
                                          CellState state2, File xmlFilePath) throws ParserConfigurationException {
         Document document = stageXml();
@@ -360,6 +494,13 @@ public abstract class AbstractXml {
         }
     }
 
+    /**
+     * saves the current simulation for a simulation that has 2 agents
+     * @param myGridView the variable that holds the map that contains all the cells and states of the current cells
+     * @param state1 the first state to be saved
+     * @param xmlFilePath the current filepath where the xml file that was initially parsed is located
+     * @throws ParserConfigurationException is thrown when the file cannot be parsed
+     */
     protected void saveCurrentSimulation(AbstractGridView myGridView, CellState state1,
                                          File xmlFilePath) throws ParserConfigurationException {
         Document document = stageXml();
