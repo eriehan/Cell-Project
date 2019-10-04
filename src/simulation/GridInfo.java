@@ -29,7 +29,10 @@ public abstract class GridInfo {
 
     public abstract void update();
 
-    //to know its neighbors
+    /**
+     * This method needs to be called. Otherwise, the gridInfo won't know which neighbor is
+     * in which direction.
+     */
     public void setPossibleOrderedDirections(List<Point> orderedDirections) {
         List<Point> list = new ArrayList<>();
         list.addAll(orderedDirections);
@@ -82,10 +85,6 @@ public abstract class GridInfo {
 
     public void addNeighbor(Point dir, GridInfo gridInfo) {
         neighborGrids.put(dir, gridInfo);
-    }
-
-    public boolean hasNeigborGrid(Point direction) {
-        return neighborGrids.containsKey(direction);
     }
 
     public GridInfo getOneNeighborGrid(Point direction) {

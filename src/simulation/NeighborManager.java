@@ -50,6 +50,9 @@ public class NeighborManager {
         this.toroidal = toroidal;
     }
 
+    /**
+     * Assigns neighbors to all cells. Includes corner neighbors.
+     */
     public void assignAllNeighbors(Map<Point, Cell> gridOfCells, int numOfRows, int numOfCols) {
         for (Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
             Cell cell = cellEntry.getValue();
@@ -59,6 +62,9 @@ public class NeighborManager {
         }
     }
 
+    /**
+     * Assigns neighbors to all cells. Does not include corner neighbors.
+     */
     public void assignEdgeNeighbors(Map<Point, Cell> gridOfCells, int numOfRows, int numOfCols) {
         for (Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
             Cell cell = cellEntry.getValue();
@@ -68,6 +74,10 @@ public class NeighborManager {
         }
     }
 
+    /**
+     * Returns ordered list of directions of actual neighbors. order goes clockwise from neighbor at NW direction.
+     * Method needed for ant foraging, as direction of ant influences its movement.
+     */
     public List<Point> getOrderedNeighborDirections(Cell cell, int numOfRows, int numOfCols) {
         List<Point> list = new ArrayList<>();
         list.addAll(getAcutalNeighborDirections(cell, numOfRows, numOfCols, calcActualNeighbors(cell.getRow(), cell.getCol())));

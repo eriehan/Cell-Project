@@ -61,7 +61,9 @@ public class AntGridInfo extends GridInfo {
         checkIfGridFull();
     }
 
-
+    /**
+     * Evaporation of both pheromones
+     */
     private void manageEvaporation() {
         multiplyNumberAttributes(HOMEPHEROMONE, (HUNDRED - getNumberAttribute(EVAPORATION)) / HUNDRED);
         multiplyNumberAttributes(FOODPHEROMONE, (HUNDRED - getNumberAttribute(EVAPORATION)) / HUNDRED);
@@ -71,6 +73,9 @@ public class AntGridInfo extends GridInfo {
         putBooleanAttributes(GridAttribute.ISPACKED, numOfIndividuals() > getNumberAttribute(MAXANT));
     }
 
+    /**
+     * Pheromone diffuses to neighbor cells.
+     */
     private void manageDiffusion() {
         double diffusionRate = getNumberAttribute(GridAttribute.DIFFUSION);
         int neighborNum = getNeighborGrids().size();

@@ -34,12 +34,21 @@ public abstract class Cell {
         return nextState;
     }
 
+    /**
+     * Sets the next-state of the cell.
+     */
     public void setNextState(CellState nextState) {
         this.nextState = nextState;
     }
 
+    /**
+     * Must be overrided by individual cell classes. Check neighbors and determine its next state.
+     */
     public abstract void check();
 
+    /**
+     * Change state to next-state.
+     */
     public abstract void changeState();
 
     public CellState getState() {
@@ -50,6 +59,10 @@ public abstract class Cell {
         this.state = state;
     }
 
+    /**
+     * Called by gridManager to assign neighbor. The cell will know which cell is its neighbor located
+     * at a certain direction.
+     */
     public void addNeighbor(Point direction, Cell cell) {
         neighbors.put(direction, cell);
     }
@@ -62,14 +75,12 @@ public abstract class Cell {
         return copyOfNeighbors;
     }
 
-    //called when the cell needs to move. Changes state with the cell that the cell should move to.
+    /**
+     * called when the cell needs to move.
+     */
     public void moveToDifferentCell(Cell other) {
         nextState = other.getState();
         other.setNextState(state);
-    }
-
-    public Point getCoord() {
-        return coord;
     }
 
     public int getRow() {
@@ -102,6 +113,10 @@ public abstract class Cell {
         cornerNeighbors.clear();
     }
 
+    /**
+     * Method to get the value of specific parameters of each individual cell class. This method was made
+     * to prevent casting.
+     */
     public void putAttribute(CellAttribute cellAttribute, int value) {
         attributes.put(cellAttribute, value);
     }
@@ -121,6 +136,9 @@ public abstract class Cell {
         this.possibleStates.addAll(possibleStates);
     }
 
+    /**
+     * Method called when the cell is clicked by user
+     */
     protected void setNextStateOnClick() {
         System.out.println(possibleStates.size());
         if (!possibleStates.contains(state)) {
