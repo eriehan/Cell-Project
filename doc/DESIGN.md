@@ -77,7 +77,17 @@ option 2: The cellGrid is going to have a field that is a 2D array of cells. Usi
 **3. which class to maintain CellGrid class**
 
 ## New features
-describe, in detail, how to add new features to your project, especially ones you were not able to complete by the deadline
+Frontend:
+Backend: 
+Configuration: 
+* create and XML file that has the name of the new simulation that is being added
+* determine, in the main class, to determine which xml object to instantiate
+* create a subclass of AbstractXml that passes in the data for the simulation and allows the simulation to be saved
+    * adjust the parsing accordingly (in the method called setUpSimulationParameters) if the new simulation has certain variables that are not accounted for by the parser in AbstractXML
+    * adjust the saving of the simulation accordingly to account for any elements that are not taken into account in the AbstractXml saving method
+        * there is currently a method to save the simulation for simulations with 2 agents and 3 agents
+        * if the new simulation being added has more than 3 agents, then create a new method in AbstractXML that will be able to save the simulation with x number of agents
+
 
 
 ### Extra Features Added 
