@@ -28,11 +28,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//general class that deals with parsing and saving xml files
 
 /**
- * Contains all the general methods that each simulation requires to be
- * parsed/saved
+ * Contains all the abstract and concrete methods that each simulation requires to be parsed/saved
  * @author  Diane Lin
  */
 public abstract class AbstractXml {
@@ -64,7 +62,7 @@ public abstract class AbstractXml {
 
     /**
      * Constructor of the AbstractXml class
-     * @param myUserInterface is the object that contains all the parameters that need to be set for the user interface
+     * @param myUserInterface is the object that allows access to the different variables in the cellGrid where all the data needs to be passed to
      */
     public AbstractXml(UserInterface myUserInterface){
         this.myUserInterface = myUserInterface;
@@ -114,6 +112,8 @@ public abstract class AbstractXml {
 
     /**
      * gets the List that contains the column numbers of each respective agent
+     * each agent has its own set of column positions in the grid
+     * the ith index of myColArray corresponds to the ith agent's col array
      * @return List that contains the column numbers of each respective agent
      */
     public List<List<Integer>> getMyColArray(){
@@ -125,7 +125,9 @@ public abstract class AbstractXml {
 
     /**
      * gets the List that contains the row numbers of each respective agent
-     * @return List that contains the row numbers of each respective agent
+     * each agent has its own set of row positions in the grid
+     * the ith index of myRowArray corresponds to the ith agent's row array
+     * @return List that contains the column numbers of each respective agent
      */
     public List<List<Integer>> getMyRowArray(){
         List<List<Integer>> copy = new ArrayList<>();
@@ -144,7 +146,7 @@ public abstract class AbstractXml {
 
 
     /**
-     * parses the xml file
+     * calls determineCellShape and setUpSimulationParameters methods to parse the xml file
      * @param file the file to be parsed
      * @throws ParserConfigurationException the xml file is not configured correctly for the parser
      */
@@ -205,7 +207,7 @@ public abstract class AbstractXml {
     //determines the shell shape for the simulation
 
     /**
-     * determins the shape of each cell
+     * determines the shape of the cell to be instantiated
      * @param doc the Document that contains the shape information
      */
     private void determineCellShape(Document doc) {
@@ -225,10 +227,10 @@ public abstract class AbstractXml {
         }
     }
 
-    //creates the elements for the new xml file to be configured and saved
 
     /**
      * stages a new XML that will contain the information of the simulation that was saved
+     * creates all the elements needed for the simulation
      * @return Document that was staged with the elements and tags needed for the new xml file
      * @throws ParserConfigurationException is thrown when the elements/tags cannot be created because there is no text element
      * that can be added
@@ -376,7 +378,6 @@ public abstract class AbstractXml {
 
     }
 
-    //creates the agent element for the new xml file to be saved
 
     /**
      * creates the agent element for the new xml file to be saved
@@ -398,7 +399,6 @@ public abstract class AbstractXml {
         return agentElement;
     }
 
-    //adds the agents to the new xml file
 
     /**
      * adds the agents to the new xml file
@@ -545,7 +545,4 @@ public abstract class AbstractXml {
         return this.maxAnts;
     }
 
-    public int getBirthRate(){
-        return this.birthRate;
-    }
 }
