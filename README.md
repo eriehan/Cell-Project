@@ -11,7 +11,7 @@ Start Date: 9/12/2019
 
 Finish Date: 9/22/2019
 
-Hours Spent:
+Hours Spent: 175 hours
 
 ### Primary Roles
 Simulation (backend): Eric Han
@@ -30,6 +30,7 @@ Configuration: Diane Lin
     * kind of simulation it represents, as well as a title for this simulation and the author of this data file
     * settings for global configuration parameters specific to the simulation
     * width and height of the grid and the initial configuration of the states for the cells in the grid
+* Allow users to save current simulation parameters and then load it as a simulation with the saved configurations
 
 ### Resources Used
 https://www2.cs.duke.edu/courses/compsci308/fall19/assign/02_simulation/
@@ -46,7 +47,6 @@ MainController
 * xml configuration files to initialize the simulation parameters and simulation grid
 * MainResources.properties to initialize game constants such as window size etc.
 
-**Interesting data files:**
 
 **Features implemented:** 
 * create a simulation cell grid that updates each step based on the previous state
@@ -56,6 +56,7 @@ MainController
     * shape of the grid cells (currently support rectangle and triangle)
     * dimensions of the simulation grid (number of rows and columns)
     * initial grid setup
+* saving of the current simulation configuration as a new xml file to be loaded later by the user
 * friendly user interface for user to start and control simulation progress
     * grid display
         * display the grid status at each state, the size of each individual cell is determined by xml file's number of row and columns, while the overall size of the grid stays constant for every simulation.
@@ -85,6 +86,7 @@ conflict from simultaneous movements. And as the cells move at a random order, t
 **Known Bugs:**
 When the size(# of rows, cols) of the 2D grid of cells gets very big, the simulations sometimes do not work well.
 For ant foraging, some cells end up getting larger pheromone values than home/food sources, leading to unwanted results.
+For ant foraging and rock paper scissors, users cannot save the current simulation because of the way that the cells are currently instantiated (randomly based on the percentage of each agent in the simulation).
 
 **Extra credit:**
 * triangular grid cells
@@ -100,7 +102,7 @@ For ant foraging, some cells end up getting larger pheromone values than home/fo
     5. click "select file" againt to start a new simulation 
 
 ### Impressions
-* For this project, our team has a clear delegation of work. This helped to increase efficiency, since everyone is clear about what they need to work on. Also, it reduces many pontential merge conflicts in GIT. 
+* For this project, our team has a clear delegation of work. This helped to increase efficiency, since everyone is clear about what they need to work on. Also, it reduces many potential merge conflicts in GIT. 
 
 ### Extra Features Added 
 * Display a line chart of the populations of all of the "kinds" of cells over the time of the simulation (updated dynamically, similar to the example in predator-prey)
