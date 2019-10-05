@@ -42,7 +42,12 @@ public class NeighborManager {
     private boolean toroidal;
     private CellShapeType cellShapeType;
 
-    //default -> put "11111111" for eightBit.
+    /**
+     * Assigns neighbors to all cells. Includes corner neighbors.
+     * @param eightBit = the eight bit string that decides the neighbor configuration
+     * @param cellShapeType = what is the shape?
+     * @param toroidal = is the grid toroidal?
+     */
     public NeighborManager(String eightBit, CellShapeType cellShapeType, boolean toroidal) {
         this.cellShapeType = cellShapeType;
         allowedNeighbor = calcAllowedAllNeighbors(eightBit);
@@ -52,6 +57,9 @@ public class NeighborManager {
 
     /**
      * Assigns neighbors to all cells. Includes corner neighbors.
+     * @param gridOfCells = the data structure in CellGrid that holds all the cells
+     * @param numOfRows = numOfRows of CellGrid
+     * @param numOfCols = numOfRows of CellGrid
      */
     public void assignAllNeighbors(Map<Point, Cell> gridOfCells, int numOfRows, int numOfCols) {
         for (Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
@@ -64,6 +72,9 @@ public class NeighborManager {
 
     /**
      * Assigns neighbors to all cells. Does not include corner neighbors.
+     * @param gridOfCells = the data structure in CellGrid that holds all the cells
+     * @param numOfRows = numOfRows of CellGrid
+     * @param numOfCols = numOfRows of CellGrid
      */
     public void assignEdgeNeighbors(Map<Point, Cell> gridOfCells, int numOfRows, int numOfCols) {
         for (Map.Entry<Point, Cell> cellEntry : gridOfCells.entrySet()) {
@@ -77,6 +88,9 @@ public class NeighborManager {
     /**
      * Returns ordered list of directions of actual neighbors. order goes clockwise from neighbor at NW direction.
      * Method needed for ant foraging, as direction of ant influences its movement.
+     *  @param cell = the cell that needs the information
+     *  @param numOfRows = numOfRows of CellGrid
+     *  @param numOfCols = numOfRows of CellGrid
      */
     public List<Point> getOrderedNeighborDirections(Cell cell, int numOfRows, int numOfCols) {
         List<Point> list = new ArrayList<>();

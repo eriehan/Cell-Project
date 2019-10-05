@@ -29,7 +29,14 @@ public abstract class CellWithInfo extends Cell {
         myGridInfo.update();
     }
 
-    public abstract void addOrderedNeighborDirections(List<Point> neighbors);
+
+    /**
+     * CellInfo is an extension of Cell and is used for simulations in which each cell needs a patch of ground
+     * that stores information.
+     *
+     * @param orderedNeighbors = ordered list of neighbors that can be obtained by calling NeighborMangager's getOrderedNeighberDirections()
+     */
+    public abstract void addOrderedNeighborDirections(List<Point> orderedNeighbors);
 
     public GridInfo getMyGridInfo() {return myGridInfo;}
 

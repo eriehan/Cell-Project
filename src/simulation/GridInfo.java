@@ -32,6 +32,9 @@ public abstract class GridInfo {
     /**
      * This method needs to be called. Otherwise, the gridInfo won't know which neighbor is
      * in which direction.
+     *
+     * @param  orderedDirections is an ordered list of directions of neighbors. Can be obtained by getOrderedNeighborDirections() in
+     *                           NeighborManager class.
      */
     public void setPossibleOrderedDirections(List<Point> orderedDirections) {
         List<Point> list = new ArrayList<>();
@@ -45,6 +48,13 @@ public abstract class GridInfo {
         return list;
     }
 
+    /**
+     * Method to put the value of specific parameters of each individual GridInfo class. This method was made
+     * to prevent casting
+     *
+     * @param gridAttribute is the GridAttribute object that represents the name of the parameter
+     * @param num is the value to be stored.
+     */
     public void putNumberAttributes(GridAttribute gridAttribute, double num) {
         gridAttributes.put(gridAttribute, num);
     }
@@ -53,6 +63,13 @@ public abstract class GridInfo {
         gridBooleans.put(gridAttribute, bool);
     }
 
+    /**
+     * Method to multiply to the value of specific parameters of each individual GridInfo class. This method was made
+     * to prevent casting
+     *
+     * @param gridAttribute is the GridAttribute object that represents the name of the parameter
+     * @param num is the value to be multiplied by.
+     */
     public void multiplyNumberAttributes(GridAttribute gridAttribute, double num) {
         if (gridAttributes.containsKey(gridAttribute)) {
             gridAttributes.put(gridAttribute, num * getNumberAttribute(gridAttribute));
@@ -61,6 +78,13 @@ public abstract class GridInfo {
         }
     }
 
+    /**
+     * Method to add to the value of specific parameters of each individual GridInfo class. This method was made
+     * to prevent casting
+     *
+     * @param gridAttribute is the GridAttribute object that represents the name of the parameter
+     * @param num is the value to be added by.
+     */
     public void addToNumberAttributes(GridAttribute gridAttribute, double num) {
         if (!gridAttributes.containsKey(gridAttribute)) {
             putNumberAttributes(gridAttribute, num);
@@ -83,6 +107,12 @@ public abstract class GridInfo {
         return gridBooleans.get(gridAttribute);
     }
 
+    /**
+     * Method to add a neighbor gridInfo with the corresponding direction.
+     *
+     * @param dir is the direction of the neighbor
+     * @param gridInfo is the gridInfo that is the neighbor
+     */
     public void addNeighbor(Point dir, GridInfo gridInfo) {
         neighborGrids.put(dir, gridInfo);
     }
@@ -107,19 +137,31 @@ public abstract class GridInfo {
         return list;
     }
 
+    /**
+     * removes all the individuals that will not exist in the next round.
+     */
     public void removeAllRemovedIndividuals() {
         individuals.removeAll(removedIndividuals);
         removedIndividuals.clear();
     }
 
+    /**
+     * Individual object in the parameter will be removed when removeAllRemovedIndividuals() is called.
+     */
     public void addRemovedIndividual(Individual individual) {
         removedIndividuals.add(individual);
     }
 
+    /**
+     * Store the individual object in the parameter
+     */
     public void addIndividual(Individual individual) {
         individuals.add(individual);
     }
 
+    /**
+     * False if neighbor has not been assigned yet
+     */
     public boolean neighborAssigned() {
         return !individuals.isEmpty();
     }

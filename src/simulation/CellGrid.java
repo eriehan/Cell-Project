@@ -44,6 +44,7 @@ public abstract class CellGrid {
 
     /**
      * Called internally by individual cellGrid inside the individual implementation of initializeControlPanel.
+     * @param controlsType = type of simulation. Specified in the xml
      */
     protected void initializeControlPanel(String controlsType) {
         this.getControlPanel().getMyColPane().getChildren().clear();
@@ -98,11 +99,14 @@ public abstract class CellGrid {
     /**
      * Must be overrided by all individual cellGrid objects. Type is the slider that the user moved,
      * and inputPercentage is the value chosen by the user.
+     * @param type = type of simulation
+     * @param inputPercentage = result from user
      */
     protected abstract void sliderAction(String type, double inputPercentage);
 
     /**
      * Creates the right types of sliders for each simulation
+     * @param controlType = type of simulation
      */
     public SimulationSlider createSliderFromResourceFile(String controlType) {
         int minVal = Integer.parseInt(getControlPanel().getResourceBundle().getString(controlType + "." + "min"));
@@ -117,6 +121,8 @@ public abstract class CellGrid {
     /**
      * Must be overrided by all individual cellGrid objects. Called by gridManager object to initialize the grid
      * according to configuration written in the xml file.
+     *
+     * @param configMap = map that contains the cellState and the corresponding points.
      */
     public abstract void initializeGrids(Map<Point, CellState> configMap);
 
@@ -175,6 +181,7 @@ public abstract class CellGrid {
 
     /**
      * Method for setting different types of neighbor configuration;
+     * @param neighborConfig = 8bit string obtained from user input
      */
     public void setNeighborConfig(String neighborConfig) {
         this.neighborConfig = neighborConfig;
@@ -247,13 +254,15 @@ public abstract class CellGrid {
 
     /**
      * Called when the shape of the cell changes. Neighbors are re-assigned.
+     * @param cellShapeType = the type of cell.
      */
     public void setCellShapeType(CellShapeType cellShapeType) {
         this.cellShapeType = cellShapeType;
         assignNeighborsToEachCell();
     }
     /**
-        * Called when the edge type of the cell changes. Neighbors are re-assigned.
+     * Called when the edge type of the cell changes. Neighbors are re-assigned.
+     * @param gridLimit = edge type
      */
     public void setGridLimit(GridLimit gridLimit) {
         this.gridLimit = gridLimit;

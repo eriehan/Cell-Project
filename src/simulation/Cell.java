@@ -96,13 +96,16 @@ public abstract class Cell {
         coord.setCol(col);
     }
 
-    public void clearNeighbors() {
+    protected void clearNeighbors() {
         neighbors.clear();
     }
 
     /**
      * Method to set the value of specific parameters of each individual cell class. This method was made
      * to prevent casting.
+     *
+     * @param cellAttribute is the CellAttribute object that represents the name of the parameter;
+     * @param value is the value to be stored for the parameter.
      */
     public void putAttribute(CellAttribute cellAttribute, int value) {
         attributes.put(cellAttribute, value);
@@ -110,12 +113,17 @@ public abstract class Cell {
 
     /**
      * Method to get the value of specific parameters of each individual cell class. This method was made
-     * to prevent casting.
+     * to prevent casting
+     *
+     * @param cellAttribute is the CellAttribute object that represents the name of the parameter
      */
     public int getAttribute(CellAttribute cellAttribute) {
         return attributes.get(cellAttribute);
     }
 
+    /**
+     * Returns the list of possible states for the cell.
+     */
     public List<CellState> getPossibleStates() {
         List<CellState> states = new ArrayList<>();
         states.addAll(possibleStates);
