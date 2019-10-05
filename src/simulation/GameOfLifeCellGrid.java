@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class GameOfLifeCellGrid extends CellGrid {
 
-    private static final int INITIALALIVE = 5;
+    private static final int INITIALALIVE = 50;
     private int initialAliveNum = INITIALALIVE;
     private static final int HUNDRED = 100;
 

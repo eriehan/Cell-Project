@@ -14,20 +14,17 @@ public abstract class Cell {
     private Point coord; // x is row, y is col
 
 
-    private List<Cell> cornerNeighbors;
-    private List<Cell> edgeNeighbors;
     private Map<Point, Cell> neighbors = new HashMap<>();
     private Map<CellAttribute, Integer> attributes = new HashMap<>();
 
     private List<CellState> possibleStates = new ArrayList<>();
+
 
     public Cell(int row, int col, CellState state) {
         this.state = state;
         this.nextState = state;
         this.coord = new Point(row, col);
 
-        cornerNeighbors = new ArrayList<>();
-        edgeNeighbors = new ArrayList<>();
     }
 
     public CellState getNextState() {
@@ -100,27 +97,21 @@ public abstract class Cell {
     }
 
     public void clearNeighbors() {
-        clearEdgeNeighbors();
-        clearCornerNeighbors();
         neighbors.clear();
     }
 
-    public void clearEdgeNeighbors() {
-        edgeNeighbors.clear();
-    }
-
-    public void clearCornerNeighbors() {
-        cornerNeighbors.clear();
-    }
-
     /**
-     * Method to get the value of specific parameters of each individual cell class. This method was made
+     * Method to set the value of specific parameters of each individual cell class. This method was made
      * to prevent casting.
      */
     public void putAttribute(CellAttribute cellAttribute, int value) {
         attributes.put(cellAttribute, value);
     }
 
+    /**
+     * Method to get the value of specific parameters of each individual cell class. This method was made
+     * to prevent casting.
+     */
     public int getAttribute(CellAttribute cellAttribute) {
         return attributes.get(cellAttribute);
     }
@@ -162,6 +153,7 @@ public abstract class Cell {
     public int hashCode() {
         return (coord.toString() + "Cell").hashCode();
     }
+
 
     protected int countNeighborsWithState(CellState state) {
         int count = 0;

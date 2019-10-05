@@ -18,7 +18,20 @@ New features made easy to add
 * New progress displays (line charts, etc.)
 * New cell grid visualizations (cell shapes, etc.)
 ## High level design
-describe the high-level design of your project, focusing on the purpose and interaction of the core classes
+The main class initializes the UI. When the user chooses the file. When the user chooses a file, an xml object(concrete classes that inherit AbstractXML class) is formed
+and the contents in the XML file is stored into the corresponding data structure. (Configuration)
+
+Then, a GridView object is made, which has the role of drawing the state of every cells on the scene. The xml object is used to make a GridManager object inside the GridView object. The GridManager
+object, using the information in the xml object, calls the appropriate concrete CellGrid class, and calls the method that will initialize the cellGrid and
+make the cellGrid assign neighbors to each cell. Thus, the visualization part initially needs the data from the configuration. (Visualization)
+ 
+At each step of the simulation, the main class will call the updating method of gridview, which will call the updating
+method of gridManager, which will call the checkAllCell() and update() method of CellGrid class. These method will make all the cells correctly
+change its state. The rules are encapsulated in the concrete cell class.
+
+After the cellGrid is updated, the gridView will use the getter method that returns the hashMap that holds the location and the cell,
+and use the state of the cell to draw the scene again. Thus, the visualization part depends on the information in the backend to update the scene.(Visualization)
+
 
 ###Overview
 The project can be divided into three parts: simulation (backend configuration and updates of the grid of cells), configuration
@@ -75,10 +88,14 @@ option 1: Each cell object will have xLoc and yLoc values. Using that value, we'
 option 2: The cellGrid is going to have a field that is a 2D array of cells. Using that, the cellGrid class will see the neighbors of each cell in the 2D array of cells.
 
 **3. which class to maintain CellGrid class**
+option 1: GridView class holds the cellGrid object
+option 2: Make a separate class that solely focuses on connecting UI to the CellGrid class.
+
 
 ## New features
 Frontend:
 Backend: 
+* Implemented Rock Paper Scissor and 
 Configuration: 
 * create and XML file that has the name of the new simulation that is being added
 * determine, in the main class, to determine which xml object to instantiate

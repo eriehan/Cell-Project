@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FireCellGrid extends GameOfLifeCellGrid {
-    private double probCatch;
+    private double probCatch = 50;
     private Map myConfigMap = new HashMap<Point, CellState>();
 
     public FireCellGrid(int numRows, int numCols, double probCatch) {
@@ -21,6 +21,9 @@ public class FireCellGrid extends GameOfLifeCellGrid {
         initializeControlPanel("FireControls");
     }
 
+    /**
+     * Method called when user changes parameter
+     */
     @Override
     protected void sliderAction(String type, double inputPercentage) {
         //TODO: added slider actions @Eric

@@ -160,7 +160,7 @@ public abstract class CellGrid {
     }
 
     /**
-     * If there is a cell at this point, it will now be 'empty', which is the default state. If there is no cell
+     * If there is a cell at this point, it will now be 'empty', which is the default state. If there was no cell
      * at the point, there will now be an empty cell at the point.
      */
     public abstract void addEmptyStateToCell(int row, int col);
